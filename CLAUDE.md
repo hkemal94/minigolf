@@ -3,7 +3,7 @@
 Bu depoda çalışan her oturum önce bu dosyayı, sonra `docs/tasarim-belgesi.md`
 ve `docs/yol-haritasi.md`'yi okur. Tasarım belgesi oyunun tek kaynağıdır.
 
-Oyunun çalışma adı: depo adı "minigolf", KKM'deki başlığı "Mini Golf Düzada".
+Oyunun çalışma adı: depo adı "minigolf", KKM'deki başlığı "Mini Golf Duzada" (Kemal'in yazdığı hâliyle, ü'süz; oyun içi ve belgelerde yazım Düzada).
 Yayın adı [Kemal].
 
 ## Kim için
