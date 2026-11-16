@@ -15,7 +15,7 @@
 </defs>
 <rect width="1200" height="1530" fill="#FAF8F5"/>
 <text x="20" y="42" class="b">Minigolf · Stadyum turu (Dirlik Stadı) · 18 delik</text>
-<text x="20" y="66" class="a">Taslak (Kemal onaylamadı) · 16-11-2026 · Oyun Tasarımcısı · 3B Dirlik Stadı modelinin kuşbakışı düzeni (kaba, ölçeksiz) · ad, sayı yok</text>
+<text x="20" y="66" class="a">Taslak · 16-11-2026 · Oyun Tasarımcısı · Kemal'in 16 Kasım kararları işli · 3B Dirlik Stadı modelinin kuşbakışı düzeni (kaba, ölçeksiz) · ad, sayı yok</text>
 
 <!-- Harita: 3B modelin kuşbakışı -->
 <rect x="20" y="84" width="1160" height="572" rx="12" fill="#F3EFE8" stroke="#0E1C4F" stroke-opacity=".3"/>
@@ -33,8 +33,11 @@
 <rect x="1060" y="188" width="72" height="64" fill="#F26B6F" fill-opacity=".7" stroke="#0E1C4F" stroke-opacity=".5"/>
 <circle cx="100" cy="140" r="7" fill="#0E1C4F"/><circle cx="1128" cy="612" r="7" fill="#0E1C4F"/>
 <line x1="62" y1="624" x2="62" y2="600" stroke="#0E1C4F" stroke-width="2"/><path d="M62 600L74 604L62 608z" fill="#0E1C4F"/>
+<rect x="430" y="532" width="200" height="62" fill="#FAF8F5" fill-opacity=".45" stroke="none"/>
 <rect x="528" y="470" width="24" height="62" class="ek"/>
 <rect x="430" y="532" width="200" height="62" class="ek"/>
+<text x="440" y="548" class="ks">tribünün altı</text>
+<line x1="646" y1="492" x2="556" y2="488" class="ince"/><line x1="646" y1="563" x2="632" y2="563" class="ince"/>
 
 <text x="300" y="462" class="k">çim saha</text>
 <text x="52" y="120" class="ks">taş duvar · içinde toprak koridor</text>
@@ -42,13 +45,13 @@
 <text x="48" y="380" class="kb">A ucu</text><text x="48" y="395" class="ks">(dışarıda ağaçlar)</text>
 <text x="1072" y="380" class="kb">B ucu</text>
 <text x="525" y="113" class="k">açık tribün</text>
-<text x="1038" y="270" class="ks">köşe yapısı</text><text x="1038" y="283" class="ks">(kiremit çatı)</text>
+<text x="1038" y="270" class="ks">kulüp binası</text><text x="1038" y="283" class="ks">(kiremit çatı)</text>
 <text x="1040" y="598" class="ks">ışık direği</text>
 <text x="80" y="632" class="ks">bayrak direği</text>
 <text x="232" y="590" class="k">kapalı tribün (kiremit çatı)</text>
-<text x="650" y="512" class="ks">tünel: modelde yok, öneri</text>
-<text x="650" y="560" class="ks">soyunma odası ve duşlar: tribün altı</text>
-<text x="650" y="574" class="ks">modelde yok, öneri (aday: köşe yapısı)</text>
+<text x="650" y="489" class="ks">tünel: kapalı tribünün altından sahaya açılır</text><text x="650" y="502" class="ks">(karar; modelde yok, eklenecek)</text>
+<text x="650" y="560" class="ks">soyunma odası ve duşlar: kapalı tribünün altı</text>
+<text x="650" y="574" class="ks">(karar; modelde yok, eklenecek)</text>
 
 <path d="M585 315L400 205L205 330L185 205L250 375L540 180L640 148L840 140L950 150L1095 220L1090 570L540 500L470 565L540 565L610 565L300 540L100 578L620 350" class="rota"/>
 <g>
@@ -76,9 +79,9 @@
 <circle cx="10" cy="0" r="9" class="no"/><text x="10" y="4" class="not" font-size="11">1</text>
 <text x="26" y="4" class="k">delik ve sırası</text>
 <line x1="120" y1="0" x2="160" y2="0" class="rota"/><text x="166" y="4" class="k">tur yönü</text>
-<rect x="226" y="-6" width="26" height="12" class="ek"/><text x="258" y="4" class="k">modelde yok, eklenmesi önerilen (Kemal onayı)</text>
+<rect x="226" y="-6" width="26" height="12" class="ek"/><text x="258" y="4" class="k">modelde yok, eklenecek (yeri karar: Kemal, 16 Kasım)</text>
 <text x="0" y="20" class="ks">Kartlarda: halka = başlangıç · bayrak = delik · kesik kiremit çizgi = nişan / top yolu · koyu = engel · çift ok = hareketli · kum rengi = kum · koyu saydam = su ya da üstü kapalı</text>
-<text x="0" y="34" class="ks">Hareketli engeller yalnız 15–18. Nefes delikleri: 5, 9, 12, 17. Uçlar: A = ağaçlı kısa uç, B = köşe yapısının ucu (kanonda yön yok). Ölçüler ve hızlar DENEME.</text>
+<text x="0" y="34" class="ks">Hareketli engeller yalnız 15–18. Nefes delikleri: 5, 9, 12, 17. Uçlar: A = ağaçlı kısa uç, B = kulüp binasının ucu (kanonda yön yok). Ölçüler ve hızlar DENEME.</text>
 </g>
 
 <!-- 1 -->
@@ -192,7 +195,7 @@
 <g transform="translate(605,972)">
 <rect width="185" height="250" rx="10" class="kart"/>
 <circle cx="20" cy="22" r="12" class="no"/><text x="20" y="26.5" class="not">10</text>
-<text x="38" y="21" class="kb">Köşe yapısı</text><text x="38" y="36" class="ks">Pist: düz, ortası kapalı</text>
+<text x="38" y="21" class="kb">Kulüp binası</text><text x="38" y="36" class="ks">Pist: düz, ortası kapalı</text>
 <rect x="124" y="80" width="40" height="90" fill="#F26B6F" fill-opacity=".6"/>
 <rect x="66" y="58" width="52" height="140" rx="6" class="pist"/>
 <rect x="58" y="100" width="70" height="46" class="kapali"/>
@@ -222,7 +225,7 @@
 <path d="M92 170L92 140Q92 118 114 112L114 92" fill="none" stroke="#0E1C4F" stroke-opacity=".22" stroke-width="27"/>
 <path d="M92 182L92 140Q92 120 112 114L114 80" class="nisan"/>
 <use xlink:href="#bas" x="92" y="188"/><use xlink:href="#delik" x="114" y="74"/>
-<text x="12" y="220" class="ks">Öğretir: yeni şey yok, tünel</text><text x="12" y="236" class="ks">Zorluk: kolay · modelde YOK</text>
+<text x="12" y="220" class="ks">Öğretir: yeni şey yok, tünel</text><text x="12" y="236" class="ks">Zorluk: kolay · eklenecek</text>
 </g>
 <!-- 13 -->
 <g transform="translate(20,1234)">
@@ -233,7 +236,7 @@
 <g class="engel"><rect x="26" y="70" width="10" height="40"/><rect x="26" y="134" width="10" height="40"/><rect x="148" y="70" width="10" height="40"/><rect x="148" y="134" width="10" height="40"/><rect x="50" y="96" width="50" height="8"/><rect x="84" y="146" width="50" height="8"/></g>
 <path d="M52 180L44 124L110 112L126 78" class="nisan"/>
 <use xlink:href="#bas" x="52" y="186"/><use xlink:href="#delik" x="128" y="74"/>
-<text x="12" y="220" class="ks">Öğretir: engeller arası yol</text><text x="12" y="236" class="ks">Zorluk: zor · modelde YOK</text>
+<text x="12" y="220" class="ks">Öğretir: engeller arası yol</text><text x="12" y="236" class="ks">Zorluk: zor · eklenecek</text>
 </g>
 <!-- 14 -->
 <g transform="translate(215,1234)">
@@ -245,7 +248,7 @@
 <text x="68" y="134" font-size="10" fill="#FAF8F5">su</text>
 <path d="M70 180L125 150L125 108L82 78" class="nisan"/>
 <use xlink:href="#bas" x="70" y="186"/><use xlink:href="#delik" x="80" y="74"/>
-<text x="12" y="220" class="ks">Öğretir: sudan kaçmak</text><text x="12" y="236" class="ks">Zorluk: zor · modelde YOK</text>
+<text x="12" y="220" class="ks">Öğretir: sudan kaçmak</text><text x="12" y="236" class="ks">Zorluk: zor · eklenecek</text>
 </g>
 <!-- 15 -->
 <g transform="translate(410,1234)">
@@ -258,7 +261,7 @@
 <line x1="70" y1="140" x2="114" y2="140" class="hareket"/>
 <line x1="92" y1="178" x2="92" y2="82" class="nisan"/>
 <use xlink:href="#bas" x="92" y="184"/><use xlink:href="#delik" x="92" y="78"/>
-<text x="12" y="220" class="ks">Öğretir: zamanlama</text><text x="12" y="236" class="ks">Zorluk: orta · modelde YOK</text>
+<text x="12" y="220" class="ks">Öğretir: zamanlama</text><text x="12" y="236" class="ks">Zorluk: orta · eklenecek</text>
 </g>
 <!-- 16 -->
 <g transform="translate(605,1234)">
@@ -303,5 +306,5 @@
 </g>
 
 <text x="20" y="1506" class="ks">Kartlar: pist kuşbakışı, dikey ekrana göre; ölçeksiz. Yerleşim Kems Ajans assetler/3b/binalar/dirlik-stadi.glb önizlemesinden.</text>
-<text x="20" y="1520" class="ks">Tünel ve soyunma odası modelde yok; yerleri öneri, Kemal'in onayı gerekir.</text>
+<text x="20" y="1520" class="ks">Tünel ve soyunma odası (duşlarıyla) modelde yok, eklenecek. Yerleri karar (Kemal, 16 Kasım): kapalı tribünün altı; tünel oradan sahaya açılır. Tur orta yuvarlakta başlar ve biter.</text>
 </svg>

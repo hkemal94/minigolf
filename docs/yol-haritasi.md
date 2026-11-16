@@ -13,15 +13,18 @@
   yayın iş akışı. Bilgisayarda telefon boyutunda denendi; gerçek telefonda denenmedi.
 - 16 Kasım 2026 (öneri; `ajans/stadyum-plani`): kapsamlı tasarım belgesi, Stadyum turunun 18 delikli
   planı ve şeması (`docs/plan/`), altı ekran maketi (`?maket=…`; ana ekran, tur seçimi, delik, atış,
-  skor kartı, tur sonu; görüntüleri `docs/ekranlar/`). Maketler öneri, oynanış değil. 3B Dirlik Stadı
-  modeli maketlerde; kaynağı ve lisansı Kemal'e soruldu. Gerçek telefonda denenmedi.
+  skor kartı, tur sonu; görüntüleri `docs/ekranlar/`). Maketler öneri, oynanış değil. Gerçek telefonda
+  denenmedi.
+- 16 Kasım 2026 (aynı dal): Kemal'in 8 cevabı işlendi. Tünel ve soyunma odası kapalı tribünün altında;
+  köşedeki yapı kulüp binası (10. delik onun önünde); 3B Dirlik Stadı modeli oyunda kullanılır; tribün
+  sıraları, köprü, duşlar engel; tur orta yuvarlakta başlar ve biter; geri al DENEME; oyuncu görünmez;
+  Stadyum turu Ocak 2027'nin ayın turu (ileride Mart'a kayabilir).
 
 ## Sıradaki
 
-1. **Kemal'in kararları:** delik planı ve maketler onaylanır ya da düzeltilir; tasarım belgesinin 7.
-   bölümündeki sorular (tünel ve soyunma odasının yeri, köşe yapısı, 3B modelin lisansı, genel stat
-   bölümleri, turun başı ve sonu, geri al, oyuncu, ayın turu).
-2. **Tünel ve soyunma odası** modele eklenir (yerini Kemal seçtikten sonra; 3B iş).
+1. **Kemal'in onayı:** delik planı ve maketler onaylanır ya da düzeltilir (8 soru cevaplandı, 16 Kasım).
+2. **Tünel ve soyunma odası** (duşlarıyla) modele eklenir: kapalı tribünün altı, tünel oradan sahaya
+   (yeri karar, Kemal 16 Kasım; 3B iş).
 3. **İlk delik denemesi:** plandaki 1. delik (orta yuvarlak); fizik kütüphanesi seçilir, tek parmak
    vuruş ve nişan çizgisi, geri al, delik sonu. Ölçüler DENEME. Maketteki ekranlar onaylanınca oyuna
    taşınır.
@@ -31,10 +34,12 @@
 
 - Hareketli engeller (engeller içinde en son).
 - Görsel dil: İllüstratör 2–3 deneme.
-- Ayın turu ve pul (takvim ayı; geçen ayın turu sonradan bitirilebilir).
+- Ayın turu ve pul (takvim ayı; geçen ayın turu sonradan bitirilebilir). Stadyum turu Ocak 2027'nin
+  ayın turu; ileride Ocak'a başka bir şey alınırsa Mart'a kayabilir.
 - Imperial uzun turu.
 - Telefon uygulaması; reklam ve reklamsız paket yalnız orada.
 
 ## Bitenler
 
 - İskelet (16 Kasım, PR #1 birleşti).
+- Stadyum turu soruları: Kemal'in 8 cevabı (16 Kasım; tasarım belgesi, kararların geçmişi).

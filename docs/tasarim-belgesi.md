@@ -17,18 +17,18 @@ fiyat, reklam sıklığı gibi sayılar yazılmaz ("veri yok"). Denemek için ko
 diye işaretlenir; bulunduğu yer web denemesidir, onaylayan Kemal'dir.
 
 **Kaynaklar:** Kems Ajans `oneriler/minigolf-fikir-belgesi-15-11-2026.md` (Kemal'in 15 ve 16 Kasım
-cevapları işli) ve Kemal'in 16 Kasım Stadyum soru turu cevapları. Düzada bilgisi yalnız KKM'deki
+cevapları işli), Kemal'in 16 Kasım Stadyum soru turu cevapları ve plan üzerine verdiği 8 cevap (16 Kasım, kesin). Düzada bilgisi yalnız KKM'deki
 `docs/03-duzada-kunyesi.md`'den. Stat kompleksinin yerleşimi Kemal'in beğendiği 3B Dirlik Stadı
 modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik-stadi-onizleme.jpg`).
 
 **İlham:**
 - 3B modelin önizlemesinden: bütün yerleşim alındı (saha, iki tribün, taş duvar, duvar içi toprak
-  yol, ışık direkleri, köşe yapısı, bayrak direği). Deliklerin yeri buna göre.
+  yol, ışık direkleri, kulüp binası, bayrak direği). Deliklerin yeri buna göre.
 - Vikideki suluboya çizimden (KKM `public/viki/cizim-dirlik-stadi.jpg`): statın zeytinlik içinde,
   yukarıda durduğu ve denizin yalnız ufukta göründüğü hava alındı. Çizimde iki tribün aynı kenarda;
   plan 3B modele göre yapıldı, çizime göre değil.
 - `assetler/ilham/stadyum/stadyum-01.jpg`'den: sahayı saran toprak yol ve sahanın kenarındaki alçak
-  taş yapı fikri alındı (tribün altına soyunma odası önerisi buradan). Görseldeki plaj ve birahane bu
+  taş yapı fikri alındı (tribün altındaki soyunma odası fikri buradan; yeri Kemal'in 16 Kasım kararı). Görseldeki plaj ve birahane bu
   turda yok.
 - Pinterest ve Behance'e bakılmadı. Bu belge oynanış ve yerleşim belgesi; görsel dil İllüstratör'ün işi (5. bölüm).
 
@@ -36,6 +36,18 @@ modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik
 
 En yeni üstte.
 
+- **16 Kasım (Kemal'in plan cevapları, kesin):**
+  1. Tünel ve soyunma odası (duşlarıyla) kapalı tribünün altında; tünel oradan sahaya açılır.
+     Modelde yok, eklenecek; yeri karar (4.2, 4.5).
+  2. Köşedeki kiremit çatılı yapı **kulüp binası**dır (Dirlik Spor Kulübü'nün binası; ad yok).
+     10. delik kulüp binasının önünde ve saçağının altında (4.2, 4.5).
+  3. 3B Dirlik Stadı modeli oyunda kullanılır (Kems Ajans yaptı; `docs/lisanslar.md`).
+  4. Tribün sıraları, köprü, duşlar engel olarak kullanılır (3.2).
+  5. Tur orta yuvarlakta başlar ve orada biter (4.3).
+  6. Geri alınan vuruşun sayıdan düşüp düşmeyeceği denemeden sonra; o zamana kadar DENEME (2. bölüm).
+  7. Oyuncu görünmez; ekranda yalnız top ve pist (1.3).
+  8. Stadyum turu şimdilik **Ocak 2027**'nin ayın turu. İleride Ocak'a başka bir şey alınırsa Mart'a
+     kayabilir (9. bölüm).
 - **16 Kasım (Kemal: "ekranları önden görmek istiyorum"):** oyun yapılmadan önce ekranların maketi
   hazırlanır. Maketler öneridir, oynanış değildir (11. bölüm).
 - **16 Kasım (Stadyum soru turu, kesin):** Turlar lokasyona göre, her tur 18 delik. İlk tur yalnız
@@ -72,8 +84,8 @@ bölümlerinde adım adım ilerler, sanki oralara gerçek minigolf parkurları k
 
 ### 1.3 Oyuncu
 
-**Öneri:** oyuncu görünmez; ekranda yalnız top, pist ve yer var. Oyuncunun bir karakteri, adı, yüzü
-yok. İleride karakter olup olmayacağı [Kemal] (7. bölüm).
+**Karar (Kemal, 16 Kasım)**: oyuncu görünmez; ekranda yalnız top ve pist (yer, pistin çevresinde dekor). Oyuncunun bir
+karakteri, adı, yüzü yok.
 
 ## 2. Oynanış: kamera ve kontrol
 
@@ -87,7 +99,8 @@ yok. İleride karakter olup olmayacağı [Kemal] (7. bölüm).
 - **Çek-bırak vuruş:** oyuncu topa dokunur, başparmağını geri çeker (ne kadar çekerse o kadar
   güçlü), bırakınca top atılır. Çekerken topun önünde ince bir nişan çizgisi çıkar. Güç-çekme oranı DENEME.
 - Nişan çizgisi yalnız yönü gösterir; sekmeyi gösterip göstermeyeceği DENEME (yardımın boyu Kemal'in).
-- **Geri al:** son vuruştan önceki yere döner; vuruş sayısından düşer mi düşmez mi [Kemal] (7. bölüm).
+- **Geri al:** son vuruştan önceki yere döner. Vuruş sayısından düşüp düşmeyeceği: DENEME; **Karar (Kemal, 16 Kasım)**,
+  karar denemeden sonra.
 - **Kaldığı yerden devam:** oyun kapanınca tur ve delik hatırlanır; açılınca aynı delikte, aynı vuruş sayısıyla.
 - **Kamera:** sabit açı; iki parmakla döndürme ve yakınlaştırma (tek elle oynamak gerekmez, isteğe bağlı).
 - **Top dışarı kaçarsa** (pistten, köprüden, suya): vuruştan önceki yere döner, o vuruş sayılır, ek ceza yok.
@@ -102,8 +115,9 @@ yok. İleride karakter olup olmayacağı [Kemal] (7. bölüm).
 **Karar (Kemal, 16 Kasım):**
 - Turlar mahalleye göre değil **lokasyona** göre. Her lokasyon bir tur, **her tur 18 delik**. Aynı
   mahallede başka bir lokasyon ayrı bir 18 delikli tur olabilir.
-- **İlk tur yalnız stat kompleksi** (Dirlik Stadı). Birahane, plaj, zeytinlik, sokak, kulüp binası
-  bu turda yok.
+- **İlk tur yalnız stat kompleksi** (Dirlik Stadı). Birahane, plaj, zeytinlik, sokak bu turda yok.
+  **Karar (Kemal, 16 Kasım)**: statın köşesindeki kiremit çatılı yapı kulüp binasıdır; tur yalnız önünden ve saçağının
+  altından geçer (10. delik), içine girmez.
 - Pist gerçek bir minigolf pistidir; yerin eşyası pistin çevresinde ve engel olarak durur.
 - Künyede ayrıca yazmayan ama **her statta olan genel eşya ve bölümler** kullanılabilir (kale, köşe
   bayrağı, tünel, soyunma odası, tribün sıraları gibi). Ad yok.
@@ -126,6 +140,9 @@ yok. İleride karakter olup olmayacağı [Kemal] (7. bölüm).
 
 **Karar (Kemal, 16 Kasım):** engellerin hepsi var: yerin eşyaları; klasik engeller (tünel, rampa,
 köprü); su ve kum tuzakları; hareketli engeller. **Hareketli engeller en son deliklerde.**
+
+**Karar (Kemal, 16 Kasım)**: tribün sıraları, köprü ve duşlar engel olarak kullanılır; statın genel eşyası yalnız
+çevrede durmaz, engel de olur.
 
 **Öneri:**
 - **Yerin eşyası önce gelir.** Bir delikte engel gerekiyorsa önce o yerde zaten olan şeye bakılır
@@ -183,33 +200,34 @@ parçalarına oturur. Modelin önizlemesinde görülenler:
 - **Taş duvar:** bütün kompleksi saran alçak duvar.
 - **Duvar içi toprak yol:** duvarla saha arasında, sahayı saran koridor.
 - **Işık direkleri:** önizlemede iki çapraz köşede görünüyor (öbür iki köşe önizlemede yok ya da görünmüyor).
-- **Köşe yapısı:** sahanın bir kısa ucunda, açık tribün tarafına yakın, kiremit çatılı küçük yapı.
+- **Kulüp binası:** sahanın bir kısa ucunda, açık tribün tarafına yakın, kiremit çatılı küçük yapı.
+  **Karar (Kemal, 16 Kasım)**: Dirlik Spor Kulübü'nün binası; ad yok.
 - **Bayrak direği:** kompleksin bir köşesinde, duvarın dibinde.
 - **Ağaçlar:** duvarın dışında, bir kısa uçta (dekor; pist yok).
 
 Bu belgede uçlar şöyle anılır: **A ucu** = duvar dışında ağaçların olduğu kısa uç; **B ucu** = köşe
-yapısının olduğu kısa uç. Kapalı tribün A ucuna yakın durur; açık tribün ortaya ve B ucuna yakın.
+binasının olduğu kısa uç. Kapalı tribün A ucuna yakın durur; açık tribün ortaya ve B ucuna yakın.
 Kanonda yön (kuzey, güney) yok; ad yok.
 
-**Modelde olmayanlar (eklenmesi gerekir, [Kemal] onayı):**
-- **Oyuncu tüneli:** öneri, kapalı tribünün altından sahaya açılır (ağzı kapalı tribünün B ucuna yakın
-  ucunda, saha kenarında).
-- **Soyunma odası (duşlarıyla):** öneri, kapalı tribünün altındaki kapalı hacmin içinde; tünel buraya
-  bağlanır. Aday: köşe yapısı soyunma odası olabilir (7. bölüm, soru). O zaman tünel köşe yapısından
-  sahaya gider.
+**Modelde olmayanlar (eklenecek):**
+- **Soyunma odası (duşlarıyla):** **Karar (Kemal, 16 Kasım)**: kapalı tribünün altındaki kapalı hacmin içinde.
+- **Oyuncu tüneli:** **Karar (Kemal, 16 Kasım)**: soyunma odasından, kapalı tribünün altından sahaya açılır. Ağzının
+  tam yeri öneri: kapalı tribünün ortasına yakın, saha kenarında (şemadaki gibi).
 - **Saha eşyası:** köşe bayrakları ve penaltı noktası önizlemede seçilmiyor; her sahada olan eşya
   olarak eklenir.
-- Modelin kaynağı ve lisansı `docs/lisanslar.md`'ye yazılmalı: [Kemal] (7. bölüm).
+- Model: **Karar (Kemal, 16 Kasım)**: oyunda kullanılır; kaynağı `docs/lisanslar.md`'de (Kems Ajans yaptı).
 
 ### 4.3 Turun akışı
 
-**Öneri:** tur orta yuvarlakta başlar, A ucunu dolaşır, açık tribüne çıkar, duvar içi koridordan B
+**Karar (Kemal, 16 Kasım)**: tur orta yuvarlakta başlar ve orada biter.
+
+**Öneri** (aradaki yol): tur orta yuvarlaktan A ucunu dolaşır, açık tribüne çıkar, duvar içi koridordan B
 ucuna geçer, kapalı tribünün altına (tünel, soyunma odası) iner, kapalı tribünün sıralarından ve A
 ucundaki bayrak direğinden geçip orta yuvarlakta biter.
 
 - Saha, A ucu: 1–5
 - Açık tribün ve koridor: 6–9
-- B ucu (köşe yapısı, ışık direği): 10–11
+- B ucu (kulüp binası, ışık direği): 10–11
 - Kapalı tribünün altı (tünel, soyunma odası): 12–15
 - Kapalı tribün, A ucu köşesi, final: 16–18
 
@@ -314,15 +332,15 @@ zorluk · öğretir · deneme notu. Hepsi **Öneri**.
 - Öğretir: yeni şey yok; sektirmenin rahat tekrarı.
 - Deneme notu: duvarın arkasında ufuk ve zeytinlik görünüyor mu, ekranı kalabalık yapıyor mu.
 
-**10 · Köşe yapısı**
-- Yer: B ucundaki kiremit çatılı köşe yapısı (modelde var).
-- Standın yerleşimi: pist yapının önünden geçer; bir bölümü saçağın altında.
+**10 · Kulüp binası**
+- Yer: B ucundaki kiremit çatılı kulüp binası (modelde var). **Karar (Kemal, 16 Kasım)**: delik binanın önünde ve
+  saçağının altında.
+- Standın yerleşimi: pist binanın önünden geçer; bir bölümü saçağın altında.
 - Pist: düz, ortası üstü kapalı.
-- Engeller: saçak (pistin bir bölümü üstü kapalı, top kısa bir an görünmez); yapının duvarı bant.
+- Engeller: saçak (pistin bir bölümü üstü kapalı, top kısa bir an görünmez); binanın duvarı bant.
 - Zorluk: orta.
 - Öğretir: görünmeyen bölümden geçirmek.
-- Deneme notu: kapalı bölümde top saydam mı görünsün, hiç mi görünmesin: DENEME. Köşe yapısı soyunma
-  odası olursa (7. bölüm) bu delik yapının önünde kalır, değişmez.
+- Deneme notu: kapalı bölümde top saydam mı görünsün, hiç mi görünmesin: DENEME.
 
 **11 · Işık direği, kum**
 - Yer: B ucunda, kapalı tribün tarafındaki köşe; ışık direğinin dibi, toprak koridor (modelde var).
@@ -334,7 +352,7 @@ zorluk · öğretir · deneme notu. Hepsi **Öneri**.
 - Deneme notu: kum ekranda ayırt ediliyor mu; kumdan çıkış adil mi. Yavaşlatma: DENEME.
 
 **12 · Oyuncu tüneli (nefes)**
-- Yer: oyuncu tüneli (**modelde yok, eklenecek**; öneri: kapalı tribünün altından sahaya).
+- Yer: oyuncu tüneli (**modelde yok, eklenecek**). **Karar (Kemal, 16 Kasım)**: kapalı tribünün altından sahaya açılır.
 - Standın yerleşimi: pist tünelin içinde, saha kenarından tribün altına.
 - Pist: uzun, tek hafif kıvrım; tünel duvarları bant.
 - Engeller: tünelin kendisi (klasik).
@@ -343,7 +361,7 @@ zorluk · öğretir · deneme notu. Hepsi **Öneri**.
 - Deneme notu: tünel içi okunur mu (ışık); tavan pisti kapatıyorsa saydam olsun mu: DENEME.
 
 **13 · Soyunma odası**
-- Yer: soyunma odası (**modelde yok, eklenecek**; öneri: kapalı tribünün altı. Aday: köşe yapısı).
+- Yer: soyunma odası (**modelde yok, eklenecek**). **Karar (Kemal, 16 Kasım)**: kapalı tribünün altı.
 - Standın yerleşimi: pist odanın zemininde; duvar boyunca dolaplar, ortada banklar.
 - Pist: geniş, dağınık engelli.
 - Engeller: banklar (ortada), dolaplar (kenarda, bant gibi).
@@ -352,7 +370,7 @@ zorluk · öğretir · deneme notu. Hepsi **Öneri**.
 - Deneme notu: bank ayakları topu takmamalı; delik bankın arkasında görünmez olmamalı.
 
 **14 · Duşlar, su**
-- Yer: soyunma odasının duş bölümü (**modelde yok, eklenecek**).
+- Yer: soyunma odasının duş bölümü, kapalı tribünün altı (**modelde yok, eklenecek**).
 - Standın yerleşimi: pist duş bölümünün zemininde.
 - Pist: düz; ortasında su birikintisi, bir yanında dar kuru yol.
 - Engeller: su tuzağı (klasik); suya düşen top dışarı kaçmış sayılır (DENEME).
@@ -408,16 +426,17 @@ zorluk · öğretir · deneme notu. Hepsi **Öneri**.
   13, 14, 15, 16, 17.
 - Her delikte aynı üç soru: tek ekranda mı, tek elle mi, yeni şey anlaşılıyor mu.
 - "Kaldığı yerden devam" 5. delikten sonra denenir.
-- 12–15 (tünel, soyunma odası) için önce yerin modele eklenmesi gerekir; Kemal yerini onaylamadan bu
-  deliklere geçilmez. O sırada 16–18 öne alınmaz (hareketliler en son).
+- 12–15 (tünel, soyunma odası) için önce bu bölümlerin modele eklenmesi gerekir (yeri karar: kapalı
+  tribünün altı, Kemal 16 Kasım); eklenmeden bu deliklere geçilmez. O sırada 16–18 öne alınmaz (hareketliler en son).
 - 18 delik bitince bir kez baştan sona oynanır: dalga hissediliyor mu, tur süresi uygun mu (DENEME).
 - Vuruş sınırı ve "top dışarı kaçarsa" kuralı bu denemelerden sonra Kemal'in kararı.
 
 ### 4.7 Bu turda gerekecek parçalar
 
 **Öneri** (görsel üretimi değil, liste; ad ve marka yok):
-- Modelden: saha, iki tribün, taş duvar, toprak koridor, ışık direkleri, köşe yapısı, bayrak direği.
-- Eklenecek yerler: oyuncu tüneli, soyunma odası (dolaplar, banklar), duş bölümü, kapı.
+- Modelden: saha, iki tribün, taş duvar, toprak koridor, ışık direkleri, kulüp binası, bayrak direği.
+- Eklenecek yerler (kapalı tribünün altında): oyuncu tüneli, soyunma odası (dolaplar, banklar), duş
+  bölümü, kapı.
 - Eklenecek saha eşyası: köşe bayrakları, penaltı noktası, kale ağı (modelde kalelerin ağı seçilmiyor).
 - Pist parçaları: bantlı pist halısı, rampa, köprü, kum, su, kayan blok, dönen kol, delik ve bayrak, top.
 
@@ -454,7 +473,7 @@ zorluk · öğretir · deneme notu. Hepsi **Öneri**.
   bu öneriyle kuruldu (16 Kasım).
 - Fizik: hazır bir fizik kütüphanesi (ör. Rapier); Oyun Geliştiricisi ilk delik denemesinde seçer.
 - 3B Dirlik Stadı modeli (`dirlik-stadi.glb`) sahnenin temeli; pistler modelin üstüne ayrı parçalar
-  olarak konur. Modelin kaynağı ve lisansı yazılmadan oyuna girmez.
+  olarak konur. **Karar (Kemal, 16 Kasım)**: model oyunda kullanılır (`docs/lisanslar.md`).
 - Her delik ayrı bir veri dosyası (pist parçaları, engeller, başlangıç ve delik yeri); kod delik delik büyür.
 - Telefonda akıcılık önce: az çokgen, az ışık, ölçülü gölge.
 - Telefon uygulaması sonra; paketleme öbür oyunlardaki gibi Capacitor.
@@ -479,24 +498,23 @@ denemesinde reklam ve satın alma yok.
 
 Kemal'in kararını bekleyenler.
 
-- **Tünel ve soyunma odasının yeri:** modelde yok. Kapalı tribünün altı mı, köşe yapısı mı? (4.2)
-- **Köşe yapısı ne?** Soyunma odası mı, başka bir şey mi, adsız bırakılsın mı? (4.2)
-- **Modelin kaynağı ve lisansı:** `dirlik-stadi.glb` nereden, oyunda kullanılabilir mi? (`docs/lisanslar.md`)
+- **Geri al vuruşu sayıdan düşer mi?** DENEME; karar denemeden sonra (Kemal, 16 Kasım; 2. bölüm).
 - **Top dışarı kaçarsa:** öneri "vuruştan önceki yere döner, vuruş sayılır"; DENEME, karar denemeden sonra.
-- **Genel stat bölümleri engel olsun mu?** Künyede yazmayan ama her statta olan bölüm ve eşyalar
-  (kale, köşe bayrağı, tünel, soyunma odası, tribün sıraları) yalnız pistin çevresinde mi durur, engel
-  olarak da mı kullanılır? Öneri: ikisi de, yerin eşyası önce (3.2).
-- **Tur orta yuvarlakta başlayıp bitsin mi?** Öneri: evet, 1. ve 18. delik orta yuvarlakta (4.3).
-- **Geri al vuruşu sayıdan düşer mi?** (2. bölüm)
 - **Vuruş sınırı:** web denemesinden sonra.
 - **Nişan çizgisi sekmeyi göstersin mi?** (4. delik)
 - **Delik ölçüsü, tur süresi, hızlar, eğimler:** DENEME, denemeden sonra.
 - **Görsel dil:** İllüstratör'ün 2–3 denemesinden hangisi.
-- **Oyuncunun karakteri:** oyuncu görünmez mi kalsın?
 - **Sonraki turların sırası** ve Imperial uzun turunun zamanı; turların zorluk sırası.
-- **Ayın turu:** Stadyum turu hangi ayın turu?
+- **Öbür ayların turu:** Stadyum Ocak 2027'nin; öbür aylar [Kemal].
 - Oyunun yayın adı, tur adları: [Kemal].
 - ~~Stadyum turunun yerleri, engel türleri, zorluk, ortam~~ Cevaplandı (Kemal, 16 Kasım): 3. ve 4. bölüm.
+- ~~Tünel ve soyunma odasının yeri~~ Cevaplandı (Kemal, 16 Kasım): kapalı tribünün altı; tünel oradan sahaya (4.2).
+- ~~Köşe yapısı ne?~~ Cevaplandı (Kemal, 16 Kasım): kulüp binası, ad yok (4.2).
+- ~~Modelin kaynağı ve lisansı~~ Cevaplandı (Kemal, 16 Kasım): oyunda kullanılır (`docs/lisanslar.md`).
+- ~~Genel stat bölümleri engel olsun mu?~~ Cevaplandı (Kemal, 16 Kasım): evet; tribün sıraları, köprü, duşlar (3.2).
+- ~~Tur orta yuvarlakta başlayıp bitsin mi?~~ Cevaplandı (Kemal, 16 Kasım): evet (4.3).
+- ~~Oyuncunun karakteri~~ Cevaplandı (Kemal, 16 Kasım): oyuncu görünmez; yalnız top ve pist (1.3).
+- ~~Ayın turu~~ Cevaplandı (Kemal, 16 Kasım): Stadyum, Ocak 2027; ileride Mart'a kayabilir (9. bölüm).
 
 ## 8. Ödül: pul koleksiyonu
 
@@ -516,15 +534,17 @@ bitince gelir. Ay takvim ayına bağlıdır; **geçen ayın turu sonradan bitiri
 **Öneri:**
 - Tur 18 deliğiyle bitince sayılır; vuruş sayısının önemi yok (cezasız ruh).
 - Yarıda bırakılan tur ay bitse de kaldığı yerden sürer; bitince o ayın pulu gelir.
-- Hangi turun hangi ayın turu olduğu: [Kemal]. Turlar 18 delik olduğu için her ay yeni tur gerekmez;
-  bir tur birden çok ay kullanılabilir ([Kemal]).
+- **Karar (Kemal, 16 Kasım)**: Stadyum turu şimdilik **Ocak 2027**'nin ayın turu. Not: ileride Ocak'a başka bir şey
+  alınırsa Mart'a kayabilir.
+- Öbür ayların turu: [Kemal]. Turlar 18 delik olduğu için her ay yeni tur gerekmez; bir tur birden çok
+  ay kullanılabilir ([Kemal]).
 
 ## 10. Sıra (öneri)
 
 Her adım bir öncekinin onayıyla başlar; tarih yazılmaz.
 
 1. **Stadyum delik planı** (Oyun Tasarımcısı): bu belge ve şema. Kemal onaylar ya da düzeltir.
-2. **Tünel ve soyunma odasının yeri** (Kemal karar verir), modele eklenmesi (3B iş, sonra).
+2. **Tünel ve soyunma odası** modele eklenir (yeri karar: kapalı tribünün altı, Kemal 16 Kasım; 3B iş).
 3. **İlk delik denemesi** (Oyun Geliştiricisi): 1. delik, fizik, vuruş, nişan çizgisi, delik sonu. Ölçüler DENEME.
 4. **Görsel dil denemeleri** (İllüstratör, ayrı iş): 2–3 deneme; Kemal seçer.
 5. Delikler sırayla (4.6), her biri Kemal denedikten sonra; hareketliler en son.
@@ -536,7 +556,7 @@ Her adım bir öncekinin onayıyla başlar; tarih yazılmaz.
 çalışmaz, top atılmaz. Her ekranın köşesinde "MAKET · öneri" yazar. Vuruşlar, ilerleme ve pul sayısı
 boştur ("–"); ad yerine `[YER TUTUCU: …]` ya da `[Kemal]` durur. Ölçüler (pist, top, nişan çizgisi,
 güç halkası) DENEME. Renkler marka kitinden, yazı Poppins; 3B stat, Kems Ajans'ın Dirlik Stadı modeli
-(kaynağı ve lisansı Kemal'e soruldu, 7. bölüm).
+(oyunda kullanımı Kemal'in 16 Kasım onayıyla). Ayın turu kutusunda "Ocak 2027" yazar (Kemal, 16 Kasım).
 
 Uygulamada adresin sonuna `?maket=<ekran>` yazınca açılır (bilgisayarda ve telefonda); oyunun kendi
 ekranına karışmaz. Görüntüler iPhone 13 boyutunda çekildi.
