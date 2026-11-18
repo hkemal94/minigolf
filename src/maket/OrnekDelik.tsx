@@ -20,6 +20,9 @@ import {
   KOSE,
   ORTA,
   PENALTI,
+  HUNILER,
+  SULAMA,
+  MANKENLER,
   type N3,
   type OrnekDelik,
 } from './ornekDelikler';
@@ -30,24 +33,22 @@ import {
 // ekrana sığmaz; kamera topun yanındadır, deliğin yeri ekran kenarındaki okla ve küçük planla gösterilir.
 // uzak: kameranın hedefe göre durduğu yön; ileri: hedefin toptan oyun yönüne kayması. Hepsi DENEME.
 type Bakis = { uzak: N3; ileri: N3; zoom: number; golge: number };
-// Adım 1 delikleri 3. delikle aynı uzaklık ve açıda; yalnız oyun yönüne göre çevrildi (-x ya da -z).
+// Adım 1 delikleri 3. delikle aynı uzaklıkta; kamera topun tam arkasına yakın durur ki ilerideki eşya
+// (huniler, sulama başlıkları, köşe bayrağı, baraj) aynı ekrana girsin. Oyun yönü: 1, 4, 5 için -x; 2 için -z.
 const eksiX = {
-  genel: { uzak: [12.3, 17, 5.5], ileri: [-1.15, 0, -0.52], zoom: 200, golge: 5 },
-  atis: { uzak: [12.3, 17, 5.5], ileri: [-0.42, 0, -0.19], zoom: 340, golge: 3 },
+  genel: { uzak: [13.3, 17, 1.5], ileri: [-1.2, 0, -0.15], zoom: 200, golge: 6 },
+  atis: { uzak: [13.3, 17, 1.5], ileri: [-0.5, 0, -0.05], zoom: 340, golge: 3 },
 } satisfies { genel: Bakis; atis: Bakis };
 const eksiZ = {
-  genel: { uzak: [-5.5, 17, 12.3], ileri: [0.52, 0, -1.15], zoom: 200, golge: 5 },
-  atis: { uzak: [-5.5, 17, 12.3], ileri: [0.19, 0, -0.42], zoom: 340, golge: 3 },
+  genel: { uzak: [-1.5, 17, 13.3], ileri: [0.15, 0, -1.2], zoom: 200, golge: 6 },
+  atis: { uzak: [-1.5, 17, 13.3], ileri: [0.05, 0, -0.5], zoom: 340, golge: 3 },
 } satisfies { genel: Bakis; atis: Bakis };
 const BAKISLAR: Record<number, { genel: Bakis; atis: Bakis }> = {
   1: eksiX,
   2: eksiZ,
-  // 4: kamera topun tam arkasına yakın; dönüş, köşe bayrağı ve köşe yayı aynı ekrana girsin diye.
-  4: {
-    genel: { uzak: [13.3, 17, 1.5], ileri: [-1.2, 0, -0.15], zoom: 200, golge: 5 },
-    atis: { uzak: [13.3, 17, 1.5], ileri: [-0.5, 0, -0.05], zoom: 340, golge: 3 },
-  },
-  5: eksiX,
+  4: eksiX,
+  // 5: baraj 2,75 m ileride; ekrana girsin diye kamera biraz daha ileriye bakar.
+  5: { genel: { ...eksiX.genel, ileri: [-1.75, 0, -0.1] }, atis: eksiX.atis },
   3: {
     genel: { uzak: [5.5, 17, -12.3], ileri: [-0.52, 0, 1.15], zoom: 200, golge: 5 },
     atis: { uzak: [5.5, 17, -12.3], ileri: [-0.19, 0, 0.42], zoom: 340, golge: 3 },
@@ -280,10 +281,107 @@ function KoseBayragi() {
 function OrtaYuvarlakCizgisi() {
   const r = IFAB.ortaYuvarlakYaricap;
   return (
-    <mesh position={[ORTA[0], MODEL.cizgiUstu + 0.001, ORTA[1]]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+    <mesh position={[ORTA[0], MODEL.cizgiUstu + 0.002, ORTA[1]]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
       <ringGeometry args={[r - MODEL.ortaYuvarlakCizgiEn / 2, r + MODEL.ortaYuvarlakCizgiEn / 2, 160]} />
       <meshStandardMaterial color={CIZGI_RENGI} roughness={1} />
     </mesh>
+  );
+}
+
+// Antrenman hunileri (1. delik). Modelde ve künyede yok; DENEME, Kemal onaylamadı. Yazı, logo yok.
+function Huniler() {
+  const t = DENEME.huniTaban;
+  const b = DENEME.huniBoy;
+  return (
+    <group>
+      {HUNILER.map((n, i) => (
+        <group key={i} position={[n[0], MODEL.cizgiUstu, n[1]]}>
+          <mesh position={[0, 0.01, 0]} castShadow receiveShadow>
+            <boxGeometry args={[t, 0.02, t]} />
+            <meshStandardMaterial color={renk.lacivertAcik} roughness={1} />
+          </mesh>
+          <mesh position={[0, 0.02 + b / 2, 0]} castShadow>
+            <cylinderGeometry args={[0.02, t / 2 - 0.02, b, 16]} />
+            <meshStandardMaterial color={renk.krem} roughness={1} />
+          </mesh>
+        </group>
+      ))}
+    </group>
+  );
+}
+
+// Sulama başlıkları (2. delik): yerden çıkmış kısa başlık ve çimdeki yuvası. Modelde ve künyede yok;
+// DENEME, Kemal onaylamadı.
+function SulamaBasliklari() {
+  const r = DENEME.sulamaYaricap;
+  const b = DENEME.sulamaBoy;
+  return (
+    <group>
+      {SULAMA.map((n, i) => (
+        <group key={i} position={[n[0], MODEL.cimUstu, n[1]]}>
+          <mesh position={[0, 0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[r + 0.04, 24]} />
+            <meshStandardMaterial color={renk.lacivert} roughness={1} />
+          </mesh>
+          <mesh position={[0, b / 2, 0]} castShadow>
+            <cylinderGeometry args={[r, r, b, 16]} />
+            <meshStandardMaterial color="#8C9299" roughness={0.6} />
+          </mesh>
+          <mesh position={[0, b + 0.01, 0]} castShadow>
+            <cylinderGeometry args={[r * 0.6, r, 0.02, 16]} />
+            <meshStandardMaterial color={renk.lacivertAcik} roughness={0.6} />
+          </mesh>
+        </group>
+      ))}
+    </group>
+  );
+}
+
+// Baraj mankenleri (5. delik): antrenman eşyası, insan figürü değil; düz levha ve taban. Modelde ve
+// künyede yok; DENEME, Kemal onaylamadı. Boy makette kısa (arkası görünsün). Yazı, logo yok.
+function BarajMankenleri() {
+  const en = DENEME.mankenEn;
+  const boy = DENEME.mankenBoy;
+  return (
+    <group>
+      {MANKENLER.map((n, i) => (
+        <group key={i} position={[n[0], MODEL.cimUstu, n[1]]}>
+          <mesh position={[0, 0.02, 0]} castShadow receiveShadow>
+            <boxGeometry args={[0.24, 0.04, en]} />
+            <meshStandardMaterial color={renk.lacivert} roughness={1} />
+          </mesh>
+          <mesh position={[0, 0.04 + (boy - en / 2) / 2, 0]} castShadow>
+            <boxGeometry args={[0.05, boy - en / 2, en]} />
+            <meshStandardMaterial color={renk.lacivertAcik} roughness={1} />
+          </mesh>
+          <mesh position={[0, 0.04 + boy - en / 2, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+            <cylinderGeometry args={[en / 2, en / 2, 0.05, 24, 1, false, 0, Math.PI]} />
+            <meshStandardMaterial color={renk.lacivertAcik} roughness={1} />
+          </mesh>
+        </group>
+      ))}
+    </group>
+  );
+}
+
+// Öne çıkarılan kenar (4. delikteki eğik sektirme kenarı): öbür kenardan yüksek, üstü krem şerit.
+function VurguKenar({ a, b, y }: { a: [number, number]; b: [number, number]; y: number }) {
+  const dx = b[0] - a[0];
+  const dz = b[1] - a[1];
+  const boy = Math.hypot(dx, dz);
+  const yuk = DENEME.vurguKenarYukseklik;
+  const en = DENEME.bordurEn + 0.02;
+  return (
+    <group position={[(a[0] + b[0]) / 2, y, (a[1] + b[1]) / 2]} rotation={[0, Math.atan2(-dz, dx), 0]}>
+      <mesh position={[0, yuk / 2, 0]} castShadow receiveShadow>
+        <boxGeometry args={[boy + en, yuk, en]} />
+        <meshStandardMaterial color={renk.kiremit} roughness={1} />
+      </mesh>
+      <mesh position={[0, yuk + 0.006, 0]}>
+        <boxGeometry args={[boy + en, 0.012, en]} />
+        <meshStandardMaterial color={renk.krem} roughness={1} />
+      </mesh>
+    </group>
   );
 }
 
@@ -345,6 +443,10 @@ export function OrnekSahne({ no, atis = false, parmakBildir, delikBildir }: Sahn
     >
       {SAHA_ESYALI.includes(delik.no) && <CevreCimi />}
       {delik.no === 1 && <OrtaYuvarlakCizgisi />}
+      {delik.no === 1 && <Huniler />}
+      {delik.no === 2 && <SulamaBasliklari />}
+      {delik.no === 5 && <BarajMankenleri />}
+      {delik.vurguKenar && <VurguKenar a={delik.vurguKenar[0]} b={delik.vurguKenar[1]} y={delik.bordurler[0].y} />}
       {delik.no === 4 && <KoseBayragi />}
       {delik.no === 5 && <PenaltiNoktasi />}
       {delik.no === 7 && <TribunKoltuklari />}

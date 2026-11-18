@@ -1,9 +1,8 @@
 import { m, seciliDil, type MetinAnahtari } from '../metinler';
 import { renk } from '../sahne/renkler';
 import { metre } from './metre';
-import { GOLF, IFAB, MODEL } from './olculer';
-import { WMF } from './olculer';
-import { ORNEK_DELIKLER, KALAN_DELIK_SAYISI, YAY_BOYU, ornekDelik, DUS_BOY, DUS_EN, MERDIVEN_X1, type Kaynak, type N2, type OrnekDelik } from './ornekDelikler';
+import { DENEME, GOLF, IFAB, MODEL, WMF } from './olculer';
+import { ORNEK_DELIKLER, KALAN_DELIK_SAYISI, YAY_BOYU, OVAL_BOY, ornekDelik, DUS_BOY, DUS_EN, MERDIVEN_X1, type Kaynak, type N2, type OrnekDelik } from './ornekDelikler';
 
 // MAKET (öneri): yeni dille çizilen deliklerin üstten şeması, ölçü çizgileriyle. Veri 3B maketle aynı (ornekDelikler.ts).
 
@@ -78,6 +77,12 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
       {delik.bordurler.map((b, i) => (
         <path key={i} d={yol(b.noktalar)} stroke={renk.kiremit} strokeWidth="2.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
       ))}
+      {delik.vurguKenar && (
+        <>
+          <path d={yol(delik.vurguKenar)} stroke={renk.kiremit} strokeWidth="6" fill="none" strokeLinecap="round" />
+          <path d={yol(delik.vurguKenar)} stroke={renk.krem} strokeWidth="1.6" fill="none" strokeLinecap="round" />
+        </>
+      )}
       {(delik.yollar ?? YOLLAR[delik.no] ?? []).map((y, i) => (
         <path key={i} d={yol(y)} stroke={renk.lacivert} strokeWidth="1.4" strokeDasharray={i ? '2 3' : '5 3'} fill="none" strokeLinejoin="round" />
       ))}
@@ -161,7 +166,7 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
     { no: 2, n: P(22.5, -55), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(22.5, -45), hiza: 'start', sekil: sekil(2) },
     { no: 3, n: P(-0.7, -32), boyut: [2.6, 13.4], yazi: P(-9, -32), hiza: 'start' },
     { no: 4, n: P(0.4, -57.6), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(-9, -60), hiza: 'start', sekil: sekil(4) },
-    { no: 5, n: P(13.75, -29), boyut: [IFAB.cezaSahasi - IFAB.penaltiNoktasi, WMF.betonEn], yazi: P(13.75, -17), hiza: 'start', sekil: sekil(5) },
+    { no: 5, n: P(13.75, -29), boyut: [OVAL_BOY, 2 * DENEME.ovalYariEn], yazi: P(13.75, -17), hiza: 'start', sekil: sekil(5) },
     { no: 7, n: P(48.7, -66), boyut: [6.25, 2.55], yazi: P(48.7, -54), hiza: 'start' },
     { no: 14, n: P(dusX + DUS_BOY / 2, dusZ + DUS_EN / 2), boyut: [DUS_BOY, DUS_EN], yazi: P(dusX + DUS_BOY / 2, -3), hiza: 'end' },
   ];

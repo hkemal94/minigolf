@@ -34,12 +34,13 @@
   maketteki uzaklıkta ve iki parmakla yakınlaştırılıp çevrilebilir; delik çapı 10,8 cm; **bu dil 18 deliğe
   yayılır**, kalan 15 delik adım adım ayrı PR'larda (aşağıda).
 - 18 Kasım 2026 (öneri; `ajans/delikler-adim-1`): adım 1. Sahadaki dört delik yeni dille çizildi: 1 (orta
-  yuvarlağın çizgisinde kavisli pist), 2 (taç çizgisine inen, ucu açık pist), 4 (köşe bayrağının çevresinden
-  dönen L), 5 (penaltı noktası; kavisli arka kenar, nefes). Zemin sahanın çimi, kenar kiremit, top ve delik
-  gerçek ölçüde. Maketler `?maket=delik&no=1|2|4|5`, `?maket=atis&no=…`, şemalar `?maket=sema&no=…`
-  (`docs/plan/ornek-delik-*.png`); yerleşim şeması ve delik planı yedi deliği gösterir, kalan 11 "yeniden
-  çizilecek". Köşe yayı, köşe bayrağı ve penaltı noktası modelde yok, kodla çizildi. Oynanış yok; gerçek
-  telefonda denenmedi.
+  yuvarlağın çizgisinde kavisli pist, çizgide üç antrenman hunisi), 2 (taç çizgisine inen, ucu açık pist, ortada
+  iki sulama başlığı), 4 (köşe bayrağının çevresinden dönen L), 5 (penaltı noktası; baraj mankenleri ve oval
+  kenar, nefes). Zemin sahanın çimi, kenar kiremit, top ve delik gerçek ölçüde. Maketler
+  `?maket=delik&no=1|2|4|5`, `?maket=atis&no=…`, şemalar `?maket=sema&no=…` (`docs/plan/ornek-delik-*.png`);
+  yerleşim şeması ve delik planı yedi deliği gösterir, kalan 11 "yeniden çizilecek". Köşe yayı, köşe bayrağı ve
+  penaltı noktası modelde yok, kodla çizildi. Huniler, sulama başlıkları ve baraj mankenleri künyede ve modelde
+  yok: DENEME, Kemal onaylamadı (Kems'in ön elemesinden sonra eklendi). Oynanış yok; gerçek telefonda denenmedi.
 
 ## Sıradaki
 

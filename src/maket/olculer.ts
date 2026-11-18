@@ -59,7 +59,7 @@ export const MODEL = {
   kaleSahasiCizgisiZ: -38.09, // kale sahasının yan çizgisi (yakın direkten 5,5 m)
   // Saha çizgileri: en 0,14 (IFAB en çok 0,12). Dış çizgiler sahanın içinde kalır (taç çizgisi z -58 … -57,86).
   cizgiEn: 0.14,
-  ortaYuvarlakCizgiEn: 0.28, // orta yuvarlak modelde 0,28 m'lik kesik parçalarla çizilmiş (öbür çizgilerden kalın)
+  ortaYuvarlakCizgiEn: 0.34, // orta yuvarlak modelde 0,28 m'lik kesik, eğik parçalarla çizilmiş; köşeleriyle 0,34 m yer tutar
   // Sahanın çimi çevredeki çimden 4 cm yüksek (şeritli çimin üstü 0,04; çizgilerin üstü 0,05; çevre çim 0).
   cimUstu: 0.04,
   cizgiUstu: 0.05,
@@ -101,13 +101,23 @@ export const DENEME = {
   // Adım 1 (delik 1, 2, 4, 5; saha, çim). Hepsi kaynaksız, Kemal onaylamadı.
   baslangicPayi: 0.45, // başlangıç işaretinin arkasında kalan pist
   delikPayi: 0.3, // deliğin arkasında kalan pist
-  ortaYuvarlakYayAcisi: 60, // 1. delik: pistin orta yuvarlak çizgisinde kapladığı yay (derece); boyu 9,58 m
+  ortaYuvarlakYayAcisi: 45, // 1. delik: pistin orta yuvarlak çizgisinde kapladığı yay (derece); boyu 7,19 m
   tacPayi: 1, // 2. delik: deliğin taç çizgisine uzaklığı
   kosePah: 0.8, // 4. delik: dış köşedeki 45° sektirme kenarının iki yana boyu
   koseDirekYaricap: 0.025, // köşe bayrağının direği (IFAB yalnız en az boyu verir)
   koseBayrakEn: 0.34,
   koseBayrakBoy: 0.26,
   penaltiNoktasiCap: 0.22, // IFAB noktanın çapını vermez
+  // Yerin eşyası olarak eklenenler: modelde ve künyede yok; DENEME, Kemal onaylamadı. Yazı, logo yok.
+  huniTaban: 0.2, // antrenman hunisi (1. delik)
+  huniBoy: 0.3,
+  sulamaYaricap: 0.06, // yerden çıkmış sulama başlığı (2. delik)
+  sulamaBoy: 0.1,
+  mankenEn: 0.4, // baraj mankeni (5. delik); boyu makette görüş kapanmasın diye kısa
+  mankenAralik: 0.45,
+  mankenBoy: 0.8,
+  ovalYariEn: 1.25, // 5. delik: oval pistin yarı eni (iki pist eni)
+  vurguKenarYukseklik: 0.16, // 4. delik: eğik sektirme kenarı öbür kenarın iki katı yüksek, üstü krem
   // Atış işaretleri (yerde): güç halkası ve nişan çizgisi
   gucHalkasiIc: 0.085,
   gucHalkasiDis: 0.11,

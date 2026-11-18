@@ -25,12 +25,14 @@ export type OrnekDelik = {
   // Şemada: çerçeve, zemin çizgileri, eşyalar
   cerceve: Dikdortgen;
   cizgiler: { a: N2; b: N2; tur: 'saha' | 'basamak' | 'merdiven' | 'ag' }[];
-  kutular: (Dikdortgen & { tur: 'direk' | 'koltuk' | 'koltukAcik' | 'bolme' | 'duvar' })[];
+  kutular: (Dikdortgen & { tur: 'direk' | 'koltuk' | 'koltukAcik' | 'bolme' | 'duvar' | 'huni' | 'sulama' | 'manken' })[];
   birikinti?: { n: N2; r: number };
   // Yere boyanmış yuvarlak işaretler (penaltı noktası)
   noktalar?: { n: N2; r: number }[];
   // Önerilen yol (şemada kesik lacivert çizgi; oynanışta çizilmez). İkincisi varsa: başka bir örnek yol.
   yollar?: N2[][];
+  // Öne çıkarılan kenar parçası (4. delikteki eğik sektirme kenarı): daha yüksek, üstü krem.
+  vurguKenar?: [N2, N2];
   olculer: Olcu[];
   etiketler: Etiket[];
   // Atış maketi: topun yeri, nişan yönü (birim vektör), nişan boyu
@@ -223,41 +225,48 @@ const R = IFAB.ortaYuvarlakYaricap; // 9,15 m
 const oy = (r: number, a: number): N2 => [ORTA[0] - r * Math.sin(a), ORTA[1] - r * Math.cos(a)];
 const yay = (r: number, a0: number, a1: number, adim = 24): N2[] => Array.from({ length: adim + 1 }, (_, i) => oy(r, a0 + ((a1 - a0) * i) / adim));
 const yayAci = (DENEME.ortaYuvarlakYayAcisi * Math.PI) / 180;
-export const YAY_BOYU = R * yayAci; // 9,58 m: keçe norm pistin aralığında (9–18 m)
+export const YAY_BOYU = R * yayAci; // 7,19 m (45°'lik yay); açı ve boy DENEME
 const y0 = -DENEME.baslangicPayi / R;
 const y1 = yayAci + DENEME.delikPayi / R;
 const ortaBas = oy(R, 0);
 const ortaCukur = oy(R, yayAci);
-// Önerilen yol: top dış kenara bir kez yaslanır (yarı yolda, 30°), kavisle deliğe döner.
-const ortaSekme = oy(R + h - TOP_YARICAP, yayAci / 2);
+// Önerilen yol: top hunilerin dışından dış kenara gider (yayın 12,5°'sinde değer), sekip çizgiye geri
+// döner; çizgiyi ikinci kez kestiği yer deliktir (45°). Sekme noktası yansıma hesabıyla bulundu.
+const ortaSekme: N2 = [42.8865, -38.522];
+
+// Antrenman hunileri (modelde ve künyede yok; DENEME, Kemal onaylamadı): çizginin üstünde, yayın başında üç huni.
+// Çizgiyi izleyen top hunilere çarpar; önerilen yol hunilerin dışından, dış kenara yaslanarak dolanır.
+export const HUNI_ACILARI = [7, 12, 17].map((d) => (d * Math.PI) / 180); // DENEME
+export const HUNILER: N2[] = HUNI_ACILARI.map((a) => oy(R, a));
+const hy = DENEME.huniTaban / 2;
 
 const ortaYuvarlak: OrnekDelik = {
   no: 1,
-  zorluk: 'maket.zorluk.enKolay',
+  zorluk: 'maket.zorluk.kolay',
   eksen: '-x',
   bordurler: [{ y: yCim, noktalar: [...yay(R + h, y0, y1), ...yay(R - h, y1, y0), oy(R + h, y0)] }],
   baslangic: [ortaBas[0], yCizgi, ortaBas[1]],
   cukur: [ortaCukur[0], yCizgi - 0.003, ortaCukur[1]],
-  cerceve: { x0: 35.5, x1: 46.5, z0: -39.7, z1: -32.1 },
+  cerceve: { x0: 37.0, x1: 46.5, z0: -39.9, z1: -33.9 },
   cizgiler: [
-    { a: [ORTA[0], -39.7], b: [ORTA[0], -32.1], tur: 'saha' }, // orta çizgi
-    ...parcala(yay(R, -0.17, 1.2, 40)), // orta yuvarlak
+    { a: [ORTA[0], -39.9], b: [ORTA[0], -33.9], tur: 'saha' }, // orta çizgi
+    ...parcala(yay(R, -0.17, 0.99, 40)), // orta yuvarlak
   ],
-  kutular: [],
-  noktalar: [],
+  kutular: HUNILER.map((n) => ({ tur: 'huni' as const, x0: n[0] - hy, x1: n[0] + hy, z0: n[1] - hy, z1: n[1] + hy })),
   yollar: [[ortaBas, ortaSekme, ortaCukur]],
   olculer: [
     { a: oy(R - h, y1), b: oy(R + h, y1), kaydir: -0.4, deger: WMF.betonEn, kaynak: 'wmf' },
   ],
   etiketler: [
-    { n: [42.0, -34.3], metin: 'maket.sema.yayBoyu', deger: YAY_BOYU, metre: true, hiza: 'orta' },
-    { n: [42.5, -34.3], metin: 'maket.sema.yaricap', deger: IFAB.ortaYuvarlakYaricap, metre: true, hiza: 'orta' },
-    { n: [ortaSekme[0] + 0.1, ortaSekme[1] + 1.75], metin: 'maket.sema.disKenar', hiza: 'sag' },
-    { n: [ORTA[0] - 0.2, -34.3], metin: 'maket.sema.ortaCizgi', hiza: 'orta' },
+    { n: [43.75, -35.6], metin: 'maket.sema.yayBoyu', deger: YAY_BOYU, metre: true, hiza: 'orta' },
+    { n: [44.15, -35.6], metin: 'maket.sema.yaricap', deger: IFAB.ortaYuvarlakYaricap, metre: true, hiza: 'orta' },
+    { n: [43.2, -37.15], metin: 'maket.sema.huni', hiza: 'sag' },
+    { n: [ortaSekme[0] - 1.1, -39.1], metin: 'maket.sema.disKenar', hiza: 'orta' },
+    { n: [ORTA[0] - 0.2, -35.0], metin: 'maket.sema.ortaCizgi', hiza: 'orta' },
     { n: [46.2, -37.75], metin: 'maket.sema.ortaYuvarlak', hiza: 'sag' },
   ],
-  // Nişan: dış kenara, yarı yola (yaklaşık 8° dışa)
-  atis: { top: [ortaBas[0], yCizgi, ortaBas[1]], yon: [-0.9903, 0.1387], boy: 1.3 },
+  // Nişan: hunilerin dışından dış kenara (yaklaşık 10° dışa)
+  atis: { top: [ortaBas[0], yCizgi, ortaBas[1]], yon: [-0.9849, -0.1733], boy: 1.3 },
 };
 
 // ---------- 2 · Kenar çizgisi: pist sahanın içinden taç çizgisine iner; ucu açık ----------
@@ -265,6 +274,15 @@ const X2 = MODEL.sahaBoy / 4; // A yarısının ortası (22,5); yeri DENEME
 const zTac = MODEL.tacCizgisiZ;
 const tacBas = zTac + WMF.minyaturBoy; // başlangıç taç çizgisinden 6,25 m içeride (minyatür norm pist boyu)
 const tacCukurZ = zTac + DENEME.tacPayi;
+
+// Sulama başlıkları (modelde ve künyede yok; DENEME, Kemal onaylamadı): pistin ortasında, yerden çıkmış iki başlık.
+// Düz giden top başlığa çarpar; önerilen yol yan kenardan bir kez sekip ikisinin yanından dolanır.
+export const SULAMA: N2[] = [
+  [X2, tacBas - 2.0],
+  [X2, tacBas - 4.0],
+]; // DENEME
+const sy = DENEME.sulamaYaricap;
+const tacSekme: N2 = [X2 - h + TOP_YARICAP, (tacBas + tacCukurZ) / 2];
 
 const kenarCizgisi: OrnekDelik = {
   no: 2,
@@ -286,8 +304,8 @@ const kenarCizgisi: OrnekDelik = {
   cukur: [X2, yCim, tacCukurZ],
   cerceve: { x0: X2 - 2.5, x1: X2 + 2.5, z0: zTac - 1.6, z1: tacBas + 1.5 },
   cizgiler: [{ a: [X2 - 2.5, zTac + MODEL.cizgiEn / 2], b: [X2 + 2.5, zTac + MODEL.cizgiEn / 2], tur: 'saha' }],
-  kutular: [],
-  yollar: [[[X2, tacBas], [X2, tacCukurZ]]],
+  kutular: SULAMA.map((n) => ({ tur: 'sulama' as const, x0: n[0] - sy, x1: n[0] + sy, z0: n[1] - sy, z1: n[1] + sy })),
+  yollar: [[[X2, tacBas], tacSekme, [X2, tacCukurZ]]],
   olculer: [
     { a: [X2 + h, tacBas], b: [X2 + h, zTac], kaydir: 0.45, deger: WMF.minyaturBoy, kaynak: 'wmf' },
     { a: [X2 - h, tacBas + DENEME.baslangicPayi], b: [X2 + h, tacBas + DENEME.baslangicPayi], kaydir: 0.4, deger: WMF.betonEn, kaynak: 'wmf' },
@@ -296,7 +314,10 @@ const kenarCizgisi: OrnekDelik = {
   etiketler: [
     { n: [X2 + 0.85, zTac - 0.2], metin: 'maket.sema.tacCizgisi', hiza: 'sol' },
     { n: [X2, zTac - 0.75], metin: 'maket.sema.acikUc', hiza: 'orta' },
-    { n: [X2 - 1.6, tacBas - 1.6], metin: 'maket.sema.sahaIci', hiza: 'orta' },
+    { n: [X2 - 0.8, SULAMA[0][1] + 0.05], metin: 'maket.sema.sulama', hiza: 'sag' },
+    { n: [X2 - 0.8, SULAMA[1][1] + 0.05], metin: 'maket.sema.sulama', hiza: 'sag' },
+    { n: [X2 - 0.8, tacSekme[1] + 0.05], metin: 'maket.sema.sektirmeYan', hiza: 'sag' },
+    { n: [X2 + 1.7, tacBas + 1.0], metin: 'maket.sema.sahaIci', hiza: 'orta' },
     { n: [X2 - 1.6, zTac - 1.2], metin: 'maket.sema.sahaDisi', hiza: 'orta' },
   ],
   // Atış anı: ikinci vuruş, top deliğe 0,86 m; kısa ve az güçle (çizgi hemen arkada)
@@ -342,6 +363,10 @@ const koseDeligi: OrnekDelik = {
     ...parcala(Array.from({ length: 13 }, (_, i): N2 => [KOSE[0] + IFAB.koseYayiYaricap * Math.cos((i * Math.PI) / 24), KOSE[1] + IFAB.koseYayiYaricap * Math.sin((i * Math.PI) / 24)])),
   ],
   kutular: [{ tur: 'direk', x0: KOSE[0] - 0.06, x1: KOSE[0] + 0.06, z0: KOSE[1] - 0.06, z1: KOSE[1] + 0.06 }],
+  vurguKenar: [
+    [KOSE[0] - h + pah, KOSE[1] - h],
+    [KOSE[0] - h, KOSE[1] - h + pah],
+  ],
   yollar: [[[koseBasX, KOSE[1]], koseSekme, [KOSE[0], koseCukurZ]]],
   olculer: [
     { a: [koseBasX, KOSE[1] - h], b: [KOSE[0], KOSE[1] - h], kaydir: 0.5, deger: KOL, kaynak: 'deneme' },
@@ -360,58 +385,51 @@ const koseDeligi: OrnekDelik = {
   atis: { top: [1.0, yCim, KOSE[1] - 0.17], yon: [-0.999, -0.0449], boy: 1.1 },
 };
 
-// ---------- 5 · Penaltı noktası (nefes): ceza sahası çizgisinden noktaya; delik noktanın kendisi ----------
+// ---------- 5 · Penaltı noktası (nefes): baraj mankenlerinin yanından, kavisli kenardan noktaya ----------
 const zKale = -MODEL.sahaEn / 2; // iki direğin ortası (z = -29)
 const penBas: N2 = [IFAB.cezaSahasi, zKale];
 export const PENALTI: N2 = [IFAB.penaltiNoktasi, zKale];
-// Arka kenar elips: odakları başlangıç işareti ile delik. Başlangıçtan çıkıp bu kenara değen her top
-// deliğe döner (elipsin odak özelliği). Genişliği delik hizasında pistin eni olacak biçimde seçildi.
-const eC = (penBas[0] - PENALTI[0]) / 2; // odak yarı aralığı 2,75
-const eA = (h + Math.sqrt(h * h + 4 * eC * eC)) / 2; // büyük yarı eksen
-const eB = Math.sqrt(eA * eA - eC * eC);
-const eT = Math.acos(eC / eA);
-const elips = (t: number): N2 => [(penBas[0] + PENALTI[0]) / 2 - eA * Math.cos(t), zKale + eB * Math.sin(t)];
-export const KAVIS_DERINLIK = eA - eC; // deliğin arkasında kalan pay (0,33 m)
-const penArka = penBas[0] + DENEME.baslangicPayi;
+// Pist oval (elips): odakları başlangıç işareti (ceza sahası çizgisinde) ile delik (penaltı noktası).
+// Başlangıçtan çıkıp kenara bir kez değen her top deliğe döner (elipsin odak özelliği).
+const eC = (penBas[0] - PENALTI[0]) / 2; // odak yarı aralığı 2,75 (IFAB: 16,5 − 11 = 5,5)
+const eB = DENEME.ovalYariEn; // yarı en 1,25: iki pist eni (2,5 m)
+const eA = Math.hypot(eC, eB); // büyük yarı eksen 3,02
+const penOrta = (penBas[0] + PENALTI[0]) / 2;
+const elips = (t: number): N2 => [penOrta - eA * Math.cos(t), zKale + eB * Math.sin(t)];
+export const OVAL_BOY = 2 * eA; // 6,04 m
+// Baraj mankenleri (antrenman eşyası; modelde ve künyede yok; DENEME, Kemal onaylamadı): başlangıçla
+// deliğin tam ortasında, yan yana üç manken. Düz vuruşu keser; top yanından geçip kenardan döner.
+export const MANKENLER: N2[] = [-1, 0, 1].map((i): N2 => [penOrta, zKale + i * DENEME.mankenAralik]);
+const my = DENEME.mankenEn / 2;
+const penSekme = 1.2693; // elips parametresi: başlangıçtan barajın 0,9 m yanından geçen yolun kenara değdiği yer
 
 const penalti: OrnekDelik = {
   no: 5,
   zorluk: 'maket.zorluk.kolay',
   eksen: '-x',
-  bordurler: [
-    {
-      y: yCim,
-      noktalar: [
-        [penArka, zKale + h],
-        [penArka, zKale - h],
-        ...Array.from({ length: 17 }, (_, i) => elips(-eT + (2 * eT * i) / 16)),
-        [penArka, zKale + h],
-      ],
-    },
-  ],
+  bordurler: [{ y: yCim, noktalar: Array.from({ length: 97 }, (_, i) => elips((2 * Math.PI * i) / 96)) }],
   baslangic: [penBas[0], yCizgi, penBas[1]],
   cukur: [PENALTI[0], yCim + 0.005, PENALTI[1]],
-  cerceve: { x0: 9.5, x1: 18.1, z0: zKale - 2.25, z1: zKale + 2.25 },
-  cizgiler: [{ a: [IFAB.cezaSahasi, zKale - 2.25], b: [IFAB.cezaSahasi, zKale + 2.25], tur: 'saha' }],
-  kutular: [],
+  cerceve: { x0: 9.5, x1: 17.9, z0: zKale - 2.5, z1: zKale + 2.5 },
+  cizgiler: [{ a: [IFAB.cezaSahasi, zKale - 2.5], b: [IFAB.cezaSahasi, zKale + 2.5], tur: 'saha' }],
+  kutular: MANKENLER.map((n) => ({ tur: 'manken' as const, x0: n[0] - 0.05, x1: n[0] + 0.05, z0: n[1] - my, z1: n[1] + my })),
   noktalar: [{ n: PENALTI, r: DENEME.penaltiNoktasiCap / 2 }],
   yollar: [
-    [penBas, PENALTI],
-    [penBas, elips(eT * 0.62), PENALTI],
+    [penBas, elips(penSekme), PENALTI],
+    [penBas, elips(-penSekme), PENALTI],
   ],
   olculer: [
-    { a: [penBas[0], zKale + h], b: [PENALTI[0], zKale + h], kaydir: -0.5, deger: IFAB.cezaSahasi - IFAB.penaltiNoktasi, kaynak: 'ifab' },
-    { a: [penArka, zKale - h], b: [penArka, zKale + h], kaydir: -0.4, deger: WMF.betonEn, kaynak: 'wmf' },
-    { a: [PENALTI[0], zKale - h], b: [PENALTI[0] - KAVIS_DERINLIK, zKale - h], kaydir: 0.45, deger: KAVIS_DERINLIK, kaynak: 'deneme' },
+    { a: [penBas[0], zKale + eB], b: [PENALTI[0], zKale + eB], kaydir: -0.35, deger: IFAB.cezaSahasi - IFAB.penaltiNoktasi, kaynak: 'ifab' },
+    { a: [penOrta + eA, zKale - eB], b: [penOrta + eA, zKale + eB], kaydir: -0.35, deger: 2 * eB, kaynak: 'deneme' },
   ],
   etiketler: [
-    { n: [PENALTI[0] - 0.85, zKale], metin: 'maket.sema.penaltiNoktasi', hiza: 'orta' },
-    { n: [PENALTI[0] - 0.3, zKale + 0.75], metin: 'maket.sema.kavis', hiza: 'sag' },
-    { n: [IFAB.cezaSahasi + 0.25, zKale - 1.5], metin: 'maket.sema.cezaCizgisi', hiza: 'orta' },
-    { n: [IFAB.cezaSahasi - 2.2, zKale - 1.55], metin: 'maket.sema.cezaSahasi', hiza: 'orta' },
+    { n: [PENALTI[0] - 0.42, zKale], metin: 'maket.sema.penaltiNoktasi', hiza: 'orta' },
+    { n: [PENALTI[0] - 0.78, zKale], metin: 'maket.sema.kavis', hiza: 'orta' },
+    { n: [penOrta - 0.3, zKale], metin: 'maket.sema.baraj', hiza: 'orta' },
+    { n: [IFAB.cezaSahasi + 0.3, zKale - 1.9], metin: 'maket.sema.cezaCizgisi', hiza: 'orta' },
   ],
-  // Atış anı: ikinci vuruş, top noktaya 1,3 m; doğrudan deliğe
-  atis: { top: [12.28, yCim, zKale + 0.25], yon: [-0.9815, -0.1917], boy: 1.0 },
+  // Nişan: barajın yanından, kavisli kenara (yaklaşık 18° yana)
+  atis: { top: [penBas[0], yCizgi, penBas[1]], yon: [-0.9503, 0.311], boy: 1.4 },
 };
 
 // Tur sırasıyla. Yeni dille çizilen delikler: 1, 2, 3, 4, 5, 7, 14; kalan 11 delik eski dilde.

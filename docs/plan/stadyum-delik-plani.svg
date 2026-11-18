@@ -76,10 +76,10 @@
 <!-- 18 Kasım 2026 (Kemal): örnek delikler 3, 7, 14 yeni dille çizildi; yerleri ve gerçek ölçüleri -->
 <!-- 18 Kasım 2026, adım 1: 1, 2, 4, 5 (saha, çim) aynı dille -->
 <g font-size="11" font-weight="600" fill="#0E1C4F">
-<circle cx="585" cy="315" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="606" y="294" width="180" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="696" y="308" text-anchor="middle">1 · gerçek ölçü</text><text x="696" y="321" text-anchor="middle">9,58 m kavis · pist eni 1,25 m</text>
-<circle cx="385" cy="208" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="287" y="150" width="196" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="385" y="164" text-anchor="middle">2 · gerçek ölçü</text><text x="385" y="177" text-anchor="middle">6,25 m · ucu taç çizgisinde açık</text>
+<circle cx="585" cy="315" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="606" y="294" width="180" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="696" y="308" text-anchor="middle">1 · gerçek ölçü</text><text x="696" y="321" text-anchor="middle">7,19 m kavis · çizgide üç huni</text>
+<circle cx="385" cy="208" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="287" y="150" width="196" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="385" y="164" text-anchor="middle">2 · gerçek ölçü</text><text x="385" y="177" text-anchor="middle">6,25 m · açık uç · iki sulama başlığı</text>
 <circle cx="185" cy="205" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="46" y="222" width="120" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="106" y="236" text-anchor="middle">4 · gerçek ölçü</text><text x="106" y="249" text-anchor="middle">L · yol 6,25 m</text>
-<circle cx="272" cy="330" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="296" y="314" width="150" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="371" y="328" text-anchor="middle">5 · gerçek ölçü</text><text x="371" y="341" text-anchor="middle">5,5 m · pist eni 1,25 m</text>
+<circle cx="272" cy="330" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="296" y="314" width="150" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="371" y="328" text-anchor="middle">5 · gerçek ölçü</text><text x="371" y="341" text-anchor="middle">oval 6,04 × 2,5 m · baraj</text>
 <circle cx="205" cy="330" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="118" y="396" width="174" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="205" y="410" text-anchor="middle">3 · örnek · gerçek ölçü</text><text x="205" y="423" text-anchor="middle">13,4 m uzun · pist eni 1,25 m</text>
 <circle cx="640" cy="148" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="664" y="106" width="150" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="739" y="120" text-anchor="middle">7 · örnek · gerçek ölçü</text><text x="739" y="133" text-anchor="middle">6,25 m uzun · 3 sıra</text>
 <circle cx="540" cy="565" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="465" y="588" width="150" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="540" y="602" text-anchor="middle">14 · örnek · gerçek ölçü</text><text x="540" y="615" text-anchor="middle">6,25 × 2,7 m</text>
@@ -101,23 +101,25 @@
 <g transform="translate(20,710)">
 <rect width="185" height="250" rx="10" class="kart"/>
 <circle cx="20" cy="22" r="12" class="no"/><text x="20" y="26.5" class="not">1</text>
-<text x="38" y="21" class="kb">Orta yuvarlak</text><text x="38" y="36" class="ks">Pist: çizgi üstünde kavis</text>
+<text x="38" y="21" class="kb">Orta yuvarlak</text><text x="38" y="36" class="ks">Pist: kavis · çizgide huniler</text>
 <path d="M124 188Q124 104 60 82" class="dis"/><path d="M124 188Q124 104 60 82" class="ic"/>
 <path d="M124 200Q124 104 48 78" class="ince" stroke-dasharray="3 3"/><line x1="40" y1="188" x2="150" y2="188" class="ince" stroke-dasharray="3 3"/>
-<path d="M124 184L124 124L64 84" class="nisan"/>
+<rect x="119.6" y="161.2" width="6" height="6" class="engel"/><rect x="116.3" y="144.2" width="6" height="6" class="engel"/><rect x="111.3" y="128.9" width="6" height="6" class="engel"/>
+<path d="M124 184L136 150L64 84" class="nisan"/>
 <use xlink:href="#bas" x="124" y="188"/><use xlink:href="#delik" x="62" y="83"/>
-<text x="12" y="220" class="ks">Öğretir: çek-bırak, nişan</text><text x="12" y="236" class="ks">Zorluk: en kolay · modelde var</text>
+<text x="12" y="220" class="ks">Öğretir: çek-bırak, nişan</text><text x="12" y="236" class="ks">Zorluk: kolay · huniler DENEME</text>
 </g>
 <!-- 2 -->
 <g transform="translate(215,710)">
 <rect width="185" height="250" rx="10" class="kart"/>
 <circle cx="20" cy="22" r="12" class="no"/><text x="20" y="26.5" class="not">2</text>
-<text x="38" y="21" class="kb">Kenar çizgisi</text><text x="38" y="36" class="ks">Pist: düz · ucu açık (taç)</text>
+<text x="38" y="21" class="kb">Kenar çizgisi</text><text x="38" y="36" class="ks">Pist: ucu açık (taç) · iki başlık</text>
 <rect x="70" y="72" width="44" height="128" fill="#F3EFE8"/><path d="M70 72L70 200L114 200L114 72" fill="none" stroke="#0E1C4F" stroke-width="2.5" stroke-linejoin="round"/>
 <line x1="36" y1="72" x2="150" y2="72" class="ince"/><text x="120" y="66" class="ks">taç çizgisi</text>
-<line x1="92" y1="186" x2="92" y2="96" class="nisan"/>
+<rect x="89" y="151" width="6" height="6" class="engel"/><rect x="89" y="118" width="6" height="6" class="engel"/>
+<path d="M92 186L72 139L92 96" class="nisan"/>
 <use xlink:href="#bas" x="92" y="192"/><use xlink:href="#delik" x="92" y="92"/>
-<text x="12" y="220" class="ks">Öğretir: güç ayarı</text><text x="12" y="236" class="ks">Zorluk: kolay · modelde var</text>
+<text x="12" y="220" class="ks">Öğretir: güç ayarı</text><text x="12" y="236" class="ks">Zorluk: kolay · başlıklar DENEME</text>
 </g>
 <!-- 3 -->
 <g transform="translate(410,710)">
@@ -146,12 +148,13 @@
 <g transform="translate(800,710)">
 <rect width="185" height="250" rx="10" class="kart"/>
 <circle cx="20" cy="22" r="12" class="no"/><text x="20" y="26.5" class="not">5</text>
-<text x="38" y="21" class="kb">Penaltı noktası</text><text x="38" y="36" class="ks">Pist: kısa · kavisli uç · nefes</text>
-<path d="M66 198L66 118Q68 92 92 92Q116 92 118 118L118 198Z" class="pist"/>
-<line x1="36" y1="180" x2="150" y2="180" class="ince"/><circle cx="92" cy="116" r="9" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/>
-<line x1="92" y1="174" x2="92" y2="120" class="nisan"/>
-<use xlink:href="#bas" x="92" y="180"/><use xlink:href="#delik" x="92" y="116"/>
-<text x="12" y="220" class="ks">Öğretir: yeni şey yok, nefes</text><text x="12" y="236" class="ks">Zorluk: kolay · nokta eklenecek</text>
+<text x="38" y="21" class="kb">Penaltı noktası</text><text x="38" y="36" class="ks">Pist: oval · baraj · nefes</text>
+<ellipse cx="92" cy="144" rx="30" ry="56" class="pist"/>
+<line x1="36" y1="190" x2="150" y2="190" class="ince"/><circle cx="92" cy="98" r="8" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/>
+<rect x="75" y="142" width="10" height="5" class="engel"/><rect x="87" y="142" width="10" height="5" class="engel"/><rect x="99" y="142" width="10" height="5" class="engel"/>
+<path d="M92 186L119 138L92 102" class="nisan"/>
+<use xlink:href="#bas" x="92" y="190"/><use xlink:href="#delik" x="92" y="98"/>
+<text x="12" y="220" class="ks">Öğretir: yeni şey yok, nefes</text><text x="12" y="236" class="ks">Zorluk: kolay · baraj DENEME</text>
 </g>
 <!-- 6 -->
 <g transform="translate(995,710)">
