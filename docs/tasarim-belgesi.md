@@ -36,9 +36,15 @@ modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik
 
 En yeni üstte.
 
+- **18 Kasım (Kemal, örneklerin ikinci hâline bakınca; kesin):**
+  1. Deliğin yeri: kenarda ok ve uzaklık, köşede küçük plan (maketteki gibi).
+  2. Kamera: maketteki uzaklık (delik ekranında yaklaşık 1,8 m, atışta yaklaşık 1 m yer görünür); ayrıca
+     oyuncu **iki parmakla yakınlaştırıp uzaklaştırabilir ve açıyı çevirebilir**.
+  3. **Delik çapı 10,8 cm.**
+  4. **Bu dil 18 deliğe yayılır.** Kalan 15 delik aynı dille adım adım, ayrı PR'larda gelir (4.9).
 - **18 Kasım (Kemal, örnek deliklere bakınca; kesin):**
   1. Dil 18 deliğe **henüz yayılmaz** ("duşlarda falan top ve delik yine çok büyük"). Yalnız üç örnek
-     delik düzeltilir; Kemal yeniden bakar.
+     delik düzeltilir; Kemal yeniden bakar. (Aynı gün ikinci bakışta yayılma kararı çıktı; üstteki madde.)
   2. **Top ve delik gerçek ölçüde**; 4 kat büyütme kalktı. **Kamera topu yakından izler**; delik tek
      ekrana sığmazsa kamera kayar ya da yaklaşır, deliğin yeri işaretle gösterilir (4.8). Bu, 15 Kasım'daki
      "her delik tek ekranda" kararının yerine geçer (2. bölüm).
@@ -112,7 +118,8 @@ karakteri, adı, yüzü yok.
 **Karar (Kemal, 15 Kasım):**
 - Kamera eğik yukarıdan 3B (izometrik); ~~her delik tek ekranda~~. **Karar (Kemal, 18 Kasım):** top ve
   delik gerçek ölçüde olduğu için kamera topu yakından izler; delik tek ekrana sığmazsa kamera kayar ya
-  da yaklaşır, deliğin yeri işaretle gösterilir (4.8).
+  da yaklaşır, deliğin yeri işaretle gösterilir (4.8). Oyuncu iki parmakla yakınlaştırıp uzaklaştırabilir
+  ve açıyı çevirebilir.
 - Ekran **dikey**, oyun **tek elle** oynanır.
 - Yardımcılar: **nişan çizgisi**, **geri al vuruş**, **kaldığı yerden devam**.
 - Delik başına vuruş sınırı: sonra; web denemesinden sonra Kemal karar verir.
@@ -124,7 +131,8 @@ karakteri, adı, yüzü yok.
 - **Geri al:** son vuruştan önceki yere döner. Vuruş sayısından düşüp düşmeyeceği: DENEME; **Karar (Kemal, 16 Kasım)**,
   karar denemeden sonra.
 - **Kaldığı yerden devam:** oyun kapanınca tur ve delik hatırlanır; açılınca aynı delikte, aynı vuruş sayısıyla.
-- **Kamera:** sabit açı; iki parmakla döndürme ve yakınlaştırma (tek elle oynamak gerekmez, isteğe bağlı).
+- **Kamera:** **Karar (Kemal, 18 Kasım):** topu yakından izler; iki parmakla yakınlaştırma, uzaklaştırma
+  ve açıyı çevirme var (tek elle oynamak için gerekmez, isteğe bağlı). Sınırları (en yakın, en uzak) DENEME.
 - **Top dışarı kaçarsa** (pistten, köprüden, suya): vuruştan önceki yere döner, o vuruş sayılır, ek ceza yok.
   Durum: açık, DENEME (Kemal, 16 Kasım).
 - **Delik sonu:** kısa sonuç (vuruş sayısı), "sonraki delik" ve "yeniden".
@@ -271,7 +279,7 @@ Kullanılmayan parça: B ucundaki ceza sahası ve kale (yedek; Kemal isterse bir
 ### 4.5 Delikler
 
 > **18 Kasım (Kemal):** bu bölümdeki delikler eski dildedir (jenerik pist, ölçeksiz). 3, 7 ve 14'ün
-> yeni hâli 4.8'de; öbür 15 delik Kemal örnekleri onaylayınca aynı dille **yeniden çizilecek**.
+> yeni hâli 4.8'de; öbür 15 delik aynı dille **yeniden çizilecek** (karar; adımlar 4.9'da).
 
 Her delik aynı sırayla: yer (modelin hangi parçası) · standın yerleşimi · pist biçimi · engeller ·
 zorluk · öğretir · deneme notu. Hepsi **Öneri**.
@@ -471,7 +479,8 @@ zorluk · öğretir · deneme notu. Hepsi **Öneri**.
 ### 4.8 Örnek delikler: yeni dil (18 Kasım)
 
 **Karar (Kemal, 18 Kasım):** gerçek ölçü, mekânın kendi zemini, yere özgü ve daha zorlu delik; önce
-örnekler. Aşağıdaki üç delik **Öneri**dir; Kemal onaylayınca öbür 15 delik aynı dille çizilir.
+örnekler. Kemal üç örneği gördü ve **bu dilin 18 deliğe yayılmasına karar verdi**; kalan 15 delik 4.9'daki
+adımlarla gelir. Üç deliğin içindeki DENEME değerleri denemede yeniden bakılır.
 Hareketli engel yok (en sona).
 
 **Ölçüler ve kaynakları** (kodda `src/maket/olculer.ts`; birim metre):
@@ -488,7 +497,7 @@ Hareketli engel yok (en sona).
 | Başlangıç işareti (beton pist): daire çapı | 0,30 | ÖBGV kural kitabı 2.3 |
 | Minigolf topu çapı (aralık) | 0,037–0,043 | Almanca Vikipedi "Minigolf" |
 | **Top (oyunda)** | 0,04267 | Golf topu en küçük çap 1,680 inç; R&A ve USGA Ekipman Kuralları (İngilizce Vikipedi "Golf ball") |
-| **Delik (oyunda)** | 0,108 | Golf deliği 4,25 inç; Golf Kuralları (İngilizce Vikipedi "Glossary of golf"). Minigolf norm deliği bulunamadı: DENEME |
+| **Delik (oyunda)** | 0,108 | Karar: Kemal, 18 Kasım (golf deliğinin çapıyla aynı, 4,25 inç) |
 | Tribün basamağı: derinlik · yükseklik; oturma tahtası eni | 0,85 · 0,42 · 0,40 | 3B Dirlik Stadı modelinden ölçüldü |
 | Açık tribünün taş merdiveni: en | 1,2 | 3B model |
 
@@ -496,7 +505,7 @@ Kaynak notları: IFAB sayfası (theifab.com, Kural 1) ve ÖBGV kural kitabı 2.3
 okundu. WMF'nin kendi sitesi açılamadı; minyatür ve keçe pist sayıları Almanca Vikipedi'den, birincil
 kaynaktan doğrulanmadı. Tribün basamağı için dış standart doğrulanamadı; ölçü modelin kendisinden (model IFAB
 ölçüleriyle, metreyle çizilmiş). Kaynağı olmayan her değer DENEME: bordür (yükseklik 0,08, en 0,06),
-delik çapı (golf deliği alındı), bayrak boyu, koltuk eni ve aralığı, duş odasının eni ve bölmeleri, karo,
+bayrak boyu, koltuk eni ve aralığı, duş odasının eni ve bölmeleri, karo,
 birikinti, kamera yakınlığı.
 
 **Ortak dil:**
@@ -505,13 +514,15 @@ birikinti, kamera yakınlığı.
 - Zemin çizilmez; yerin zemini neyse o. Sınır ince, yükseltilmiş bordür. **Karar (Kemal, 18 Kasım):**
   pist kenarı kiremit.
 - **Karar (Kemal, 18 Kasım): top ve delik gerçek ölçüde.** Top 4,27 cm (golf topunun en küçük çapı
-  42,67 mm; R&A ve USGA Ekipman Kuralları). Delik 10,8 cm: golf deliğinin çapı (Golf Kuralları); norm
-  minigolf pistinin delik çapı bulunamadı, o yüzden delik çapı DENEME.
-- **Karar (Kemal, 18 Kasım): kamera topu yakından izler.** Öneri (DENEME): delik ekranında kamera topun
-  yanındadır (ekranın eni yaklaşık 1,8 m yer gösterir); atışta daha da yaklaşır (yaklaşık 1 m). Delik
-  ekranda değilse kenarda deliğe bakan bir ok ve uzaklığı çıkar; köşede deliğin tamamını gösteren küçük
-  plan durur (topun ve deliğin yeri). Top ilerledikçe kamera onunla kayar; delik ekrana girince ok kalkar,
-  bayrak görünür.
+  42,67 mm; R&A ve USGA Ekipman Kuralları). **Delik 10,8 cm (Karar: Kemal, 18 Kasım)**; golf deliğinin
+  çapıyla aynı.
+- **Karar (Kemal, 18 Kasım): kamera topu yakından izler.** Delik ekranında kamera topun yanındadır
+  (ekranın eni yaklaşık 1,8 m yer gösterir); atışta daha da yaklaşır (yaklaşık 1 m). Top ilerledikçe kamera
+  onunla kayar. **Oyuncu iki parmakla yakınlaştırıp uzaklaştırabilir ve açıyı çevirebilir**; sınırları
+  DENEME. Makette bu hareket yok (sabit bir an); ilk delik denemesinde gelir.
+- **Karar (Kemal, 18 Kasım): deliğin yeri.** Delik ekranda değilse kenarda deliğe bakan bir ok ve uzaklığı
+  çıkar; köşede deliğin tamamını gösteren küçük plan durur (topun ve deliğin yeri). Delik ekrana girince
+  ok kalkar, bayrak görünür.
 
 **3 · Kale (A ucu)** · zemin: sahanın çimi · zorluk: orta (öneri; eskisi kolay)
 - Yer: A ucundaki kale ve kale çizgisi (modelde var). Pist kale çizgisinin üstünde: kale sahası
@@ -553,6 +564,26 @@ birikinti, kamera yakınlığı.
 
 Modelle ilgili not: modelde toprak zemin ile çimin tabanı aynı yükseklikte olduğu için saha kenarında
 titreme oluyordu; makette düzeltildi, modelin kendisinde de düzeltilmesi iyi olur (Kems Ajans).
+
+### 4.9 Kalan 15 delik: adım planı (18 Kasım)
+
+**Karar (Kemal, 18 Kasım):** dil 18 deliğe yayılır; kalan 15 delik aynı dille, adım adım, ayrı PR'larda gelir.
+
+**Öneri** (sıra ve adım başına delik sayısı; Kemal değiştirebilir). Her adım tek PR: o deliklerin üstten
+ölçülü şeması, delik ve atış maketi, belgedeki tarifi. Her adım bir öncekini Kemal gördükten sonra başlar.
+Delikler yere göre toplandı; turun sırası (1–18) değişmez.
+
+| Adım | Delikler | Yer | Zemin | Not |
+|---|---|---|---|---|
+| 1 | 1, 2, 4, 5 | Saha: orta yuvarlak, kenar çizgisi, köşe, penaltı noktası | çim | Modelde hazır; 3. delikle aynı yer, en kolay başlangıç |
+| 2 | 6, 8, 9 | Açık tribünün önü, koridor köprüsü, duvar içi koridor | beton, toprak yol, taş duvar | 7. delikle komşu |
+| 3 | 10, 11 | Kulüp binası, ışık direği | binanın önü (zemini modelden bakılacak), toprak yol | B ucu |
+| 4 | 12, 13, 15 | Oyuncu tüneli, soyunma odası, soyunma odası kapısı | beton ya da zift, karo | Bu yerler modelde yok; 14 gibi kodla çizilir. 15'in hareketli kapısı en sona kalır, önce durağan hâli |
+| 5 | 16, 17, 18 | Kapalı tribün, bayrak direği, final (orta yuvarlak) | beton basamak ve koltuklar, toprak, çim | Hareketli engeller burada; en son |
+
+Toplam 4 + 3 + 2 + 3 + 3 = 15 delik. Her delikte: gerçek ölçü, yerin kendi zemini, kiremit ince kenar, yerin
+şekli ve eşyasıyla kurulan bulmaca; kaynağı olmayan değer DENEME. 4.4'teki zorluk dalgası her adımda o
+deliklere göre yeniden yazılır. 18 delik bitince 4.5 ve eski kartlı şema (4. bölümün eki) yenisiyle değişir.
 
 ## 5. Ses ve görsel dil
 
@@ -612,9 +643,12 @@ denemesinde reklam ve satın alma yok.
 
 Kemal'in kararını bekleyenler.
 
-- **Örnek delikler (3, 7, 14) onay:** Kemal yeniden bakacak; onaylanırsa öbür 15 delik aynı dille çizilir (4.8).
-- **Kameranın yakınlığı ve deliğin işareti** (ok, uzaklık, küçük plan): öneri, DENEME (4.8).
-- **Norm minigolf deliğinin çapı** bulunamadı; golf deliği (10,8 cm) alındı, DENEME.
+- **Kalan 15 deliğin adım sırası** (4.9): öneri; Kemal değiştirebilir.
+- **İki parmakla yakınlaştırma ve çevirmenin sınırları:** DENEME, ilk delik denemesinde.
+- ~~Örnek delikler (3, 7, 14) onay~~ Cevaplandı (Kemal, 18 Kasım): bu dil 18 deliğe yayılır (4.9).
+- ~~Kameranın yakınlığı ve deliğin işareti~~ Cevaplandı (Kemal, 18 Kasım): maketteki uzaklık, ok ve uzaklık
+  ve küçük plan; ayrıca iki parmakla yakınlaştırma ve çevirme (4.8).
+- ~~Delik çapı~~ Cevaplandı (Kemal, 18 Kasım): 10,8 cm.
 - ~~Top ve delik ne kadar büyük çizilsin?~~ Cevaplandı (Kemal, 18 Kasım): gerçek ölçü, kamera topu izler.
 - ~~Bordürün rengi~~ Cevaplandı (Kemal, 18 Kasım): kiremit.
 - ~~Tribünde oturma tahtaları~~ Cevaplandı (Kemal, 18 Kasım): tahta yerine tek tek koltuk, engel olarak.
@@ -695,8 +729,8 @@ ekranına karışmaz. Görüntüler iPhone 13 boyutunda çekildi.
 6. **Tur sonu** (`?maket=tur-sonu`): toplam vuruş "–", ayın turu ilerlemesi (18 parça, boş), ayın pulu yer
    tutucusu ve 3+1 pul dizisi.
 
-Kamera notu: örnek deliklerde kamera tam izometrik ve topu yakından izler (Kemal, 18 Kasım); yakınlık
-DENEME, ilk delik denemesinde Kemal'e gösterilir.
+Kamera notu: örnek deliklerde kamera tam izometrik ve topu yakından izler; yakınlık maketteki gibi
+(Kemal, 18 Kasım). Oyunda iki parmakla yakınlaştırılır ve çevrilir; makette bu hareket yok.
 Eski 3. ve 4. maket (büyük krem pist) 18 Kasım'da kaldırıldı.
 
 | | | |

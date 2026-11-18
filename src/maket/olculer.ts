@@ -38,11 +38,10 @@ export const WMF = {
 // --- Top ve delik gerçek ölçüde (Kemal, 18 Kasım 2026: "top ve delik gerçek ölçü").
 // Top: golf topunun çapı en az 1,680 inç = 42,67 mm (R&A ve USGA Ekipman Kuralları; İngilizce
 // Vikipedi "Golf ball", 18 Kasım 2026'da okundu). WMF'nin 37–43 mm aralığının içinde.
-// Delik: golf deliğinin çapı 4,25 inç = 108 mm (Golf Kuralları; İngilizce Vikipedi "Glossary of golf").
-// Norm minigolf pistinin delik çapı bu oturumda bulunamadı; o yüzden delik çapı DENEME sayılır.
+// Delik: 10,8 cm. Karar (Kemal, 18 Kasım 2026). Golf deliğinin çapıyla aynı (4,25 inç = 108 mm).
 export const GOLF = {
   topCap: 0.04267,
-  delikCap: 0.108, // DENEME: golf deliği; minigolf norm deliği doğrulanamadı
+  delikCap: 0.108, // Kemal, 18 Kasım 2026
 } as const;
 
 // --- 3B Dirlik Stadı modelinden ölçülenler (public/modeller/dirlik-stadi.glb; Kems Ajans modeli).
