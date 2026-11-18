@@ -2,11 +2,17 @@ import { m, seciliDil, type MetinAnahtari } from '../metinler';
 import { renk } from '../sahne/renkler';
 import { metre } from './metre';
 import { GOLF, IFAB, MODEL } from './olculer';
-import { ORNEK_DELIKLER, ornekDelik, DUS_BOY, DUS_EN, MERDIVEN_X1, type Kaynak, type N2, type OrnekDelik } from './ornekDelikler';
+import { WMF } from './olculer';
+import { ORNEK_DELIKLER, KALAN_DELIK_SAYISI, YAY_BOYU, ornekDelik, DUS_BOY, DUS_EN, MERDIVEN_X1, type Kaynak, type N2, type OrnekDelik } from './ornekDelikler';
 
-// MAKET (öneri): örnek deliklerin üstten şeması, ölçü çizgileriyle. Veri 3B maketle aynı (ornekDelikler.ts).
+// MAKET (öneri): yeni dille çizilen deliklerin üstten şeması, ölçü çizgileriyle. Veri 3B maketle aynı (ornekDelikler.ts).
 
-const ZEMIN: Record<number, string> = { 3: '#7E9A55', 7: '#C8C0AF', 14: '#C8C0AF' };
+const CIM = '#7E9A55'; // modeldeki çimin rengi
+const ZEMIN: Record<number, string> = { 1: CIM, 2: CIM, 3: CIM, 4: CIM, 5: CIM, 7: '#C8C0AF', 14: '#C8C0AF' };
+
+// Uzun eksen ekranda dikey, başlangıç altta: 'z' (x, z) -> (-x, -z); '-z' -> (x, z); 'x' -> (z, -x); '-x' -> (-z, x).
+const eksenCevir = (eksen: OrnekDelik['eksen']) => (n: N2): N2 =>
+  eksen === 'z' ? [-n[0], -n[1]] : eksen === '-z' ? [n[0], n[1]] : eksen === 'x' ? [n[1], -n[0]] : [-n[1], n[0]];
 const KAYNAK_ADI: Record<Kaynak, MetinAnahtari> = {
   ifab: 'maket.kaynak.ifab',
   wmf: 'maket.kaynak.wmf',
@@ -23,8 +29,7 @@ const YOLLAR: Record<number, N2[][]> = {
 
 function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: number }) {
   const c = delik.cerceve;
-  // Uzun eksen ekranda dikey, başlangıç altta: 'z' (x, z) -> (-x, -z); 'x' -> (z, -x); '-x' -> (-z, x).
-  const cevir = (n: N2): N2 => (delik.eksen === 'z' ? [-n[0], -n[1]] : delik.eksen === 'x' ? [n[1], -n[0]] : [-n[1], n[0]]);
+  const cevir = eksenCevir(delik.eksen);
   const koseler = [cevir([c.x0, c.z0]), cevir([c.x1, c.z1])];
   const minX = Math.min(koseler[0][0], koseler[1][0]);
   const maxX = Math.max(koseler[0][0], koseler[1][0]);
@@ -55,7 +60,8 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
           key={i}
           d={yol([l.a, l.b])}
           stroke={l.tur === 'basamak' ? '#8F8776' : l.tur === 'merdiven' ? '#A58A5E' : '#FAF8F5'}
-          strokeWidth={l.tur === 'saha' ? 2.2 : 1.2}
+          strokeWidth={l.tur === 'saha' ? (delik.yollar ? Math.max(2.2, MODEL.cizgiEn * olcek) : 2.2) : 1.2}
+          strokeLinecap={l.tur === 'saha' && delik.yollar ? 'round' : undefined}
           strokeDasharray={l.tur === 'ag' ? '3 3' : undefined}
           fill="none"
         />
@@ -63,13 +69,16 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
       {delik.birikinti && (
         <circle cx={P(delik.birikinti.n)[0]} cy={P(delik.birikinti.n)[1]} r={delik.birikinti.r * olcek} fill="#7FB0C8" opacity="0.8" />
       )}
+      {delik.noktalar?.map((n, i) => (
+        <circle key={i} cx={P(n.n)[0]} cy={P(n.n)[1]} r={n.r * olcek} fill="#FAF8F5" />
+      ))}
       {delik.kutular.map((k, i) => (
         <rect key={i} {...kutu(k)} rx={k.tur.startsWith('koltuk') ? 2 : 0} fill={k.tur === 'koltuk' ? renk.lacivert : k.tur === 'koltukAcik' ? renk.krem : '#FAF8F5'} stroke={renk.lacivert} strokeWidth={k.tur === 'koltuk' ? 0 : 0.8} />
       ))}
       {delik.bordurler.map((b, i) => (
         <path key={i} d={yol(b.noktalar)} stroke={renk.kiremit} strokeWidth="2.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
       ))}
-      {YOLLAR[delik.no].map((y, i) => (
+      {(delik.yollar ?? YOLLAR[delik.no] ?? []).map((y, i) => (
         <path key={i} d={yol(y)} stroke={renk.lacivert} strokeWidth="1.4" strokeDasharray={i ? '2 3' : '5 3'} fill="none" strokeLinejoin="round" />
       ))}
       {/* Başlangıç ve delik */}
@@ -113,7 +122,7 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
       })}
       {delik.etiketler.map((e, i) => (
         <text key={i} x={P(e.n)[0]} y={P(e.n)[1]} textAnchor={hiza[e.hiza ?? 'orta']} className="mk-sema-etiket">
-          {e.metin === 'maket.sema.basamakYukseklik' ? m(e.metin, metre(e.deger ?? 0)) : m(e.metin, e.deger ?? '')}
+          {e.metre || e.metin === 'maket.sema.basamakYukseklik' ? m(e.metin, metre(e.deger ?? 0)) : m(e.metin, e.deger ?? '')}
         </text>
       ))}
       <text x={bx} y={by + 16} textAnchor="middle" className="mk-sema-etiket koyu">{m('maket.sema.baslangic')}</text>
@@ -126,7 +135,7 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
   );
 }
 
-// Üç deliğin stattaki yeri: saha, tribünler ve delikler aynı ölçekte.
+// Yeni dille çizilen deliklerin stattaki yeri: saha, tribünler ve delikler aynı ölçekte.
 function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
   const x0 = -14, x1 = 104, z0 = -72, z1 = 18; // taş duvarın çevresi (model)
   const olcek = Math.min(gen / (z1 - z0), yuk / (x1 - x0));
@@ -144,8 +153,15 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
   const yanKale = IFAB.kaleGenislik / 2 + IFAB.kaleSahasi;
   // Duşların yeri: kapalı tribünün altı (Kemal, 16 Kasım); tam yeri öneri.
   const dusX = 40, dusZ = 9.5;
-  const isaretler: { no: number; n: N2; boyut: [number, number]; yazi: N2; hiza: 'start' | 'end' }[] = [
+  // sekil: deliğin kenarı gerçek biçimiyle (adım 1 delikleri); yoksa gerçek ölçüsünde kutu.
+  type Isaret = { no: number; n: N2; boyut: [number, number]; yazi: N2; hiza: 'start' | 'end'; sekil?: N2[] };
+  const sekil = (no: number) => ornekDelik(no).bordurler[0].noktalar.map((q) => P(q[0], q[1]));
+  const isaretler: Isaret[] = [
+    { no: 1, n: P(40.4, -37), boyut: [YAY_BOYU, WMF.betonEn], yazi: P(31, -39), hiza: 'start', sekil: sekil(1) },
+    { no: 2, n: P(22.5, -55), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(22.5, -45), hiza: 'start', sekil: sekil(2) },
     { no: 3, n: P(-0.7, -32), boyut: [2.6, 13.4], yazi: P(-9, -32), hiza: 'start' },
+    { no: 4, n: P(0.4, -57.6), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(-9, -60), hiza: 'start', sekil: sekil(4) },
+    { no: 5, n: P(13.75, -29), boyut: [IFAB.cezaSahasi - IFAB.penaltiNoktasi, WMF.betonEn], yazi: P(13.75, -17), hiza: 'start', sekil: sekil(5) },
     { no: 7, n: P(48.7, -66), boyut: [6.25, 2.55], yazi: P(48.7, -54), hiza: 'start' },
     { no: 14, n: P(dusX + DUS_BOY / 2, dusZ + DUS_EN / 2), boyut: [DUS_BOY, DUS_EN], yazi: P(dusX + DUS_BOY / 2, -3), hiza: 'end' },
   ];
@@ -175,12 +191,16 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
       <text x={P(45, 16)[0]} y={P(45, 16)[1]} className="mk-sema-etiket koyu" textAnchor="middle" transform={`rotate(90 ${P(45, 16)[0]} ${P(45, 16)[1]})`}>{m('maket.yerlesim.kapaliTribun')}</text>
       <text x={P(45, -70.2)[0]} y={P(45, -70.2)[1]} className="mk-sema-etiket koyu" textAnchor="middle" transform={`rotate(-90 ${P(45, -70.2)[0]} ${P(45, -70.2)[1]})`}>{m('maket.yerlesim.acikTribun')}</text>
       <text x={P(99, -29)[0]} y={P(99, -29)[1] - 12} className="mk-sema-etiket koyu" textAnchor="middle">{m('maket.yerlesim.kulupBinasi')}</text>
-      <text x={P(-9, -68)[0]} y={P(-9, -68)[1]} className="mk-sema-etiket koyu" textAnchor="start">{m('maket.yerlesim.aUcu')}</text>
+      <text x={P(-9, -71.4)[0]} y={P(-9, -71.4)[1] + 3.5} className="mk-sema-etiket koyu" textAnchor="start">{m('maket.yerlesim.aUcu')}</text>
       <text x={P(101, -68)[0]} y={P(101, -68)[1] - 16} className="mk-sema-etiket koyu" textAnchor="start">{m('maket.yerlesim.bUcu')}</text>
-      {/* Üç örnek delik: gerçek ölçüsünde kiremit kutu, yanında numara ve ölçü */}
+      {/* Yeni dille çizilen delikler: gerçek ölçüsünde kiremit biçim, yanında numara ve ölçü */}
       {isaretler.map((i) => (
         <g key={i.no}>
-          <rect x={i.n[0] - (i.boyut[1] * olcek) / 2} y={i.n[1] - (i.boyut[0] * olcek) / 2} width={i.boyut[1] * olcek} height={i.boyut[0] * olcek} fill={renk.kiremit} stroke={renk.lacivert} strokeWidth="0.8" />
+          {i.sekil ? (
+            <path d={i.sekil.map((q, k) => `${k ? 'L' : 'M'}${q[0].toFixed(1)} ${q[1].toFixed(1)}`).join(' ')} fill={renk.kiremit} stroke={renk.lacivert} strokeWidth="0.8" strokeLinejoin="round" />
+          ) : (
+            <rect x={i.n[0] - (i.boyut[1] * olcek) / 2} y={i.n[1] - (i.boyut[0] * olcek) / 2} width={i.boyut[1] * olcek} height={i.boyut[0] * olcek} fill={renk.kiremit} stroke={renk.lacivert} strokeWidth="0.8" />
+          )}
           <path d={`M${i.n[0]} ${i.n[1]} L${i.yazi[0]} ${i.yazi[1]}`} stroke={renk.lacivert} strokeWidth="0.8" />
           <circle cx={i.yazi[0]} cy={i.yazi[1]} r="9" fill={renk.lacivert} />
           <text x={i.yazi[0]} y={i.yazi[1] + 3.5} textAnchor="middle" className="mk-yerlesim-no">{i.no}</text>
@@ -210,14 +230,14 @@ export function Sema({ no }: { no: number }) {
         <div className="mk-sema-alan">
           <Yerlesim gen={362} yuk={476} />
         </div>
-        <ul className="mk-sema-not">
+        <ul className="mk-sema-not mk-iki-sutun">
           {ORNEK_DELIKLER.map((d) => (
             <li key={d.no}>
-              <b>{d.no}</b> {m(`maket.yer.${d.no}` as MetinAnahtari)} · {m(`maket.zemin.${d.no}` as MetinAnahtari)}
+              <b>{d.no}</b> {m(`maket.yer.${d.no}` as MetinAnahtari)}
             </li>
           ))}
-          <li>{m('maket.yerlesim.not')}</li>
         </ul>
+        <div className="mk-sema-not">{m('maket.yerlesim.not', ORNEK_DELIKLER.length, KALAN_DELIK_SAYISI)}</div>
       </div>
     );
   }
@@ -245,7 +265,7 @@ export function Sema({ no }: { no: number }) {
 // Küçük plan: delik ekranının köşesinde deliğin tamamı; topun ve deliğin yeri (kamera topun yanındayken).
 export function KucukHarita({ delik, top }: { delik: OrnekDelik; top: [number, number] }) {
   const c = delik.cerceve;
-  const cevir = (n: N2): N2 => (delik.eksen === 'z' ? [-n[0], -n[1]] : delik.eksen === 'x' ? [n[1], -n[0]] : [-n[1], n[0]]);
+  const cevir = eksenCevir(delik.eksen);
   const k = [cevir([c.x0, c.z0]), cevir([c.x1, c.z1])];
   const minX = Math.min(k[0][0], k[1][0]);
   const minY = Math.min(k[0][1], k[1][1]);
@@ -265,6 +285,11 @@ export function KucukHarita({ delik, top }: { delik: OrnekDelik; top: [number, n
       {delik.cizgiler.filter((l) => l.tur === 'ag').map((l, i) => (
         <path key={i} d={yol([l.a, l.b])} stroke={renk.lacivert} strokeWidth="0.8" strokeDasharray="2 2" fill="none" opacity="0.6" />
       ))}
+      {/* Saha çizgileri yalnız adım 1 deliklerinde (yerin kendisi: yuvarlak, taç çizgisi, köşe, ceza sahası) */}
+      {delik.yollar &&
+        delik.cizgiler.filter((l) => l.tur === 'saha').map((l, i) => (
+          <path key={`s${i}`} d={yol([l.a, l.b])} stroke={renk.lacivert} strokeWidth="1" fill="none" opacity="0.28" strokeLinecap="round" />
+        ))}
       {delik.bordurler.map((b, i) => (
         <path key={i} d={yol(b.noktalar)} stroke={renk.kiremit} strokeWidth="1.5" fill="none" strokeLinejoin="round" strokeLinecap="round" />
       ))}

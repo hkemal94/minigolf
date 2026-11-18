@@ -4,7 +4,7 @@ import { CanvasTexture, RepeatWrapping, SRGBColorSpace } from 'three';
 import { renk } from '../sahne/renkler';
 import { StatSahnesi, EkranKonumu } from './StatSahnesi';
 import { Bordur, Baslangic, Top, BayrakliDelik, KesikNisan, KalinCizgi, GucHalkasi } from './Pist';
-import { DENEME, MODEL, TOP_YARICAP } from './olculer';
+import { DENEME, IFAB, MODEL, TOP_YARICAP } from './olculer';
 import {
   ornekDelik,
   siraOn,
@@ -17,17 +17,37 @@ import {
   DUS_BOY,
   DUS_EN,
   DUS_BOLMELER,
+  KOSE,
+  ORTA,
+  PENALTI,
   type N3,
   type OrnekDelik,
 } from './ornekDelikler';
 
-// MAKET (öneri): üç örnek deliğin 3B sahnesi. Oynanış değil; top atılmaz.
+// MAKET (öneri): yeni dille çizilen deliklerin 3B sahnesi. Oynanış değil; top atılmaz.
 
 // Kamera topu yakından izler (Kemal, 18 Kasım 2026): top ve delik gerçek ölçüde olduğu için delik tek
 // ekrana sığmaz; kamera topun yanındadır, deliğin yeri ekran kenarındaki okla ve küçük planla gösterilir.
 // uzak: kameranın hedefe göre durduğu yön; ileri: hedefin toptan oyun yönüne kayması. Hepsi DENEME.
 type Bakis = { uzak: N3; ileri: N3; zoom: number; golge: number };
+// Adım 1 delikleri 3. delikle aynı uzaklık ve açıda; yalnız oyun yönüne göre çevrildi (-x ya da -z).
+const eksiX = {
+  genel: { uzak: [12.3, 17, 5.5], ileri: [-1.15, 0, -0.52], zoom: 200, golge: 5 },
+  atis: { uzak: [12.3, 17, 5.5], ileri: [-0.42, 0, -0.19], zoom: 340, golge: 3 },
+} satisfies { genel: Bakis; atis: Bakis };
+const eksiZ = {
+  genel: { uzak: [-5.5, 17, 12.3], ileri: [0.52, 0, -1.15], zoom: 200, golge: 5 },
+  atis: { uzak: [-5.5, 17, 12.3], ileri: [0.19, 0, -0.42], zoom: 340, golge: 3 },
+} satisfies { genel: Bakis; atis: Bakis };
 const BAKISLAR: Record<number, { genel: Bakis; atis: Bakis }> = {
+  1: eksiX,
+  2: eksiZ,
+  // 4: kamera topun tam arkasına yakın; dönüş, köşe bayrağı ve köşe yayı aynı ekrana girsin diye.
+  4: {
+    genel: { uzak: [13.3, 17, 1.5], ileri: [-1.2, 0, -0.15], zoom: 200, golge: 5 },
+    atis: { uzak: [13.3, 17, 1.5], ileri: [-0.5, 0, -0.05], zoom: 340, golge: 3 },
+  },
+  5: eksiX,
   3: {
     genel: { uzak: [5.5, 17, -12.3], ileri: [-0.52, 0, 1.15], zoom: 200, golge: 5 },
     atis: { uzak: [5.5, 17, -12.3], ileri: [-0.19, 0, 0.42], zoom: 340, golge: 3 },
@@ -213,6 +233,70 @@ function Birikinti({ n, r }: { n: [number, number]; r: number }) {
   );
 }
 
+// Adım 1 (delik 1, 2, 4, 5): zemin sahanın çimi.
+// Modelde sahanın çimi çevredeki çimden 4 cm yüksek (basamak). Taç ve kale çizgisinin üstünden geçen
+// pistte top bu basamağa takılır; makette çevre çim sahanın düzeyine getirilir. Model dosyasına
+// dokunulmaz; modelin kendisinde de düzeltilmesi iyi olur. Renk modeldeki çimin rengi.
+const SAHA_ESYALI = [1, 2, 4, 5];
+function CevreCimi() {
+  // Modeldeki çevre çim: x -4 … 94, z -62 … 4. Sahanın şeritli çiminin hemen altında durur.
+  return (
+    <mesh position={[45, MODEL.cimUstu - 0.001, -29]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+      <planeGeometry args={[98, 66]} />
+      <meshStandardMaterial color="#7E9A55" roughness={1} />
+    </mesh>
+  );
+}
+
+const CIZGI_RENGI = '#EEE8DC'; // modeldeki saha çizgisinin rengi
+
+// Köşe bayrağı ve köşe yayı (modelde yok; tasarım belgesi 4.7 "eklenecek saha eşyası"). Kodla çizilir.
+// Direk en az 1,5 m, köşe yayı 1 m (IFAB, Kural 1). Direğin kalınlığı ve bayrağın ölçüsü DENEME.
+function KoseBayragi() {
+  const boy = IFAB.koseBayragiEnAz;
+  const r = DENEME.koseDirekYaricap;
+  const yay = IFAB.koseYayiYaricap;
+  const en = MODEL.cizgiEn;
+  return (
+    <group position={[KOSE[0], 0, KOSE[1]]}>
+      <mesh position={[0, MODEL.cizgiUstu - 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <ringGeometry args={[yay - en / 2, yay + en / 2, 32, 1, -Math.PI / 2, Math.PI / 2]} />
+        <meshStandardMaterial color={CIZGI_RENGI} roughness={1} />
+      </mesh>
+      <mesh position={[0, MODEL.cimUstu + boy / 2, 0]} castShadow>
+        <cylinderGeometry args={[r, r, boy, 12]} />
+        <meshStandardMaterial color={renk.krem} roughness={0.8} />
+      </mesh>
+      <mesh position={[DENEME.koseBayrakEn / 2 + r, MODEL.cimUstu + boy - DENEME.koseBayrakBoy / 2, 0]} castShadow>
+        <boxGeometry args={[DENEME.koseBayrakEn, DENEME.koseBayrakBoy, 0.008]} />
+        <meshStandardMaterial color={renk.lacivert} roughness={1} />
+      </mesh>
+    </group>
+  );
+}
+
+// Orta yuvarlak modelde kesik parçalarla çizilmiş; yakından kare kare görünüyor. Makette üstüne aynı
+// yarıçapta (IFAB 9,15 m), parçaların eninde düz bir çizgi çizilir; modelin kendisinde de düzeltilmesi iyi olur.
+function OrtaYuvarlakCizgisi() {
+  const r = IFAB.ortaYuvarlakYaricap;
+  return (
+    <mesh position={[ORTA[0], MODEL.cizgiUstu + 0.001, ORTA[1]]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+      <ringGeometry args={[r - MODEL.ortaYuvarlakCizgiEn / 2, r + MODEL.ortaYuvarlakCizgiEn / 2, 160]} />
+      <meshStandardMaterial color={CIZGI_RENGI} roughness={1} />
+    </mesh>
+  );
+}
+
+// Penaltı noktası (modelde yok; tasarım belgesi 4.7). Yeri IFAB: kale çizgisinden 11 m. Çapı DENEME.
+function PenaltiNoktasi() {
+  return (
+    <mesh position={[PENALTI[0], MODEL.cimUstu + 0.003, PENALTI[1]]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+      <circleGeometry args={[DENEME.penaltiNoktasiCap / 2, 32]} />
+      <meshStandardMaterial color={CIZGI_RENGI} roughness={1} />
+    </mesh>
+  );
+}
+
 // Atış maketinin 3B parçaları: nişan çizgisi, parmağa giden çizgi, güç halkası.
 function AtisIsaretleri({ delik, parmakBildir }: { delik: OrnekDelik; parmakBildir: (x: number, y: number) => void }) {
   const { top, yon, boy } = delik.atis;
@@ -259,6 +343,10 @@ export function OrnekSahne({ no, atis = false, parmakBildir, delikBildir }: Sahn
       kesim={kesim}
       arkaPlan={delik.no === 14 ? renk.kremKoyu : renk.krem}
     >
+      {SAHA_ESYALI.includes(delik.no) && <CevreCimi />}
+      {delik.no === 1 && <OrtaYuvarlakCizgisi />}
+      {delik.no === 4 && <KoseBayragi />}
+      {delik.no === 5 && <PenaltiNoktasi />}
       {delik.no === 7 && <TribunKoltuklari />}
       {delik.no === 14 && <DusOdasi />}
       {delik.birikinti && <Birikinti n={delik.birikinti.n} r={delik.birikinti.r} />}

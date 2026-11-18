@@ -13,6 +13,7 @@ export const IFAB = {
   penaltiNoktasi: 11, // iki direğin ortasından
   ortaYuvarlakYaricap: 9.15,
   koseBayragiEnAz: 1.5, // yükseklik
+  koseYayiYaricap: 1, // köşe bayrağından, sahanın içine çeyrek daire (18 Kasım 2026'da yeniden okundu)
   sahaBoyEnAz: 90, // taç çizgisi 90–120 m
   sahaEnEnAz: 45, // kale çizgisi 45–90 m
 } as const;
@@ -56,6 +57,13 @@ export const MODEL = {
   direkEn: 0.14, // modeldeki direk (IFAB en çok 0,12)
   agDerinlik: 2,
   kaleSahasiCizgisiZ: -38.09, // kale sahasının yan çizgisi (yakın direkten 5,5 m)
+  // Saha çizgileri: en 0,14 (IFAB en çok 0,12). Dış çizgiler sahanın içinde kalır (taç çizgisi z -58 … -57,86).
+  cizgiEn: 0.14,
+  ortaYuvarlakCizgiEn: 0.28, // orta yuvarlak modelde 0,28 m'lik kesik parçalarla çizilmiş (öbür çizgilerden kalın)
+  // Sahanın çimi çevredeki çimden 4 cm yüksek (şeritli çimin üstü 0,04; çizgilerin üstü 0,05; çevre çim 0).
+  cimUstu: 0.04,
+  cizgiUstu: 0.05,
+  tacCizgisiZ: -58, // açık tribün yanındaki taç çizgisinin dış kenarı
   // Tribün basamakları (iki tribünde aynı): derinlik ve yükseklik
   basamakDerinlik: 0.85,
   basamakYukseklik: 0.42,
@@ -90,6 +98,16 @@ export const DENEME = {
   koltukEn: 0.43,
   koltukAralik: 0.45, // iki koltuğun ortası arası; arada top geçmez (2 cm)
   koltukSirt: 0.28,
+  // Adım 1 (delik 1, 2, 4, 5; saha, çim). Hepsi kaynaksız, Kemal onaylamadı.
+  baslangicPayi: 0.45, // başlangıç işaretinin arkasında kalan pist
+  delikPayi: 0.3, // deliğin arkasında kalan pist
+  ortaYuvarlakYayAcisi: 60, // 1. delik: pistin orta yuvarlak çizgisinde kapladığı yay (derece); boyu 9,58 m
+  tacPayi: 1, // 2. delik: deliğin taç çizgisine uzaklığı
+  kosePah: 0.8, // 4. delik: dış köşedeki 45° sektirme kenarının iki yana boyu
+  koseDirekYaricap: 0.025, // köşe bayrağının direği (IFAB yalnız en az boyu verir)
+  koseBayrakEn: 0.34,
+  koseBayrakBoy: 0.26,
+  penaltiNoktasiCap: 0.22, // IFAB noktanın çapını vermez
   // Atış işaretleri (yerde): güç halkası ve nişan çizgisi
   gucHalkasiIc: 0.085,
   gucHalkasiDis: 0.11,
