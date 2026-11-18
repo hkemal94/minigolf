@@ -1,7 +1,10 @@
 import { useState, type ReactNode } from 'react';
 import { m, type MetinAnahtari } from '../metinler';
-import { StatSahnesi, EkranKonumu, ORTA_YUVARLAK } from './StatSahnesi';
-import { Pist, Top, BayrakliDelik, Blok, KesikNisan, KalinCizgi, GucHalkasi, pistUstu } from './Pist';
+import { StatSahnesi, ORTA_YUVARLAK } from './StatSahnesi';
+import { OrnekSahne } from './OrnekDelik';
+import { Sema, KucukHarita } from './Sema';
+import { metre } from './metre';
+import { ORNEK_DELIKLER, ornekDelik } from './ornekDelikler';
 import { renk } from '../sahne/renkler';
 import './maket.css';
 
@@ -228,76 +231,102 @@ function DelikAlt({ ipucu }: { ipucu: ReactNode }) {
   );
 }
 
-// 1. delik (orta yuvarlak): pist orta çizgiye dik, orta yuvarlağın üstünden. Ölçüler DENEME.
-const D1 = {
-  merkez: [ORTA_YUVARLAK[0], 0.02, ORTA_YUVARLAK[2]] as [number, number, number],
-  boy: 16, // DENEME
-  en: 3.2, // DENEME
-};
+// Örnek delikler (Kemal, 18 Kasım 2026): yeni dille üç delik. ?maket=delik&no=3 | 7 | 14.
+const ornekNo = () => ornekDelik(Number(new URLSearchParams(window.location.search).get('no') ?? ORNEK_DELIKLER[0].no)).no;
 
-// c) Delik ekranı
+// Örnek delikler arasında geçiş (maketin kendi gezintisi; oyunda olmayacak).
+function OrnekGecis({ ekran, secili }: { ekran: string; secili: number }) {
+  return (
+    <nav className="mk-ornekler">
+      <span>{m('maket.ornek.baslik')}</span>
+      {ORNEK_DELIKLER.map((d) => (
+        <a key={d.no} href={`?maket=${ekran}&no=${d.no}`} className={d.no === secili ? 'secili' : ''}>
+          {d.no}
+        </a>
+      ))}
+      <span className="mk-ornek-zemin">{m(`maket.zemin.${secili}` as MetinAnahtari)}</span>
+    </nav>
+  );
+}
+
+// Deliğin yeri: delik ekranın dışındaysa kenarda ok ve uzaklık; içindeyse bayrağın kendisi görünür.
+// Köşede küçük plan: deliğin tamamı, topun ve deliğin yeri. (Kemal, 18 Kasım 2026: kamera topu izler.)
+function DelikYeri({ no, atis, delikEkran, alan }: { no: number; atis: boolean; delikEkran: [number, number] | null; alan: HTMLDivElement | null }) {
+  const delik = ornekDelik(no);
+  const top = atis ? delik.atis.top : delik.baslangic;
+  const uzaklik = Math.hypot(delik.cukur[0] - top[0], delik.cukur[2] - top[2]);
+  let ok: ReactNode = null;
+  if (delikEkran && alan) {
+    const g = alan.clientWidth;
+    const y = alan.clientHeight;
+    const pay = 30;
+    const [dx, dy] = delikEkran;
+    if (dx < 0 || dx > g || dy < 0 || dy > y) {
+      // Ekranın ortasından deliğe giden doğrunun kenarı kestiği yer.
+      const ox = g / 2;
+      const oy = y / 2;
+      const t = Math.min((g / 2 - pay) / Math.abs(dx - ox || 1), (y / 2 - pay) / Math.abs(dy - oy || 1));
+      const aci = (Math.atan2(dy - oy, dx - ox) * 180) / Math.PI;
+      let okX = ox + (dx - ox) * t;
+      const okY = oy + (dy - oy) * t;
+      // Sağ üst köşede küçük plan var; ok onun altında kalmasın.
+      if (okX > g - 120 && okY < 190) okX = g - 130;
+      ok = (
+        <div className="mk-delik-oku" style={{ left: okX, top: okY }}>
+          <svg viewBox="0 0 24 24" width="26" height="26" style={{ transform: `rotate(${aci}deg)` }} aria-hidden>
+            <path d="M4 12h13M12 6l6 6-6 6" fill="none" stroke={renk.krem} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span>{m('maket.delik.uzaklik', metre(Math.round(uzaklik * 10) / 10))}</span>
+        </div>
+      );
+    }
+  }
+  return (
+    <>
+      {ok}
+      <div className="mk-kucuk-harita-kutu">
+        <KucukHarita delik={delik} top={[top[0], top[2]]} />
+      </div>
+    </>
+  );
+}
+
+// c) Delik ekranı: kamera topun yanında; deliğin yeri ok ve küçük planla.
 function DelikEkrani() {
-  const [x, y, z] = D1.merkez;
-  const u = pistUstu(y);
+  const no = ornekNo();
+  const [delikEkran, setDelikEkran] = useState<[number, number] | null>(null);
+  const [alan, setAlan] = useState<HTMLDivElement | null>(null);
   return (
     <Ekran>
-      <DelikUst no={1} zorluk="maket.zorluk.enKolay" />
-      <div className="mk-sahne">
-        <StatSahnesi konum={[x - 30, 27, z - 24]} hedef={[x + 5, 0, z + 5]} zoom={1} gorusAcisi={40} golgeMerkez={[x + 10, 0, z]} golgeYaricap={45}>
-          <Pist merkez={D1.merkez} boy={D1.boy} en={D1.en} />
-          <Top konum={[x - D1.boy / 2 + 1.6, u, z]} />
-          <BayrakliDelik konum={[x + D1.boy / 2 - 1.6, u, z]} />
-        </StatSahnesi>
+      <DelikUst no={no} zorluk={ornekDelik(no).zorluk} />
+      <OrnekGecis ekran="delik" secili={no} />
+      <div className="mk-sahne" ref={setAlan}>
+        <OrnekSahne no={no} delikBildir={(x, y) => setDelikEkran([x, y])} />
+        <DelikYeri no={no} atis={false} delikEkran={delikEkran} alan={alan} />
       </div>
       <DelikAlt ipucu={m('maket.delik.ipucu')} />
     </Ekran>
   );
 }
 
-// 3. delik (A ucundaki kale): pist ceza sahasından kaleye, sonunda dar geçit. Ölçüler DENEME.
-const D3 = {
-  merkez: [6.2, 0.02, ORTA_YUVARLAK[2]] as [number, number, number],
-  boy: 15, // DENEME
-  en: 3.4, // DENEME
-  gecit: 1.3, // DENEME (iki direk arası)
-};
-
-// d) Atış ve nişan
+// d) Atış ve nişan: kamera topa daha da yaklaşır; parmak, nişan çizgisi, güç halkası.
 function AtisEkrani() {
-  const [x, y, z] = D3.merkez;
-  const u = pistUstu(y);
-  const top: [number, number, number] = [x + D3.boy / 2 - 2.6, u, z + 0.5];
-  const delik: [number, number, number] = [x - D3.boy / 2 + 1.3, u, z];
-  const gecitX = x - D3.boy / 2 + 3.6;
-  // Nişan: topun önünden geçide doğru; parmak topun arkasında (çekilen yön ters).
-  const yon = [delik[0] - top[0], delik[2] - top[2]];
-  const yb = Math.hypot(yon[0], yon[1]);
-  const ux = yon[0] / yb;
-  const uz = yon[1] / yb;
-  const nisanSon: [number, number, number] = [top[0] + ux * 8.2, u + 0.02, top[2] + uz * 8.2]; // DENEME boy
-  const parmak: [number, number, number] = [top[0] - ux * 2.6, u + 0.02, top[2] - uz * 2.6]; // DENEME
-  const yanParca = (D3.en - D3.gecit) / 2;
+  const no = ornekNo();
   const [parmakEkran, setParmakEkran] = useState<[number, number] | null>(null);
+  const [delikEkran, setDelikEkran] = useState<[number, number] | null>(null);
+  const [alan, setAlan] = useState<HTMLDivElement | null>(null);
   return (
     <Ekran>
-      <DelikUst no={3} zorluk="maket.zorluk.kolay" />
-      <div className="mk-sahne">
-        <StatSahnesi konum={[x + 34, 30, z + 20]} hedef={[x - 3, 0, z]} zoom={21} golgeMerkez={[x, 0, z]} golgeYaricap={30}>
-          <Pist merkez={D3.merkez} boy={D3.boy} en={D3.en} />
-          <Blok konum={[gecitX, u, z - D3.gecit / 2 - yanParca / 2]} boyut={[0.5, 0.5, yanParca]} />
-          <Blok konum={[gecitX, u, z + D3.gecit / 2 + yanParca / 2]} boyut={[0.5, 0.5, yanParca]} />
-          <BayrakliDelik konum={delik} />
-          <KesikNisan bas={[top[0] + ux * 0.5, u + 0.02, top[2] + uz * 0.5]} son={nisanSon} />
-          <KalinCizgi bas={[top[0], u + 0.03, top[2]]} son={parmak} kalinlik={0.08} renkKodu={renk.lacivert} saydam={0.7} />
-          <GucHalkasi merkez={[top[0], u, top[2]]} oran={0.45} />
-          <Top konum={top} />
-          <EkranKonumu nokta={parmak} bildir={(px, py) => setParmakEkran([px, py])} />
-        </StatSahnesi>
+      <DelikUst no={no} zorluk={ornekDelik(no).zorluk} />
+      <OrnekGecis ekran="atis" secili={no} />
+      <div className="mk-sahne" ref={setAlan}>
+        <OrnekSahne no={no} atis parmakBildir={(px, py) => setParmakEkran([px, py])} delikBildir={(x, y) => setDelikEkran([x, y])} />
         {parmakEkran && (
           <div className="mk-parmak" style={{ left: parmakEkran[0], top: parmakEkran[1] }}>
             <span>{m('maket.atis.parmak')}</span>
           </div>
         )}
+        <DelikYeri no={no} atis delikEkran={delikEkran} alan={alan} />
         <div className="mk-guc-etiket">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden>
             <circle cx="12" cy="12" r="8" fill="none" stroke={renk.lacivert} strokeOpacity="0.25" strokeWidth="3" />
@@ -307,6 +336,16 @@ function AtisEkrani() {
         </div>
       </div>
       <DelikAlt ipucu={m('maket.atis.not')} />
+    </Ekran>
+  );
+}
+
+// Üstten şema (ölçü çizgili): ?maket=sema&no=3 | 7 | 14; no=0 üç deliğin stattaki yeri (ölçekli).
+function SemaEkrani() {
+  const ham = Number(new URLSearchParams(window.location.search).get('no') ?? 0);
+  return (
+    <Ekran>
+      <Sema no={ham === 0 ? 0 : ornekDelik(ham).no} />
     </Ekran>
   );
 }
@@ -410,6 +449,7 @@ const EKRANLAR: Record<string, () => ReactNode> = {
   'tur-secimi': TurSecimi,
   delik: DelikEkrani,
   atis: AtisEkrani,
+  sema: SemaEkrani,
   'skor-karti': SkorKarti,
   'tur-sonu': TurSonu,
 };
