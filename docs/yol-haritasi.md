@@ -19,13 +19,21 @@
   köşedeki yapı kulüp binası (10. delik onun önünde); 3B Dirlik Stadı modeli oyunda kullanılır; tribün
   sıraları, köprü, duşlar engel; tur orta yuvarlakta başlar ve biter; geri al DENEME; oyuncu görünmez;
   Stadyum turu Ocak 2027'nin ayın turu (ileride Mart'a kayabilir).
+- 18 Kasım 2026 (öneri; `ajans/ornek-delikler`): Kemal maketlere bakıp üç karar verdi: pistler gerçek
+  boyutlarda, her delik yere özgü ve daha zorlu, zemin mekânın kendi zemini (ayrı halı yok, ince bordür).
+  Üç örnek delik bu dille çizildi: 3 (kale, çim), 7 (açık tribün sıraları, beton basamak), 14 (duşlar,
+  karo). Delik ve atış maketleri bu üç delikle yeniden yapıldı (`?maket=delik&no=3|7|14`,
+  `?maket=atis&no=…`), üstten ölçülü şemalar eklendi (`?maket=sema&no=…`; `docs/plan/ornek-delik-*.png`).
+  Ölçüler kaynağıyla (IFAB, WMF norm pistleri, 3B model); kaynağı olmayan DENEME. Öbür 15 delik eski
+  dilde, yeniden çizilecek. Gerçek telefonda denenmedi.
 
 ## Sıradaki
 
-1. **Kemal'in onayı:** delik planı ve maketler onaylanır ya da düzeltilir (8 soru cevaplandı, 16 Kasım).
+1. **Kemal'in onayı:** üç örnek delik (3, 7, 14) onaylanır ya da düzeltilir; top büyüklüğü ve bordür
+   rengi sorusu cevaplanır. Onaylanınca öbür 15 delik aynı dille yeniden çizilir (tasarım belgesi 4.8).
 2. **Tünel ve soyunma odası** (duşlarıyla) modele eklenir: kapalı tribünün altı, tünel oradan sahaya
    (yeri karar, Kemal 16 Kasım; 3B iş).
-3. **İlk delik denemesi:** plandaki 1. delik (orta yuvarlak); fizik kütüphanesi seçilir, tek parmak
+3. **İlk delik denemesi:** plandaki 1. delik (orta yuvarlak; yeni dille çizildikten sonra); fizik kütüphanesi seçilir, tek parmak
    vuruş ve nişan çizgisi, geri al, delik sonu. Ölçüler DENEME. Maketteki ekranlar onaylanınca oyuna
    taşınır.
 4. Sonraki delikler, delik delik; her biri Kemal denedikten sonra; hareketliler en son.
@@ -43,3 +51,4 @@
 
 - İskelet (16 Kasım, PR #1 birleşti).
 - Stadyum turu soruları: Kemal'in 8 cevabı (16 Kasım; tasarım belgesi, kararların geçmişi).
+- Ölçek, zemin ve özgün delik kararı (Kemal, 18 Kasım; tasarım belgesi, kararların geçmişi ve 4.8).

@@ -1,28 +1,62 @@
 import { Suspense, useLayoutEffect, useMemo, useRef, type ReactNode } from 'react';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { Mesh, Vector3, type Object3D } from 'three';
+import { Mesh, Plane, Vector3, type Material, type Object3D } from 'three';
 import { renk } from '../sahne/renkler';
 
 // MAKET (öneri): yalnız ?maket=… ekranlarında kullanılır, oyunun kalıcı koduna girmez.
-// 3B Dirlik Stadı modeli Kems Ajans'ın Blender modeli; kaynağı ve lisansı Kemal'e soruldu.
+// 3B Dirlik Stadı modeli Kems Ajans'ın Blender modeli (docs/lisanslar.md). Model metreyle çizilmiş.
 export const STAT_MODELI = `${import.meta.env.BASE_URL}modeller/dirlik-stadi.glb`;
 
 // Modelin kendi ölçüsünde (metreye yakın) sahanın ortası: orta yuvarlak.
 export const ORTA_YUVARLAK: [number, number, number] = [45, 0, -29];
 
-function StatModeli() {
+// Modelde kesilecek kutu: içindeki oturma tahtaları (krem ve lacivert) çizilmez; pist o sıralarda
+// çıplak beton basamaktan geçer.
+export type Kesim = { x0: number; x1: number; z0: number; z1: number };
+
+function StatModeli({ kesim }: { kesim?: Kesim }) {
   const gltf = useLoader(GLTFLoader, STAT_MODELI);
   const sahne = useMemo(() => {
     const kopya = gltf.scene.clone(true);
+    const duzlemler = kesim && [
+      new Plane(new Vector3(-1, 0, 0), kesim.x0),
+      new Plane(new Vector3(1, 0, 0), -kesim.x1),
+      new Plane(new Vector3(0, 0, -1), kesim.z0),
+      new Plane(new Vector3(0, 0, 1), -kesim.z1),
+    ];
     kopya.traverse((o: Object3D) => {
-      if (o instanceof Mesh) {
-        o.castShadow = true;
-        o.receiveShadow = true;
+      if (!(o instanceof Mesh)) return;
+      o.castShadow = true;
+      o.receiveShadow = true;
+      const ad = (o.material as Material).name;
+      if (ad === 'zemin') {
+        // Modelde toprak zemin ile çimin tabanı aynı yükseklikte; üst üste titremesin diye zemin geriye itilir.
+        const zemin = (o.material as Material).clone();
+        zemin.polygonOffset = true;
+        zemin.polygonOffsetFactor = 2;
+        zemin.polygonOffsetUnits = 8;
+        o.material = zemin;
+      }
+      if (ad === 'file') {
+        // Kale ağı modelde dolu kutu; içi görünsün diye saydam.
+        const ag = (o.material as Material).clone();
+        ag.transparent = true;
+        ag.opacity = 0.32;
+        ag.depthWrite = false;
+        o.material = ag;
+        o.castShadow = false;
+      }
+      if (duzlemler && (ad === 'krem' || ad === 'lacivert')) {
+        const kesik = (o.material as Material).clone();
+        kesik.clippingPlanes = duzlemler;
+        kesik.clipIntersection = true;
+        kesik.clipShadows = true;
+        o.material = kesik;
       }
     });
     return kopya;
-  }, [gltf]);
+  }, [gltf, kesim]);
   return <primitive object={sahne} />;
 }
 
@@ -65,10 +99,13 @@ type Ozellik = {
   arkaPlan?: string;
   // Görüş açısı verilirse eğik yukarıdan perspektif kamera (iskeletteki gibi); verilmezse izometrik.
   gorusAcisi?: number;
+  // Model çizilmesin (modelde olmayan kapalı yerler: duşlar).
+  modelsiz?: boolean;
+  kesim?: Kesim;
   children?: ReactNode;
 };
 
-export function StatSahnesi({ konum, hedef, zoom, golgeMerkez = hedef, golgeYaricap = 40, arkaPlan = renk.krem, gorusAcisi, children }: Ozellik) {
+export function StatSahnesi({ konum, hedef, zoom, golgeMerkez = hedef, golgeYaricap = 40, arkaPlan = renk.krem, gorusAcisi, modelsiz = false, kesim, children }: Ozellik) {
   const [gx, gy, gz] = golgeMerkez;
   return (
     <Canvas
@@ -77,6 +114,9 @@ export function StatSahnesi({ konum, hedef, zoom, golgeMerkez = hedef, golgeYari
       dpr={[1, 2]}
       camera={gorusAcisi ? { position: konum, fov: gorusAcisi, near: 0.1, far: 1000 } : { position: konum, zoom, near: 0.1, far: 1000 }}
       gl={{ preserveDrawingBuffer: true }}
+      onCreated={({ gl }) => {
+        gl.localClippingEnabled = true;
+      }}
     >
       <Kamera konum={konum} hedef={hedef} zoom={zoom} />
       <color attach="background" args={[arkaPlan]} />
@@ -95,7 +135,7 @@ export function StatSahnesi({ konum, hedef, zoom, golgeMerkez = hedef, golgeYari
         shadow-bias={-0.0005}
       />
       <Suspense fallback={null}>
-        <StatModeli />
+        {!modelsiz && <StatModeli kesim={kesim} />}
       </Suspense>
       {children}
     </Canvas>
