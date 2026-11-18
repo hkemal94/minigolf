@@ -11,8 +11,8 @@ export const STAT_MODELI = `${import.meta.env.BASE_URL}modeller/dirlik-stadi.glb
 // Modelin kendi ölçüsünde (metreye yakın) sahanın ortası: orta yuvarlak.
 export const ORTA_YUVARLAK: [number, number, number] = [45, 0, -29];
 
-// Modelde kesilecek kutu: içindeki oturma tahtaları (krem ve lacivert) çizilmez; pist o sıralarda
-// çıplak beton basamaktan geçer.
+// Modelde kesilecek kutu: içindeki oturma tahtaları (krem ve lacivert) çizilmez; yerlerine makette
+// tek tek koltuk çizilir (Kemal, 18 Kasım 2026). Model dosyasına dokunulmaz.
 export type Kesim = { x0: number; x1: number; z0: number; z1: number };
 
 function StatModeli({ kesim }: { kesim?: Kesim }) {

@@ -81,7 +81,7 @@
   "maket.zemin.7": "Zemin: beton basamak",
   "maket.zemin.14": "Zemin: duş karosu",
   "maket.bulmaca.3": "Top kale çizgisi boyunca gider. Yakın direği sıyırıp geçer; uzak direkteki köşeden sekip kalenin içine döner. Direğin arkasına kaçan top yan ağda kalır.",
-  "maket.bulmaca.7": "Top sıra boyunca gider, oturma tahtasının arkasındaki dar geçitten geçer. Tribün merdivenindeki köşe topu iki basamak aşağı düşürür; alt sırada yine tahtanın arkasından deliğe.",
+  "maket.bulmaca.7": "Pist koltukların arkasındaki dar oluk. Boş koltuğun önündeki köşe topu aradan bir alt sıraya düşürür; iki sıra böyle inilir. Delik en alt sıranın oluğunda.",
   "maket.bulmaca.14": "Bölmelerin arasından zikzak. Zemin süzgece doğru eğimli; delik süzgecin kendisi. Birikintiye giren top dışarı sayılır (DENEME).",
   "maket.sema.baslik": "Örnek delik {0} · {1}",
   "maket.sema.metre": "{0} m",
@@ -90,8 +90,6 @@
   "maket.sema.sektirme": "köşe: sektirme",
   "maket.sema.ag": "ağ",
   "maket.sema.yanAg": "yan ağ: çıkmaz",
-  "maket.sema.dusus": "düşüş",
-  "maket.sema.tahta": "oturma tahtası",
   "maket.sema.sira": "sıra {0}",
   "maket.sema.basamakYukseklik": "basamak {0}",
   "maket.sema.bolme": "bölme",
@@ -99,7 +97,7 @@
   "maket.sema.suzgec": "süzgeç",
   "maket.sema.egim": "eğim süzgece",
   "maket.sema.kapi": "kapı",
-  "maket.sema.topNotu": "Top ve delik görünsün diye {0} kat büyük çizildi (DENEME). Kiremit çizgi: bordür. Kesik lacivert çizgi: önerilen yol.",
+  "maket.sema.topNotu": "Top {0} cm, delik {1} cm: gerçek ölçü. Kiremit çizgi: pist kenarı. Kesik lacivert çizgi: önerilen yol.",
   "maket.kaynak.ifab": "IFAB",
   "maket.kaynak.wmf": "WMF",
   "maket.kaynak.model": "MODEL",
@@ -116,5 +114,8 @@
   "maket.yerlesim.aUcu": "A ucu",
   "maket.yerlesim.bUcu": "B ucu",
   "maket.yerlesim.not": "Öbür 15 delik bu dille yeniden çizilecek (Kemal onaylayınca).",
-  "maket.sema.merdiven": "tribün merdiveni"
+  "maket.sema.merdiven": "tribün merdiveni",
+  "maket.delik.uzaklik": "delik {0}",
+  "maket.sema.bosKoltuk": "boş koltuk: geçit",
+  "maket.sema.oluk": "koltukların arkası: pist"
 }

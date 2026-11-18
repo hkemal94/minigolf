@@ -36,6 +36,15 @@ modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik
 
 En yeni üstte.
 
+- **18 Kasım (Kemal, örnek deliklere bakınca; kesin):**
+  1. Dil 18 deliğe **henüz yayılmaz** ("duşlarda falan top ve delik yine çok büyük"). Yalnız üç örnek
+     delik düzeltilir; Kemal yeniden bakar.
+  2. **Top ve delik gerçek ölçüde**; 4 kat büyütme kalktı. **Kamera topu yakından izler**; delik tek
+     ekrana sığmazsa kamera kayar ya da yaklaşır, deliğin yeri işaretle gösterilir (4.8). Bu, 15 Kasım'daki
+     "her delik tek ekranda" kararının yerine geçer (2. bölüm).
+  3. **Pist kenarı kiremit** (ince bordür).
+  4. Tribünde oturma tahtası yerine **tek tek tribün koltukları**; koltuklar engel olarak kullanılır.
+     Model dosyasına dokunulmaz; koltuklar kodla çizilir.
 - **18 Kasım (Kemal, maketlere bakınca; kesin):**
   1. **Ölçek:** pistler gerçek boyutlarda olur; gerçek minigolf pisti ölçüsünde ve statla oranlı (kale,
      penaltı noktası, tribün basamağı yanında doğru büyüklükte). Eski maketteki pist sahaya göre çok büyüktü.
@@ -101,7 +110,9 @@ karakteri, adı, yüzü yok.
 ## 2. Oynanış: kamera ve kontrol
 
 **Karar (Kemal, 15 Kasım):**
-- Kamera eğik yukarıdan 3B (izometrik); **her delik tek ekranda**.
+- Kamera eğik yukarıdan 3B (izometrik); ~~her delik tek ekranda~~. **Karar (Kemal, 18 Kasım):** top ve
+  delik gerçek ölçüde olduğu için kamera topu yakından izler; delik tek ekrana sığmazsa kamera kayar ya
+  da yaklaşır, deliğin yeri işaretle gösterilir (4.8).
 - Ekran **dikey**, oyun **tek elle** oynanır.
 - Yardımcılar: **nişan çizgisi**, **geri al vuruş**, **kaldığı yerden devam**.
 - Delik başına vuruş sınırı: sonra; web denemesinden sonra Kemal karar verir.
@@ -471,27 +482,36 @@ Hareketli engel yok (en sona).
 | Kale sahası (direkten yana ve içeri) · ceza sahası · penaltı noktası | 5,5 · 16,5 · 11 | IFAB, Kural 1 |
 | Direk ve çizgi genişliği en çok · orta yuvarlak yarıçapı · köşe bayrağı en az | 0,12 · 9,15 · 1,5 | IFAB, Kural 1 |
 | Saha: taç çizgisi 90–120, kale çizgisi 45–90 (modelde 90 × 58) | 90 × 58 | IFAB, Kural 1; 3B model |
-| Beton norm minigolf pisti (boy × en) | 12 × 1,25 | WMF norm sistemi (Vikipedi "Bahnengolf" üzerinden) |
-| Minyatür (eternit) norm pist (boy × en) | 6,25 × 0,90 | aynı |
+| Beton norm minigolf pisti (boy × en) | 12 × 1,25 | ÖBGV kural kitabı 2.3 "Minigolf (Concrete)" (WMF-2.4) |
+| Minyatür (eternit) norm pist (boy × en) | 6,25 × 0,90 | Almanca Vikipedi "Bahnengolf" (ÖBGV ve WMF kural kitaplarına dayanır) |
 | Keçe norm pist (boy; en 0,90) | 9–18 | aynı |
-| Başlangıç işareti (beton pist): daire çapı | 0,30 | aynı |
-| Minigolf topu çapı | 0,037–0,043 | Vikipedi "Minigolf" (Almanca) |
+| Başlangıç işareti (beton pist): daire çapı | 0,30 | ÖBGV kural kitabı 2.3 |
+| Minigolf topu çapı (aralık) | 0,037–0,043 | Almanca Vikipedi "Minigolf" |
+| **Top (oyunda)** | 0,04267 | Golf topu en küçük çap 1,680 inç; R&A ve USGA Ekipman Kuralları (İngilizce Vikipedi "Golf ball") |
+| **Delik (oyunda)** | 0,108 | Golf deliği 4,25 inç; Golf Kuralları (İngilizce Vikipedi "Glossary of golf"). Minigolf norm deliği bulunamadı: DENEME |
 | Tribün basamağı: derinlik · yükseklik; oturma tahtası eni | 0,85 · 0,42 · 0,40 | 3B Dirlik Stadı modelinden ölçüldü |
 | Açık tribünün taş merdiveni: en | 1,2 | 3B model |
 
-Kaynak notları: IFAB sayfası (theifab.com, Kural 1) 18 Kasım'da okundu. WMF'nin kendi sitesi açılamadı;
-norm pist sayıları Almanca Vikipedi'den (ÖBGV ve WMF kural kitaplarına dayanır), birincil kaynaktan
-doğrulanmadı. Tribün basamağı için dış standart doğrulanamadı; ölçü modelin kendisinden (model IFAB
+Kaynak notları: IFAB sayfası (theifab.com, Kural 1) ve ÖBGV kural kitabı 2.3 (oebgv.at) 18 Kasım'da
+okundu. WMF'nin kendi sitesi açılamadı; minyatür ve keçe pist sayıları Almanca Vikipedi'den, birincil
+kaynaktan doğrulanmadı. Tribün basamağı için dış standart doğrulanamadı; ölçü modelin kendisinden (model IFAB
 ölçüleriyle, metreyle çizilmiş). Kaynağı olmayan her değer DENEME: bordür (yükseklik 0,08, en 0,06),
-delik çapı, bayrak boyu, duş odasının eni ve bölmeleri, karo, birikinti.
+delik çapı (golf deliği alındı), bayrak boyu, koltuk eni ve aralığı, duş odasının eni ve bölmeleri, karo,
+birikinti, kamera yakınlığı.
 
 **Ortak dil:**
-- Pistin eni ve boyu gerçek minigolf pistinden: en 0,85–1,25 m, boy 6,25–13,4 m.
-- Zemin çizilmez; yerin zemini neyse o. Sınır ince, yükseltilmiş bordür. Bordürün rengi kiremit (DENEME:
-  çimde, betonda, karoda ve lacivert tahtaların yanında aynı çizgi okunsun diye; açık soru).
-- **Top ve delik gerçek ölçüsünde telefonda görünmüyor** (gerçek top tek ekranda 2 piksel). Makette top
-  ve delik 4 kat büyük çizildi: DENEME, açık soru (7. bölüm).
-- Her delik yine tek ekranda; atışta kamera topa yaklaşır (DENEME).
+- Pistin eni ve boyu gerçek minigolf pistinden: boy 6,25–13,4 m; en 1,25 m (kale), tribünde koltukların
+  arkasındaki oluk (0,35 m), duşta odanın kendisi.
+- Zemin çizilmez; yerin zemini neyse o. Sınır ince, yükseltilmiş bordür. **Karar (Kemal, 18 Kasım):**
+  pist kenarı kiremit.
+- **Karar (Kemal, 18 Kasım): top ve delik gerçek ölçüde.** Top 4,27 cm (golf topunun en küçük çapı
+  42,67 mm; R&A ve USGA Ekipman Kuralları). Delik 10,8 cm: golf deliğinin çapı (Golf Kuralları); norm
+  minigolf pistinin delik çapı bulunamadı, o yüzden delik çapı DENEME.
+- **Karar (Kemal, 18 Kasım): kamera topu yakından izler.** Öneri (DENEME): delik ekranında kamera topun
+  yanındadır (ekranın eni yaklaşık 1,8 m yer gösterir); atışta daha da yaklaşır (yaklaşık 1 m). Delik
+  ekranda değilse kenarda deliğe bakan bir ok ve uzaklığı çıkar; köşede deliğin tamamını gösteren küçük
+  plan durur (topun ve deliğin yeri). Top ilerledikçe kamera onunla kayar; delik ekrana girince ok kalkar,
+  bayrak görünür.
 
 **3 · Kale (A ucu)** · zemin: sahanın çimi · zorluk: orta (öneri; eskisi kolay)
 - Yer: A ucundaki kale ve kale çizgisi (modelde var). Pist kale çizgisinin üstünde: kale sahası
@@ -503,13 +523,16 @@ delik çapı, bayrak boyu, duş odasının eni ve bölmeleri, karo, birikinti.
 - Deneme notu: direği sıyırma açısı adil mi; ağ topu yumuşak durduruyor mu.
 
 **7 · Açık tribün sıraları** · zemin: beton basamak · zorluk: zor (öneri; eskisi orta)
-- Yer: açık tribünün 5., 4. ve 3. sıraları ve ortadaki taş merdiven (modelde var).
-- Ölçü: 6,25 m uzun (minyatür norm pist boyu); pistin eni basamağın kendisi (0,85 m); iki basamak iniş (2 × 0,42 m).
-- Bulmaca: top 5. sıra boyunca gider; yolda kalan oturma tahtası sıranın ön yanını kapatır, arkasında
-  0,35 m'lik dar geçit kalır. Merdivendeki 45° köşe topu aşağı çevirir, top merdivenden iki basamak düşer
-  ve 3. sırada durur. 3. sırada yine bir tahtanın arkasından deliğe. Pistin geçtiği yerde oturma tahtaları
-  yok; çıplak beton.
-- Deneme notu: düşen top 3. sıranın bordüründe duruyor mu; dar geçit telefonda nişan alınabilir mi.
+- Yer: açık tribünün 5., 4. ve 3. sıraları, ortadaki taş merdivenin doğusu (modelde var). **Karar (Kemal,
+  18 Kasım):** oturma tahtası yerine tek tek koltuk; koltuklar engel. Makette modelin tahtaları bu bölgede
+  çizilmez, yerlerine koltuklar kodla çizilir (model dosyası değişmedi).
+- Ölçü: 6,25 m uzun (minyatür norm pist boyu). Pist, koltukların arkasında bir üst basamağın dibinde kalan
+  oluk: 0,35 m (model). İki basamak iniş (2 × 0,42 m). Koltuk eni 0,43 m, aralığı 0,45 m (DENEME).
+- Bulmaca: top 5. sıranın oluğunda koltukların arkasından gider. Sıradaki bir koltuk boş; boşluğun
+  önündeki 45° köşe topu aradan öne çevirir, top bir basamak düşüp 4. sıranın oluğuna iner. 4. sırada
+  aynı şey bir kez daha (boş koltuk başka yerde), top 3. sıraya düşer; delik 3. sıranın oluğunda. Koltuklar
+  duvar gibidir: top aralarından geçemez, yalnız boş koltuktan geçer.
+- Deneme notu: düşen top alt sıranın oluğunda duruyor mu; köşe doğru güçte topu yoluna devam ettiriyor mu.
 
 **14 · Duşlar** · zemin: duşun karosu · zorluk: zor
 - Yer: soyunma odasının duş bölümü, kapalı tribünün altı (**modelde yok, eklenecek**; makette oda kodla
@@ -519,6 +542,7 @@ delik çapı, bayrak boyu, duş odasının eni ve bölmeleri, karo, birikinti.
   daha az vuruş). Zemin süzgece doğru hafif eğimli (eğim DENEME); delik süzgecin kendisi. Açık duşun
   altındaki birikintiye giren top dışarı sayılır (DENEME).
 - Deneme notu: eğim topu süzgece adil taşıyor mu; birikinti açıkça "girme" diyor mu.
+- 18 Kasım: Kemal "duşlarda top ve delik yine çok büyük" dedi; top ve delik gerçek ölçüye indi.
 
 Üstten şemalar (ölçü çizgili) ve üç deliğin stattaki yeri (ölçekli):
 
@@ -588,9 +612,12 @@ denemesinde reklam ve satın alma yok.
 
 Kemal'in kararını bekleyenler.
 
-- **Top ve delik ne kadar büyük çizilsin?** (18 Kasım) Gerçek top tek ekranda görünmüyor; makette 4 kat (4.8).
-- **Bordürün rengi:** kiremit (makette), lacivert ya da krem (4.8).
-- **Örnek delikler (3, 7, 14) onay:** onaylanırsa öbür 15 delik aynı dille çizilir (4.8).
+- **Örnek delikler (3, 7, 14) onay:** Kemal yeniden bakacak; onaylanırsa öbür 15 delik aynı dille çizilir (4.8).
+- **Kameranın yakınlığı ve deliğin işareti** (ok, uzaklık, küçük plan): öneri, DENEME (4.8).
+- **Norm minigolf deliğinin çapı** bulunamadı; golf deliği (10,8 cm) alındı, DENEME.
+- ~~Top ve delik ne kadar büyük çizilsin?~~ Cevaplandı (Kemal, 18 Kasım): gerçek ölçü, kamera topu izler.
+- ~~Bordürün rengi~~ Cevaplandı (Kemal, 18 Kasım): kiremit.
+- ~~Tribünde oturma tahtaları~~ Cevaplandı (Kemal, 18 Kasım): tahta yerine tek tek koltuk, engel olarak.
 - **Geri al vuruşu sayıdan düşer mi?** DENEME; karar denemeden sonra (Kemal, 16 Kasım; 2. bölüm).
 - **Top dışarı kaçarsa:** öneri "vuruştan önceki yere döner, vuruş sayılır"; DENEME, karar denemeden sonra.
 - **Vuruş sınırı:** web denemesinden sonra.
@@ -659,17 +686,17 @@ ekranına karışmaz. Görüntüler iPhone 13 boyutunda çekildi.
 2. **Tur seçimi** (`?maket=tur-secimi`): Stadyum turu kartı 3B statın küçük görüntüsüyle; sonraki turlar
    kilitli, yer tutucu (açılma kuralı [Kemal]).
 3. **Delik ekranı** (`?maket=delik&no=3`, `7`, `14`): **18 Kasım'da yeniden yapıldı.** Üç örnek delik
-   yeni dille (4.8): deliğin tamamı tek ekranda, zemin yerin kendi zemini, ince bordür, top, bayraklı delik.
-   Üstte delik no, yer, zorluk ve vuruş; altında örnekler arası geçiş ve zemin etiketi; altta geri al ve skor.
-4. **Atış ve nişan** (`?maket=atis&no=3`, `7`, `14`): aynı üç delikte kamera topa yaklaşır; parmakla geri
-   çekme göstergesi, kiremit kesik nişan çizgisi, topun çevresinde güç halkası.
+   (4.8). Kamera topun yanında; top ve delik gerçek ölçüde. Delik ekranda değilse kenarda ok ve uzaklığı,
+   köşede deliğin tamamını gösteren küçük plan. Zemin yerin kendi zemini, kenar kiremit ince bordür.
+4. **Atış ve nişan** (`?maket=atis&no=3`, `7`, `14`): kamera topa daha da yaklaşır; parmakla geri çekme
+   göstergesi, kiremit kesik nişan çizgisi, topun çevresinde güç halkası.
    Ayrıca **üstten şema** (`?maket=sema&no=3`, `7`, `14`; `no=0` üç deliğin stattaki yeri): ölçü çizgili.
 5. **Skor kartı** (`?maket=skor-karti`): 18 deliğin listesi (plandaki yerleriyle), vuruşlar "–", DENEME.
 6. **Tur sonu** (`?maket=tur-sonu`): toplam vuruş "–", ayın turu ilerlemesi (18 parça, boş), ayın pulu yer
    tutucusu ve 3+1 pul dizisi.
 
-Kamera notu (DENEME): örnek deliklerde kamera tam izometrik; delik ekranında deliğin tamamı, atış
-ekranında topun yakını görünür. Hangisinin oyunda kalacağı ilk delik denemesinde Kemal'e gösterilir.
+Kamera notu: örnek deliklerde kamera tam izometrik ve topu yakından izler (Kemal, 18 Kasım); yakınlık
+DENEME, ilk delik denemesinde Kemal'e gösterilir.
 Eski 3. ve 4. maket (büyük krem pist) 18 Kasım'da kaldırıldı.
 
 | | | |

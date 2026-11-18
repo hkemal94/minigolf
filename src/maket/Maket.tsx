@@ -2,7 +2,8 @@ import { useState, type ReactNode } from 'react';
 import { m, type MetinAnahtari } from '../metinler';
 import { StatSahnesi, ORTA_YUVARLAK } from './StatSahnesi';
 import { OrnekSahne } from './OrnekDelik';
-import { Sema } from './Sema';
+import { Sema, KucukHarita } from './Sema';
+import { metre } from './metre';
 import { ORNEK_DELIKLER, ornekDelik } from './ornekDelikler';
 import { renk } from '../sahne/renkler';
 import './maket.css';
@@ -248,36 +249,84 @@ function OrnekGecis({ ekran, secili }: { ekran: string; secili: number }) {
   );
 }
 
-// c) Delik ekranı: deliğin tamamı tek ekranda.
+// Deliğin yeri: delik ekranın dışındaysa kenarda ok ve uzaklık; içindeyse bayrağın kendisi görünür.
+// Köşede küçük plan: deliğin tamamı, topun ve deliğin yeri. (Kemal, 18 Kasım 2026: kamera topu izler.)
+function DelikYeri({ no, atis, delikEkran, alan }: { no: number; atis: boolean; delikEkran: [number, number] | null; alan: HTMLDivElement | null }) {
+  const delik = ornekDelik(no);
+  const top = atis ? delik.atis.top : delik.baslangic;
+  const uzaklik = Math.hypot(delik.cukur[0] - top[0], delik.cukur[2] - top[2]);
+  let ok: ReactNode = null;
+  if (delikEkran && alan) {
+    const g = alan.clientWidth;
+    const y = alan.clientHeight;
+    const pay = 30;
+    const [dx, dy] = delikEkran;
+    if (dx < 0 || dx > g || dy < 0 || dy > y) {
+      // Ekranın ortasından deliğe giden doğrunun kenarı kestiği yer.
+      const ox = g / 2;
+      const oy = y / 2;
+      const t = Math.min((g / 2 - pay) / Math.abs(dx - ox || 1), (y / 2 - pay) / Math.abs(dy - oy || 1));
+      const aci = (Math.atan2(dy - oy, dx - ox) * 180) / Math.PI;
+      let okX = ox + (dx - ox) * t;
+      const okY = oy + (dy - oy) * t;
+      // Sağ üst köşede küçük plan var; ok onun altında kalmasın.
+      if (okX > g - 120 && okY < 190) okX = g - 130;
+      ok = (
+        <div className="mk-delik-oku" style={{ left: okX, top: okY }}>
+          <svg viewBox="0 0 24 24" width="26" height="26" style={{ transform: `rotate(${aci}deg)` }} aria-hidden>
+            <path d="M4 12h13M12 6l6 6-6 6" fill="none" stroke={renk.krem} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span>{m('maket.delik.uzaklik', metre(Math.round(uzaklik * 10) / 10))}</span>
+        </div>
+      );
+    }
+  }
+  return (
+    <>
+      {ok}
+      <div className="mk-kucuk-harita-kutu">
+        <KucukHarita delik={delik} top={[top[0], top[2]]} />
+      </div>
+    </>
+  );
+}
+
+// c) Delik ekranı: kamera topun yanında; deliğin yeri ok ve küçük planla.
 function DelikEkrani() {
   const no = ornekNo();
+  const [delikEkran, setDelikEkran] = useState<[number, number] | null>(null);
+  const [alan, setAlan] = useState<HTMLDivElement | null>(null);
   return (
     <Ekran>
       <DelikUst no={no} zorluk={ornekDelik(no).zorluk} />
       <OrnekGecis ekran="delik" secili={no} />
-      <div className="mk-sahne">
-        <OrnekSahne no={no} />
+      <div className="mk-sahne" ref={setAlan}>
+        <OrnekSahne no={no} delikBildir={(x, y) => setDelikEkran([x, y])} />
+        <DelikYeri no={no} atis={false} delikEkran={delikEkran} alan={alan} />
       </div>
       <DelikAlt ipucu={m('maket.delik.ipucu')} />
     </Ekran>
   );
 }
 
-// d) Atış ve nişan: kamera topa yaklaşır; parmak, nişan çizgisi, güç halkası.
+// d) Atış ve nişan: kamera topa daha da yaklaşır; parmak, nişan çizgisi, güç halkası.
 function AtisEkrani() {
   const no = ornekNo();
   const [parmakEkran, setParmakEkran] = useState<[number, number] | null>(null);
+  const [delikEkran, setDelikEkran] = useState<[number, number] | null>(null);
+  const [alan, setAlan] = useState<HTMLDivElement | null>(null);
   return (
     <Ekran>
       <DelikUst no={no} zorluk={ornekDelik(no).zorluk} />
       <OrnekGecis ekran="atis" secili={no} />
-      <div className="mk-sahne">
-        <OrnekSahne no={no} atis parmakBildir={(px, py) => setParmakEkran([px, py])} />
+      <div className="mk-sahne" ref={setAlan}>
+        <OrnekSahne no={no} atis parmakBildir={(px, py) => setParmakEkran([px, py])} delikBildir={(x, y) => setDelikEkran([x, y])} />
         {parmakEkran && (
           <div className="mk-parmak" style={{ left: parmakEkran[0], top: parmakEkran[1] }}>
             <span>{m('maket.atis.parmak')}</span>
           </div>
         )}
+        <DelikYeri no={no} atis delikEkran={delikEkran} alan={alan} />
         <div className="mk-guc-etiket">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden>
             <circle cx="12" cy="12" r="8" fill="none" stroke={renk.lacivert} strokeOpacity="0.25" strokeWidth="3" />

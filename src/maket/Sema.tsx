@@ -1,8 +1,8 @@
-import { m, type MetinAnahtari } from '../metinler';
+import { m, seciliDil, type MetinAnahtari } from '../metinler';
 import { renk } from '../sahne/renkler';
 import { metre } from './metre';
-import { DENEME, IFAB, MODEL } from './olculer';
-import { ORNEK_DELIKLER, ornekDelik, DUS_BOY, DUS_EN, MERDIVEN_X0, MERDIVEN_X1, type Kaynak, type N2, type OrnekDelik } from './ornekDelikler';
+import { GOLF, IFAB, MODEL } from './olculer';
+import { ORNEK_DELIKLER, ornekDelik, DUS_BOY, DUS_EN, MERDIVEN_X1, type Kaynak, type N2, type OrnekDelik } from './ornekDelikler';
 
 // MAKET (öneri): örnek deliklerin üstten şeması, ölçü çizgileriyle. Veri 3B maketle aynı (ornekDelikler.ts).
 
@@ -17,7 +17,7 @@ const KAYNAK_ADI: Record<Kaynak, MetinAnahtari> = {
 // Önerilen yol (kesik kiremit) ve kestirme: bulmacayı anlatmak için; oynanışta çizilmez.
 const YOLLAR: Record<number, N2[][]> = {
   3: [[[0, MODEL.kaleSahasiCizgisiZ], [0.4, -25.68], [-1.25, -25.64]]],
-  7: [[[47.6, -67.05], [45.05, -67.05], [45.05, -64.95], [44.3, -65.4], [43.0, -65.4], [42.5, -65.12]]],
+  7: [[[51.4, -67.075], [49.4, -67.075], [49.43, -66.225], [47.6, -66.225], [47.63, -65.375], [46.3, -65.375]]],
   14: [[[0.6, 0.75], [1.5, 2.2], [3.1, 0.5], [4.7, 2.2], [5.6, 0.75]]],
 };
 
@@ -49,7 +49,7 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
     <svg viewBox={`0 0 ${gen} ${yuk}`} width="100%" height="100%" className="mk-sema-cizim">
       <rect x={ox} y={oy} width={(maxX - minX) * olcek} height={(maxY - minY) * olcek} rx="10" fill={ZEMIN[delik.no]} />
       {delik.no === 14 && <rect {...kutu({ x0: 0, x1: DUS_BOY, z0: 0, z1: DUS_EN })} fill="#F4F1EA" />}
-      {delik.no === 7 && <rect {...kutu({ x0: MERDIVEN_X0, x1: MERDIVEN_X1, z0: c.z0, z1: c.z1 })} fill="#B79A6E" opacity="0.55" />}
+      {delik.no === 7 && <rect {...kutu({ x0: c.x0, x1: MERDIVEN_X1, z0: c.z0, z1: c.z1 })} fill="#B79A6E" opacity="0.55" />}
       {delik.cizgiler.map((l, i) => (
         <path
           key={i}
@@ -64,7 +64,7 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
         <circle cx={P(delik.birikinti.n)[0]} cy={P(delik.birikinti.n)[1]} r={delik.birikinti.r * olcek} fill="#7FB0C8" opacity="0.8" />
       )}
       {delik.kutular.map((k, i) => (
-        <rect key={i} {...kutu(k)} fill={k.tur === 'tahta' ? renk.lacivert : '#FAF8F5'} stroke={renk.lacivert} strokeWidth={k.tur === 'tahta' ? 0 : 1} />
+        <rect key={i} {...kutu(k)} rx={k.tur.startsWith('koltuk') ? 2 : 0} fill={k.tur === 'koltuk' ? renk.lacivert : k.tur === 'koltukAcik' ? renk.krem : '#FAF8F5'} stroke={renk.lacivert} strokeWidth={k.tur === 'koltuk' ? 0 : 0.8} />
       ))}
       {delik.bordurler.map((b, i) => (
         <path key={i} d={yol(b.noktalar)} stroke={renk.kiremit} strokeWidth="2.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
@@ -73,8 +73,9 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
         <path key={i} d={yol(y)} stroke={renk.lacivert} strokeWidth="1.4" strokeDasharray={i ? '2 3' : '5 3'} fill="none" strokeLinejoin="round" />
       ))}
       {/* Başlangıç ve delik */}
-      <circle cx={bx} cy={by} r="5" fill="#FFFFFF" stroke={renk.lacivert} strokeWidth="1.5" />
-      <circle cx={cx} cy={cy} r={Math.max(4, (DENEME.delikCap / 2) * olcek)} fill={renk.lacivert} />
+      <circle cx={bx} cy={by} r="4.5" fill="none" stroke={renk.lacivert} strokeWidth="0.9" />
+      <circle cx={bx} cy={by} r={Math.max(1.4, (GOLF.topCap / 2) * olcek)} fill="#FFFFFF" stroke={renk.lacivert} strokeWidth="0.6" />
+      <circle cx={cx} cy={cy} r={Math.max(2, (GOLF.delikCap / 2) * olcek)} fill={renk.lacivert} />
       <path d={`M${cx} ${cy} v-16 l9 4 -9 4`} stroke={renk.lacivert} strokeWidth="1.3" fill={renk.kiremit} />
       {/* Ölçü çizgileri */}
       {delik.olculer.map((o, i) => {
@@ -145,7 +146,7 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
   const dusX = 40, dusZ = 9.5;
   const isaretler: { no: number; n: N2; boyut: [number, number]; yazi: N2; hiza: 'start' | 'end' }[] = [
     { no: 3, n: P(-0.7, -32), boyut: [2.6, 13.4], yazi: P(-9, -32), hiza: 'start' },
-    { no: 7, n: P(45.1, -65.6), boyut: [6.25, 2.55], yazi: P(45.1, -54), hiza: 'start' },
+    { no: 7, n: P(48.7, -66), boyut: [6.25, 2.55], yazi: P(48.7, -54), hiza: 'start' },
     { no: 14, n: P(dusX + DUS_BOY / 2, dusZ + DUS_EN / 2), boyut: [DUS_BOY, DUS_EN], yazi: P(dusX + DUS_BOY / 2, -3), hiza: 'end' },
   ];
   return (
@@ -196,6 +197,8 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
   );
 }
 
+const santim = (n: number) => (n * 100).toLocaleString(seciliDil(), { maximumFractionDigits: 2 });
+
 const KAYNAK_SATIRLARI: MetinAnahtari[] = ['maket.kaynak.ifabUzun', 'maket.kaynak.wmfUzun', 'maket.kaynak.modelUzun', 'maket.kaynak.denemeUzun'];
 
 export function Sema({ no }: { no: number }) {
@@ -233,8 +236,41 @@ export function Sema({ no }: { no: number }) {
         {KAYNAK_SATIRLARI.map((k) => (
           <li key={k}>{m(k)}</li>
         ))}
-        <li>{m('maket.sema.topNotu', DENEME.topBuyutme)}</li>
+        <li>{m('maket.sema.topNotu', santim(GOLF.topCap), santim(GOLF.delikCap))}</li>
       </ul>
     </div>
+  );
+}
+
+// Küçük plan: delik ekranının köşesinde deliğin tamamı; topun ve deliğin yeri (kamera topun yanındayken).
+export function KucukHarita({ delik, top }: { delik: OrnekDelik; top: [number, number] }) {
+  const c = delik.cerceve;
+  const cevir = (n: N2): N2 => (delik.eksen === 'z' ? [-n[0], -n[1]] : delik.eksen === 'x' ? [n[1], -n[0]] : [-n[1], n[0]]);
+  const k = [cevir([c.x0, c.z0]), cevir([c.x1, c.z1])];
+  const minX = Math.min(k[0][0], k[1][0]);
+  const minY = Math.min(k[0][1], k[1][1]);
+  const gen = Math.abs(k[0][0] - k[1][0]);
+  const yuk = Math.abs(k[0][1] - k[1][1]);
+  const olcek = Math.min(70 / gen, 118 / yuk);
+  const P = (n: N2): N2 => [(cevir(n)[0] - minX) * olcek, (cevir(n)[1] - minY) * olcek];
+  const yol = (ns: N2[]) => ns.map((n, i) => `${i ? 'L' : 'M'}${P(n)[0].toFixed(1)} ${P(n)[1].toFixed(1)}`).join(' ');
+  const [tx, ty] = P(top);
+  const [dx, dy] = P([delik.cukur[0], delik.cukur[2]]);
+  return (
+    <svg className="mk-kucuk-harita" width={gen * olcek} height={yuk * olcek} viewBox={`0 0 ${gen * olcek} ${yuk * olcek}`} aria-hidden>
+      {delik.kutular.map((q, i) => {
+        const [a, b] = [P([q.x0, q.z0]), P([q.x1, q.z1])];
+        return <rect key={i} x={Math.min(a[0], b[0])} y={Math.min(a[1], b[1])} width={Math.abs(a[0] - b[0])} height={Math.abs(a[1] - b[1])} fill={renk.lacivert} opacity="0.35" />;
+      })}
+      {delik.cizgiler.filter((l) => l.tur === 'ag').map((l, i) => (
+        <path key={i} d={yol([l.a, l.b])} stroke={renk.lacivert} strokeWidth="0.8" strokeDasharray="2 2" fill="none" opacity="0.6" />
+      ))}
+      {delik.bordurler.map((b, i) => (
+        <path key={i} d={yol(b.noktalar)} stroke={renk.kiremit} strokeWidth="1.5" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+      ))}
+      <path d={`M${dx} ${dy} v-9 l5 2.2 -5 2.2`} stroke={renk.lacivert} strokeWidth="1" fill={renk.kiremit} />
+      <circle cx={dx} cy={dy} r="1.8" fill={renk.lacivert} />
+      <circle cx={tx} cy={ty} r="3" fill="#FFFFFF" stroke={renk.lacivert} strokeWidth="1.2" />
+    </svg>
   );
 }

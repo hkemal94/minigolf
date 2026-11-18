@@ -1,13 +1,12 @@
 import { renk } from '../sahne/renkler';
-import { DENEME, TOP_YARICAP, WMF } from './olculer';
+import { DENEME, GOLF, TOP_YARICAP, WMF } from './olculer';
 import type { N2, N3 } from './ornekDelikler';
 
 // MAKET (öneri): pistin ortak parçaları. Zemin çizilmez: pistin zemini mekânın kendi zeminidir
 // (Kemal, 18 Kasım 2026); burada yalnız ince bordür, başlangıç işareti, top, delik ve nişan var.
 // Ölçüler olculer.ts'te; kaynağı olmayanlar DENEME.
 
-// İnce, yükseltilmiş bordür: verilen noktaları sırayla birleştirir. Renk kiremit (DENEME): çimde,
-// betonda, karoda ve lacivert oturma tahtalarının yanında aynı çizgi okunsun diye; alan olarak az.
+// İnce, yükseltilmiş bordür: verilen noktaları sırayla birleştirir. Renk kiremit (Kemal, 18 Kasım 2026).
 export function Bordur({ noktalar, y }: { noktalar: N2[]; y: number }) {
   const h = DENEME.bordurYukseklik;
   const e = DENEME.bordurEn;
@@ -31,8 +30,8 @@ export function Bordur({ noktalar, y }: { noktalar: N2[]; y: number }) {
 // Başlangıç işareti: zemine yatık krem daire (çap WMF beton pistteki gibi 30 cm).
 export function Baslangic({ konum }: { konum: N3 }) {
   return (
-    <mesh position={[konum[0], konum[1] + 0.012, konum[2]]} rotation={[-Math.PI / 2, 0, 0]}>
-      <ringGeometry args={[WMF.baslangicDairesi / 2 - 0.03, WMF.baslangicDairesi / 2, 32]} />
+    <mesh position={[konum[0], konum[1] + 0.004, konum[2]]} rotation={[-Math.PI / 2, 0, 0]}>
+      <ringGeometry args={[WMF.baslangicDairesi / 2 - 0.012, WMF.baslangicDairesi / 2, 40]} />
       <meshBasicMaterial color={renk.krem} />
     </mesh>
   );
@@ -50,26 +49,26 @@ export function Top({ konum }: { konum: N3 }) {
 // Delik ve bayrak: koyu daire, ince direk, kiremit bayrak. izgara: delik yer süzgeciyse çevresine halka.
 export function BayrakliDelik({ konum, izgara = false }: { konum: N3; izgara?: boolean }) {
   const [x, y, z] = konum;
-  const r = DENEME.delikCap / 2;
+  const r = GOLF.delikCap / 2;
   const boy = DENEME.bayrakBoy;
   return (
     <group>
       {izgara && (
-        <mesh position={[x, y + 0.008, z]} rotation={[-Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[r, r + 0.06, 28]} />
+        <mesh position={[x, y + 0.003, z]} rotation={[-Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[r, r + 0.035, 28]} />
           <meshBasicMaterial color="#8C9299" />
         </mesh>
       )}
-      <mesh position={[x, y + 0.012, z]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh position={[x, y + 0.005, z]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[r, 28]} />
         <meshBasicMaterial color={renk.lacivert} />
       </mesh>
       <mesh position={[x, y + boy / 2, z]} castShadow>
-        <cylinderGeometry args={[0.015, 0.015, boy, 8]} />
+        <cylinderGeometry args={[0.008, 0.008, boy, 8]} />
         <meshStandardMaterial color={renk.lacivert} />
       </mesh>
-      <mesh position={[x, y + boy - 0.1, z + 0.15]} castShadow>
-        <boxGeometry args={[0.015, 0.2, 0.3]} />
+      <mesh position={[x, y + boy - 0.08, z + 0.11]} castShadow>
+        <boxGeometry args={[0.008, 0.16, 0.22]} />
         <meshStandardMaterial color={renk.kiremit} roughness={1} />
       </mesh>
     </group>
@@ -82,14 +81,14 @@ export function KalinCizgi({ bas, son, kalinlik, renkKodu, saydam = 1 }: { bas: 
   const dz = son[2] - bas[2];
   return (
     <mesh position={[(bas[0] + son[0]) / 2, bas[1], (bas[2] + son[2]) / 2]} rotation={[0, Math.atan2(-dz, dx), 0]}>
-      <boxGeometry args={[Math.hypot(dx, dz), 0.012, kalinlik]} />
+      <boxGeometry args={[Math.hypot(dx, dz), 0.004, kalinlik]} />
       <meshBasicMaterial color={renkKodu} transparent={saydam < 1} opacity={saydam} />
     </mesh>
   );
 }
 
 // Kesik nişan çizgisi kalın parçalarla (kiremit). Parça ve boşluk boyu DENEME.
-export function KesikNisan({ bas, son, parca = 0.22, bosluk = 0.14 }: { bas: N3; son: N3; parca?: number; bosluk?: number }) {
+export function KesikNisan({ bas, son, parca = 0.07, bosluk = 0.045 }: { bas: N3; son: N3; parca?: number; bosluk?: number }) {
   const dx = son[0] - bas[0];
   const dz = son[2] - bas[2];
   const boy = Math.hypot(dx, dz);
@@ -106,7 +105,7 @@ export function KesikNisan({ bas, son, parca = 0.22, bosluk = 0.14 }: { bas: N3;
   return (
     <>
       {parcalar.map(([a, b], i) => (
-        <KalinCizgi key={i} bas={a} son={b} kalinlik={0.05} renkKodu={renk.kiremit} />
+        <KalinCizgi key={i} bas={a} son={b} kalinlik={DENEME.nisanKalinlik} renkKodu={renk.kiremit} />
       ))}
     </>
   );
@@ -114,15 +113,15 @@ export function KesikNisan({ bas, son, parca = 0.22, bosluk = 0.14 }: { bas: N3;
 
 // Güç halkası: topun çevresinde zemine yatık halka; dolu kısım gücü gösterir (oran DENEME).
 export function GucHalkasi({ merkez, oran }: { merkez: N3; oran: number }) {
-  const ic = TOP_YARICAP * 2.6;
-  const dis = TOP_YARICAP * 3.3;
+  const ic = DENEME.gucHalkasiIc;
+  const dis = DENEME.gucHalkasiDis;
   return (
-    <group position={[merkez[0], merkez[1] + 0.014, merkez[2]]} rotation={[-Math.PI / 2, 0, 0]}>
+    <group position={[merkez[0], merkez[1] + 0.006, merkez[2]]} rotation={[-Math.PI / 2, 0, 0]}>
       <mesh>
         <ringGeometry args={[ic, dis, 48]} />
         <meshBasicMaterial color={renk.krem} transparent opacity={0.55} />
       </mesh>
-      <mesh rotation={[0, 0, Math.PI / 2]} position={[0, 0, 0.006]}>
+      <mesh rotation={[0, 0, Math.PI / 2]} position={[0, 0, 0.002]}>
         <ringGeometry args={[ic, dis, 48, 1, 0, Math.PI * 2 * oran]} />
         <meshBasicMaterial color={renk.lacivert} />
       </mesh>

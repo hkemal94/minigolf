@@ -18,19 +18,31 @@ export const IFAB = {
 } as const;
 
 // --- Gerçek minigolf pistleri: Dünya Minigolf Sporu Federasyonu (WMF) norm sistemleri.
-// Sayılar Almanca Vikipedi "Bahnengolf" maddesinden (ÖBGV kural kitabı ve WMF kural kitabı 2.5'e
-// dayanır; https://de.wikipedia.org/wiki/Bahnengolf, 18 Kasım 2026'da okundu). WMF'nin kendi
-// sitesi (minigolfsport.com) bu oturumda açılamadı; sayı birincil kaynaktan doğrulanmadı.
+// Beton pist: Avusturya federasyonu ÖBGV kural kitabı 2.3 "Minigolf (Concrete)" (WMF-2.4):
+// boy 12,00 m, en 1,25 m, başlangıç işareti 30 cm çaplı daire
+// (https://www.oebgv.at/uploads/pdf/regelwerk/OEBGV-Re-2.3.pdf, 18 Kasım 2026'da okundu).
+// Minyatür ve keçe pist ile top çapı aralığı: Almanca Vikipedi "Bahnengolf" ve "Minigolf" maddeleri
+// (ÖBGV ve WMF kural kitaplarına dayanır). WMF'nin kendi sitesi bu oturumda açılamadı.
 export const WMF = {
-  betonBoy: 12, // "Minigolf" (beton) pisti
+  betonBoy: 12,
   betonEn: 1.25,
   minyaturBoy: 6.25, // "Miniaturgolf" (eternit) pisti
   minyaturEn: 0.9,
   keceBoyEnAz: 9, // keçe pist 9–18 m, en 0,90
   keceBoyEnCok: 18,
-  baslangicDairesi: 0.3, // beton pistte başlangıç işareti: 30 cm çaplı daire
-  topCapEnAz: 0.037, // minigolf topu 37–43 mm (https://de.wikipedia.org/wiki/Minigolf)
+  baslangicDairesi: 0.3,
+  topCapEnAz: 0.037, // minigolf topu 37–43 mm
   topCapEnCok: 0.043,
+} as const;
+
+// --- Top ve delik gerçek ölçüde (Kemal, 18 Kasım 2026: "top ve delik gerçek ölçü").
+// Top: golf topunun çapı en az 1,680 inç = 42,67 mm (R&A ve USGA Ekipman Kuralları; İngilizce
+// Vikipedi "Golf ball", 18 Kasım 2026'da okundu). WMF'nin 37–43 mm aralığının içinde.
+// Delik: golf deliğinin çapı 4,25 inç = 108 mm (Golf Kuralları; İngilizce Vikipedi "Glossary of golf").
+// Norm minigolf pistinin delik çapı bu oturumda bulunamadı; o yüzden delik çapı DENEME sayılır.
+export const GOLF = {
+  topCap: 0.04267,
+  delikCap: 0.108, // DENEME: golf deliği; minigolf norm deliği doğrulanamadı
 } as const;
 
 // --- 3B Dirlik Stadı modelinden ölçülenler (public/modeller/dirlik-stadi.glb; Kems Ajans modeli).
@@ -48,7 +60,7 @@ export const MODEL = {
   // Tribün basamakları (iki tribünde aynı): derinlik ve yükseklik
   basamakDerinlik: 0.85,
   basamakYukseklik: 0.42,
-  tahtaEn: 0.4, // basamağın üstündeki oturma tahtası
+  tahtaEn: 0.4, // basamağın üstündeki oturma tahtası (makette yerine tek tek koltuk çizilir)
   tahtaKalinlik: 0.08,
   tahtaOndenBosluk: 0.1,
   // Açık tribün: x 28–62, ilk basamağın ön kenarı z = -63, altı basamak
@@ -65,8 +77,6 @@ export const MODEL = {
 export const DENEME = {
   bordurYukseklik: 0.08, // pist sınırı: ince, yükseltilmiş bordür
   bordurEn: 0.06,
-  topBuyutme: 4, // top telefonda görünsün diye gerçeğinin 4 katı çizilir (gerçek top 2 piksel kalıyor)
-  delikCap: 0.3, // gerçek minigolf deliğinin ölçüsü doğrulanamadı; topla birlikte büyütüldü
   bayrakBoy: 0.9,
   // Duşlar (oda modelde yok; maket için kodla çizildi)
   dusEn: 2.7,
@@ -77,6 +87,14 @@ export const DENEME = {
   dusBolmeYukseklik: 0.7, // arkası görünsün diye kesik
   karo: 0.3,
   birikintiYaricap: 0.38,
+  // Tribün koltukları (modelde yok; makette kodla çizildi). Koltuğun derinliği modeldeki tahtanın eni.
+  koltukEn: 0.43,
+  koltukAralik: 0.45, // iki koltuğun ortası arası; arada top geçmez (2 cm)
+  koltukSirt: 0.28,
+  // Atış işaretleri (yerde): güç halkası ve nişan çizgisi
+  gucHalkasiIc: 0.085,
+  gucHalkasiDis: 0.11,
+  nisanKalinlik: 0.016,
 } as const;
 
-export const TOP_YARICAP = (WMF.topCapEnCok / 2) * DENEME.topBuyutme;
+export const TOP_YARICAP = GOLF.topCap / 2;

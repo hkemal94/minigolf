@@ -26,11 +26,15 @@
   `?maket=atis&no=…`), üstten ölçülü şemalar eklendi (`?maket=sema&no=…`; `docs/plan/ornek-delik-*.png`).
   Ölçüler kaynağıyla (IFAB, WMF norm pistleri, 3B model); kaynağı olmayan DENEME. Öbür 15 delik eski
   dilde, yeniden çizilecek. Gerçek telefonda denenmedi.
+- 18 Kasım 2026 (aynı dal, Kemal'in cevapları): dil 18'e henüz yayılmıyor, yalnız üç örnek düzeltildi.
+  Top (4,27 cm) ve delik gerçek ölçüde, büyütme kalktı; kamera topu yakından izler, deliğin yeri kenardaki
+  okla ve küçük planla gösterilir; pist kenarı kiremit; tribünde tahta yerine tek tek koltuk ve 7. deliğin
+  bulmacası koltuklarla yeniden kuruldu. Gerçek telefonda denenmedi.
 
 ## Sıradaki
 
-1. **Kemal'in onayı:** üç örnek delik (3, 7, 14) onaylanır ya da düzeltilir; top büyüklüğü ve bordür
-   rengi sorusu cevaplanır. Onaylanınca öbür 15 delik aynı dille yeniden çizilir (tasarım belgesi 4.8).
+1. **Kemal'in onayı:** üç örnek deliğe (3, 7, 14) yeniden bakar. Onaylanınca öbür 15 delik aynı dille
+   yeniden çizilir (tasarım belgesi 4.8); o zamana kadar dil yayılmaz.
 2. **Tünel ve soyunma odası** (duşlarıyla) modele eklenir: kapalı tribünün altı, tünel oradan sahaya
    (yeri karar, Kemal 16 Kasım; 3B iş).
 3. **İlk delik denemesi:** plandaki 1. delik (orta yuvarlak; yeni dille çizildikten sonra); fizik kütüphanesi seçilir, tek parmak
@@ -52,3 +56,4 @@
 - İskelet (16 Kasım, PR #1 birleşti).
 - Stadyum turu soruları: Kemal'in 8 cevabı (16 Kasım; tasarım belgesi, kararların geçmişi).
 - Ölçek, zemin ve özgün delik kararı (Kemal, 18 Kasım; tasarım belgesi, kararların geçmişi ve 4.8).
+- Gerçek ölçüde top ve delik, topu izleyen kamera, kiremit kenar, tribün koltukları kararı (Kemal, 18 Kasım).

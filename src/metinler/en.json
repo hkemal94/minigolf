@@ -81,7 +81,7 @@
   "maket.zemin.7": "Ground: concrete steps",
   "maket.zemin.14": "Ground: shower tiles",
   "maket.bulmaca.3": "The ball runs along the goal line. It slips past the near post, then banks off the corner at the far post into the goal. A ball that goes behind the post stops in the side netting.",
-  "maket.bulmaca.7": "The ball runs along the row, through the narrow gap behind the seat plank. The corner on the stand stairs drops it two steps down; on the lower row it passes behind a plank again to the hole.",
+  "maket.bulmaca.7": "The lane is the narrow channel behind the seats. The corner at an empty seat drops the ball through the gap one row down; two rows are descended this way. The hole is in the channel of the lowest row.",
   "maket.bulmaca.14": "Zigzag between the partitions. The floor slopes towards the drain; the hole is the drain itself. A ball in the puddle counts as out (test value).",
   "maket.sema.baslik": "Sample hole {0} · {1}",
   "maket.sema.metre": "{0} m",
@@ -90,8 +90,6 @@
   "maket.sema.sektirme": "corner: bank",
   "maket.sema.ag": "net",
   "maket.sema.yanAg": "side net: dead end",
-  "maket.sema.dusus": "drop",
-  "maket.sema.tahta": "seat plank",
   "maket.sema.sira": "row {0}",
   "maket.sema.basamakYukseklik": "step {0}",
   "maket.sema.bolme": "partition",
@@ -99,7 +97,7 @@
   "maket.sema.suzgec": "drain",
   "maket.sema.egim": "slope to drain",
   "maket.sema.kapi": "door",
-  "maket.sema.topNotu": "Ball and hole are drawn {0}× larger to be visible (test value). Red line: kerb. Dashed navy line: suggested path.",
+  "maket.sema.topNotu": "Ball {0} cm, hole {1} cm: real size. Red line: lane edge. Dashed navy line: suggested path.",
   "maket.kaynak.ifab": "IFAB",
   "maket.kaynak.wmf": "WMF",
   "maket.kaynak.model": "MODEL",
@@ -116,5 +114,8 @@
   "maket.yerlesim.aUcu": "End A",
   "maket.yerlesim.bUcu": "End B",
   "maket.yerlesim.not": "The other 15 holes will be redrawn in this language (after Kemal approves).",
-  "maket.sema.merdiven": "stand stairs"
+  "maket.sema.merdiven": "stand stairs",
+  "maket.delik.uzaklik": "hole {0}",
+  "maket.sema.bosKoltuk": "empty seat: gap",
+  "maket.sema.oluk": "behind the seats: the lane"
 }

@@ -23,7 +23,7 @@ export type OrnekDelik = {
   // Şemada: çerçeve, zemin çizgileri, eşyalar
   cerceve: Dikdortgen;
   cizgiler: { a: N2; b: N2; tur: 'saha' | 'basamak' | 'merdiven' | 'ag' }[];
-  kutular: (Dikdortgen & { tur: 'direk' | 'tahta' | 'bolme' | 'duvar' })[];
+  kutular: (Dikdortgen & { tur: 'direk' | 'koltuk' | 'koltukAcik' | 'bolme' | 'duvar' })[];
   birikinti?: { n: N2; r: number };
   olculer: Olcu[];
   etiketler: Etiket[];
@@ -56,7 +56,7 @@ const kale: OrnekDelik = {
     },
   ],
   baslangic: [0, 0.05, MODEL.kaleSahasiCizgisiZ],
-  cukur: [-1.25, 0.05, uz - 0.3],
+  cukur: [-1.25, 0.045, uz - 0.3],
   cerceve: { x0: -3.9, x1: 3.9, z0: kaleBas - 1.3, z1: uz + 1.5 },
   cizgiler: [
     { a: [0, kaleBas - 1.3], b: [0, uz + 1.5], tur: 'saha' }, // kale çizgisi
@@ -83,7 +83,7 @@ const kale: OrnekDelik = {
     { n: [-0.8, yk - 1.6], metin: 'maket.sema.yanAg', hiza: 'sol' },
   ],
   // Nişan: yakın direği sıyıran dar açı (yaklaşık 2°)
-  atis: { top: [0, 0.05, MODEL.kaleSahasiCizgisiZ], yon: [0.035, 0.9994], boy: 5.2 },
+  atis: { top: [0, 0.05, MODEL.kaleSahasiCizgisiZ], yon: [0.035, 0.9994], boy: 1.3 },
 };
 
 // ---------- 7 · Açık tribün sıraları: zemin tribünün beton basamağı ----------
@@ -92,74 +92,73 @@ const H = MODEL.basamakYukseklik;
 export const siraOn = (k: number) => MODEL.acikTribunOnZ - D * (k - 1); // sıranın sahaya bakan kenarı
 export const siraArka = (k: number) => siraOn(k) - D;
 export const siraY = (k: number) => H * k;
-// Tribünün ortasındaki taş merdiven (modelde var): x 44,4–45,6, bütün sıraları keser.
+// Tribünün ortasındaki taş merdiven (modelde var): x 44,4–45,6, bütün sıraları keser. Koltuk yok.
 export const MERDIVEN_X0 = 44.4;
 export const MERDIVEN_X1 = 45.6;
-const MERDIVEN_PAY = 0.03; // merdiven taşı basamaktan 3 cm yüksek (model)
-export const TRIBUN_X1 = 48.15;
-export const TRIBUN_X0 = TRIBUN_X1 - WMF.minyaturBoy; // pistin boyu 6,25 m (minyatür norm pist)
+export const TRIBUN_X0 = MERDIVEN_X1; // pist merdivenin doğu kenarından başlar
+export const TRIBUN_X1 = TRIBUN_X0 + WMF.minyaturBoy; // pistin boyu 6,25 m (minyatür norm pist)
 const X0 = TRIBUN_X0;
 const X1 = TRIBUN_X1;
-const A0 = MERDIVEN_X0;
-const A1 = MERDIVEN_X1;
-// Pistte bırakılan iki oturma tahtası parçası (yerin eşyası; pistin ön yanını kapatır, arkada dar geçit kalır).
-const ENGEL_TAHTALAR = [
-  { sira: 5, x0: 46.0, x1: 46.9 },
-  { sira: 3, x0: 43.2, x1: 44.0 },
-];
-// 3B makette çizilen tahtalar: engeller ve pistin dışında kalan (modelden kesilip yerine konan) parçalar.
-export const TRIBUN_TAHTALAR = [
-  ...ENGEL_TAHTALAR,
-  { sira: 5, x0: X0, x1: A0 },
-  { sira: 4, x0: X0, x1: A0 },
-  { sira: 4, x0: A1, x1: X1 },
-  { sira: 3, x0: A1, x1: X1 },
-];
-export const tahtaZ = (k: number): [number, number] => [siraOn(k) - MODEL.tahtaOndenBosluk - MODEL.tahtaEn, siraOn(k) - MODEL.tahtaOndenBosluk];
-const arkaGecit = D - MODEL.tahtaOndenBosluk - MODEL.tahtaEn; // tahtanın arkasında kalan boşluk: 0,35 m
+// Koltuklar (Kemal, 18 Kasım 2026: tahta yerine tek tek koltuk): her sırada, basamağın ön yanında dizilir.
+// Koltuğun arkasında, bir üst basamağın dibinde 0,35 m'lik oluk kalır; pist bu oluktur.
+export const OLUK = D - MODEL.tahtaOndenBosluk - MODEL.tahtaEn; // 0,35 m (model)
+export const koltukZ = (k: number): [number, number] => [siraOn(k) - MODEL.tahtaOndenBosluk - MODEL.tahtaEn, siraOn(k) - MODEL.tahtaOndenBosluk];
+const koltukBosluk = (DENEME.koltukAralik - DENEME.koltukEn) / 2;
+// Merdivenin doğusundaki i. koltuğun x aralığı (i = 0 merdivenin yanı).
+export const koltukX = (i: number): [number, number] => [X0 + koltukBosluk + i * DENEME.koltukAralik, X0 + koltukBosluk + i * DENEME.koltukAralik + DENEME.koltukEn];
+export const KOLTUK_SAYISI = Math.ceil(WMF.minyaturBoy / DENEME.koltukAralik); // pist boyunca 14 koltuk
+// Boş koltuklar: topun bir alt sıraya geçtiği yerler (sıra -> koltuk sırası).
+export const BOS_KOLTUK: Record<number, number> = { 5: 8, 4: 4 };
+const olukOrta = (k: number) => siraArka(k) + OLUK / 2;
+// Boş koltuğun olduğu yerde olukta 45° köşe: topu boşluktan aşağı çevirir.
+const kose = (k: number): N2[] => {
+  const [b0, b1] = koltukX(BOS_KOLTUK[k]);
+  return [
+    [Math.min(b0 + OLUK, b1), siraArka(k)],
+    [b0, siraArka(k) + OLUK],
+  ];
+};
+const ucKapak = (k: number, x: number) => ({ y: siraY(k), noktalar: [[x, siraArka(k)], [x, siraArka(k) + OLUK]] as N2[] });
 
 const tribun: OrnekDelik = {
   no: 7,
   zorluk: 'maket.zorluk.zor',
   eksen: '-x',
   bordurler: [
-    // 5. sıra (üst): ön kenar ve doğu ucu; merdivenin içinde 45° köşe topu aşağı çevirir
-    { y: siraY(5), noktalar: [[A1, siraOn(5)], [X1, siraOn(5)], [X1, siraArka(5)]] },
-    { y: siraY(5) + MERDIVEN_PAY, noktalar: [[A0 + D, siraArka(5)], [A0, siraOn(5)]] },
-    // merdiven, 4. sıra hizası: iki yan
-    { y: siraY(4) + MERDIVEN_PAY, noktalar: [[A0, siraOn(5)], [A0, siraOn(4)]] },
-    { y: siraY(4) + MERDIVEN_PAY, noktalar: [[A1, siraOn(5)], [A1, siraOn(4)]] },
-    // merdiven, 3. sıra hizası: doğu yanı ve ön kenar; sonra 3. sıra batıya
-    { y: siraY(3) + MERDIVEN_PAY, noktalar: [[A1, siraOn(4)], [A1, siraOn(3)], [A0, siraOn(3)]] },
-    { y: siraY(3), noktalar: [[A0, siraOn(3)], [X0, siraOn(3)], [X0, siraArka(3)]] },
+    ...[5, 4, 3].flatMap((k) => [ucKapak(k, X0), ucKapak(k, X1)]),
+    { y: siraY(5), noktalar: kose(5) },
+    { y: siraY(4), noktalar: kose(4) },
   ],
-  baslangic: [X1 - 0.55, siraY(5), siraArka(5) + 0.2],
-  cukur: [X0 + 0.6, siraY(3), siraOn(3) - D / 2],
-  cerceve: { x0: X0 - 1.0, x1: X1 + 1.0, z0: siraArka(5) - 1.2, z1: siraOn(3) + 1.2 },
+  baslangic: [X1 - 0.45, siraY(5), olukOrta(5)],
+  cukur: [X0 + 0.7, siraY(3), olukOrta(3)],
+  cerceve: { x0: X0 - 0.9, x1: X1 + 0.9, z0: siraArka(5) - 1.1, z1: siraOn(3) + 1.1 },
   cizgiler: [
-    ...[3, 4, 5, 6].map((k) => ({ a: [X0 - 1.0, siraOn(k)] as N2, b: [X1 + 1.0, siraOn(k)] as N2, tur: 'basamak' as const })),
-    { a: [A0, siraArka(5) - 1.2], b: [A0, siraOn(3) + 1.2], tur: 'merdiven' },
-    { a: [A1, siraArka(5) - 1.2], b: [A1, siraOn(3) + 1.2], tur: 'merdiven' },
+    ...[3, 4, 5, 6].map((k) => ({ a: [X0 - 0.9, siraOn(k)] as N2, b: [X1 + 0.9, siraOn(k)] as N2, tur: 'basamak' as const })),
+    { a: [X0, siraArka(5) - 1.1], b: [X0, siraOn(3) + 1.1], tur: 'merdiven' },
   ],
-  kutular: ENGEL_TAHTALAR.map((t) => ({ tur: 'tahta' as const, x0: t.x0, x1: t.x1, z0: tahtaZ(t.sira)[0], z1: tahtaZ(t.sira)[1] })),
+  kutular: [3, 4, 5].flatMap((k) =>
+    Array.from({ length: KOLTUK_SAYISI }, (_, i) => i)
+      .filter((i) => BOS_KOLTUK[k] !== i)
+      .map((i) => ({ tur: (k === 5 ? 'koltukAcik' : 'koltuk') as 'koltuk' | 'koltukAcik', x0: koltukX(i)[0], x1: koltukX(i)[1], z0: koltukZ(k)[0], z1: koltukZ(k)[1] })),
+  ),
   olculer: [
-    { a: [X0, siraOn(3)], b: [X1, siraOn(3)], kaydir: 0.55, deger: WMF.minyaturBoy, kaynak: 'wmf' },
-    { a: [X1, siraArka(5)], b: [X1, siraOn(5)], kaydir: -0.35, deger: MODEL.basamakDerinlik, kaynak: 'model' },
-    { a: [A0, siraArka(5)], b: [A1, siraArka(5)], kaydir: -0.45, deger: A1 - A0, kaynak: 'model' },
-    { a: [43.6, siraArka(3)], b: [43.6, siraArka(3) + arkaGecit], kaydir: 0.75, deger: arkaGecit, kaynak: 'model' },
+    { a: [X0, siraOn(3)], b: [X1, siraOn(3)], kaydir: 0.5, deger: WMF.minyaturBoy, kaynak: 'wmf' },
+    { a: [X1, siraArka(5)], b: [X1, siraArka(5) + OLUK], kaydir: -0.3, deger: OLUK, kaynak: 'model' },
+    { a: [X1, siraArka(3)], b: [X1, siraOn(3)], kaydir: -0.3, deger: MODEL.basamakDerinlik, kaynak: 'model' },
+    { a: [koltukX(BOS_KOLTUK[4])[0], siraOn(4)], b: [koltukX(BOS_KOLTUK[4])[1], siraOn(4)], kaydir: 1.25, deger: DENEME.koltukEn, kaynak: 'deneme' },
   ],
   etiketler: [
-    { n: [45, siraOn(5) + 0.42], metin: 'maket.sema.dusus', hiza: 'orta' },
-    { n: [45, siraOn(4) + 0.42], metin: 'maket.sema.dusus', hiza: 'orta' },
-    { n: [45.52, siraOn(3) + 0.8], metin: 'maket.sema.merdiven', hiza: 'orta' },
-    { n: [46.45, siraOn(5) + 0.25], metin: 'maket.sema.tahta', hiza: 'sol' },
+    { n: [koltukX(BOS_KOLTUK[5])[0] + 0.2, siraOn(5) + 0.12], metin: 'maket.sema.bosKoltuk', hiza: 'sol' },
+    { n: [koltukX(BOS_KOLTUK[4])[0] + 0.2, siraOn(4) + 0.12], metin: 'maket.sema.bosKoltuk', hiza: 'sol' },
+    { n: [50.6, siraArka(5) - 0.12], metin: 'maket.sema.oluk', hiza: 'sag' },
     { n: [X1 + 0.75, siraOn(5) - D / 2], metin: 'maket.sema.sira', deger: 5, hiza: 'orta' },
     { n: [X1 + 0.75, siraOn(4) - D / 2], metin: 'maket.sema.sira', deger: 4, hiza: 'orta' },
     { n: [X1 + 0.75, siraOn(3) - D / 2], metin: 'maket.sema.sira', deger: 3, hiza: 'orta' },
-    { n: [X0 - 0.6, siraOn(4)], metin: 'maket.sema.basamakYukseklik', deger: MODEL.basamakYukseklik, hiza: 'orta' },
+    { n: [X0 - 0.55, siraOn(3) + 0.45], metin: 'maket.sema.merdiven', hiza: 'orta' },
+    { n: [X0 - 0.25, siraOn(5)], metin: 'maket.sema.basamakYukseklik', deger: MODEL.basamakYukseklik, hiza: 'orta' },
   ],
-  // Nişan: tahtanın arkasındaki dar geçitten, merdivendeki köşeye
-  atis: { top: [X1 - 0.55, siraY(5), siraArka(5) + 0.2], yon: [-1, 0], boy: 2.4 },
+  // Nişan: oluk boyunca, boş koltuğun önündeki köşeye
+  atis: { top: [X1 - 0.45, siraY(5), olukOrta(5)], yon: [-1, 0], boy: 1.1 },
 };
 
 // ---------- 14 · Duşlar: zemin duşun karosu (oda modelde yok; kodla çizildi) ----------
@@ -198,7 +197,7 @@ const dus: OrnekDelik = {
     { n: [-0.45, 0.75], metin: 'maket.sema.kapi', hiza: 'orta' },
   ],
   // Nişan: ilk bölmenin açık yanındaki geçide
-  atis: { top: [0.6, 0, 0.75], yon: [0.6, 0.8], boy: 1.75 },
+  atis: { top: [0.6, 0, 0.75], yon: [0.6, 0.8], boy: 1.2 },
 };
 
 export const ORNEK_DELIKLER: OrnekDelik[] = [kale, tribun, dus];

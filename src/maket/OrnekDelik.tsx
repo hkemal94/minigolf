@@ -9,10 +9,11 @@ import {
   ornekDelik,
   siraOn,
   siraY,
-  TRIBUN_X0,
   TRIBUN_X1,
-  TRIBUN_TAHTALAR,
-  tahtaZ,
+  MERDIVEN_X0,
+  BOS_KOLTUK,
+  koltukX,
+  koltukZ,
   DUS_BOY,
   DUS_EN,
   DUS_BOLMELER,
@@ -22,36 +23,76 @@ import {
 
 // MAKET (öneri): üç örnek deliğin 3B sahnesi. Oynanış değil; top atılmaz.
 
-// Kamera: her delik tek ekranda (genel) ve topun yakınından (atış). Açılar ve yakınlık DENEME.
-type Bakis = { konum: N3; hedef: N3; zoom: number; golge: number };
+// Kamera topu yakından izler (Kemal, 18 Kasım 2026): top ve delik gerçek ölçüde olduğu için delik tek
+// ekrana sığmaz; kamera topun yanındadır, deliğin yeri ekran kenarındaki okla ve küçük planla gösterilir.
+// uzak: kameranın hedefe göre durduğu yön; ileri: hedefin toptan oyun yönüne kayması. Hepsi DENEME.
+type Bakis = { uzak: N3; ileri: N3; zoom: number; golge: number };
 const BAKISLAR: Record<number, { genel: Bakis; atis: Bakis }> = {
   3: {
-    genel: { konum: [6.5, 20, -47], hedef: [-0.2, 0, -31.7], zoom: 45, golge: 14 },
-    atis: { konum: [4.9, 17, -50.1], hedef: [-0.6, 0, -37.8], zoom: 88, golge: 10 },
+    genel: { uzak: [5.5, 17, -12.3], ileri: [-0.52, 0, 1.15], zoom: 200, golge: 5 },
+    atis: { uzak: [5.5, 17, -12.3], ileri: [-0.19, 0, 0.42], zoom: 340, golge: 3 },
   },
   7: {
-    genel: { konum: [56.2, 20.7, -63.5], hedef: [45, 1.7, -65.95], zoom: 84, golge: 9 },
-    atis: { konum: [57.8, 21.1, -64.3], hedef: [46.6, 2.1, -66.75], zoom: 170, golge: 7 },
+    genel: { uzak: [11.2, 19, 2.45], ileri: [-1.25, -0.25, -0.2], zoom: 200, golge: 5 },
+    atis: { uzak: [11.2, 19, 2.45], ileri: [-0.4, 0, -0.085], zoom: 340, golge: 3 },
   },
   14: {
-    genel: { konum: [-8.9, 17.2, 5.85], hedef: [3.1, 0.2, 1.4], zoom: 78, golge: 8 },
-    atis: { konum: [-10.6, 17.2, 5.55], hedef: [1.4, 0.2, 1.1], zoom: 122, golge: 6 },
+    genel: { uzak: [-12, 17, 4.45], ileri: [1.2, 0, -0.45], zoom: 200, golge: 5 },
+    atis: { uzak: [-12, 17, 4.45], ileri: [0.42, 0, -0.16], zoom: 340, golge: 3 },
   },
 };
 
-// Tribün: oturma tahtaları. Pistin geçtiği yerde modelin tahtaları kesilir (StatSahnesi, kesim);
-// burada pistin dışında kalan parçalar yerine konur ve pistte bırakılan iki engel parçası çizilir.
-function TribunEsyasi() {
-  const t = MODEL.tahtaKalinlik;
-  const e = MODEL.tahtaEn;
+// Tribün koltukları (Kemal, 18 Kasım 2026: oturma tahtası yerine tek tek koltuk). Modelde yok; kodla
+// çizilir. Modelin tahtaları bu bölgede kesilir (StatSahnesi, kesim). Koltuk: oturak ve sırtlık; sırtlık
+// bir üst basamağa bakan yanda. Boş bırakılan koltuklar topun alt sıraya geçtiği yerlerdir.
+const KOLTUK_BOLGE = { x0: MERDIVEN_X0 - 4.5, x1: TRIBUN_X1 + 3.5 };
+function TribunKoltuklari() {
+  const koltuklar = useMemo(() => {
+    const liste: { x: number; sira: number }[] = [];
+    for (let sira = 1; sira <= MODEL.acikTribunSira; sira++) {
+      // merdivenin doğusu
+      for (let i = 0; koltukX(i)[1] <= KOLTUK_BOLGE.x1; i++) {
+        if (BOS_KOLTUK[sira] !== i) liste.push({ x: (koltukX(i)[0] + koltukX(i)[1]) / 2, sira });
+      }
+      // merdivenin batısı
+      for (let x = MERDIVEN_X0 - DENEME.koltukAralik / 2; x - DENEME.koltukEn / 2 >= KOLTUK_BOLGE.x0; x -= DENEME.koltukAralik) {
+        liste.push({ x, sira });
+      }
+    }
+    return liste;
+  }, []);
+  const kalin = MODEL.tahtaKalinlik;
+  const derin = MODEL.tahtaEn;
+  const sirt = DENEME.koltukSirt;
+  // Renkler modeldeki tahtaların sırasıyla: 2. ve 5. sıra krem, öbürleri lacivert.
+  const acik = (sira: number) => sira === 2 || sira === 5;
+  const koltukRengi = (sira: number) => (acik(sira) ? renk.krem : renk.lacivertAcik);
+  const ayakRengi = (sira: number) => (acik(sira) ? renk.kremKoyu : renk.lacivert);
+  const oturakEn = DENEME.koltukEn - 0.07;
   return (
     <group>
-      {TRIBUN_TAHTALAR.map((p, i) => (
-        <mesh key={i} position={[(p.x0 + p.x1) / 2, siraY(p.sira) + t / 2, (tahtaZ(p.sira)[0] + tahtaZ(p.sira)[1]) / 2]} castShadow receiveShadow>
-          <boxGeometry args={[p.x1 - p.x0, t, e]} />
-          <meshStandardMaterial color={p.sira === 5 ? renk.krem : renk.lacivert} roughness={1} />
-        </mesh>
-      ))}
+      {koltuklar.map((k, i) => {
+        const [z0, z1] = koltukZ(k.sira);
+        const y = siraY(k.sira);
+        return (
+          <group key={i}>
+            {/* Ayak: koltuğun altı dolu, top aradan geçmez */}
+            <mesh position={[k.x, y + kalin / 4, (z0 + z1) / 2]} castShadow receiveShadow>
+              <boxGeometry args={[DENEME.koltukEn, kalin / 2, derin]} />
+              <meshStandardMaterial color={ayakRengi(k.sira)} roughness={1} />
+            </mesh>
+            {/* Oturak ve sırtlık: ayaktan dar, koltuklar tek tek okunur */}
+            <mesh position={[k.x, y + kalin * 0.75, (z0 + z1) / 2 + 0.01]} castShadow receiveShadow>
+              <boxGeometry args={[oturakEn, kalin / 2, derin - 0.04]} />
+              <meshStandardMaterial color={koltukRengi(k.sira)} roughness={1} />
+            </mesh>
+            <mesh position={[k.x, y + kalin + sirt / 2, z0 + 0.03]} castShadow receiveShadow>
+              <boxGeometry args={[oturakEn, sirt, 0.05]} />
+              <meshStandardMaterial color={koltukRengi(k.sira)} roughness={1} />
+            </mesh>
+          </group>
+        );
+      })}
     </group>
   );
 }
@@ -175,40 +216,50 @@ function Birikinti({ n, r }: { n: [number, number]; r: number }) {
 // Atış maketinin 3B parçaları: nişan çizgisi, parmağa giden çizgi, güç halkası.
 function AtisIsaretleri({ delik, parmakBildir }: { delik: OrnekDelik; parmakBildir: (x: number, y: number) => void }) {
   const { top, yon, boy } = delik.atis;
-  const y = top[1] + 0.02;
-  const bas: N3 = [top[0] + yon[0] * TOP_YARICAP * 1.6, y, top[2] + yon[1] * TOP_YARICAP * 1.6];
+  const y = top[1] + 0.008;
+  const bas: N3 = [top[0] + yon[0] * TOP_YARICAP * 2, y, top[2] + yon[1] * TOP_YARICAP * 2];
   const son: N3 = [top[0] + yon[0] * boy, y, top[2] + yon[1] * boy];
-  const parmak: N3 = [top[0] - yon[0] * boy * 0.36, y, top[2] - yon[1] * boy * 0.36]; // çekme boyu DENEME
+  const parmak: N3 = [top[0] - yon[0] * boy * 0.3, y, top[2] - yon[1] * boy * 0.3]; // çekme boyu DENEME
   return (
     <>
       <KesikNisan bas={bas} son={son} />
-      <KalinCizgi bas={[top[0], y, top[2]]} son={parmak} kalinlik={0.03} renkKodu={renk.lacivert} saydam={0.7} />
+      <KalinCizgi bas={[top[0], y, top[2]]} son={parmak} kalinlik={0.01} renkKodu={renk.lacivert} saydam={0.7} />
       <GucHalkasi merkez={top} oran={0.45} />
       <EkranKonumu nokta={parmak} bildir={parmakBildir} />
     </>
   );
 }
 
-export function OrnekSahne({ no, atis = false, parmakBildir }: { no: number; atis?: boolean; parmakBildir?: (x: number, y: number) => void }) {
+type SahneOzellik = {
+  no: number;
+  atis?: boolean;
+  parmakBildir?: (x: number, y: number) => void;
+  // Deliğin ekrandaki yeri (ekranın dışındaysa kenarda ok çizilir).
+  delikBildir?: (x: number, y: number) => void;
+};
+
+export function OrnekSahne({ no, atis = false, parmakBildir, delikBildir }: SahneOzellik) {
   const delik = ornekDelik(no);
   const bakis = BAKISLAR[delik.no][atis ? 'atis' : 'genel'];
   const top = atis ? delik.atis.top : delik.baslangic;
+  const hedef: N3 = [top[0] + bakis.ileri[0], top[1] + bakis.ileri[1], top[2] + bakis.ileri[2]];
+  const konum: N3 = [hedef[0] + bakis.uzak[0], hedef[1] + bakis.uzak[1], hedef[2] + bakis.uzak[2]];
   const kesim = useMemo(
-    () => (delik.no === 7 ? { x0: TRIBUN_X0, x1: TRIBUN_X1, z0: siraOn(5) - 0.6, z1: siraOn(3) - 0.05 } : undefined),
+    () => (delik.no === 7 ? { x0: KOLTUK_BOLGE.x0, x1: KOLTUK_BOLGE.x1, z0: siraOn(MODEL.acikTribunSira) - 0.7, z1: siraOn(1) } : undefined),
     [delik.no],
   );
   return (
     <StatSahnesi
-      konum={bakis.konum}
-      hedef={bakis.hedef}
+      konum={konum}
+      hedef={hedef}
       zoom={bakis.zoom}
-      golgeMerkez={bakis.hedef}
+      golgeMerkez={hedef}
       golgeYaricap={bakis.golge}
       modelsiz={delik.no === 14}
       kesim={kesim}
       arkaPlan={delik.no === 14 ? renk.kremKoyu : renk.krem}
     >
-      {delik.no === 7 && <TribunEsyasi />}
+      {delik.no === 7 && <TribunKoltuklari />}
       {delik.no === 14 && <DusOdasi />}
       {delik.birikinti && <Birikinti n={delik.birikinti.n} r={delik.birikinti.r} />}
       {delik.bordurler.map((b, i) => (
@@ -217,9 +268,8 @@ export function OrnekSahne({ no, atis = false, parmakBildir }: { no: number; ati
       <Baslangic konum={delik.baslangic} />
       <BayrakliDelik konum={delik.cukur} izgara={delik.no === 14} />
       {atis && parmakBildir && <AtisIsaretleri delik={delik} parmakBildir={parmakBildir} />}
+      {delikBildir && <EkranKonumu nokta={delik.cukur} bildir={delikBildir} />}
       <Top konum={top} />
     </StatSahnesi>
   );
 }
-
-
