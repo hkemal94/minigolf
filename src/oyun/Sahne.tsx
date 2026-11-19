@@ -3,10 +3,11 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { BufferGeometry, Color, DoubleSide, Float32BufferAttribute, Mesh, Object3D, Plane, Vector3, type Group, type InstancedMesh, type Material, type OrthographicCamera } from 'three';
 import { renk } from '../sahne/renkler';
-import { DENEME, GOLF, MODEL, TOP_YARICAP, WMF } from '../maket/olculer';
+import { DENEME, GOLF, IFAB, MODEL, TOP_YARICAP, WMF } from '../maket/olculer';
 import { BOS_KOLTUK, MERDIVEN_X0, TRIBUN_X1, koltukX, koltukZ, siraOn, siraY } from '../maket/ornekDelikler';
 import { FIZIK, GORUNTU, KAMERA, VURUS } from './ayarlar';
 import { adimAt, yeniTop, type Top } from './fizik';
+import { tahminEt, type Tahmin } from './tahmin';
 import type { OyunDeligi } from './dunya';
 
 // OYNANABİLİR PROTOTİP · 3B sahne. Stat modeli maketle aynı dosya (public/modeller/dirlik-stadi.glb);
@@ -20,9 +21,16 @@ export type Durum = {
   onceki: [number, number, number]; // son vuruştan önce topun yeri
   birikim: number; // hesaplanmayı bekleyen süre
   aci: number; // kameranın baktığı yön (radyan; x'ten z'ye)
+  egim: number; // kameranın yerden açısı (radyan)
+  hedefAci: number | null; // "Deliğe bak": kameranın döneceği yön
+  takip: boolean; // vuruştan sonra kamera topu izliyor (top durana ya da oyuncu kamerayı elle çevirene kadar)
   yakinlik: number;
   hedef: Vector3; // kameranın izlediği nokta (topu yumuşak izler)
   nisan: { aktif: boolean; yonX: number; yonZ: number; guc: number };
+  kolay: boolean; // kolay mod: çekerken topun duracağı yer görünür
+  // Kolay moddaki tahmin ve hangi nişan için hesaplandığı (nişan değişmedikçe yeniden hesaplanmaz).
+  tahmin: (Tahmin & { yonX: number; yonZ: number; guc: number }) | null;
+  tahminGorunur: boolean; // işaret şu an ekranda mı (deneme için)
   topEkran: [number, number]; // topun ekrandaki yeri (piksel)
   kamera: OrthographicCamera | null;
   en: number;
@@ -39,9 +47,15 @@ export function yeniDurum(delik: OyunDeligi): Durum {
     onceki: [x, y, z],
     birikim: 0,
     aci: Math.atan2(delik.bakis[1], delik.bakis[0]),
+    egim: KAMERA.egim,
+    hedefAci: null,
+    takip: false,
     yakinlik: KAMERA.yakinlik,
     hedef: new Vector3(x, y, z),
     nisan: { aktif: false, yonX: 0, yonZ: 0, guc: 0 },
+    kolay: false,
+    tahmin: null,
+    tahminGorunur: false,
     topEkran: [-1, -1],
     kamera: null,
     en: 1,
@@ -50,6 +64,17 @@ export function yeniDurum(delik: OyunDeligi): Durum {
     cizim: { cagri: 0, ucgen: 0, kare: 0 },
   };
 }
+
+// İki yön arasındaki en kısa dönüş (radyan, -π…π).
+export function aciFarki(a: number, b: number): number {
+  let f = (a - b) % (2 * Math.PI);
+  if (f > Math.PI) f -= 2 * Math.PI;
+  if (f < -Math.PI) f += 2 * Math.PI;
+  return f;
+}
+
+// "Deliğe bak": kameranın topun arkasından deliğe bakan yönü.
+export const delikYonu = (d: Durum): number => Math.atan2(d.delik.dunya.delik.z - d.top.z, d.delik.dunya.delik.x - d.top.x);
 
 // Ekrandaki bir noktanın, verilen yükseklikteki yatay düzlemde denk geldiği yer.
 export function yerNoktasi(d: Durum, px: number, py: number, y: number): [number, number] | null {
@@ -98,13 +123,10 @@ function StatModeli({ koltuklu }: { koltuklu: boolean }) {
         o.material = zemin;
       }
       if (ad === 'file') {
-        // Kale ağı modelde dolu kutu; içi görünsün diye saydam.
-        const ag = (o.material as Material).clone();
-        ag.transparent = true;
-        ag.opacity = 0.3;
-        ag.depthWrite = false;
-        o.material = ag;
-        o.castShadow = false;
+        // Kale filesi modelde dolu kutu (yerde ince bir levha ve arkada bir duvar): saydam çizilince cam gibi
+        // görünüyor, yerdeki levha çimle üst üste binip titriyordu (Kemal, 19 Kasım). Oyunda çizilmez;
+        // yerine KaleFilesi gelir. Model dosyasına dokunulmaz.
+        o.visible = false;
       }
       if (koltuklu && (ad === 'krem' || ad === 'lacivert')) {
         const kesik = (o.material as Material).clone();
@@ -210,6 +232,61 @@ function Huniler({ delik }: { delik: OyunDeligi }) {
   );
 }
 
+// Kale filesi (Kemal, 19 Kasım: "titriyor, cam gibi"): ince çizgilerden ağ; titremez, içi görünür.
+// Fizikteki ağlarla aynı yerde: iki yan file, arka file ve üstte kale direğinden arkaya inen file.
+// Göz aralığı DENEME (GORUNTU.fileGoz). Gerçeğe yakın file sonraki adımda.
+function fileCizgileri(): Float32Array {
+  const n: number[] = [];
+  const cizgi = (a: [number, number, number], b: [number, number, number]) => n.push(...a, ...b);
+  const g = GORUNTU.fileGoz;
+  const h = IFAB.kaleYukseklik;
+  const hb = GORUNTU.fileArkaBoy;
+  const D = MODEL.agDerinlik;
+  const z0 = MODEL.yakinDirekZ;
+  const z1 = MODEL.uzakDirekZ;
+  const alt = 0.006; // çimin hemen üstü (çimle üst üste binmesin)
+  const adimlar = (bas: number, son: number) => {
+    const k = Math.max(1, Math.round((son - bas) / g));
+    return Array.from({ length: k + 1 }, (_, i) => bas + ((son - bas) * i) / k);
+  };
+  // İki kale: A ucunda (x = 0, file eksi x'e), B ucunda (x = saha boyu, file artı x'e).
+  for (const [xk, s] of [[MODEL.kaleCizgisiX, -1], [MODEL.kaleCizgisiX + MODEL.sahaBoy, 1]] as const) {
+    const xa = xk + s * D; // arka file
+    // Arka file: dikey ve yatay çizgiler
+    for (const z of adimlar(z0, z1)) cizgi([xa, alt, z], [xa, hb, z]);
+    for (const y of adimlar(alt, hb)) cizgi([xa, y, z0], [xa, y, z1]);
+    // Üst file: kale direğinden (y = h) arka filenin üstüne (y = hb)
+    for (const z of adimlar(z0, z1)) cizgi([xk, h, z], [xa, hb, z]);
+    for (const u of adimlar(0, 1)) {
+      const x = xk + s * D * u;
+      const y = h + (hb - h) * u;
+      cizgi([x, y, z0], [x, y, z1]);
+    }
+    // Yan fileler: üst kenarı kale direğinden arkaya iner
+    for (const z of [z0, z1]) {
+      for (const u of adimlar(0, 1)) cizgi([xk + s * D * u, alt, z], [xk + s * D * u, h + (hb - h) * u, z]);
+      for (const y of adimlar(alt, h)) {
+        const uSon = y <= hb ? 1 : (h - y) / (h - hb);
+        cizgi([xk, y, z], [xk + s * D * uSon, y, z]);
+      }
+    }
+  }
+  return new Float32Array(n);
+}
+
+function KaleFilesi() {
+  const geo = useMemo(() => {
+    const g = new BufferGeometry();
+    g.setAttribute('position', new Float32BufferAttribute(fileCizgileri(), 3));
+    return g;
+  }, []);
+  return (
+    <lineSegments geometry={geo}>
+      <lineBasicMaterial color={renk.krem} />
+    </lineSegments>
+  );
+}
+
 // Nişan okunun ucu: yere yatık üçgen.
 function useUcgen() {
   return useMemo(() => {
@@ -237,6 +314,8 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
   const ucRef = useRef<Mesh>(null);
   const cekmeRef = useRef<Mesh>(null);
   const bayrakRef = useRef<Group>(null);
+  const tahminRef = useRef<Group>(null);
+  const tahminHalkaRef = useRef<Mesh>(null);
   const ucgen = useUcgen();
   const bordurler = useMemo(() => bordurKutulari(delik), [delik]);
   const koltuklar = useMemo(() => (delik.no === 7 ? koltukKutulari() : []), [delik]);
@@ -268,17 +347,37 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
     d.kamera = kam;
     d.en = s.size.width;
     d.boy = s.size.height;
-    const k = 1 - Math.exp(-KAMERA.izleme * gecen);
+    // Vuruştan sonra top durana kadar: daha sıkı izler, yavaşça topun gittiği yöne döner (topun arkasından bakar).
+    if (d.takip && (t.duruyor || t.disarida)) d.takip = false;
+    if (d.takip) {
+      const hiz = Math.hypot(t.vx, t.vz);
+      if (hiz > 0.05) {
+        const oran = Math.min(1, hiz / KAMERA.takipHizi);
+        const kd = 1 - Math.exp(-KAMERA.takipDonme * oran * gecen);
+        d.aci += aciFarki(Math.atan2(t.vz, t.vx), d.aci) * kd;
+      }
+    }
+    // "Deliğe bak": kamera yumuşakça topun arkasına, deliğe bakan yöne döner.
+    if (d.hedefAci !== null) {
+      const fark = aciFarki(d.hedefAci, d.aci);
+      if (Math.abs(fark) < 1e-3) {
+        d.aci = d.hedefAci;
+        d.hedefAci = null;
+      } else {
+        d.aci += fark * (1 - Math.exp(-KAMERA.delikBakisi * gecen));
+      }
+    }
+    const k = 1 - Math.exp(-(d.takip ? KAMERA.takipIzleme : KAMERA.izleme) * gecen);
     d.hedef.x += (t.x - d.hedef.x) * k;
     d.hedef.y += (Math.max(t.y, d.delik.zeminY) - d.hedef.y) * k;
     d.hedef.z += (t.z - d.hedef.z) * k;
     const fx = Math.cos(d.aci);
     const fz = Math.sin(d.aci);
-    const ileri = (KAMERA.topAsagi * d.boy) / (d.yakinlik * Math.sin(KAMERA.egim));
+    const ileri = (KAMERA.topAsagi * d.boy) / (d.yakinlik * Math.sin(d.egim));
     const hx = d.hedef.x + fx * ileri;
     const hz = d.hedef.z + fz * ileri;
-    const yatay = KAMERA.uzaklik * Math.cos(KAMERA.egim);
-    kam.position.set(hx - fx * yatay, d.hedef.y + KAMERA.uzaklik * Math.sin(KAMERA.egim), hz - fz * yatay);
+    const yatay = KAMERA.uzaklik * Math.cos(d.egim);
+    kam.position.set(hx - fx * yatay, d.hedef.y + KAMERA.uzaklik * Math.sin(d.egim), hz - fz * yatay);
     kam.zoom = d.yakinlik;
     kam.lookAt(hx, d.hedef.y, hz);
     kam.updateProjectionMatrix();
@@ -312,6 +411,30 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
       }
     }
 
+    // --- Kolay mod: çekerken topun duracağı yer (aynı fizikle; nişan değişince karede bir kez hesaplanır).
+    const nis = d.nisan;
+    const tg = tahminRef.current;
+    d.tahminGorunur = d.kolay && nis.aktif && nis.guc > 0 && t.duruyor;
+    if (d.tahminGorunur) {
+      const eski = d.tahmin;
+      if (!eski || eski.guc !== nis.guc || eski.yonX !== nis.yonX || eski.yonZ !== nis.yonZ) {
+        d.tahmin = { ...tahminEt(d.delik.dunya, t, nis.yonX, nis.yonZ, nis.guc), yonX: nis.yonX, yonZ: nis.yonZ, guc: nis.guc };
+      }
+      const th = d.tahmin!;
+      if (tg) {
+        tg.visible = true;
+        const [px, pz] = th.delikte ? [c.x, c.z] : [th.x, th.z];
+        const py = th.delikte ? c.y : th.y - TOP_YARICAP;
+        tg.position.set(px, py + d.delik.kaldirma + 0.004, pz);
+        // Uzaklaşınca halka küçülüp kaybolmasın: ekranda en az başlangıç yakınlığındaki boyunda kalır.
+        tg.scale.setScalar(Math.max(1, KAMERA.yakinlik / d.yakinlik));
+      }
+      const halka = tahminHalkaRef.current;
+      if (halka) (halka.material as Material & { color: Color }).color.set(th.disarida ? renk.kiremit : renk.krem);
+    } else if (tg) {
+      tg.visible = false;
+    }
+
     // --- Bayrak: top deliğin dibindeyken kalkar (topun önünü kapatmasın)
     if (bayrakRef.current) bayrakRef.current.visible = Math.hypot(t.x - c.x, t.z - c.z) > 0.45;
 
@@ -339,6 +462,7 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
         shadow-bias={-0.0005}
       />
       <StatModeli koltuklu={delik.no === 7} />
+      <KaleFilesi />
       {koltuklar.length > 0 && <KutuYigini kutular={koltuklar} />}
       <KutuYigini kutular={bordurler} />
       <Huniler delik={delik} />
@@ -366,6 +490,18 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
         <mesh position={[c.x, isaretY + DENEME.bayrakBoy - 0.08, c.z + 0.11]} castShadow>
           <boxGeometry args={[0.008, 0.16, 0.22]} />
           <meshStandardMaterial color={renk.kiremit} roughness={1} />
+        </mesh>
+      </group>
+
+      {/* Kolay mod: topun duracağı yer (halka; top dışarı çıkacaksa kiremit). Engellerin arkasında da görünür. */}
+      <group ref={tahminRef} visible={false} renderOrder={10}>
+        <mesh ref={tahminHalkaRef} rotation={[-Math.PI / 2, 0, 0]} renderOrder={10}>
+          <ringGeometry args={[TOP_YARICAP * 2.2, TOP_YARICAP * 3.2, 32]} />
+          <meshBasicMaterial color={renk.krem} depthTest={false} transparent />
+        </mesh>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={10}>
+          <circleGeometry args={[TOP_YARICAP * 0.7, 16]} />
+          <meshBasicMaterial color={renk.lacivert} depthTest={false} transparent />
         </mesh>
       </group>
 

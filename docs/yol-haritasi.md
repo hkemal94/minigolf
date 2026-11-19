@@ -18,6 +18,17 @@ değerler DENEME (`src/oyun/ayarlar.ts`). Bilgisayarda telefon boyutunda (390 ×
 bot üç deliği de deliğe soktu (`scripts/oyna-bot.mjs`). **Gerçek telefonda denenmedi.** Maketler (`?maket=…`)
 olduğu gibi duruyor. Geri al, kaldığı yerden devam, ses, vuruş sınırı bu prototipte yok.
 
+## Oynanabilir prototip · kontroller (19 Kasım 2026; öneri, `ajans/oyna-kamera-guc`)
+
+Kemal prototipi telefonda denedi; üç PR'lık düzeltmenin ilki (kontroller). Kamera topun çevresinde tam tur döner
+(tek parmak boşta sağa sola), yukarı aşağı eğilir (20°–80°); vuruştan sonra top durana kadar topu izler; "Deliğe bak"
+düğmesi kamerayı tek dokunuşla topun arkasına çevirir. İki parmakla yakınlaştırma kaldı. Güç sınırı 5'ten 8,5 m/s'ye
+çıktı: en uzun delik (3) artık gücün yaklaşık %61–69'uyla oynanır (önce %90). Güç çubuğunda %25, %50, %75 çentikleri.
+Küçük ayar menüsünde **kolay mod**: çekerken topun duracağı yer, aynı fizikle (sekmeler dahil) halkayla görünür; başta
+açık (DENEME, Kemal'in kararı). Kale filesi artık titremiyor, cam gibi değil: ince çizgilerden ağ (gerçeğe yakın file
+sonraki PR'da). **Karar (Kemal, 19 Kasım):** dışarı çıkan top son vuruşun yerine döner, +1 ceza vuruşu (sayaç 2 artar).
+Bilgisayarda telefon boyutunda bot denedi (`scripts/oyna-bot.mjs`); **gerçek telefonda denenmedi.**
+
 ## Neredeyiz
 
 - 16 Kasım 2026 (PR #1, birleşti): iskelet. Dikey tek ekran: üstte ince şerit (oyunun adı
