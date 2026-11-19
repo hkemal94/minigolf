@@ -18,7 +18,7 @@ değerler DENEME (`src/oyun/ayarlar.ts`). Bilgisayarda telefon boyutunda (390 ×
 bot üç deliği de deliğe soktu (`scripts/oyna-bot.mjs`). **Gerçek telefonda denenmedi.** Maketler (`?maket=…`)
 olduğu gibi duruyor. Geri al, kaldığı yerden devam, ses, vuruş sınırı bu prototipte yok.
 
-## Oynanabilir prototip · kontroller (19 Kasım 2026; öneri, `ajans/oyna-kamera-guc`)
+## Oynanabilir prototip · kontroller (19 Kasım 2026; öneri, PR #9, `ajans/oyna-kamera-guc`)
 
 Kemal prototipi telefonda denedi; üç PR'lık düzeltmenin ilki (kontroller). Kamera topun çevresinde tam tur döner
 (tek parmak boşta sağa sola), yukarı aşağı eğilir (20°–80°); vuruştan sonra top durana kadar topu izler; "Deliğe bak"

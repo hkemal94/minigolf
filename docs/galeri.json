@@ -132,7 +132,7 @@
       "baslik": "Oynanabilir prototip · kontroller · delik 3 · başlangıç (Deliğe bak düğmesi, ayar düğmesi)",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 9,
       "yol": "docs/ekranlar/oyna-v2-1-baslangic.png"
     },
     {
@@ -140,7 +140,7 @@
       "baslik": "Oynanabilir prototip · kontroller · kolay mod: topun duracağı yer halkası, güç çubuğunda %25, %50, %75 çentikleri",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 9,
       "yol": "docs/ekranlar/oyna-v2-2-kolay-mod.png"
     },
     {
@@ -148,7 +148,7 @@
       "baslik": "Oynanabilir prototip · kontroller · \"Deliğe bak\": kamera topun arkasında, delik tam önde",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 9,
       "yol": "docs/ekranlar/oyna-v2-3-delige-bak.png"
     },
     {
@@ -156,7 +156,7 @@
       "baslik": "Oynanabilir prototip · kontroller · kamera en yandan (20°), çizgilerden kale filesi",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 9,
       "yol": "docs/ekranlar/oyna-v2-4-yandan-file.png"
     },
     {
@@ -164,7 +164,7 @@
       "baslik": "Oynanabilir prototip · kontroller · kamera en tepeden (80°), uzaklaşmış",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 9,
       "yol": "docs/ekranlar/oyna-v2-5-tepeden.png"
     },
     {
@@ -172,7 +172,7 @@
       "baslik": "Oynanabilir prototip · kontroller · tek parmakla 180° çevrilmiş (tam tur döner)",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 9,
       "yol": "docs/ekranlar/oyna-v2-6-cevrilmis.png"
     },
     {
@@ -180,7 +180,7 @@
       "baslik": "Oynanabilir prototip · kontroller · vuruştan sonra kamera topu izliyor",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 9,
       "yol": "docs/ekranlar/oyna-v2-7-takip.png"
     },
     {
@@ -188,7 +188,7 @@
       "baslik": "Oynanabilir prototip · kontroller · ayar menüsü: kolay mod",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 9,
       "yol": "docs/ekranlar/oyna-v2-8-ayarlar.png"
     },
     {
@@ -196,7 +196,7 @@
       "baslik": "Oynanabilir prototip · kontroller · delik 7 · top dışarı çıktı, +1 ceza vuruşu",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 9,
       "yol": "docs/ekranlar/oyna-v2-9-disari-ceza.png"
     },
     {
