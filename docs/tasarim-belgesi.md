@@ -129,7 +129,7 @@ En yeni üstte.
 ### 1.1 Oyun bir cümlede
 
 Düzada'nın yerlerine kurulmuş gerçek minigolf pistlerinde, topu tek parmakla çekip bırakarak deliğe
-sokulan, sakin ve cezasız bir telefon minigolf oyunu.
+sokulan, sakin bir telefon minigolf oyunu; dışarı çıkan top ve geri al bir vuruş ceza alır.
 
 **Karar (Kemal, 15 Kasım):** telefon önce, dikey, tek elle. Web deneme sürümü önce, telefon
 uygulaması sonra.
