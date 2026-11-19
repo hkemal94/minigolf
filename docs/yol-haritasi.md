@@ -29,6 +29,24 @@ açık (DENEME, Kemal'in kararı). Kale filesi artık titremiyor, cam gibi deği
 sonraki PR'da). **Karar (Kemal, 19 Kasım):** dışarı çıkan top son vuruşun yerine döner, +1 ceza vuruşu (sayaç 2 artar).
 Bilgisayarda telefon boyutunda bot denedi (`scripts/oyna-bot.mjs`); **gerçek telefonda denenmedi.**
 
+## Oynanabilir prototip · dokulu gerçekçi görünüş (19 Kasım 2026; öneri, PR #11, `ajans/oyna-doku`)
+
+Üç PR'lık düzeltmenin ikincisi (görünüş; Kemal: "dokulu gerçekçi"). Sahanın çimi (biçme şeritleriyle), toprak zemin, beton
+basamaklar, taş duvar ve ahşap gerçek dokuyla çiziliyor; bordür kiremit renginde, boyalı beton gibi. Top gamzeli beyaz golf
+topu ve yuvarlanırken dönüyor; kale filesi ip dokulu gerçek ağ; delik bayrağı hafif rüzgârda dalgalanıyor (büyük kutlama
+dalgası sonraki PR'da). Işık sakin gün ışığı: tek güneş, yumuşak gölge (önceki sürümde gölgeler çoğu delikte görünmüyordu).
+Dokular yalnız Poly Haven ve ambientCG'den (CC0; `docs/lisanslar.md`): 10 dosya, toplam 0,77 MB. Stat modelinin dosyasına
+dokunulmadı. Oyun kare hızını ölçer; düşükse gölgeleri kapatır (eşik DENEME). **Fizik değişmedi:** bot üç deliği de aynı
+vuruşlarla deliğe soktu (1, 1, 4; sapma 0). Bütün görünüş değerleri DENEME (`src/oyun/ayarlar.ts` → `GORUNUS`; tasarım
+belgesi 6.4 "Görünüş", çizim yükü tablosuyla). Öncesi ve sonrası: `docs/ekranlar/oyna-doku-7-oncesi-sonrasi.jpg`.
+Bilgisayarda telefon boyutunda denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
+
+## Maketlerde kadraj (19 Kasım 2026; öneri, PR #11, aynı dal, ayrı commit)
+
+Karar (Kemal, 19 Kasım): köşeye taşınan kulüp binası tam görünsün. Ana ekran, tur seçimi ve tur sonu maketleri aynı stat
+görüntüsünü kullanıyor; üçünde de bakış binaya doğru kaydırıldı ve biraz uzaklaştırıldı (kayma ve uzaklık DENEME). Üç
+görüntü yeniden alındı; önceki hâlleri `docs/galeri/eski/kadraj-oncesi/` altında. Oynanış yok; gerçek telefonda denenmedi.
+
 ## Neredeyiz
 
 - 16 Kasım 2026 (PR #1, birleşti): iskelet. Dikey tek ekran: üstte ince şerit (oyunun adı
@@ -128,8 +146,9 @@ Bilgisayarda telefon boyutunda bot denedi (`scripts/oyna-bot.mjs`); **gerçek te
 
 ## Sona kalanlar
 
+- Dokuların sıkıştırılmış biçimi (KTX2): telefonda doku belleğini azaltır; bu adımda araç yoktu, WebP kullanıldı.
 - Hareketli engeller (engeller içinde en son).
-- Görsel dil: İllüstratör 2–3 deneme.
+- ~~Görsel dil: İllüstratör 2–3 deneme.~~ Karar (Kemal, 19 Kasım): dokulu gerçekçi; prototipte uygulandı (yukarıda).
 - Ayın turu ve pul (takvim ayı; geçen ayın turu sonradan bitirilebilir). Stadyum turu Ocak 2027'nin
   ayın turu; ileride Ocak'a başka bir şey alınırsa Mart'a kayabilir.
 - Imperial uzun turu.

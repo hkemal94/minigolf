@@ -60,7 +60,7 @@
       "baslik": "Maket · Ana ekran",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 10,
+      "pr": 11,
       "yol": "docs/ekranlar/maket-1-ana-ekran.png"
     },
     {
@@ -68,7 +68,7 @@
       "baslik": "Maket · Tur seçimi",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 10,
+      "pr": 11,
       "yol": "docs/ekranlar/maket-2-tur-secimi.png"
     },
     {
@@ -200,6 +200,62 @@
       "yol": "docs/ekranlar/oyna-v2-9-disari-ceza.png"
     },
     {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · dokulu görünüş · delik 3 · başlangıç (çim dokusu, bordür, gölge)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/ekranlar/oyna-doku-1-delik-3.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · dokulu görünüş · delik 1 · orta yuvarlak (çim, huniler, gölge)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/ekranlar/oyna-doku-2-delik-1.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · dokulu görünüş · delik 7 · tribün sıraları (beton doku, koltuklar)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/ekranlar/oyna-doku-3-delik-7.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · dokulu görünüş · gamzeli golf topu (yakından)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/ekranlar/oyna-doku-4-top-yakin.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · dokulu görünüş · kale filesi: gerçek ağ",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/ekranlar/oyna-doku-5-file-yakin.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · dokulu görünüş · delik bayrağı (hafif rüzgârda dalgalanır) ve file",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/ekranlar/oyna-doku-6-bayrak.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · dokulu görünüş · öncesi ve sonrası (altı görüntü yan yana)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/ekranlar/oyna-doku-7-oncesi-sonrasi.jpg"
+    },
+    {
       "bolum": "maket",
       "baslik": "Maket · Skor kartı",
       "tarih": "2026-11-16",
@@ -212,7 +268,7 @@
       "baslik": "Maket · Tur sonu",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 10,
+      "pr": 11,
       "yol": "docs/ekranlar/maket-6-tur-sonu.png"
     },
     {
@@ -1361,6 +1417,96 @@
       "yol": "docs/galeri/eski/kulup-binasi-oncesi/maket-6-tur-sonu.png",
       "grup": "Kulüp binası taşınmadan önce · stat modelinin eski hâli",
       "not": "Kulüp binası B ucundaki kalenin arkasındaydı."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · dokudan önce · delik 3 · başlangıç",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 9,
+      "yol": "docs/galeri/eski/doku-oncesi/oyna-doku-1-delik-3.png",
+      "grup": "Dokulu görünüşten önce · düz renkli hâl",
+      "not": "Düz renkli yüzeyler, gamzesiz top, çizgilerden file, donuk bayrak. Aynı bakışla alındı (PR #9 ve #10 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · dokudan önce · delik 1 · orta yuvarlak",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 9,
+      "yol": "docs/galeri/eski/doku-oncesi/oyna-doku-2-delik-1.png",
+      "grup": "Dokulu görünüşten önce · düz renkli hâl",
+      "not": "Düz renkli yüzeyler, gamzesiz top, çizgilerden file, donuk bayrak. Aynı bakışla alındı (PR #9 ve #10 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · dokudan önce · delik 7 · tribün sıraları",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 9,
+      "yol": "docs/galeri/eski/doku-oncesi/oyna-doku-3-delik-7.png",
+      "grup": "Dokulu görünüşten önce · düz renkli hâl",
+      "not": "Düz renkli yüzeyler, gamzesiz top, çizgilerden file, donuk bayrak. Aynı bakışla alındı (PR #9 ve #10 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · dokudan önce · top (yakından)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 9,
+      "yol": "docs/galeri/eski/doku-oncesi/oyna-doku-4-top-yakin.png",
+      "grup": "Dokulu görünüşten önce · düz renkli hâl",
+      "not": "Düz renkli yüzeyler, gamzesiz top, çizgilerden file, donuk bayrak. Aynı bakışla alındı (PR #9 ve #10 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · dokudan önce · kale filesi (çizgilerden ağ)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 9,
+      "yol": "docs/galeri/eski/doku-oncesi/oyna-doku-5-file-yakin.png",
+      "grup": "Dokulu görünüşten önce · düz renkli hâl",
+      "not": "Düz renkli yüzeyler, gamzesiz top, çizgilerden file, donuk bayrak. Aynı bakışla alındı (PR #9 ve #10 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · dokudan önce · delik bayrağı (donuk) ve file",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 9,
+      "yol": "docs/galeri/eski/doku-oncesi/oyna-doku-6-bayrak.png",
+      "grup": "Dokulu görünüşten önce · düz renkli hâl",
+      "not": "Düz renkli yüzeyler, gamzesiz top, çizgilerden file, donuk bayrak. Aynı bakışla alındı (PR #9 ve #10 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Maket · Ana ekran · kulüp binası kadrajın kenarında",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 10,
+      "yol": "docs/galeri/eski/kadraj-oncesi/maket-1-ana-ekran.png",
+      "grup": "Kadraj kaydırılmadan önce · kulüp binası kenarda",
+      "not": "Kulüp binası kadrajın sağ kenarında kalıyor, tamamı görünmüyordu."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Maket · Tur seçimi · kulüp binası kadrajın kenarında",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 10,
+      "yol": "docs/galeri/eski/kadraj-oncesi/maket-2-tur-secimi.png",
+      "grup": "Kadraj kaydırılmadan önce · kulüp binası kenarda",
+      "not": "Kulüp binası kadrajın sağ kenarında kalıyor, tamamı görünmüyordu."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Maket · Tur sonu · kulüp binası kadrajın kenarında",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 10,
+      "yol": "docs/galeri/eski/kadraj-oncesi/maket-6-tur-sonu.png",
+      "grup": "Kadraj kaydırılmadan önce · kulüp binası kenarda",
+      "not": "Kulüp binası kadrajın sağ kenarında kalıyor, tamamı görünmüyordu."
     }
   ]
 }

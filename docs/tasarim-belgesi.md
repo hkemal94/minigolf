@@ -36,6 +36,11 @@ modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik
 
 En yeni üstte.
 
+- **19 Kasım (Kemal, maket kadrajı; kesin):** ana ekran, tur seçimi ve tur sonu maketlerinde stat görüntüsünün kadrajı,
+  köşedeki kulüp binası tam görünecek biçimde kaydırılır. Kayma ve uzaklık DENEME (`src/maket/Maket.tsx`).
+- **19 Kasım (Kemal, doku kaynağı; kesin):** dokulu gerçekçi görünüşün dokuları yalnız Poly Haven ve ambientCG'den
+  (ikisi de CC0); her doku `docs/lisanslar.md`'ye yazılır. Top gerçek, gamzeli golf topu; kale filesi gerçek ağ; delik
+  bayrağı donuk durmaz, hafif rüzgârda oynar (büyük kutlama dalgası ayrı adım). Uygulama: 6.4 "Görünüş" (öneri).
 - **19 Kasım (Kemal, dışarıdan gelen minigolf raporu belgeyle karşılaştırıldı; kesin):**
   1. **Geri al cezalı:** geri alınan ya da iptal edilen vuruş **+1 vuruş** sayılır (2. bölüm). 16 Kasım'daki "denemeden
      sonra" notunun yerine geçer.
@@ -879,7 +884,8 @@ deliklere göre yeniden yazılır. 18 delik bitince 4.5 ve eski kartlı şema (4
 - ~~Low-poly, mat yüzey (Dondurmacı Kızlar'daki tasarım dili örnek). Hangi dil olduğu: [Kemal].~~
 
 **Karar (Kemal, 19 Kasım):** görsel dil **dokulu gerçekçi**: çim, beton, ahşap dokuları; gerçekçi ışık ve gölge;
-gamzeli golf topu; gerçek ağ. Low-poly önerisinin yerine geçer. İllüstratör denemesi kararı (yukarıda) geçmiş olarak durur.
+gamzeli golf topu; gerçek ağ. Low-poly önerisinin yerine geçer. Doku kaynağı: Poly Haven ve ambientCG (CC0).
+Oynanabilir prototipteki uygulaması: 6.4 "Görünüş". İllüstratör denemesi kararı (yukarıda) geçmiş olarak durur.
 
 ## 6. Teknik, kapsam ve ilk sürüm
 
@@ -956,7 +962,7 @@ Sıra: 3 (kale), 1 (orta yuvarlak), 7 (tribün sıraları).
 | Vuruştan sonra izleme: sıkılık · dönme | 12 · 1,2 (top 2 m/s'den yavaşken orantılı az) | kamera topun arkasına döner; oyuncu elle çevirirse o vuruş için bırakır |
 | "Deliğe bak" dönüşünün yumuşaklığı | 8 | |
 | Kolay mod (topun duracağı yer) başta | açık | Kemal'in kararı; ayar menüsünden kapanır, telefonda hatırlanır |
-| Kale filesinin göz aralığı | 0,12 m | kaynağı yok; gerçek file sonraki adımda |
+| Kale filesinin göz aralığı · ip kalınlığı | 0,12 m · 9 mm | kaynağı yok; ip telefonda seçilsin diye gerçeğinden kalın |
 | Kamera başlangıç yönü | maketteki bakış | topun arkasından, biraz yandan |
 | Top dışarı çıkarsa | son vuruşun yerine döner, vuruş sayılır, +1 ceza vuruşu | **Karar (Kemal, 19 Kasım)**; artık DENEME değil (`KURAL.disariCeza`) |
 | Bir vuruşun en uzun süresi | 30 sn | top sıkışırsa oyun kilitlenmesin diye |
@@ -973,6 +979,53 @@ Yerçekimi 9,81 m/s² (gerçek). Kale direği 2,44 m (IFAB). Huni boyu maketteki
   sekmeler dahil hesaplanır (dışarı çıkacaksa halka kiremit). Kapalıyken gösterilmez.
 - **Kale filesi:** modeldeki dolu file (cam gibi görünüp çimle titriyordu) oyunda çizilmez; yerine ince çizgilerden ağ:
   iki yan, arka ve üst file, fizikteki ağlarla aynı yerde.
+
+**Görünüş: dokulu gerçekçi (19 Kasım; öneri, PR #11; karar 5.2):**
+- **Dokular:** sahanın çimi (modelin iki tonlu biçme şeritleri korunur), toprak zemin, beton (tribün basamakları),
+  taş duvar ve ahşap gerçek dokuyla çizilir. Kaynak yalnız Poly Haven ve ambientCG (CC0; `docs/lisanslar.md`).
+  Stat modelinin dosyasına dokunulmaz: malzemeleri yüklenirken kodda değişir; doku modelin kendi rengine ayarlanır,
+  yani renkler aynı kalır, yüzey dokulu olur. Modelde sahanın çevresinde ayrı bir çim yok (çevre toprak); eklenmedi.
+- **Bordür:** kiremit rengi aynı; yüzeyi boyalı beton gibi hafif pürüzlü.
+- **Top:** gamzeli beyaz golf topu; yuvarlanırken döner (yalnız görüntü). Gamzeler kodla hesaplanır.
+- **Kale filesi:** çizgiler yerine ip dokulu gerçek ağ (arası boş); titremez, uzaktan ipler incelip solar.
+- **Delik bayrağı:** donuk durmaz, hafif rüzgârda dalgalanır. Büyük kutlama dalgası sonraki adımda.
+- **Işık:** sakin gün ışığı (maçsız gün): tek güneş, yumuşak gölge, gökten ve yerden dolgu ışığı; topta hafif gök
+  yansıması. Gölge veren tek ışık var. Önceki sürümde güneş deliğe değil stadın köşesine bakıyordu, gölgeler
+  çoğu delikte görünmüyordu; düzeltildi.
+- **Kalite düşürme:** oyun kare hızını ölçer; düşükse gölgeleri kapatır (o açılış için). Eşik DENEME.
+- **Fizik değişmedi:** bu adımda yalnız görüntü değişti; `fizik.ts`, delik verisi ve vuruş ayarlarına dokunulmadı.
+
+Görünüşün DENEME değerleri (`src/oyun/ayarlar.ts` → `GORUNUS`; Kemal onaylamadı):
+
+| Ne | Değer | Not |
+|---|---|---|
+| Dokunun yerde kapladığı kenar: çim · toprak · beton · taş · ahşap | 1,4 · 2,07 · 2,0 · 2,0 · 1,5 m | kaynağın kendi ölçüsü (ambientCG ve Poly Haven sayfalarından) |
+| Çim ve beton dokusunun kontrastı | 0,6 · 0,45 | lekeli görünmesin diye azaltıldı (`scripts/dokulari-hazirla.py`) |
+| Kabartı gücü: çim · toprak · beton · taş · ahşap · bordür | 0,7 · 0,8 · 0,7 · 1,2 · 0,8 · 0,5 | |
+| Güneş: yön (x, y, z) · güç | 22, 40, 26 · 2,8 | yaklaşık 50° yüksekte; renk sıcak beyaz |
+| Dolgu ışığı gücü | 1,7 | gök açık mavi, yer toprak rengi |
+| Gölge dokusunun kenarı | 2048 piksel | kutu deliğin tamamını kaplar |
+| Gölgelerin kapandığı kare hızı | saniyede 30 karenin altı | 2 sn'lik iki ölçüm art arda düşükse; ilk 2 sn sayılmaz |
+| Top: gamze sayısı · gamze gücü | 336 · 0,8 | gerçek toplardaki sayı kaynaktan okunmadı |
+| Bayrak: dalga genliği · hızı · dalga sayısı | 1,4 cm · 3,2 · 1,3 | |
+| Eğik bakışta doku netliği | en çok 4 | |
+
+**Çizim yükü (bilgisayarda, telefon boyutunda 390 × 844, yazılımla çizen tarayıcıda; delik 3 · 1 · 7):**
+
+| | Önce | Sonra (gölge açık) | Sonra (gölge kapalı) |
+|---|---|---|---|
+| Çizim çağrısı | 41 · 50 · 45 | 48 · 66 · 52 | 24 · 32 · 27 |
+| Üçgen | 21 616 · 22 768 · 28 660 | 25 616 · 27 532 · 39 164 | 12 746 · 13 730 · 19 622 |
+| Doku belleği (yaklaşık) | 16 MB (yalnız gölge dokusu) | 42 MB (dokular 26 + gölge 16) | 26 MB |
+| Saniyedeki kare (yazılımla çizim) | 7,2 · 7,2 · 4,2 | 5,0 · 5,4 · 2,2 | 6,7 · 6,6 · 4,0 |
+| İndirilen doku dosyaları | yok | 10 dosya, 0,77 MB | aynı |
+
+Kare sayıları ekran kartı olmayan bir bilgisayarda ölçüldü; telefondaki hızı göstermez, yalnız önce ile sonrayı
+karşılaştırır. Üçgen ve çağrı artışının çoğu gölgenin artık deliğin üstünde gerçekten çizilmesinden.
+**Gerçek telefonda denenmedi; telefondaki kare hızı ölçülmedi.**
+
+Görüntüler: `ekranlar/oyna-doku-1-delik-3.jpg` … `oyna-doku-7-oncesi-sonrasi.jpg`; önceki hâlleri
+`galeri/eski/doku-oncesi/`.
 
 **Bu prototipte yok:** geri al, kaldığı yerden devam, ses, vuruş sınırı, zorluk yazısı, ana ekran, skor kartı
 ekranı, pul. Nişan oku yalnız yönü ve gücü gösterir; sekmeyi yalnız kolay moddaki durma yeri halkası hesaba katar.

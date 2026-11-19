@@ -37,7 +37,12 @@ function kolayOku(): boolean {
 const sinirla = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
 export default function Oyun() {
-  const [sira, setSira] = useState(0);
+  // Deneme için (yalnız ?bot=1 ile): ?delik=3|1|7 turu o delikten açar (görüntü almak için).
+  const [sira, setSira] = useState(() => {
+    const adres = new URLSearchParams(window.location.search);
+    const i = adres.has('bot') ? OYUN_SIRASI.indexOf(Number(adres.get('delik'))) : -1;
+    return i < 0 ? 0 : i;
+  });
   const [tekrar, setTekrar] = useState(0);
   const [vuruslar, setVuruslar] = useState<number[]>(() => OYUN_SIRASI.map(() => 0));
   const [asama, setAsama] = useState<Asama>('oyun');
@@ -101,6 +106,13 @@ export default function Oyun() {
         alan: alanRef.current?.getBoundingClientRect().toJSON(),
       }),
       ekran: (x: number, y: number, z: number) => ekranNoktasi(durum, x, y, z),
+      // Görüntü almak için kamerayı yerleştirir (oyunda parmakla yapılanın aynısı; fiziğe dokunmaz).
+      kamera: (k: { aci?: number; egim?: number; yakinlik?: number; bak?: [number, number, number] | null }) => {
+        if (k.bak !== undefined) durum.bakisNoktasi = k.bak;
+        if (k.aci !== undefined) durum.aci = k.aci;
+        if (k.egim !== undefined) durum.egim = k.egim;
+        if (k.yakinlik !== undefined) durum.yakinlik = k.yakinlik;
+      },
     };
     return () => {
       delete w.__minigolf;
