@@ -72,6 +72,10 @@ En yeni üstte.
   2. **Stat modeli düzeltildi:** sahanın çimi çevre çimle aynı düzeyde, orta yuvarlak sürekli çizgi; köşe ve
      penaltı yayları, penaltı ve orta noktaları, köşe bayrakları modelde. Makette bunlar artık kodla çizilmez.
   3. Açık soru (Kemal sordu): 2. delikte taç çizgisi duvarsız sınır mı olacak? Üç seçenek çizildi (7. bölüm).
+- **19 Kasım (Kemal, kulüp binası; kesin):** kulüp binası açık tribün tarafındaki köşeye taşındı (B ucu;
+  modelde x 95–102, z -62 … -50); saha yüzünde 2 m direkli bir sundurma var, taş duvarda sokağa açılan bir kapı
+  var. 10. delik ~~kulüp binasının önünde ve saçağının altında~~ **kulüp binasının sundurmasının altında**
+  (4.5). Model Kems-Ajans #182 ile güncellendi (`docs/lisanslar.md`).
 - **18–19 Kasım (Kemal, Dirlik Stadı kompleksi; kesin):** köprü açık tribünün kulüp binası ucunda (tribünün
   arkasından taş duvara); kulüp binasının girişi iki tarafta; tünel kapalı tribünün ortasında. 8. delik bu
   köprünün üstünde (4.8).
@@ -106,7 +110,8 @@ En yeni üstte.
   1. Tünel ve soyunma odası (duşlarıyla) kapalı tribünün altında; tünel oradan sahaya açılır.
      Modelde yok, eklenecek; yeri karar (4.2, 4.5).
   2. Köşedeki kiremit çatılı yapı **kulüp binası**dır (Dirlik Spor Kulübü'nün binası; ad yok).
-     10. delik kulüp binasının önünde ve saçağının altında (4.2, 4.5).
+     10. delik ~~kulüp binasının önünde ve saçağının altında~~ **kulüp binasının sundurmasının altında**
+     (Kemal, 19 Kasım; 4.2, 4.5).
   3. 3B Dirlik Stadı modeli oyunda kullanılır (Kems Ajans yaptı; `docs/lisanslar.md`).
   4. Tribün sıraları, köprü, duşlar engel olarak kullanılır (3.2).
   5. Tur orta yuvarlakta başlar ve orada biter (4.3).
@@ -204,8 +209,8 @@ karakteri, adı, yüzü yok.
 - Turlar mahalleye göre değil **lokasyona** göre. Her lokasyon bir tur, **her tur 18 delik**. Aynı
   mahallede başka bir lokasyon ayrı bir 18 delikli tur olabilir.
 - **İlk tur yalnız stat kompleksi** (Dirlik Stadı). Birahane, plaj, zeytinlik, sokak bu turda yok.
-  **Karar (Kemal, 16 Kasım)**: statın köşesindeki kiremit çatılı yapı kulüp binasıdır; tur yalnız önünden ve saçağının
-  altından geçer (10. delik), içine girmez.
+  **Karar (Kemal, 16 Kasım)**: statın köşesindeki kiremit çatılı yapı kulüp binasıdır; tur ~~yalnız önünden ve saçağının
+  altından geçer~~ yalnız **sundurmasının altından** geçer (10. delik; Kemal, 19 Kasım), içine girmez.
 - Pist gerçek bir minigolf pistidir; yerin eşyası pistin çevresinde ve engel olarak durur.
   **Karar (Kemal, 18 Kasım):** pist gerçek boyutlardadır ve zemini yerin kendi zeminidir; ayrı halı
   yok, sınır ince bordür (4.8).
@@ -309,7 +314,9 @@ parçalarına oturur. Modelin önizlemesinde görülenler:
 - **Taş duvar:** bütün kompleksi saran alçak duvar.
 - **Duvar içi toprak yol:** duvarla saha arasında, sahayı saran koridor.
 - **Işık direkleri:** önizlemede iki çapraz köşede görünüyor (öbür iki köşe önizlemede yok ya da görünmüyor).
-- **Kulüp binası:** sahanın bir kısa ucunda, açık tribün tarafına yakın, kiremit çatılı küçük yapı.
+- **Kulüp binası:** sahanın bir kısa ucunda (B ucu), ~~açık tribün tarafına yakın~~ **açık tribün
+  tarafındaki köşede** (Kemal, 19 Kasım; modelde x 95–102, z -62 … -50), kiremit çatılı küçük yapı. Saha
+  yüzünde 2 m direkli sundurma; taş duvarda sokağa açılan kapı.
   **Karar (Kemal, 16 Kasım)**: Dirlik Spor Kulübü'nün binası; ad yok.
 - **Bayrak direği:** kompleksin bir köşesinde, duvarın dibinde.
 - **Ağaçlar:** duvarın dışında, bir kısa uçta (dekor; pist yok).
@@ -460,11 +467,14 @@ zorluk · öğretir · deneme notu. Hepsi **Öneri**.
 - Deneme notu: duvarın arkasında ufuk ve zeytinlik görünüyor mu, ekranı kalabalık yapıyor mu.
 
 **10 · Kulüp binası**
-- Yer: B ucundaki kiremit çatılı kulüp binası (modelde var). **Karar (Kemal, 16 Kasım)**: delik binanın önünde ve
-  saçağının altında.
-- Standın yerleşimi: pist binanın önünden geçer; bir bölümü saçağın altında.
+- Yer: B ucundaki, açık tribün tarafındaki köşede kiremit çatılı kulüp binası (modelde var). **Karar (Kemal,
+  16 Kasım)**: ~~delik binanın önünde ve saçağının altında~~. **Karar (Kemal, 19 Kasım):** delik kulüp
+  binasının **sundurmasının altında** (saha yüzünde, 2 m direkli sundurma).
+- Standın yerleşimi: ~~pist binanın önünden geçer; bir bölümü saçağın altında~~ pist sundurmanın altında;
+  ayrıntısı adım 3'te çizilir (4.9).
 - Pist: düz, ortası üstü kapalı.
-- Engeller: saçak (pistin bir bölümü üstü kapalı, top kısa bir an görünmez); binanın duvarı bant.
+- Engeller: ~~saçak~~ sundurma (pistin bir bölümü üstü kapalı, top kısa bir an görünmez; sundurmayla
+  yeniden bakılacak, adım 3); binanın duvarı bant; sundurmanın direkleri (öneri).
 - Zorluk: orta.
 - Öğretir: görünmeyen bölümden geçirmek.
 - Deneme notu: kapalı bölümde top saydam mı görünsün, hiç mi görünmesin: DENEME.
@@ -834,8 +844,8 @@ Delikler yere göre toplandı; turun sırası (1–18) değişmez.
 | Adım | Delikler | Yer | Zemin | Not |
 |---|---|---|---|---|
 | 1 | 1, 2, 4, 5 | Saha: orta yuvarlak, kenar çizgisi, köşe, penaltı noktası | çim | **Çizildi (18 Kasım; birleşti, PR #4).** Tarifleri 4.8'de. Eşyalar 19 Kasım'da gerçeğe yakın çizildi |
-| 2 | 6, 8, 9 | Açık tribünün önü, koridor köprüsü, duvar içi koridor | çim ve toprak, beton basamak ve köprü, toprak yol | **Çizildi (19 Kasım, öneri).** Kemal'in aynı gün cevapları işlendi (taç, köprü, sulama, zorluk, banklar). Tarifleri 4.8'de |
-| 3 | 10, 11 | Kulüp binası, ışık direği | binanın önü (zemini modelden bakılacak), toprak yol | B ucu |
+| 2 | 6, 8, 9 | Açık tribünün önü, koridor köprüsü, duvar içi koridor | çim ve toprak, beton basamak ve köprü, toprak yol | **Çizildi (19 Kasım; birleşti, PR #6).** Kemal'in aynı gün cevapları işlendi (taç, köprü, sulama, zorluk, banklar). Tarifleri 4.8'de |
+| 3 | 10, 11 | Kulüp binası, ışık direği | ~~binanın önü~~ binanın sundurmasının altı (zemini modelden bakılacak), toprak yol | B ucu; kulüp binası açık tribün köşesinde (Kemal, 19 Kasım) |
 | 4 | 12, 13, 15 | Oyuncu tüneli, soyunma odası, soyunma odası kapısı | beton ya da zift, karo | Bu yerler modelde yok; 14 gibi kodla çizilir. 15'in hareketli kapısı en sona kalır, önce durağan hâli |
 | 5 | 16, 17, 18 | Kapalı tribün, bayrak direği, final (orta yuvarlak) | beton basamak ve koltuklar, toprak, çim | Hareketli engeller burada; en son |
 

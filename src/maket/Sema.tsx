@@ -211,13 +211,13 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
           </g>
         );
       })}
-      {/* Kapalı tribün, açık tribün, kulüp binası (modeldeki yerleri) */}
+      {/* Kapalı tribün, açık tribün, kulüp binası (modeldeki yerleri; kulüp binası 19 Kasım'da açık tribün köşesine taşındı) */}
       <rect {...kutu(23, 67, 5, 13.5)} fill="#B9B2A4" stroke="#8F8776" />
       <rect {...kutu(28, 62, -68.1, -63)} fill="#B9B2A4" stroke="#8F8776" />
-      <rect {...kutu(95, 102, -35, -23)} fill="#B85A3E" opacity="0.8" />
+      <rect {...kutu(95, 102, -62, -50)} fill="#B85A3E" opacity="0.8" />
       <text x={P(45, 16)[0]} y={P(45, 16)[1]} className="mk-sema-etiket koyu" textAnchor="middle" transform={`rotate(90 ${P(45, 16)[0]} ${P(45, 16)[1]})`}>{m('maket.yerlesim.kapaliTribun')}</text>
       <text x={P(45, -70.2)[0]} y={P(45, -70.2)[1]} className="mk-sema-etiket koyu" textAnchor="middle" transform={`rotate(-90 ${P(45, -70.2)[0]} ${P(45, -70.2)[1]})`}>{m('maket.yerlesim.acikTribun')}</text>
-      <text x={P(99, -29)[0]} y={P(99, -29)[1] - 12} className="mk-sema-etiket koyu" textAnchor="middle">{m('maket.yerlesim.kulupBinasi')}</text>
+      <text x={P(99, -56)[0]} y={P(99, -56)[1] - 12} className="mk-sema-etiket koyu" textAnchor="middle">{m('maket.yerlesim.kulupBinasi')}</text>
       <text x={P(-9, -71.4)[0]} y={P(-9, -71.4)[1] + 3.5} className="mk-sema-etiket koyu" textAnchor="start">{m('maket.yerlesim.aUcu')}</text>
       <text x={P(101, -68)[0]} y={P(101, -68)[1] - 16} className="mk-sema-etiket koyu" textAnchor="start">{m('maket.yerlesim.bUcu')}</text>
       {/* Yeni dille çizilen delikler: gerçek ölçüsünde kiremit biçim, yanında numara ve ölçü */}
