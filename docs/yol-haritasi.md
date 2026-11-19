@@ -50,8 +50,8 @@
   birleşmiş PR'lardan. Kural: her yeni çizim aynı PR'la bu listeye girer. Oyunda değişiklik yok.
 - 19 Kasım 2026 (öneri; `ajans/delikler-adim-2`): adım 2. Açık tribünün çevresindeki üç delik yeni dille çizildi:
   6 (tribünün önü: çimden toprağa, korkuluğun altından, direklerin arasından merdivenin ayağına), 8 (üst sıranın
-  oluğundan köşeyle köprüye; kenarsız, hafif inen köprüden taş duvarın üstüne), 9 (nefes; koridorda köprü
-  ayağının yanından, taş duvardan sekip tribünün köşesinin arkasına). Maketler `?maket=delik|atis|sema&no=6|8|9`;
+  oluğundan köşeyle köprüye; kenarsız, hafif inen köprüden taş duvarın üstüne), 9 (nefes; koridorda duvar
+  dibindeki taş sırasının boşluğundan taş duvara, köprü ayağının yanından tribünün köşesinin arkasına; taş sırası DENEME). Maketler `?maket=delik|atis|sema&no=6|8|9`;
   yerleşim şeması ve delik planı on deliği gösterir, kalan 8 "yeniden çizilecek". Numara şeridi on deliğe göre
   düzenlendi. Köprünün yeri karar (Kemal); biçimi, ölçüsü ve ayağı DENEME. Oynanış yok; gerçek telefonda denenmedi.
 - 19 Kasım 2026 (aynı dal; Kemal): **stat modeli düzeltildi** (çim tek düzeyde, orta yuvarlak sürekli, yaylar,

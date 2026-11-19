@@ -152,7 +152,7 @@
   "maket.zemin.9": "Zemin: toprak yol",
   "maket.bulmaca.6": "Pist çimden tribüne iner, korkuluğun altından geçip toprağa girer ve ilk basamağın dibinde merdivene döner. Kenar yalnız çim yanında: öbür yan basamağın kendisi. Korkuluğun direkleri şeridin içinde kalır; delik direklerle basamak arasındaki dar yanda, merdivenin ayağında. Top iki direğin arasından dar yana süzülür.",
   "maket.bulmaca.8": "Top en üst sıranın oluğunda koltukların arkasından gider. Oluğun ucundaki köşe topu arka duvardaki geçitten köprüye çevirir. Köprü dar, kenarsız ve duvara doğru hafif iner (biçimi DENEME): yandan düşen top dışarı sayılır (DENEME). Delik taş duvarın üstündeki sahanlıkta; arkası kenarlı.",
-  "maket.bulmaca.9": "Nefes. Pist koridorun kendisi: bir yanı tribünün arka duvarı, öbür yanı taş duvar. Köprünün ayağı (DENEME) düz yolu keser; delik tribünün köşesinin arkasındaki cepte, görünmez. Top taş duvardan bir kez sekip ayağın yanından geçer ve köşeyi döner.",
+  "maket.bulmaca.9": "Nefes. Pist koridorun kendisi: bir yanı tribünün arka duvarı, öbür yanı taş duvar. Köprünün ayağı (DENEME) düz yolu keser. Taş duvarın dibinde düzensiz bir taş sırası var (DENEME): top duvardan yalnız sıradaki boşluktan temiz seker. Oradan sekip ayakla duvarın arasından geçer ve tribünün köşesinin arkasındaki deliğe döner.",
   "maket.sema.korkuluk": "korkuluk: direkler engel, altı açık",
   "maket.sema.ilkBasamak": "ilk basamak: kenar",
   "maket.sema.merdivenAyagi": "merdivenin ayağı: delik dar yanda",
@@ -166,8 +166,9 @@
   "maket.sema.arkaDuvar": "tribünün arka duvarı",
   "maket.sema.sahanlik": "duvarın üstü: delik",
   "maket.sema.merdivenKisa": "merdiven",
-  "maket.sema.tasDuvarSektirme": "taş duvar: sektirme",
-  "maket.sema.kopruAyagi": "köprü ayağı · DENEME",
+  "maket.sema.kopruAyagi": "köprü ayakları · DENEME",
   "maket.sema.kopruUstte": "köprü (üstte)",
-  "maket.sema.tribunKosesi": "tribünün köşesi"
+  "maket.sema.tribunKosesi": "tribünün köşesi",
+  "maket.sema.tasBosluk": "boşluk: sekme",
+  "maket.sema.tasSirasi": "duvar dibi taş sırası · DENEME"
 }

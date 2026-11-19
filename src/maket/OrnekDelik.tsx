@@ -14,7 +14,8 @@ import {
   KOPRU,
   KOPRU_BOY,
   KOPRU_INIS,
-  KOPRU_AYAK,
+  KOPRU_AYAKLAR,
+  TAS_SIRASI,
   kopruY,
   BOS_KOLTUK,
   koltukX,
@@ -63,10 +64,10 @@ const BAKISLAR: Record<number, { genel: Bakis; atis: Bakis }> = {
     atis: { uzak: [-1.5, 17, 13.3], ileri: [0.05, 0, -0.6], zoom: 340, golge: 4 },
   },
   // 9: başlangıçta oyun yönü +x (koridor boyunca; köprünün ayağı ekrana girsin diye ileriye bakar);
-  // atış anında +z (tribünün köşesinin arkasındaki cebe).
+  // atış anı ilk vuruş: nişan taş sırasındaki boşluğa.
   9: {
-    genel: { uzak: [-12, 17, -4.45], ileri: [1.7, 0, 0.35], zoom: 200, golge: 7 },
-    atis: { uzak: [5.5, 17, -12.3], ileri: [-0.2, 0, 0.42], zoom: 340, golge: 4 },
+    genel: { uzak: [-12, 17, 4.45], ileri: [1.3, 0, -0.1], zoom: 200, golge: 7 },
+    atis: { uzak: [-12, 17, 4.45], ileri: [0.42, 0, -0.35], zoom: 340, golge: 4 },
   },
   3: {
     genel: { uzak: [5.5, 17, -12.3], ileri: [-0.52, 0, 1.15], zoom: 200, golge: 5 },
@@ -381,9 +382,25 @@ function BarajMankenleri() {
   );
 }
 
-// Köprü (8. delik; 9. delikte üstte ve ayağıyla). Modelde yok, kodla çizilir. Yeri karar (Kemal: açık
+// Taş duvarın dibindeki taş sırası (9. delik). Modelde ve künyede yok: DENEME, Kemal onaylamadı.
+// Renkler modeldeki duvar taşlarının renkleri.
+const TAS_TONLARI = ['#D6C7A8', '#C9B48F', '#BFA987', '#DDD0B4'];
+function TasSirasi() {
+  return (
+    <group>
+      {TAS_SIRASI.map((t, i) => (
+        <mesh key={i} position={[(t.x0 + t.x1) / 2, t.boy / 2, MODEL.tasDuvarIcZ + t.derinlik / 2]} castShadow receiveShadow>
+          <boxGeometry args={[t.x1 - t.x0, t.boy, t.derinlik]} />
+          <meshStandardMaterial color={TAS_TONLARI[t.ton]} roughness={1} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+// Köprü (8. delik; 9. delikte üstte ve ayaklarıyla). Modelde yok, kodla çizilir. Yeri karar (Kemal: açık
 // tribünün kulüp binası ucunda, tribünün arkasından taş duvara). Biçimi ve ölçüsü DENEME, Kemal onaylamadı:
-// düz beton döşeme, kenarsız ve korkuluksuz; ortasında tek ayak. Tribünün arka duvarında köprünün eninde
+// düz beton döşeme, kenarsız ve korkuluksuz; koridorda iki ayak. Tribünün arka duvarında köprünün eninde
 // bir geçit açılır (modelin duvarı orada kesilir, basamak düzeyine kadar olan altı kodla doldurulur).
 // Döşeme tribünden (2,52 m) taş duvarın üstüne (2,40 m) hafif iner; duvarın üstünde düz bir sahanlık olur.
 const KOPRU_KESIMI: Kesim = { x0: KOPRU.x0, x1: KOPRU.x1, z0: MODEL.arkaDuvarDisZ - 0.05, z1: MODEL.arkaDuvarIcZ, malzemeler: ['tas2'] };
@@ -395,7 +412,6 @@ function Kopru() {
   const tasKalin = MODEL.tasDuvarIcZ - MODEL.tasDuvarDisZ;
   const egik = Math.hypot(KOPRU_BOY, KOPRU_INIS);
   const aci = -Math.atan2(KOPRU_INIS, KOPRU_BOY);
-  const ayakBoy = kopruY(KOPRU_AYAK[1]) - k;
   const beton = '#C9C1B0';
   return (
     <group>
@@ -414,11 +430,16 @@ function Kopru() {
         <boxGeometry args={[en, 0.22, tasKalin]} />
         <meshStandardMaterial color={beton} roughness={1} />
       </mesh>
-      {/* Ayak: koridorun ortasında */}
-      <mesh position={[KOPRU_AYAK[0], ayakBoy / 2, KOPRU_AYAK[1]]} castShadow receiveShadow>
-        <boxGeometry args={[DENEME.kopruAyak, ayakBoy, DENEME.kopruAyak]} />
-        <meshStandardMaterial color="#B9B09D" roughness={1} />
-      </mesh>
+      {/* Ayaklar: koridorda, açıklığın üçte birlerinde */}
+      {KOPRU_AYAKLAR.map((a, i) => {
+        const ayakBoy = kopruY(a[1]) - k;
+        return (
+          <mesh key={i} position={[a[0], ayakBoy / 2, a[1]]} castShadow receiveShadow>
+            <boxGeometry args={[DENEME.kopruAyak, ayakBoy, DENEME.kopruAyak]} />
+            <meshStandardMaterial color="#B9B09D" roughness={1} />
+          </mesh>
+        );
+      })}
     </group>
   );
 }
@@ -498,6 +519,7 @@ export function OrnekSahne({ no, atis = false, parmakBildir, delikBildir }: Sahn
       {delik.vurguKenar && <VurguKenar a={delik.vurguKenar[0]} b={delik.vurguKenar[1]} y={delik.bordurler[0].y} />}
       {KOLTUK_BOLGELERI[delik.no] && <TribunKoltuklari bolge={KOLTUK_BOLGELERI[delik.no]} bos={delik.no === 7 ? BOS_KOLTUK : undefined} />}
       {(delik.no === 8 || delik.no === 9) && <Kopru />}
+      {delik.no === 9 && <TasSirasi />}
       {delik.no === 14 && <DusOdasi />}
       {delik.birikinti && <Birikinti n={delik.birikinti.n} r={delik.birikinti.r} />}
       {delik.bordurler.map((b, i) => (

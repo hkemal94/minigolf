@@ -546,7 +546,8 @@ bulunamayanlar DENEME: huninin tabanı (0,2) ve ucu, sulama başlığının çim
 aralığı (0,55) ve ayak tabanı (0,4). Penaltı noktasının çapı ve köşe bayrağı artık modelden. Adım 2'de eklenen
 DENEME değerleri: 6. delikte pistin tribün boyunca yeri ve iki kolun bölüşümü (2,25 + 4); 8. delikte köprünün
 biçimi, eni (0,6), kalınlığı, duvarın üstündeki sahanlığın yüksekliği (2,40; iniş 0,12), ayağı (0,3) ve oluktaki
-yol (3); 9. delikte başlangıcın ayağa uzaklığı (2,4) ve cebin ölçüsü (2,2 × 1,4).
+yol (3); 9. delikte başlangıcın ayağa uzaklığı (1,5), cebin ölçüsü (2,2 × 1,4), köprünün ikinci ayağı ve duvar
+dibindeki taş sırası (derinlik 0,3, boşluk 0,9).
 
 **Ortak dil:**
 - Pistin eni ve boyu gerçek minigolf pistinden: boy 6–13,4 m; en 1,25 m (sahada; 5. delik oval, 2,5 m), tribünde
@@ -662,7 +663,7 @@ bayrağı, köşe yayı ve penaltı noktası kaldırıldı; pistlerin ve delikle
 **Adım 2 (19 Kasım; öneri, Kemal görmedi): 6, 8, 9.** Yer açık tribünün önü, arkası ve üstü. Korkuluk,
 basamaklar, merdivenler, tribünün duvarları ve taş duvar modelde var; ölçüleri modelden. Hareketli engel yok.
 **Köprü modelde yok:** yeri karar (Kemal: açık tribünün kulüp binası ucunda, tribünün arkasından taş duvara);
-**biçimi, ölçüsü ve ayağı DENEME, Kemal onaylamadı.** Makette kodla çizildi; tribünün arka duvarında köprünün
+**biçimi, ölçüsü ve ayakları DENEME, Kemal onaylamadı.** Makette kodla çizildi; tribünün arka duvarında köprünün
 eninde bir geçit açıldı (model dosyası değişmedi). Tribünde 7. deliktekiyle aynı koltuklar.
 
 **6 · Açık tribünün önü** · zemin: çim ve toprak · zorluk: orta
@@ -696,15 +697,20 @@ eninde bir geçit açıldı (model dosyası değişmedi). Tribünde 7. delikteki
 
 **9 · Duvar içi koridor (nefes)** · zemin: toprak yol · zorluk: kolay
 - Yer: açık tribünün arkasındaki toprak koridor, B ucuna doğru; köprünün altı ve tribünün B ucundaki köşesi (modelde var).
-- Ölçü: pist koridorun kendisi, en 3,1 m (model); boy 6,85 m (DENEME). İki yanında kenar yok: bir yan tribünün
+- Ölçü: pist koridorun kendisi, en 3,1 m (model); boy 5,95 m (DENEME). İki yanında kenar yok: bir yan tribünün
   arka duvarı, öbür yan taş duvar. Kiremit kenar yalnız iki uçta ve köşenin arkasındaki cepte (2,2 × 1,4 m, DENEME).
-- Eşya: köprünün koridorun ortasındaki ayağı (0,3 m; DENEME), başlangıçtan 2,4 m ileride.
-- Bulmaca: ayak düz yolu keser. Delik tribünün köşesinin arkasındaki cepte, başlangıçtan görünmez (ok ve küçük
-  plan gösterir). Top taş duvardan bir kez sekip ayağın yanından geçer ve köşeyi döner. Koridor geniş: tutmazsa
-  iki rahat vuruşla da biter.
+- Eşya: köprünün koridordaki iki ayağı (0,3 m; açıklığın üçte birlerinde; DENEME); taş duvarın dibinde düzensiz
+  bir taş sırası (duvardan en çok 0,3 m çıkar; **modelde ve künyede yok: DENEME, Kemal onaylamadı**). Sırada
+  0,9 m'lik tek boşluk var.
+- Bulmaca: başlangıç taş duvara yakın; duvar yanındaki ayak 1,5 m ileride düz yolu keser. Delik tribünün
+  köşesinin arkasındaki cepte, başlangıçtan görünmez (ok ve küçük plan gösterir). Taş sırasına gelen top düzgün
+  sekmez; top duvardan yalnız sıradaki boşluktan temiz seker. Oradan sekip ayakla duvarın arasından geçer ve
+  köşeyi döner. Koridor geniş: tutmazsa iki ayağın arasından iki rahat vuruşla da biter.
 - Öğretir: yeni şey yok; sektirmenin rahat tekrarı, görünmeyen deliğe ok ve planla oynamak.
-- Deneme notu: taş duvar (taşlar tek tek) düzgün sektiriyor mu; delik görünmeyince ok ve plan yetiyor mu;
-  yüksek duvarlar topu kapatıyor mu (kamera çevrilebilir).
+- Deneme notu: taş duvar (taşlar tek tek) düzgün sektiriyor mu; taş sırası nefes deliği için fazla mı (fazlaysa
+  boşluk genişler); delik görünmeyince ok ve plan yetiyor mu; yüksek duvarlar topu kapatıyor mu (kamera çevrilebilir).
+- Kems'in ön elemesi (19 Kasım): ilk hâlinde delik ekranı düz toprak gibiydi; başlangıç duvara ve ayağa
+  yaklaştırıldı, taş sırası ve ikinci ayak eklendi.
 
 Üstten şemalar (ölçü çizgili) ve on deliğin stattaki yeri (ölçekli):
 
@@ -809,7 +815,8 @@ Kemal'in kararını bekleyenler.
   - (c) Delik çizgiden uzaklaşır (1,5–2 m): uç yine duvarsız, ama hata payı büyür.
 
   ![2. delik taç seçenekleri](plan/delik-2-tac-secenekleri.png)
-- **8. delik: köprünün biçimi** (DENEME): kenarsız ve korkuluksuz düz döşeme, en 0,6 m, ortada tek ayak. Yeri karar; biçim Kemal'in.
+- **8. delik: köprünün biçimi** (DENEME): kenarsız ve korkuluksuz düz döşeme, en 0,6 m, koridorda iki ayak. Yeri karar; biçim Kemal'in.
+- **9. delik: duvar dibindeki taş sırası** (DENEME): modelde ve künyede yok; kalsın mı, Kemal'in kararı.
 - ~~Huni, sulama başlığı, baraj mankeni kalsın mı?~~ Cevaplandı (Kemal, 19 Kasım): kalsın, gerçeğe yakın (4.8).
 - ~~3B model eksikleri (çim basamağı, orta yuvarlak, yaylar, noktalar, köşe bayrakları)~~ Düzeltildi (19 Kasım; model).
 - **Kalan 8 deliğin adım sırası** (4.9): öneri; Kemal değiştirebilir.
@@ -894,7 +901,7 @@ ekranına karışmaz. Görüntüler iPhone 13 boyutunda çekildi.
 4. **Atış ve nişan** (`?maket=atis&no=…`, aynı numaralar): kamera topa daha da yaklaşır; parmakla geri çekme
    göstergesi, kiremit kesik nişan çizgisi, topun çevresinde güç halkası. 2 ve 4'te atış ekranı ikinci
    vuruşun anıdır (top deliğin ya da dönüşün yakınında), yerin eşyası görünsün diye.
-   6, 8 ve 9'da da atış ekranı ikinci vuruşun anıdır (6: direklerin önü; 8: köprünün üstü; 9: köşenin arkası).
+   6 ve 8'de de atış ekranı ikinci vuruşun anıdır (6: direklerin önü; 8: köprünün üstü); 9'da ilk vuruş (nişan taş sırasındaki boşluğa).
    Ayrıca **üstten şema** (`?maket=sema&no=…`; `no=0` on deliğin stattaki yeri): ölçü çizgili.
 5. **Skor kartı** (`?maket=skor-karti`): 18 deliğin listesi (plandaki yerleriyle), vuruşlar "–", DENEME.
 6. **Tur sonu** (`?maket=tur-sonu`): toplam vuruş "–", ayın turu ilerlemesi (18 parça, boş), ayın pulu yer

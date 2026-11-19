@@ -549,8 +549,9 @@ export const KOPRU_BOY = zArkaDis - zTasIc; // koridorun üstündeki açıklık:
 export const KOPRU_INIS = KOPRU.y0 - KOPRU.y1; // 0,12 m
 // Köprünün üstünde yükseklik (z'ye göre): arka duvarın içinde düz, koridorun üstünde iner, taş duvarın üstünde düz.
 export const kopruY = (z: number) => (z >= zArkaDis ? KOPRU.y0 : z <= zTasIc ? KOPRU.y1 : KOPRU.y0 - (KOPRU_INIS * (zArkaDis - z)) / KOPRU_BOY);
-// Köprünün koridorun ortasındaki ayağı (DENEME): 9. delikte düz yolu keser.
-export const KOPRU_AYAK: N2 = [kopruOrta, (zArkaDis + zTasIc) / 2];
+// Köprünün koridordaki iki ayağı (DENEME): açıklığın üçte birlerinde. 9. delikte taş duvar yanındaki ayak düz yolu keser.
+export const KOPRU_AYAKLAR: N2[] = [1, 2].map((i): N2 => [kopruOrta, zTasIc + (i * (zArkaDis - zTasIc)) / 3]);
+const KOPRU_AYAK = KOPRU_AYAKLAR[0];
 const olukOrta8 = siraArka(UST) + OLUK / 2;
 const bas8: N2 = [kopruOrta - DENEME.kopruOluk, olukOrta8];
 const cukur8: N2 = [kopruOrta, (zTasIc + zTasDis) / 2];
@@ -636,12 +637,30 @@ const zSek = zTasIc + TOP_YARICAP;
 const sek9: N2 = [bas9[0] + ((cukur9[0] - bas9[0]) * (bas9[1] - zSek)) / (bas9[1] - zSek + (cukur9[1] - zSek)), zSek];
 export const KORIDOR_EN = zArkaDis - zTasIc; // 3,1 m (model)
 const ay = DENEME.kopruAyak / 2;
-const c9 = { x0: 56.0, x1: 65.4, z0: -72.6, z1: -65.8 };
-// Atış anı: ikinci vuruş, top köşeyi dönmüş.
-const ara9: N2 = [kose9[0] + 0.45, zArkaDis - 0.4];
+// Taş duvarın dibindeki taş sırası (duvardan dökülmüş, dibe dizilmiş taşlar; modelde ve künyede yok: DENEME,
+// Kemal onaylamadı). Taşlar düzensiz: üstlerine gelen top düzgün sekmez. Sırada tek boşluk var; top duvardan
+// yalnız oradan temiz seker. Taşların eni, derinliği ve boyu sabit bir diziden (rastgele değil).
+const tasBosluk: [number, number] = [sek9[0] - DENEME.tasSirasiBosluk / 2, sek9[0] + DENEME.tasSirasiBosluk / 2];
+export const TAS_SIRASI = ((): { x0: number; x1: number; derinlik: number; boy: number; ton: number }[] => {
+  const enler = [0.42, 0.34, 0.5, 0.38, 0.46, 0.36];
+  const derinlikler = [1, 0.8, 0.93, 0.73, 0.87, 0.97];
+  const boylar = [0.22, 0.16, 0.26, 0.18, 0.24, 0.2];
+  const liste: { x0: number; x1: number; derinlik: number; boy: number; ton: number }[] = [];
+  let x = bas9[0] - DENEME.baslangicPayi;
+  for (let i = 0; x < cepX1 - 0.05; i++) {
+    const x1 = Math.min(x + enler[i % 6], cepX1);
+    // Boşluğa giren taş konmaz.
+    if (x1 <= tasBosluk[0] || x >= tasBosluk[1]) liste.push({ x0: x, x1, derinlik: DENEME.tasSirasiDerinlik * derinlikler[i % 6], boy: boylar[i % 6], ton: i % 4 });
+    x = x1 + 0.03;
+  }
+  return liste;
+})();
+const c9 = { x0: 57.6, x1: 65.4, z0: -72.6, z1: -66.0 };
+// Atış anı: ilk vuruş; nişan taş sırasındaki boşluğa, taş duvara.
+const ara9: N2 = bas9;
 const yon9 = ((): N2 => {
-  const dx = cukur9[0] - ara9[0];
-  const dz = cukur9[1] - ara9[1];
+  const dx = sek9[0] - ara9[0];
+  const dz = sek9[1] - ara9[1];
   const b = Math.hypot(dx, dz);
   return [dx / b, dz / b];
 })();
@@ -673,7 +692,8 @@ const koridor: OrnekDelik = {
     { tur: 'duvar', x0: KOPRU.x1, x1: MODEL.yanDuvarX0, z0: zArkaDis, z1: zArkaIc },
     { tur: 'duvar', x0: MODEL.yanDuvarX0, x1: MODEL.yanDuvarX1, z0: zArkaIc, z1: c9.z1 },
     { tur: 'tas', x0: c9.x0, x1: c9.x1, z0: zTasDis, z1: zTasIc },
-    { tur: 'ayak', x0: KOPRU_AYAK[0] - ay, x1: KOPRU_AYAK[0] + ay, z0: KOPRU_AYAK[1] - ay, z1: KOPRU_AYAK[1] + ay },
+    ...KOPRU_AYAKLAR.map((a) => ({ tur: 'ayak' as const, x0: a[0] - ay, x1: a[0] + ay, z0: a[1] - ay, z1: a[1] + ay })),
+    ...TAS_SIRASI.map((t) => ({ tur: 'tas' as const, x0: t.x0, x1: t.x1, z0: zTasIc, z1: zTasIc + t.derinlik })),
   ],
   // Köprü üstte: şemada iki kenarı kesik çizgiyle (top altından geçer).
   acikKenarlar: [
@@ -688,14 +708,16 @@ const koridor: OrnekDelik = {
     { a: [cepX1, zArkaDis], b: [cepX1, cepZ1], kaydir: -0.4, deger: DENEME.koridorCepDerinlik, kaynak: 'deneme' },
   ],
   etiketler: [
-    { n: [58.9, (zTasIc + zTasDis) / 2 + 0.07], metin: 'maket.sema.tasDuvarSektirme', hiza: 'orta' },
+    { n: [61.6, (zTasIc + zTasDis) / 2 + 0.07], metin: 'maket.sema.tasDuvar', hiza: 'orta' },
     { n: [58.3, (zArkaIc + zArkaDis) / 2 + 0.07], metin: 'maket.sema.arkaDuvar', hiza: 'orta' },
-    { n: [KOPRU_AYAK[0] - 0.4, KOPRU_AYAK[1] + 0.2], metin: 'maket.sema.kopruAyagi', hiza: 'orta' },
-    { n: [KOPRU.x1 + 0.13, -70.85], metin: 'maket.sema.kopruUstte', hiza: 'orta' },
+    { n: [KOPRU_AYAK[0] - 0.5, -69.5], metin: 'maket.sema.kopruAyagi', hiza: 'orta' },
+    { n: [sek9[0] - 0.25, zTasIc + 0.1], metin: 'maket.sema.tasBosluk', hiza: 'sol' },
+    { n: [62.6, zTasIc + 0.55], metin: 'maket.sema.tasSirasi', hiza: 'orta' },
+    { n: [KOPRU.x1 + 0.13, -69.3], metin: 'maket.sema.kopruUstte', hiza: 'orta' },
     { n: [kose9[0] - 0.25, zArkaDis + 0.75], metin: 'maket.sema.tribunKosesi', hiza: 'sag' },
     { n: [63.5, -70.2], metin: 'maket.sema.toprak', hiza: 'orta' },
   ],
-  // Atış anı: ikinci vuruş, top tribünün köşesini dönmüş; nişan cepteki deliğe
+  // Atış anı: ilk vuruş; nişan taş sırasındaki boşluktan taş duvara
   atis: { top: [ara9[0], 0, ara9[1]], yon: yon9, boy: 1.2 },
 };
 

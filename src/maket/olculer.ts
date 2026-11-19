@@ -151,8 +151,10 @@ export const DENEME = {
   kopruKalinlik: 0.1,
   kopruSahanlikY: 2.4, // köprünün taş duvarın üstüne oturduğu yükseklik (duvar taşları modelde 2,2–2,5 m)
   kopruOluk: 3, // 8. delik: başlangıçtan köprünün ağzına, üst sıranın oluğunda
-  kopruAyak: 0.3, // köprünün koridorun ortasındaki ayağı (9. delikte engel)
-  koridorBaslangic: 2.4, // 9. delik: başlangıcın köprü ayağına uzaklığı
+  kopruAyak: 0.3, // köprünün koridordaki iki ayağı (açıklığın üçte birlerinde; 9. delikte engel)
+  koridorBaslangic: 1.5, // 9. delik: başlangıcın köprü ayağına uzaklığı
+  tasSirasiDerinlik: 0.3, // 9. delik: taş duvarın dibindeki taş sırası (duvardan ne kadar çıkar; en çok)
+  tasSirasiBosluk: 0.9, // taş sırasındaki boşluk: topun duvardan sekebildiği yer
   koridorCepBoy: 2.2, // 9. delik: tribünün köşesinden sonraki cebin boyu (x) ve derinliği (z)
   koridorCepDerinlik: 1.4,
   // Atış işaretleri (yerde): güç halkası ve nişan çizgisi

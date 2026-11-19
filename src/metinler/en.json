@@ -152,7 +152,7 @@
   "maket.zemin.9": "Ground: dirt path",
   "maket.bulmaca.6": "The lane runs from the grass to the stand, passes under the railing onto the dirt and turns along the foot of the first step towards the stairs. Only the grass side has an edge: the other side is the step itself. The railing posts stand inside the strip; the hole is on the narrow side between the posts and the step, at the foot of the stairs. The ball slips between two posts to the narrow side.",
   "maket.bulmaca.8": "The ball runs in the channel of the top row, behind the seats. The corner at the end of the channel turns it through the gap in the back wall onto the bridge. The bridge is narrow, has no edges and slopes slightly down to the wall (shape is TRIAL): a ball that falls off counts as out (TRIAL). The hole is on the landing on top of the stone wall; its back has an edge.",
-  "maket.bulmaca.9": "Breather. The lane is the corridor itself: one side is the back wall of the stand, the other the stone wall. The bridge pier (TRIAL) blocks the straight line; the hole is in the pocket behind the corner of the stand, out of sight. The ball bounces once off the stone wall, passes the pier and turns the corner.",
+  "maket.bulmaca.9": "Breather. The lane is the corridor itself: one side is the back wall of the stand, the other the stone wall. A bridge pier (TRIAL) blocks the straight line. A row of uneven stones lies at the foot of the stone wall (TRIAL): the ball only bounces cleanly off the wall through the gap in the row. From there it passes between the pier and the wall and turns to the hole behind the corner of the stand.",
   "maket.sema.korkuluk": "railing: posts block, open below",
   "maket.sema.ilkBasamak": "first step: the edge",
   "maket.sema.merdivenAyagi": "foot of the stairs: hole on the narrow side",
@@ -166,8 +166,9 @@
   "maket.sema.arkaDuvar": "back wall of the stand",
   "maket.sema.sahanlik": "top of the wall: hole",
   "maket.sema.merdivenKisa": "stairs",
-  "maket.sema.tasDuvarSektirme": "stone wall: bank shot",
-  "maket.sema.kopruAyagi": "bridge pier · TRIAL",
+  "maket.sema.kopruAyagi": "bridge piers · TRIAL",
   "maket.sema.kopruUstte": "bridge (above)",
-  "maket.sema.tribunKosesi": "corner of the stand"
+  "maket.sema.tribunKosesi": "corner of the stand",
+  "maket.sema.tasBosluk": "gap: bank shot",
+  "maket.sema.tasSirasi": "stones at the wall foot · TRIAL"
 }
