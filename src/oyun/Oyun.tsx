@@ -2,7 +2,8 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type Point
 import { Canvas } from '@react-three/fiber';
 import { m, type MetinAnahtari } from '../metinler';
 import { metre } from '../maket/metre';
-import { KAMERA, KURAL, KUTLAMA, OYUNCU, PUAN, VURUS } from './ayarlar';
+import { HALKA_RENKLERI, KAMERA, KURAL, KUTLAMA, OYUNCU, PUAN, VURUS, type HalkaRengi } from './ayarlar';
+import { renk } from '../sahne/renkler';
 import { OYUN_SIRASI, oyunDeligi } from './dunya';
 import { vur, yeniTop } from './fizik';
 import { vurusHizi } from './tahmin';
@@ -33,6 +34,16 @@ function kolayOku(): boolean {
     return v === null ? OYUNCU.kolayMod : v === '1';
   } catch {
     return OYUNCU.kolayMod;
+  }
+}
+// Engelin arkasındaki topun halkasının rengi de hatırlanır (Kemal, 19 Kasım).
+const HALKA_ANAHTARI = 'minigolf.halkaRengi';
+function halkaOku(): HalkaRengi {
+  try {
+    const v = window.localStorage.getItem(HALKA_ANAHTARI);
+    return (HALKA_RENKLERI as readonly string[]).includes(v ?? '') ? (v as HalkaRengi) : OYUNCU.halkaRengi;
+  } catch {
+    return OYUNCU.halkaRengi;
   }
 }
 const sinirla = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
@@ -78,6 +89,7 @@ export default function Oyun() {
   const [disari, setDisari] = useState(false);
   const [yuklendi, setYuklendi] = useState(false);
   const [kolay, setKolay] = useState(kolayOku);
+  const [halkaRengi, setHalkaRengi] = useState(halkaOku);
   const [ayarAcik, setAyarAcik] = useState(false);
 
   const no = OYUN_SIRASI[sira];
@@ -85,6 +97,7 @@ export default function Oyun() {
   // tekrar: "yeniden" denince aynı delik baştan kurulur.
   const durum = useMemo<Durum>(() => yeniDurum(oyunDeligi(no)), [no, tekrar]);
   durum.kolay = kolay;
+  durum.halkaRengi = halkaRengi;
   useEffect(() => {
     try {
       window.localStorage.setItem(KOLAY_ANAHTARI, kolay ? '1' : '0');
@@ -92,6 +105,13 @@ export default function Oyun() {
       // Tarayıcı saklamaya izin vermiyorsa ayar yalnız bu açılışta geçerli.
     }
   }, [kolay]);
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(HALKA_ANAHTARI, halkaRengi);
+    } catch {
+      // Saklanamazsa seçim yalnız bu açılışta geçerli.
+    }
+  }, [halkaRengi]);
 
   const alanRef = useRef<HTMLDivElement>(null);
   const uzaklikRef = useRef<HTMLSpanElement>(null);
@@ -128,6 +148,7 @@ export default function Oyun() {
         takip: durum.takip,
         hedefAci: durum.hedefAci,
         kolay: durum.kolay,
+        halkaRengi: durum.halkaRengi,
         tahmin: durum.tahmin,
         tahminGorunur: durum.tahminGorunur,
         delikYonu: delikYonu(durum),
@@ -458,6 +479,10 @@ export default function Oyun() {
             ))}
           </div>
           <span ref={gucYaziRef} />
+          {/* Kemal, 19 Kasım: atış bırakılmadan cezasız iptal edilebilir (parmağı topa geri getirip bırakmak). */}
+          <small className="oy-guc-ipucu" data-deneme="iptal-ipucu">
+            {m('oyna.iptalIpucu')}
+          </small>
         </div>
         <div className="oy-arac">
           <button type="button" className="oy-dugme-kucuk" onClick={deligeBak} data-deneme="delige-bak">
@@ -487,7 +512,7 @@ export default function Oyun() {
         </div>
       </div>
 
-      {/* Küçük ayar menüsü: kolay mod */}
+      {/* Küçük ayar menüsü: kolay mod, engelin arkasındaki topun halkasının rengi */}
       {ayarAcik && asama === 'oyun' && (
         <div className="oy-ayar" data-deneme="ayar-menusu">
           <div className="oy-ayar-baslik">{m('oyna.ayarlar')}</div>
@@ -499,6 +524,28 @@ export default function Oyun() {
             <input type="checkbox" checked={kolay} onChange={(e) => setKolay(e.target.checked)} data-deneme="kolay-mod" />
             <i className="oy-anahtar" aria-hidden="true" />
           </label>
+          <div className="oy-ayar-satir" data-deneme="halka-rengi">
+            <span>
+              <b>{m('oyna.halkaRengi')}</b>
+              <small>{m('oyna.halkaRengiAciklama')}</small>
+            </span>
+            <span className="oy-renkler" role="radiogroup" aria-label={m('oyna.halkaRengi')}>
+              {HALKA_RENKLERI.map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  role="radio"
+                  aria-checked={halkaRengi === r}
+                  aria-label={m(`oyna.renk.${r}` as MetinAnahtari)}
+                  title={m(`oyna.renk.${r}` as MetinAnahtari)}
+                  className={`oy-renk${halkaRengi === r ? ' secili' : ''}`}
+                  style={{ background: renk[r] }}
+                  onClick={() => setHalkaRengi(r)}
+                  data-renk={r}
+                />
+              ))}
+            </span>
+          </div>
           <button type="button" className="oy-dugme-ince" onClick={() => setAyarAcik(false)}>
             {m('oyna.kapat')}
           </button>

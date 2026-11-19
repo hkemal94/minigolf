@@ -27,6 +27,8 @@
 .oy-guc-cubuk { flex: 1; height: 8px; border-radius: 999px; background: rgba(14, 28, 79, 0.15); overflow: hidden; }
 .oy-guc-dolu { height: 100%; width: 0; background: var(--kiremit); }
 .oy-guc span { min-width: 74px; text-align: right; }
+.oy-guc { flex-wrap: wrap; row-gap: 2px; }
+.oy-guc .oy-guc-ipucu { flex-basis: 100%; font-size: 10px; font-weight: 500; opacity: 0.75; }
 .oy-alt-satir { display: flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 14px; background: rgba(14, 28, 79, 0.92); color: var(--krem); }
 .oy-ipucu { flex: 1; min-width: 0; font-size: 10px; line-height: 1.35; text-align: center; opacity: 0.9; }
 .oy-rozet { font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; max-width: 44px; text-align: right; line-height: 1.25; }
@@ -70,6 +72,9 @@
 .oy-ayar-satir input:checked + .oy-anahtar { background: var(--lacivert); }
 .oy-ayar-satir input:checked + .oy-anahtar::after { left: 21px; }
 .oy-ayar .oy-dugme-ince { align-self: flex-end; }
+.oy-renkler { flex: none; display: flex; gap: 8px; }
+.oy-renk { width: 26px; height: 26px; padding: 0; border-radius: 50%; border: 1.5px solid rgba(14, 28, 79, 0.35); cursor: pointer; }
+.oy-renk.secili { outline: 2px solid var(--lacivert); outline-offset: 2px; }
 
 /* Par ve yıldız (değerler deneme): delik sonu kartında büyük, listede küçük. Dolu yıldız lacivert. */
 .oy-yildizlar { display: flex; justify-content: center; gap: 4px; margin: 0 0 6px; }

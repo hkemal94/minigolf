@@ -9,6 +9,8 @@ import { SEFFAFLIK } from './ayarlar';
 // topun üstünde kalan yüzey, yumuşak kenarlı yuvarlak bir pencerede şeffaflaşır. Pencere yalnız top gerçekten
 // bir engelin arkasındayken açılır; bunu saniyede birkaç kez atılan bir ışın söyler (her karede değil).
 // Zemin (çim, toprak, saha çizgisi), top, işaretler ve file bu ekten geçmez. Değerler DENEME (SEFFAFLIK).
+// Delik de (Kemal, 19 Kasım 2026: "aynısı delik için de olsun"): delik ve bayrağı bir engelin arkasında kalınca
+// deliğin çevresinde ikinci bir pencere açılır; ikisi aynı anda açık olabilir. Aynı saydamlık, süre, pencere boyu.
 
 // Bütün engel malzemelerinin paylaştığı değerler (her karede yalnız sayılar değişir; malzeme kopyalanmaz).
 export const seffafDegerler = {
@@ -17,6 +19,11 @@ export const seffafDegerler = {
   uYaricap: { value: 1 }, // pencerenin yarıçapı (m)
   uTopYaricap: { value: 0.02 },
   uGuc: { value: 0 }, // 0: pencere kapalı, 1: tam açık
+  // Deliğin penceresi: merkezi (delik ve bayrağın ortası), "önünde" sayılma payı, delik ağzının yüksekliği, gücü.
+  uDelikMerkez: { value: new Vector3(0, -1000, 0) },
+  uDelikPay: { value: 0.05 },
+  uDelikTaban: { value: -1000 },
+  uDelikGuc: { value: 0 },
   uOpaklik: { value: SEFFAFLIK.opaklik },
 };
 
@@ -42,18 +49,29 @@ function ek(shader: { uniforms: Record<string, unknown>; vertexShader: string; f
     uniform float uYaricap;
     uniform float uTopYaricap;
     uniform float uGuc;
-    uniform float uOpaklik;\n` +
+    uniform float uOpaklik;
+    uniform vec3 uDelikMerkez;
+    uniform float uDelikPay;
+    uniform float uDelikTaban;
+    uniform float uDelikGuc;
+    // Bir pencere: merkezden kameraya giden çizginin çevresinde, merkezin önünde ve taban yüksekliğinin üstünde kalan yüzey.
+    float sfPencere( vec3 merkez, float pay, float taban ) {
+      vec3 sfFark = vSeffafDunya - merkez;
+      float sfBoy = dot( sfFark, uKameraYonu ); // merkezden kameraya doğru ne kadar önde
+      float sfYan = length( sfFark - uKameraYonu * sfBoy ); // çizgiye uzaklık
+      float sfIc = 1.0 - smoothstep( uYaricap * 0.55, uYaricap, sfYan );
+      float sfOnde = smoothstep( pay, pay * 3.0, sfBoy );
+      float sfUst = smoothstep( taban - pay, taban + pay, vSeffafDunya.y );
+      return sfIc * sfOnde * sfUst;
+    }\n` +
     shader.fragmentShader.replace(
       '#include <opaque_fragment>',
       `#include <opaque_fragment>
-      if ( uGuc > 0.0 ) {
-        vec3 sfFark = vSeffafDunya - uTopMerkez;
-        float sfBoy = dot( sfFark, uKameraYonu ); // topdan kameraya doğru ne kadar önde
-        float sfYan = length( sfFark - uKameraYonu * sfBoy ); // çizgiye uzaklık
-        float sfIc = 1.0 - smoothstep( uYaricap * 0.55, uYaricap, sfYan );
-        float sfOnde = smoothstep( uTopYaricap, uTopYaricap * 3.0, sfBoy );
-        float sfUst = smoothstep( uTopMerkez.y - uTopYaricap, uTopMerkez.y + uTopYaricap, vSeffafDunya.y );
-        gl_FragColor.a *= mix( 1.0, uOpaklik, uGuc * sfIc * sfOnde * sfUst );
+      if ( uGuc > 0.0 || uDelikGuc > 0.0 ) {
+        float sfTop = uGuc > 0.0 ? uGuc * sfPencere( uTopMerkez, uTopYaricap, uTopMerkez.y ) : 0.0;
+        // Deliğin penceresi delik ağzından yukarısı (bayrak dahil).
+        float sfDelik = uDelikGuc > 0.0 ? uDelikGuc * sfPencere( uDelikMerkez, uDelikPay, uDelikTaban ) : 0.0;
+        gl_FragColor.a *= mix( 1.0, uOpaklik, max( sfTop, sfDelik ) );
       }`,
     );
 }
@@ -91,9 +109,10 @@ function gorunurEngel(v: Intersection): boolean {
 const isin = new Raycaster();
 const bas = new Vector3();
 const vurulan: Intersection[] = [];
-export function engelArkasinda(engeller: Object3D, top: Vector3, kameraYonu: Vector3, uzaklik: number, topYaricap: number): boolean {
-  // İki ışın: topun ortası ve tepesi (top yarı yarıya örtülünce de pencere açılsın).
-  for (const yukari of [0, topYaricap * 0.9]) {
+// yukarilar: ışınların başladığı yükseklikler (merkeze göre). Top için ortası ve tepesi; delik için ağzı ve bayrağın ucu.
+export function engelArkasinda(engeller: Object3D, top: Vector3, kameraYonu: Vector3, uzaklik: number, topYaricap: number, yukarilar: number[] = [0, topYaricap * 0.9]): boolean {
+  // Top için iki ışın: topun ortası ve tepesi (top yarı yarıya örtülünce de pencere açılsın).
+  for (const yukari of yukarilar) {
     bas.copy(top).addScaledVector(kameraYonu, topYaricap * 1.5);
     bas.y += yukari;
     isin.set(bas, kameraYonu);

@@ -41,7 +41,7 @@ vuruşlarla deliğe soktu (1, 1, 4; sapma 0). Bütün görünüş değerleri DEN
 belgesi 6.4 "Görünüş", çizim yükü tablosuyla). Öncesi ve sonrası: `docs/ekranlar/oyna-doku-7-oncesi-sonrasi.jpg`.
 Bilgisayarda telefon boyutunda denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
 
-## Oynanabilir prototip · par, yıldız, kutlama, ortam, rozetler (19 Kasım 2026; öneri, PR #12, `ajans/oyna-par-ortam`)
+## Oynanabilir prototip · par, yıldız, kutlama, ortam, rozetler (19 Kasım 2026; birleşti, PR #12, `ajans/oyna-par-ortam`)
 
 Üç PR'lık düzeltmenin üçüncüsü. **Par ve yıldız:** her deliğin hedef vuruş sayısı (par) üstteki bilgide, delik sonunda ve
 tur sonundaki listede yazıyor; vuruşa göre en çok üç yıldız veriliyor. **Kutlama:** top deliğe düşünce bayrak delikten
@@ -52,11 +52,11 @@ yürüyor; ad, yüz, hikâye yok). Hepsi kodla çizildi; yeni dış model yok. *
 simgeler (tek vuruş, par altı, cezasız); ad konmadı, pulun yerine geçmez. Oyun yavaşlayıp gölgeleri kapatırsa ortam da
 azalır (2 kuş, 3 kişi; ağaç ve çim durur). **Fizik değişmedi:** bot üç deliği de aynı vuruşlarla deliğe soktu (1, 1, 4).
 Bütün değerler DENEME (`src/oyun/ayarlar.ts` → `PUAN`, `KUTLAMA`, `ORTAM`; tasarım belgesi 6.4). Çizim yükü tablosu
-belgede. Görüntüler: `docs/ekranlar/oyna-par-1-ortam.jpg` … `oyna-par-5-kolaj.jpg`; delik sonu ve tur sonu kartlarının
+belgede. Görüntüler: `docs/ekranlar/oyna-par-2-kutlama.jpg` … `oyna-par-5-kolaj.jpg` (ortam görüntüsü insanlar kapanınca `docs/galeri/eski/insan-oncesi/` altına taşındı); delik sonu ve tur sonu kartlarının
 önceki hâlleri `docs/galeri/eski/par-oncesi/` altında. Bilgisayarda telefon boyutunda denendi; **gerçek telefonda
 denenmedi, telefondaki kare hızı ölçülmedi.**
 
-## Oynanabilir prototip · engel şeffaflığı ve kamera (19 Kasım 2026; öneri, PR #13, `ajans/oyna-seffaf-kamera`)
+## Oynanabilir prototip · engel şeffaflığı ve kamera (19 Kasım 2026; birleşti, PR #13, `ajans/oyna-seffaf-kamera`)
 
 Kemal'in iki isteği. **Engelin arkasındaki top:** top tribünün duvarı, basamak, koltuk, kulüp binası, sundurma, kale direği,
 bordür ya da huni arkasında kalınca o engel topun çevresinde yuvarlak bir pencerede yumuşakça şeffaflaşır (opaklık 0,25,
@@ -67,6 +67,20 @@ kesilmiyor. Başlangıç yakınlığı aynı. Saha dışındaki boşluk görüne
 (`SEFFAFLIK`, `KAMERA`; tasarım belgesi 6.4). Fizik değişmedi; bot üç deliği aynı vuruşlarla (1, 1, 4) bitirdi, hepsi tamam.
 Çizim çağrısı aynı (engel varken +1). Öncesi ve sonrası: `docs/ekranlar/oyna-seffaf-4-oncesi-sonrasi.jpg`.
 Bilgisayarda telefon boyutunda denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
+
+## Oynanabilir prototip · Kemal'in kararları, iptal, normal mod, deliğin penceresi (19 Kasım 2026; öneri, PR #14, `ajans/oyna-par-karar-insansiz`)
+
+Kemal'in #12 ve #13 cevapları. **Kararlar:** par ve yıldız şimdiki gibi (par delik 1 → 2, 3 → 3, 7 → 4; par ya da altı
+3 yıldız, par + 1 iki, fazlası bir); üç rozet kalır, adları [Kemal]; engel şeffaflığının opaklığı 0,25 ve kameranın
+başlangıç yakınlığı 200 kalır. Bunlar artık DENEME değil. **Uzaktaki insanlar kaldırıldı** ("bir müddet gerek yok"):
+tek ayarla kapalı, kod duruyor; kuşlar ve esinti aynen. Çizim çağrısı 4 azaldı. **Ayar menüsü:** engelin arkasındaki
+top ve deliğin halkasının rengi seçilir (krem, lacivert, kiremit; başta krem; hatırlanır). **Normal mod:** oyun kolay mod
+kapalı başlar; menüden açılır, hatırlanır. **Cezasız iptal:** nişan alırken parmak topa geri getirilip bırakılırsa atış
+olmaz, vuruş ve ceza sayılmaz; çekerken güç çubuğunun altında kısa ipucu. **Deliğin penceresi:** delik ve bayrağı bir
+engelin arkasında kalınca deliğin çevresinde de aynı pencere açılır; top da gizliyse ikisi birden. Fizik değişmedi; bot
+üç deliği aynı vuruşlarla (1, 1, 4) bitirdi, hepsi tamam. Görüntüler: `docs/ekranlar/oyna-karar-1-ortam-insansiz.jpg` …
+`oyna-karar-5-kolaj.jpg`; insanlı ortam görüntüsü `docs/galeri/eski/insan-oncesi/`. Bilgisayarda telefon boyutunda
+denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
 
 ## Maketlerde kadraj (19 Kasım 2026; öneri, PR #11, aynı dal, ayrı commit)
 
@@ -169,7 +183,8 @@ görüntü yeniden alındı; önceki hâlleri `docs/galeri/eski/kadraj-oncesi/` 
 4. **İlk delik denemesi:** yapıldı (PR #7 birleşti; yukarıda "Oynanabilir prototip"): 3, 1 ve 7. delik oynanıyor.
    Kemal telefonda dener; DENEME değerleri (güç sınırı, çimin hızı, sekme, kamera, dışarı çıkma kuralı) onun
    denemesinden sonra ayarlanır. Eksik kalan: geri al, kaldığı yerden devam.
-   Par, yıldız eşikleri, rozetler ve ortamın sayıları da DENEME (PR #12): Kemal oynadıktan sonra onaylar.
+   Par, yıldız eşikleri ve rozetler karara bağlandı (Kemal, 19 Kasım; PR #14); rozetlerin adları [Kemal]. Kutlama ve
+   kuşların sayıları DENEME. Uzaktaki insanlar bir müddet kapalı; ileride dönülür.
 5. Sonraki delikler oynanışa, delik delik; her biri Kemal denedikten sonra; hareketliler en son.
 
 ## Sona kalanlar
@@ -184,6 +199,8 @@ görüntü yeniden alındı; önceki hâlleri `docs/galeri/eski/kadraj-oncesi/` 
 
 ## Bitenler
 
+- Engel şeffaflığı ve uzak kamera (19 Kasım, PR #13 birleşti).
+- Par, yıldız, kutlama, ortam, rozetler (19 Kasım, PR #12 birleşti).
 - Oynanabilir prototip: delik 3, 1, 7 (19 Kasım, PR #7 birleşti).
 - Adım 2: delik 6, 8, 9 (19 Kasım, PR #6 birleşti).
 - Adım 1: delik 1, 2, 4, 5 (18 Kasım, PR #4 birleşti).

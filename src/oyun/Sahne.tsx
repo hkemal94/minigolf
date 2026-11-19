@@ -6,7 +6,7 @@ import { BoxGeometry, BufferGeometry, Color, DirectionalLight, DoubleSide, Float
 import { renk } from '../sahne/renkler';
 import { DENEME, GOLF, MODEL, TOP_YARICAP, WMF } from '../maket/olculer';
 import { BOS_KOLTUK, MERDIVEN_X0, TRIBUN_X1, koltukX, koltukZ, siraOn, siraY } from '../maket/ornekDelikler';
-import { FIZIK, GORUNTU, GORUNUS, KAMERA, KUTLAMA, ORTAM, SEFFAFLIK, VURUS } from './ayarlar';
+import { FIZIK, GORUNTU, GORUNUS, KAMERA, KUTLAMA, ORTAM, OYUNCU, SEFFAFLIK, VURUS, type HalkaRengi } from './ayarlar';
 import { engelArkasinda, seffafDegerler, seffafYap } from './seffaflik';
 import { Ortam, RUZGAR, agacMalzemesi, cimeRuzgar, yeniOrtamDurumu, type OrtamDurumu } from './Ortam';
 import { DOKU_DOSYALARI, dokuBellegi, dokulariHazirla, dunyaYerlesimi, fileDokusu, fileGeometrisi, gokYansimasi, modelDokusu, modelMalzemesi, modelYerlesimi, topKabartisi, type Dokular } from './dokular';
@@ -32,6 +32,7 @@ export type Durum = {
   hedef: Vector3; // kameranın izlediği nokta (topu yumuşak izler)
   nisan: { aktif: boolean; yonX: number; yonZ: number; guc: number };
   kolay: boolean; // kolay mod: çekerken topun duracağı yer görünür
+  halkaRengi: HalkaRengi; // engelin arkasındaki topun halkası (ayar menüsünden; Kemal, 19 Kasım)
   // Kolay moddaki tahmin ve hangi nişan için hesaplandığı (nişan değişmedikçe yeniden hesaplanmaz).
   tahmin: (Tahmin & { yonX: number; yonZ: number; guc: number }) | null;
   tahminGorunur: boolean; // işaret şu an ekranda mı (deneme için)
@@ -41,8 +42,8 @@ export type Durum = {
   boy: number;
   kilitli: boolean; // delik bitti: vuruş alınmaz
   // Son karenin çizim yükü ve süresi (deneme için); doku sayısı, dokuların yaklaşık belleği (MB), gölge açık mı.
-  // engel: top bir engelin arkasında mı (0–1; şeffaflığın o anki gücü).
-  cizim: { cagri: number; ucgen: number; kare: number; doku: number; dokuMB: number; golge: boolean; engel: number };
+  // engel: top bir engelin arkasında mı (0–1; şeffaflığın o anki gücü). delikEngel: aynısı delik için.
+  cizim: { cagri: number; ucgen: number; kare: number; doku: number; dokuMB: number; golge: boolean; engel: number; delikEngel: number };
   bakisNoktasi: [number, number, number] | null; // deneme için (?bot=1): kamera topu değil bu noktayı izler
   // Kutlama: top deliğe düştükten sonra geçen süre (sn); kutlama yokken -1.
   kutlama: number;
@@ -66,6 +67,7 @@ export function yeniDurum(delik: OyunDeligi): Durum {
     hedef: new Vector3(x, y, z),
     nisan: { aktif: false, yonX: 0, yonZ: 0, guc: 0 },
     kolay: false,
+    halkaRengi: OYUNCU.halkaRengi,
     tahmin: null,
     tahminGorunur: false,
     topEkran: [-1, -1],
@@ -73,7 +75,7 @@ export function yeniDurum(delik: OyunDeligi): Durum {
     en: 1,
     boy: 1,
     kilitli: false,
-    cizim: { cagri: 0, ucgen: 0, kare: 0, doku: 0, dokuMB: 0, golge: true, engel: 0 },
+    cizim: { cagri: 0, ucgen: 0, kare: 0, doku: 0, dokuMB: 0, golge: true, engel: 0, delikEngel: 0 },
     bakisNoktasi: null,
     kutlama: -1,
     kutlamaDur: null,
@@ -397,6 +399,10 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
   const seffafHalkaRef = useRef<Mesh>(null);
   // Engelin arkasında kalan top: ışının zamanlayıcısı, sonucu ve şeffaflığın o anki gücü (SEFFAFLIK; DENEME).
   const seffaf = useMemo(() => ({ bekle: 0, arkada: false, guc: 0, yon: new Vector3(), top: new Vector3(), ara: new Vector3(), sonTop: new Vector3(1e9, 0, 0), sonYon: new Vector3() }), []);
+  // Engelin arkasında kalan delik (Kemal, 19 Kasım: "aynısı delik için de olsun"): delik yerinden oynamaz; ışın yalnız
+  // kamera oynayınca atılır (saniyede en çok SEFFAFLIK.bakisSikligi kez).
+  const seffafDelik = useMemo(() => ({ bekle: 0, arkada: false, guc: 0, sonKam: new Vector3(1e9, 0, 0), sonYon: new Vector3(), ara: new Vector3() }), []);
+  const delikHalkaRef = useRef<Mesh>(null);
   const halkaRef = useRef<(Mesh | null)[]>([null, null]);
   const gl = useThree((s) => s.gl);
   // Dokular (Poly Haven, ambientCG; docs/lisanslar.md) ve kodla hesaplananlar (top gamzeleri, file, gök yansıması).
@@ -539,6 +545,40 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
         halka.quaternion.copy(kam.quaternion);
         halka.scale.setScalar(Math.max(1, KAMERA.yakinlik / d.yakinlik));
         (halka.material as Material).opacity = SEFFAFLIK.halkaOpaklik * yumusak;
+        (halka.material as Material & { color: Color }).color.set(renk[d.halkaRengi]);
+      }
+    }
+
+    // --- Engelin arkasında kalan delik: aynı pencere deliğin (ve bayrağın) çevresinde; top ile aynı anda açık olabilir.
+    seffafDelik.bekle -= gecen;
+    if (seffafDelik.bekle <= 0 && engelRef.current) {
+      seffafDelik.bekle = 1 / SEFFAFLIK.bakisSikligi;
+      const degisti = kam.position.distanceToSquared(seffafDelik.sonKam) > 1e-8 || seffaf.yon.distanceToSquared(seffafDelik.sonYon) > 1e-8;
+      if (degisti) {
+        seffafDelik.sonKam.copy(kam.position);
+        seffafDelik.sonYon.copy(seffaf.yon);
+        const agiz = seffafDelik.ara.set(c.x, isaretY, c.z);
+        const derinlik = -seffaf.yon.dot(agiz.clone().sub(kam.position)) - kam.near;
+        // Üç ışın: delik ağzı, bayrağın ortası ve ucu.
+        seffafDelik.arkada = engelArkasinda(engelRef.current, agiz, seffaf.yon, Math.max(0, derinlik), r, [0.01, DENEME.bayrakBoy * 0.5, DENEME.bayrakBoy * 0.95]);
+      }
+    }
+    seffafDelik.guc = seffafDelik.arkada ? Math.min(1, seffafDelik.guc + adim) : Math.max(0, seffafDelik.guc - adim);
+    const delikYumusak = seffafDelik.guc * seffafDelik.guc * (3 - 2 * seffafDelik.guc);
+    seffafDegerler.uDelikGuc.value = delikYumusak;
+    seffafDegerler.uDelikMerkez.value.set(c.x, isaretY + DENEME.bayrakBoy / 2, c.z);
+    seffafDegerler.uDelikTaban.value = isaretY;
+    seffafDegerler.uDelikPay.value = r;
+    d.cizim.delikEngel = delikYumusak;
+    const delikHalka = delikHalkaRef.current;
+    if (delikHalka) {
+      delikHalka.visible = delikYumusak > 0.01;
+      if (delikHalka.visible) {
+        delikHalka.position.set(c.x, isaretY + 0.01, c.z);
+        delikHalka.quaternion.copy(kam.quaternion);
+        delikHalka.scale.setScalar(Math.max(1, KAMERA.yakinlik / d.yakinlik));
+        (delikHalka.material as Material).opacity = SEFFAFLIK.halkaOpaklik * delikYumusak;
+        (delikHalka.material as Material & { color: Color }).color.set(renk[d.halkaRengi]);
       }
     }
 
@@ -750,6 +790,11 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
       {/* Engelin arkasındaki top: topun çevresinde ince krem halka, engellerin önünde çizilir. */}
       <mesh ref={seffafHalkaRef} visible={false} renderOrder={11}>
         <ringGeometry args={[TOP_YARICAP * (SEFFAFLIK.halkaBoy - 0.35), TOP_YARICAP * SEFFAFLIK.halkaBoy, 32]} />
+        <meshBasicMaterial color={renk.krem} depthTest={false} depthWrite={false} transparent opacity={0} />
+      </mesh>
+      {/* Engelin arkasındaki delik: deliğin çevresinde aynı halka (rengi aynı ayardan). */}
+      <mesh ref={delikHalkaRef} visible={false} renderOrder={11}>
+        <ringGeometry args={[r * (SEFFAFLIK.halkaBoy - 0.35), r * SEFFAFLIK.halkaBoy, 32]} />
         <meshBasicMaterial color={renk.krem} depthTest={false} depthWrite={false} transparent opacity={0} />
       </mesh>
 
