@@ -42,6 +42,12 @@
   penaltı noktası modelde yok, kodla çizildi. Huniler, sulama başlıkları ve baraj mankenleri künyede ve modelde
   yok: DENEME, Kemal onaylamadı (Kems'in ön elemesinden sonra eklendi). Oynanış yok; gerçek telefonda denenmedi.
 
+- 19 Kasım 2026 (öneri; `ajans/galeri-listesi`): çizimlerin listesi `docs/galeri.json` (Kemal: "Bu minigolf
+  planlarını sakla, bayıldım; KKM'nin içinde oyun galerisine koy"). KKM → Oyunlar → Mini Golf Duzada →
+  "Planlar ve çizimler" bu listeyi okur: stadyum delik planı (3), ekran maketleri (4), delikler (7 delik × delik
+  ekranı, atış ekranı, ölçülü şema = 21) ve eski sürümler (26; git geçmişinden `docs/galeri/eski/` altına
+  kopyalandı: ilk maketler, örnek deliklerin ve adım 1'in ilk hâli). Hepsi taslak (Kemal açıkça onaylamadı),
+  birleşmiş PR'lardan. Kural: her yeni çizim aynı PR'la bu listeye girer. Oyunda değişiklik yok.
 - 19 Kasım 2026 (öneri; `ajans/delikler-adim-2`): adım 2. Açık tribünün çevresindeki üç delik yeni dille çizildi:
   6 (tribünün önü: çimden toprağa, korkuluğun altından, direklerin arasından merdivenin ayağına), 8 (üst sıranın
   oluğundan köşeyle köprüye; kenarsız, hafif inen köprüden taş duvarın üstüne), 9 (nefes; koridorda köprü

@@ -38,6 +38,9 @@ değişti, telefonda nasıl denenir, Kemal'in yapacağı bir şey var mı. Denen
   Kemal'e sorulmadan eklenmez. Modeller yalnız ücretsiz ve ticari kullanıma açık paketlerden.
 - `npm run build` her iş sonunda hatasız geçer.
 - Her PR `docs/yol-haritasi.md`'yi günceller.
+- Her yeni çizim (plan, maket, delik ekranı, şema) aynı PR'la `docs/galeri.json`'a eklenir (KKM'deki
+  "Planlar ve çizimler" onu okur; Kemal, 19 Kasım). Değişen çizimin eski hâli `docs/galeri/eski/` altına
+  kopyalanır ve "eski" bölümüne girer; eski sürüm silinmez.
 - Kararı verilmemiş konu: sor, seçme. Açık sorular tasarım belgesinin 7. bölümünde.
 
 ## Teknik
