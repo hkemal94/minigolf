@@ -36,6 +36,9 @@ modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik
 
 En yeni üstte.
 
+- **19 Kasım (Kemal, oynanabilir prototip, görünüş isteği):** top bir duvarın, tribünün, binanın, kenarın arkasında
+  kalınca aradaki engel yumuşakça şeffaflaşsın; kamera biraz daha uzaklaşabilsin, çevre daha çok görünsün (uzaklaşınca saha
+  dışındaki boşluk görünebilir; gökyüzü ve ada ayrı adım). Uygulama: 6.4 "Engel şeffaflığı ve kamera" (öneri; değerler DENEME).
 - **19 Kasım (Kemal, maket kadrajı; kesin):** ana ekran, tur seçimi ve tur sonu maketlerinde stat görüntüsünün kadrajı,
   köşedeki kulüp binası tam görünecek biçimde kaydırılır. Kayma ve uzaklık DENEME (`src/maket/Maket.tsx`).
 - **19 Kasım (Kemal, doku kaynağı; kesin):** dokulu gerçekçi görünüşün dokuları yalnız Poly Haven ve ambientCG'den
@@ -200,6 +203,7 @@ karakteri, adı, yüzü yok.
 - **Kaldığı yerden devam:** oyun kapanınca tur ve delik hatırlanır; açılınca aynı delikte, aynı vuruş sayısıyla.
 - **Kamera:** **Karar (Kemal, 18 Kasım):** topu yakından izler; iki parmakla yakınlaştırma, uzaklaştırma
   ve açıyı çevirme var (tek elle oynamak için gerekmez, isteğe bağlı). Sınırları (en yakın, en uzak) DENEME.
+  19 Kasım (Kemal): en uzak hâl daha uzak; top bir engelin arkasında kalınca engel topun çevresinde şeffaflaşır (6.4).
 - ~~**Top dışarı kaçarsa** (pistten, köprüden, suya): vuruştan önceki yere döner, o vuruş sayılır, ek ceza yok.
   Durum: açık, DENEME (Kemal, 16 Kasım).~~ **Karar (Kemal, 19 Kasım):** +1 ceza vuruşu, son vuruş yerine döner (yukarıda).
 - **Delik sonu:** kısa sonuç (vuruş sayısı), "sonraki delik" ve "yeniden". **Karar (Kemal, 19 Kasım):** top deliğe
@@ -957,7 +961,7 @@ Sıra: 3 (kale), 1 (orta yuvarlak), 7 (tribün sıraları).
 | Düşen topun zeminden sekmesi: çim · beton | 0,25 · 0,4 | kaynağı yok |
 | Delik: kenardan sekme · tabandan sekme · derinlik | 0,3 · 0,15 · 0,1016 m | derinlik golf kuralındaki en az 4 inç; bu oturumda kaynaktan okunmadı |
 | Duvara sürtünme | 0,12 | kaynağı yok |
-| Kamera: yakınlık · en uzak · en yakın | 200 · 55 · 420 piksel/m | 200: ekranın eni yaklaşık 1,95 m (maketteki uzaklık) |
+| Kamera: yakınlık · en uzak · en yakın | 200 · 25 · 420 piksel/m | 200: ekranın eni yaklaşık 1,95 m (maketteki uzaklık); en uzak 19 Kasım'da 55'ten 25'e (ekranın eni 7,1 m yerine 15,6 m) |
 | Kamera eğimi: başta · en az · en çok | 52° · 20° · 80° | en az: yere yatmaz, yerin altına inmez; en çok: tam tepeden bakmaz |
 | Tek parmakla çevirme · eğme hızı | 0,012 · 0,006 radyan/piksel | yaklaşık 520 piksel sağa sola sürükleme bir tam tur |
 | Vuruştan sonra izleme: sıkılık · dönme | 12 · 1,2 (top 2 m/s'den yavaşken orantılı az) | kamera topun arkasına döner; oyuncu elle çevirirse o vuruş için bırakır |
@@ -1091,6 +1095,45 @@ Görüntüler: `ekranlar/oyna-par-1-ortam.jpg` (delik 3, biraz uzaklaştırılm�
 `oyna-par-3-delik-sonu.jpg`, `oyna-par-4-tur-sonu.jpg`, `oyna-par-5-kolaj.jpg`; delik sonu ve tur sonu kartlarının
 önceki hâlleri `galeri/eski/par-oncesi/`.
 
+**Engel şeffaflığı ve kamera (19 Kasım; öneri, PR #13; Kemal'in isteği):**
+- **Engelin arkasındaki top:** top kameradan bakınca bir engelin arkasında kalırsa (tribünün taş duvarı, basamak,
+  koltuk, kulüp binası, sundurma, kale direği, bordür, huni; stat modelinde zemin olmayan her şey) engel topun çevresinde
+  yuvarlak, yumuşak kenarlı bir pencerede şeffaflaşır; top görünür ve çevresine ince krem bir halka çıkar. Engel açılınca
+  pencere yumuşakça kapanır. Zemin (çim, toprak, saha çizgisi), kale filesi (zaten ağ), top ve işaretler şeffaflaşmaz.
+- **Neden bütün engel değil, pencere:** stat modeli malzemeye göre birleşik (bütün taş duvarlar tek parça, bütün
+  basamaklar tek parça); engel tek tek soldurulursa bütün stadın duvarları birden solardı. Pencere yalnız topun
+  önündeki ve topun üstündeki yüzeyi şeffaflaştırır; topun üstünde durduğu basamak şeffaflaşmaz.
+- **Telefonda ucuz:** topun engelin arkasında olup olmadığına saniyede 10 kez bakılır (her karede değil); top da
+  kamera da yerinde duruyorsa (nişan alırken) hiç bakılmaz. Malzeme kopyalanmaz; ek çizim yalnız halka (1 çağrı).
+- **Kamera:** en uzak hâl 55'ten 25 piksel/m'ye indi (telefonun eninde 7,1 m yerine yaklaşık 15,6 m görünür).
+  Kamera eğik yukarıdan dik izdüşümle bakar; "görüş açısı" ayrı bir ayar değil, görünen alanı bu sınır belirler.
+  Başlangıç yakınlığı (200, maketteki uzaklık; Kemal 18 Kasım) değişmedi. Uzaklaşıp yere yaklaşınca ekranın alt
+  ucundaki yer kesiliyordu (eski en uzak hâlde de 20°'de oluyordu); kamera o zaman kendi bakış çizgisinde geri çekilir,
+  görüntü küçülmez. Saha dışındaki boşluk görünebilir; gökyüzü ve ada ayrı adım.
+- **Fizik değişmedi:** `fizik.ts`, delik verisi ve vuruş ayarlarına dokunulmadı; bot aynı vuruşlarla (1, 1, 4) bitirdi.
+
+DENEME değerleri (`src/oyun/ayarlar.ts` → `SEFFAFLIK` ve `KAMERA`; Kemal onaylamadı):
+
+| Ne | Değer | Not |
+|---|---|---|
+| Şeffaflaşan yerin opaklığı | 0,25 | 1: hiç şeffaf değil, 0: hiç görünmez |
+| Açılma ve kapanma süresi | 0,3 sn | |
+| Engelin arkasında mı diye bakma sıklığı | saniyede 10 | yerinde dururken bakılmaz |
+| Pencerenin yarıçapı | 110 ekran pikseli | yakınlaşınca da uzaklaşınca da ekranda aynı boy |
+| Halkanın opaklığı · boyu | 0,9 · top yarıçapının 1,9 katı | uzaklaşınca küçülmez |
+| Kamera en uzak | 25 piksel/m | önce 55 |
+| Uzaklaşınca kesilme payı | 10 m | yüksek duvarlar ekranın altında kesilmesin |
+
+Çizim yükü (bilgisayarda, telefon boyutunda, yazılımla çizen tarayıcıda, gölge açık; delik 3 · 1 · 7): çizim çağrısı
+önce ve sonra aynı (48 · 66 · 52); top engelin arkasındayken +1 (halka). Üçgen aynı, halkayla +64. Bir bakışın süresi
+(iki ışın) bilgisayarda ortada 1,3 ms, en çok 5,4 ms. Saniyedeki kare yazılımla çizimde, dört ölçümün aralığı: önce
+5,7–8,1 · 5,7–8,3 · 2,2–3,5; sonra 6,2–8,7 · 4,9–15,1 · 1,9–2,7. Makine o sırada başka işlerle yüklüydü, ölçümler çok
+oynak; 7. delikte sonrası biraz düşük görünüyor ama aralıklar üst üste biniyor, kesin bir fark söylenemez.
+**Gerçek telefonda denenmedi; telefondaki kare hızı ölçülmedi.**
+
+Görüntüler: `ekranlar/oyna-seffaf-1-tas-duvar.jpg` … `oyna-seffaf-4-oncesi-sonrasi.jpg`; önceki hâlleri
+`galeri/eski/seffaf-kamera-oncesi/`.
+
 **Bu prototipte yok:** geri al, kaldığı yerden devam, ses, vuruş sınırı, zorluk yazısı, ana ekran, skor kartı
 ekranı, pul. Nişan oku yalnız yönü ve gücü gösterir; sekmeyi yalnız kolay moddaki durma yeri halkası hesaba katar.
 
@@ -1154,7 +1197,8 @@ Kemal'in kararını bekleyenler.
 - ~~Huni, sulama başlığı, baraj mankeni kalsın mı?~~ Cevaplandı (Kemal, 19 Kasım): kalsın, gerçeğe yakın (4.8).
 - ~~3B model eksikleri (çim basamağı, orta yuvarlak, yaylar, noktalar, köşe bayrakları)~~ Düzeltildi (19 Kasım; model).
 - **Kalan 8 deliğin adım sırası** (4.9): öneri; Kemal değiştirebilir.
-- **İki parmakla yakınlaştırma ve çevirmenin sınırları:** DENEME, ilk delik denemesinde.
+- **İki parmakla yakınlaştırma ve çevirmenin sınırları:** DENEME, ilk delik denemesinde. 19 Kasım: en uzak 25'e indi;
+  engel şeffaflığının opaklığı (0,25), süresi (0,3 sn) ve penceresi (110 piksel) de DENEME (6.4).
 - ~~Örnek delikler (3, 7, 14) onay~~ Cevaplandı (Kemal, 18 Kasım): bu dil 18 deliğe yayılır (4.9).
 - ~~Kameranın yakınlığı ve deliğin işareti~~ Cevaplandı (Kemal, 18 Kasım): maketteki uzaklık, ok ve uzaklık
   ve küçük plan; ayrıca iki parmakla yakınlaştırma ve çevirme (4.8).

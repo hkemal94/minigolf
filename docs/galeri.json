@@ -280,6 +280,38 @@
       "yol": "docs/ekranlar/oyna-par-5-kolaj.jpg"
     },
     {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · engel şeffaflığı ve kamera · delik 7 · top tribünün arka taş duvarının arkasında: duvar topun çevresinde şeffaf, topta halka",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 13,
+      "yol": "docs/ekranlar/oyna-seffaf-1-tas-duvar.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · engel şeffaflığı ve kamera · delik 7 · top koltukların arkasında: koltuklar topun çevresinde şeffaf",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 13,
+      "yol": "docs/ekranlar/oyna-seffaf-2-koltuk.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · engel şeffaflığı ve kamera · delik 3 · kameranın en uzak hâli (25 piksel/m)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 13,
+      "yol": "docs/ekranlar/oyna-seffaf-3-en-uzak.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · engel şeffaflığı ve kamera · öncesi ve sonrası (üç görüntü, yan yana)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 13,
+      "yol": "docs/ekranlar/oyna-seffaf-4-oncesi-sonrasi.jpg"
+    },
+    {
       "bolum": "maket",
       "baslik": "Maket · Skor kartı",
       "tarih": "2026-11-16",
@@ -1551,6 +1583,36 @@
       "yol": "docs/galeri/eski/par-oncesi/oyna-7-tur-sonu.png",
       "grup": "Par ve yıldızdan önce · yalnız vuruş sayısı",
       "not": "Kartta yalnız vuruş sayısı vardı; par, yıldız ve rozet yoktu (PR #7'deki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · şeffaflıktan önce · delik 7 · top taş duvarın arkasında görünmüyor",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/galeri/eski/seffaf-kamera-oncesi/oyna-seffaf-1-tas-duvar.jpg",
+      "grup": "Engel şeffaflığından ve uzak kameradan önce",
+      "not": "Engel opak, top arkasında görünmüyor; en uzak hâl 55 piksel/m. Aynı bakışla alındı (PR #11 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · şeffaflıktan önce · delik 7 · top koltukların arkasında görünmüyor",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/galeri/eski/seffaf-kamera-oncesi/oyna-seffaf-2-koltuk.jpg",
+      "grup": "Engel şeffaflığından ve uzak kameradan önce",
+      "not": "Engel opak, top arkasında görünmüyor; en uzak hâl 55 piksel/m. Aynı bakışla alındı (PR #11 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · şeffaflıktan önce · delik 3 · kameranın en uzak hâli (55 piksel/m)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 11,
+      "yol": "docs/galeri/eski/seffaf-kamera-oncesi/oyna-seffaf-3-en-uzak.jpg",
+      "grup": "Engel şeffaflığından ve uzak kameradan önce",
+      "not": "Engel opak, top arkasında görünmüyor; en uzak hâl 55 piksel/m. Aynı bakışla alındı (PR #11 birleştikten sonraki hâl)."
     }
   ]
 }
