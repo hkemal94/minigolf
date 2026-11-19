@@ -41,6 +41,18 @@ vuruşlarla deliğe soktu (1, 1, 4; sapma 0). Bütün görünüş değerleri DEN
 belgesi 6.4 "Görünüş", çizim yükü tablosuyla). Öncesi ve sonrası: `docs/ekranlar/oyna-doku-7-oncesi-sonrasi.jpg`.
 Bilgisayarda telefon boyutunda denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
 
+## Oynanabilir prototip · engel şeffaflığı ve kamera (19 Kasım 2026; öneri, PR #?, `ajans/oyna-seffaf-kamera`)
+
+Kemal'in iki isteği. **Engelin arkasındaki top:** top tribünün duvarı, basamak, koltuk, kulüp binası, sundurma, kale direği,
+bordür ya da huni arkasında kalınca o engel topun çevresinde yuvarlak bir pencerede yumuşakça şeffaflaşır (opaklık 0,25,
+0,3 sn); topun çevresine ince krem halka çıkar. Zemin şeffaflaşmaz. Stat modeli malzemeye göre birleşik olduğu için bütün
+engel değil topun önündeki kısmı şeffaflaşır. Saniyede 10 kez bakılır, yerinde dururken hiç. **Kamera:** iki parmakla daha
+çok uzaklaşır (en uzak 55'ten 25'e; telefonun eninde 7,1 m yerine 15,6 m); uzaklaşıp yere yaklaşınca ekranın altı artık
+kesilmiyor. Başlangıç yakınlığı aynı. Saha dışındaki boşluk görünebilir; gökyüzü ve ada sonraki PR. Bütün değerler DENEME
+(`SEFFAFLIK`, `KAMERA`; tasarım belgesi 6.4). Fizik değişmedi; bot üç deliği aynı vuruşlarla (1, 1, 4) bitirdi, hepsi tamam.
+Çizim çağrısı aynı (engel varken +1). Öncesi ve sonrası: `docs/ekranlar/oyna-seffaf-4-oncesi-sonrasi.jpg`.
+Bilgisayarda telefon boyutunda denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
+
 ## Maketlerde kadraj (19 Kasım 2026; öneri, PR #11, aynı dal, ayrı commit)
 
 Karar (Kemal, 19 Kasım): köşeye taşınan kulüp binası tam görünsün. Ana ekran, tur seçimi ve tur sonu maketleri aynı stat

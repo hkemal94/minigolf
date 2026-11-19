@@ -6,7 +6,8 @@ import { BoxGeometry, BufferGeometry, Color, DirectionalLight, DoubleSide, Float
 import { renk } from '../sahne/renkler';
 import { DENEME, GOLF, MODEL, TOP_YARICAP, WMF } from '../maket/olculer';
 import { BOS_KOLTUK, MERDIVEN_X0, TRIBUN_X1, koltukX, koltukZ, siraOn, siraY } from '../maket/ornekDelikler';
-import { FIZIK, GORUNTU, GORUNUS, KAMERA, VURUS } from './ayarlar';
+import { FIZIK, GORUNTU, GORUNUS, KAMERA, SEFFAFLIK, VURUS } from './ayarlar';
+import { engelArkasinda, seffafDegerler, seffafYap } from './seffaflik';
 import { DOKU_DOSYALARI, dokuBellegi, dokulariHazirla, dunyaYerlesimi, fileDokusu, fileGeometrisi, gokYansimasi, modelDokusu, modelMalzemesi, modelYerlesimi, topKabartisi, type Dokular } from './dokular';
 import { adimAt, yeniTop, type Top } from './fizik';
 import { tahminEt, type Tahmin } from './tahmin';
@@ -39,7 +40,8 @@ export type Durum = {
   boy: number;
   kilitli: boolean; // delik bitti: vuruş alınmaz
   // Son karenin çizim yükü ve süresi (deneme için); doku sayısı, dokuların yaklaşık belleği (MB), gölge açık mı.
-  cizim: { cagri: number; ucgen: number; kare: number; doku: number; dokuMB: number; golge: boolean };
+  // engel: top bir engelin arkasında mı (0–1; şeffaflığın o anki gücü).
+  cizim: { cagri: number; ucgen: number; kare: number; doku: number; dokuMB: number; golge: boolean; engel: number };
   bakisNoktasi: [number, number, number] | null; // deneme için (?bot=1): kamera topu değil bu noktayı izler
 };
 
@@ -65,7 +67,7 @@ export function yeniDurum(delik: OyunDeligi): Durum {
     en: 1,
     boy: 1,
     kilitli: false,
-    cizim: { cagri: 0, ucgen: 0, kare: 0, doku: 0, dokuMB: 0, golge: true },
+    cizim: { cagri: 0, ucgen: 0, kare: 0, doku: 0, dokuMB: 0, golge: true, engel: 0 },
     bakisNoktasi: null,
   };
 }
@@ -103,6 +105,9 @@ export function ekranNoktasi(d: Durum, x: number, y: number, z: number): [number
 // Tribün deliğinde modelin oturma tahtaları bu kutunun içinde çizilmez; yerlerine tek tek koltuk gelir
 // (Kemal, 18 Kasım 2026). Model dosyasına dokunulmaz. (Maketteki OrnekDelik.tsx ile aynı bölge.)
 const KOLTUK_BOLGE = { x0: MERDIVEN_X0 - 4.5, x1: TRIBUN_X1 + 3.5, z0: siraOn(MODEL.acikTribunSira) - 0.7, z1: siraOn(1) };
+
+// Modelin zemin malzemeleri: topun üstünde durduğu yer; engel sayılmaz, şeffaflaşmaz. File oyunda çizilmez.
+const ZEMIN_MALZEMELERI = new Set(['zemin', 'cim', 'cim2', 'cizgi', 'file']);
 
 function StatModeli({ koltuklu, dokular }: { koltuklu: boolean; dokular: Dokular }) {
   const gltf = useLoader(GLTFLoader, STAT_MODELI);
@@ -153,6 +158,9 @@ function StatModeli({ koltuklu, dokular }: { koltuklu: boolean; dokular: Dokular
         kesik.clipShadows = true;
         o.material = kesik;
       }
+      // Engelin arkasında kalan top: zemin şeffaflaşmaz (top onun üstünde durur); öbür her şey engeldir.
+      if (ZEMIN_MALZEMELERI.has(ad)) o.userData.engelDegil = true;
+      else seffafYap(o.material as Material);
     });
     return kopya;
   }, [gltf, koltuklu, dokular]);
@@ -179,6 +187,7 @@ function KutuYigini({ kutular, golge = true }: { kutular: KutuCizimi[]; golge?: 
     ag.instanceMatrix.needsUpdate = true;
     if (ag.instanceColor) ag.instanceColor.needsUpdate = true;
     ag.computeBoundingSphere();
+    seffafYap(ag.material as Material);
   }, [kutular]);
   return (
     <instancedMesh ref={ref} args={[undefined, undefined, kutular.length]} castShadow={golge} receiveShadow>
@@ -229,8 +238,14 @@ function bordurKutulari(delik: OyunDeligi): KutuCizimi[] {
 // Antrenman hunileri (1. delik; DENEME, Kemal onaylamadı): taban ve koni. Yeri delik verisinden.
 function Huniler({ delik }: { delik: OyunDeligi }) {
   const huniler = delik.veri.kutular.filter((k) => k.tur === 'huni');
+  const ref = useRef<Group>(null);
+  useLayoutEffect(() => {
+    ref.current?.traverse((o) => {
+      if (o instanceof Mesh) seffafYap(o.material as Material);
+    });
+  }, [huniler]);
   return (
-    <group>
+    <group ref={ref}>
       {huniler.map((k, i) => {
         const t = k.x1 - k.x0;
         return (
@@ -282,6 +297,7 @@ function Bordurler({ kutular, dokular }: { kutular: KutuCizimi[]; dokular: Dokul
   const malzeme = useMemo(() => {
     const m = new MeshStandardMaterial({ color: renk.kiremit, roughness: 0.8, normalMap: dokular.beton.normal });
     m.normalScale.setScalar(GORUNUS.kabarti.bordur);
+    seffafYap(m);
     return m;
   }, [dokular]);
   useEffect(() => () => geo.dispose(), [geo]);
@@ -361,6 +377,10 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
   const ucRef = useRef<Mesh>(null);
   const cekmeRef = useRef<Mesh>(null);
   const bayrakRef = useRef<Group>(null);
+  const engelRef = useRef<Group>(null);
+  const halkaRef = useRef<Mesh>(null);
+  // Engelin arkasında kalan top: ışının zamanlayıcısı, sonucu ve şeffaflığın o anki gücü (SEFFAFLIK; DENEME).
+  const seffaf = useMemo(() => ({ bekle: 0, arkada: false, guc: 0, yon: new Vector3(), top: new Vector3(), ara: new Vector3(), sonTop: new Vector3(1e9, 0, 0), sonYon: new Vector3() }), []);
   const gl = useThree((s) => s.gl);
   // Dokular (Poly Haven, ambientCG; docs/lisanslar.md) ve kodla hesaplananlar (top gamzeleri, file, gök yansıması).
   const yuklenen = useLoader(TextureLoader, DOKU_DOSYALARI);
@@ -441,8 +461,13 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
     const ileri = (KAMERA.topAsagi * d.boy) / (d.yakinlik * Math.sin(d.egim));
     const hx = d.hedef.x + fx * ileri;
     const hz = d.hedef.z + fz * ileri;
-    const yatay = KAMERA.uzaklik * Math.cos(d.egim);
-    kam.position.set(hx - fx * yatay, d.hedef.y + KAMERA.uzaklik * Math.sin(d.egim), hz - fz * yatay);
+    // Uzaklaşınca ve kamera yere yaklaşınca ekranın alt ucundaki yer kameranın gerisine düşüp kesiliyordu: kamera o
+    // zaman kendi bakış çizgisinde geri çekilir (dik izdüşüm: görüntü küçülmez, yalnız kesilme kalkar).
+    // Başlangıç yakınlığında kamera eskisi gibi KAMERA.uzaklik'ta durur.
+    const altUc = (d.boy * (0.5 + KAMERA.topAsagi)) / d.yakinlik / Math.tan(d.egim) + KAMERA.kesilmePayi;
+    const uzaklik = Math.max(KAMERA.uzaklik, altUc);
+    const yatay = uzaklik * Math.cos(d.egim);
+    kam.position.set(hx - fx * yatay, d.hedef.y + uzaklik * Math.sin(d.egim), hz - fz * yatay);
     kam.zoom = d.yakinlik;
     kam.lookAt(hx, d.hedef.y, hz);
     kam.updateProjectionMatrix();
@@ -462,6 +487,43 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
       }
     }
     d.topEkran = ekranNoktasi(d, t.x, ty, t.z);
+
+    // --- Engelin arkasında kalan top: saniyede birkaç kez toptan kameraya ışın; arkadaysa aradaki engel topun
+    // çevresinde yumuşakça şeffaflaşır, topun çevresine halka çıkar (SEFFAFLIK; DENEME).
+    seffaf.yon.copy(kam.getWorldDirection(seffaf.yon)).negate();
+    seffaf.top.set(t.x, ty, t.z);
+    seffaf.bekle -= gecen;
+    if (seffaf.bekle <= 0 && engelRef.current) {
+      seffaf.bekle = 1 / SEFFAFLIK.bakisSikligi;
+      // Top da kamera da yerinde duruyorsa (nişan alırken) sonuç değişmez; ışın yeniden atılmaz.
+      const degisti = seffaf.top.distanceToSquared(seffaf.sonTop) > 1e-8 || seffaf.yon.distanceToSquared(seffaf.sonYon) > 1e-8;
+      if (degisti) {
+        seffaf.sonTop.copy(seffaf.top);
+        seffaf.sonYon.copy(seffaf.yon);
+        // Kameranın yakın kesme düzlemine kadar (onun gerisi zaten çizilmez).
+        const derinlik = -seffaf.yon.dot(seffaf.ara.copy(seffaf.top).sub(kam.position)) - kam.near;
+        seffaf.arkada = !t.delikte && engelArkasinda(engelRef.current, seffaf.top, seffaf.yon, Math.max(0, derinlik), TOP_YARICAP);
+      }
+    }
+    const adim = gecen / SEFFAFLIK.sure;
+    seffaf.guc = seffaf.arkada ? Math.min(1, seffaf.guc + adim) : Math.max(0, seffaf.guc - adim);
+    const yumusak = seffaf.guc * seffaf.guc * (3 - 2 * seffaf.guc);
+    seffafDegerler.uGuc.value = yumusak;
+    seffafDegerler.uTopMerkez.value.copy(seffaf.top);
+    seffafDegerler.uKameraYonu.value.copy(seffaf.yon);
+    seffafDegerler.uYaricap.value = SEFFAFLIK.pencere / d.yakinlik;
+    seffafDegerler.uTopYaricap.value = TOP_YARICAP;
+    d.cizim.engel = yumusak;
+    const halka = halkaRef.current;
+    if (halka) {
+      halka.visible = yumusak > 0.01;
+      if (halka.visible) {
+        halka.position.copy(seffaf.top);
+        halka.quaternion.copy(kam.quaternion);
+        halka.scale.setScalar(Math.max(1, KAMERA.yakinlik / d.yakinlik));
+        (halka.material as Material).opacity = SEFFAFLIK.halkaOpaklik * yumusak;
+      }
+    }
 
     // --- Nişan oku: yön ve güç
     const ok = okRef.current;
@@ -570,11 +632,14 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
       />
       {/* Işığın baktığı yer sahnede durmalı; yoksa güneş deliğe değil stadın köşesine bakar (gölge kutusu kayar). */}
       <primitive object={isik.target} position={[ox, 0, oz]} />
-      <StatModeli koltuklu={delik.no === 7} dokular={dokular} />
+      {/* Engeller: top arkalarında kalınca topun çevresinde şeffaflaşır (seffaflik.ts). File zaten ağ; dışarıda. */}
+      <group ref={engelRef}>
+        <StatModeli koltuklu={delik.no === 7} dokular={dokular} />
+        {koltuklar.length > 0 && <KutuYigini kutular={koltuklar} />}
+        <Bordurler kutular={bordurler} dokular={dokular} />
+        <Huniler delik={delik} />
+      </group>
       <KaleFilesi />
-      {koltuklar.length > 0 && <KutuYigini kutular={koltuklar} />}
-      <Bordurler kutular={bordurler} dokular={dokular} />
-      <Huniler delik={delik} />
 
       {/* Başlangıç işareti: krem halka (çap WMF beton pistteki gibi 30 cm) */}
       <mesh position={[delik.baslangic[0], delik.baslangicY + delik.kaldirma + 0.003, delik.baslangic[2]]} rotation={[-Math.PI / 2, 0, 0]}>
@@ -617,6 +682,12 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
       <mesh ref={topRef} castShadow>
         <sphereGeometry args={[TOP_YARICAP, 40, 28]} />
         <meshStandardMaterial color="#FFFFFF" roughness={0.38} normalMap={gamze} envMap={gok} envMapIntensity={0.55} />
+      </mesh>
+
+      {/* Engelin arkasındaki top: topun çevresinde ince krem halka, engellerin önünde çizilir. */}
+      <mesh ref={halkaRef} visible={false} renderOrder={11}>
+        <ringGeometry args={[TOP_YARICAP * (SEFFAFLIK.halkaBoy - 0.35), TOP_YARICAP * SEFFAFLIK.halkaBoy, 32]} />
+        <meshBasicMaterial color={renk.krem} depthTest={false} depthWrite={false} transparent opacity={0} />
       </mesh>
 
       {/* Nişan oku (kiremit) ve geri çekme çizgisi (lacivert) */}

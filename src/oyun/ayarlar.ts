@@ -64,7 +64,10 @@ export const VURUS = {
 export const KAMERA = {
   // DENEME · Yakınlık: ekranın bir pikseline düşen yer. 200: ekranın eni yaklaşık 1,95 m (maketteki uzaklık).
   yakinlik: 200,
-  enUzak: 55,
+  // DENEME · En uzak hâl (iki parmakla uzaklaştırmanın sınırı). 19 Kasım (Kemal: "biraz daha uzaklaşabilsin, çevre
+  // daha çok görünsün"): 55'ten 25'e indi; telefonun eni (390 piksel) 7,1 m yerine yaklaşık 15,6 m yer gösterir.
+  // Kamera eğik yukarıdan dik izdüşümle bakar (uzaklıkla küçülme yok); görüş alanını bu sınır belirler.
+  enUzak: 25,
   enYakin: 420,
   // Kameranın başlangıçta yerden açısı (maketteki bakış: 17 m yukarı, 13,4 m geri; yaklaşık 52°).
   egim: Math.atan2(17, 13.4),
@@ -77,6 +80,8 @@ export const KAMERA = {
   cevirHizi: 0.012,
   egimHizi: 0.006,
   uzaklik: 22,
+  // DENEME · Uzaklaşınca kamera ekranın alt ucundaki yerin bu kadar (m) gerisine çekilir (yüksek duvarlar kesilmesin).
+  kesilmePayi: 10,
   // DENEME · Top ekranın ortasından bu kadar aşağıda durur (ekran boyunun oranı): önü görünsün, çekmeye yer kalsın.
   topAsagi: 0.12,
   // DENEME · Kameranın topu izleme yumuşaklığı (büyük: daha çabuk).
@@ -88,6 +93,23 @@ export const KAMERA = {
   takipHizi: 2, // top bu hızdan (m/s) hızlıyken tam hızla döner, yavaşken orantılı
   // DENEME · "Deliğe bak" düğmesinde dönüşün yumuşaklığı (büyük: daha çabuk).
   delikBakisi: 8,
+} as const;
+
+// --- Engelin arkasında kalan top (Kemal, 19 Kasım: aradaki engel yumuşakça şeffaflaşsın). src/oyun/seffaflik.ts.
+// Duvar, tribün, koltuk, kulüp binası, sundurma, kale direği, bordür, huni: topun önündeki kısmı yuvarlak bir pencerede
+// şeffaflaşır; top görünür, çevresine ince bir halka çıkar. Zemin (çim, toprak, saha çizgisi) şeffaflaşmaz.
+export const SEFFAFLIK = {
+  // DENEME · Şeffaflaşan yerin opaklığı (1: hiç şeffaf değil, 0: hiç görünmez).
+  opaklik: 0.25,
+  // DENEME · Açılma ve kapanma süresi (saniye).
+  sure: 0.3,
+  // DENEME · Topun engelin arkasında olup olmadığına saniyede kaç kez bakılır (her karede değil; telefonda ucuz).
+  bakisSikligi: 10,
+  // DENEME · Pencerenin yarıçapı (ekran pikseli; yakınlaştırınca da uzaklaştırınca da ekranda aynı boyda).
+  pencere: 110,
+  // DENEME · Engelin arkasındaki topun halkası: opaklığı ve ekrandaki en küçük boyu (top yarıçapının katı, başlangıç yakınlığında).
+  halkaOpaklik: 0.9,
+  halkaBoy: 1.9,
 } as const;
 
 // --- Oyuncu ayarları (oyundaki küçük ayar menüsü)
