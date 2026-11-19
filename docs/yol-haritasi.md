@@ -84,7 +84,8 @@ olduğu gibi duruyor. Geri al, kaldığı yerden devam, ses, vuruş sınırı bu
 - 19 Kasım 2026 (öneri; `ajans/belge-rapor-kararlari`): dışarıdan gelen minigolf raporu belgeyle karşılaştırıldı, Kemal'in
   kararları tasarım belgesine işlendi: geri al ve dışarı çıkan top +1 vuruş; tur yapısı aynı; nişan yardımı (yön, güç
   çentikleri, kolay modda duracağı yer); par ve yıldız (DENEME); kutlama, maçsız gün ortamı, dokulu gerçekçi görsel dil;
-  sonraki turlar için yüzey tablosu. Açık soru: vuruştan önce cezasız iptal. Raporun öbür fikirleri öneri havuzunda (6.5).
+  sonraki turlar için yüzey tablosu; falso (sade, tek elle), dokunmatik titreşim (seslerle, sonra), delik listesinde
+  küçük rozetler. Açık soru: vuruştan önce cezasız iptal. Raporun öbür fikirleri öneri havuzunda (6.5).
   Yalnız belge; oyunda değişiklik yok.
 
 ## Sıradaki

@@ -42,8 +42,7 @@ En yeni üstte.
   2. **Tur yapısı aynı kalır:** her lokasyon ayrı 18 delikli tur; ilk tur yalnız stat kompleksi. Liman, iskele, meydan,
      sahil yolu ve zeytinliği bağlayan tek bir "Düzada Turu" kullanılmaz (3.1).
   3. **Nişan yardımı:** yön oku + güç çubuğunda çentikler (25 / 50 / 75) + topun duracağı tahmini yer yalnız **kolay
-     modda**. Kolay modun açık ya da kapalı başlaması DENEME. Falso (spin) gelirse etkisini gösteren nişan çizgisiyle
-     birlikte düşünülür; falso yalnız öneri (2. bölüm, 6.5).
+     modda**. Kolay modun açık ya da kapalı başlaması DENEME. Falso için aşağıda 8. madde.
   4. **Dışarı çıkan top cezalı:** oyun alanından çıkan top (saha dışı, taç çizgisinin ötesi, su, ör. duşlardaki su
      tuzağı) **+1 ceza vuruşu** alır ve son vuruş yerine döner (2. bölüm). "Ek ceza yok" önerisinin yerine geçer.
   5. **Par ve yıldız:** her deliğin hedef vuruş sayısı (par) ve yıldızı olur; değerler DENEME, Kemal oynadıktan sonra
@@ -52,6 +51,11 @@ En yeni üstte.
   6. **Yüzey tablosu sonraki turlar için** (stat turu için değil): kısa çim, uzun çim, taş ve kaldırım, ahşap, kum,
      deniz; değerler DENEME, veri yok (3.2).
   7. Açık soru: vuruştan önce cezasız iptal (7. bölüm). Raporun öbür önerileri havuzda (6.5).
+  8. **Falso (spin): evet, sade.** Tek elle oynanır, kapsamlı olmaz ("inanılmaz kapsamlı olmasın"). Falso seçilince nişan
+     oku ona göre kıvrılır ya da değişir, top da ona göre gider. Falsonun miktarı ve nasıl seçildiği DENEME (2. bölüm).
+  9. **Dokunmatik titreşim: evet.** Seslerle birlikte, sonra gelir (5.1).
+  10. **Rozetler: evet, küçük.** Delik listesinde küçük simgeler: tek vuruşta delik, geri almadan bitirme ve benzerleri.
+      Pul koleksiyonunun yerine geçmez (8. bölüm).
 - **19 Kasım (Kemal, PR #6'nın soruları; kesin):**
   1. **2. delik, taç:** uç duvarsız kalır, sınır taç çizgisinin kendisi (seçenek A; 7. bölüm).
   2. **8. delik, köprü:** kenarsız ve korkuluksuz düz beton, **en 0,6 m**. En artık Kemal'in değeri, DENEME değil.
@@ -167,8 +171,10 @@ karakteri, adı, yüzü yok.
 **Karar (Kemal, 19 Kasım):**
 - **Nişan yardımı:** yön oku + güç çubuğunda çentikler (25 / 50 / 75) + topun duracağı tahmini yer **yalnız kolay
   modda**. Kolay modun açık ya da kapalı başlaması DENEME.
-- Falso (spin) eklenirse etkisini gösteren bir nişan çizgisi gerekebilir; falso yalnız öneridir ve o çizgiyle
-  birlikte düşünülür (6.5).
+- ~~Falso (spin) eklenirse etkisini gösteren bir nişan çizgisi gerekebilir; falso yalnız öneridir ve o çizgiyle
+  birlikte düşünülür (6.5).~~
+- **Falso (spin): evet, sade.** Tek elle oynanır, kapsamlı olmaz ("inanılmaz kapsamlı olmasın"). Falso seçilince nişan
+  oku ona göre kıvrılır ya da değişir; top da ona göre gider. Falsonun miktarı ve nasıl seçildiği DENEME.
 - **Geri al cezalı:** geri alınan vuruş **+1 vuruş** sayılır.
 - **Dışarı çıkan top cezalı:** oyun alanından çıkan top (saha dışı, taç çizgisinin ötesi, su; ör. duşlardaki su
   tuzağı) **+1 ceza vuruşu** alır ve son vuruş yerine döner.
@@ -848,7 +854,7 @@ deliklere göre yeniden yazılır. 18 delik bitince 4.5 ve eski kartlı şema (4
   olmayan gün; seyirci sesi yok. Tünel ve soyunma odasında ses biraz yankılı.
 - **Müzik:** seyrek; ortam sesi önde (The Imperial Kemskoy'daki karara yakın).
 - Efektler, ortam ve müzik ayrı kısılır.
-- **Karar (Kemal, 19 Kasım):** sesler sonra.
+- **Karar (Kemal, 19 Kasım):** sesler sonra. Dokunmatik titreşim de olur; seslerle birlikte, sonra gelir.
 - Sesler yalnız ücretsiz ve ticari kullanıma açık kaynaklardan; her biri `docs/lisanslar.md`'ye, kaynağı Kemal'e sorularak.
 
 ### 5.2 Görsel dil
@@ -955,11 +961,13 @@ Görüntüler: `ekranlar/oyna-1-delik-3-baslangic.png` … `oyna-7-tur-sonu.png`
 
 ### 6.5 Öneri havuzu (19 Kasım raporundan)
 
-**Öneri** (Kemal onaylamadı). Dışarıdan gelen rapordaki fikirler. ✓ = prototipte (#7, ana dalda) var; "1. PR'da" =
+**Öneri** (Kemal onaylamadı; karara bağlananlar ayrıca yazılı). Dışarıdan gelen rapordaki fikirler. ✓ = prototipte (#7, ana dalda) var; "1. PR'da" =
 kamera ve güç PR'ında geliyor.
 
 - Çekişin parmağın dokunduğu yerden ölçülmesi (dinamik çekme ölçeği).
-- Falso (topspin / backspin): köşede küçük top simgesiyle; etkisini gösteren nişan çizgisiyle birlikte (2. bölüm).
+- ~~Falso (topspin / backspin): köşede küçük top simgesiyle; etkisini gösteren nişan çizgisiyle birlikte (2. bölüm).~~
+  **Karar (Kemal, 19 Kasım):** falso evet, sade ve tek elle; nişan oku ona göre değişir (2. bölüm). Nasıl seçildiği
+  (ör. köşedeki küçük top simgesi) DENEME.
 - Tek dokunuşla kuşbakışı ("Deliğe bak"ın yanında): 1. PR'da.
 - Kamera duvara ve binaya girmesin (yaylı kol).
 - Çekerken eğim ızgarası ve akış işaretleri (ayarlardan kapatılabilir).
@@ -973,10 +981,12 @@ kamera ve güç PR'ında geliyor.
 - Sıkışan top: 3 sn sonra (DENEME) cezasız, en yakın düz yere. Bugün prototip topu ancak 30 sn sonra durduruyor.
 - Anında yeniden başlat ✓ ("Deliği baştan", "Yeniden").
 - Hayalet top (en iyi oyun).
-- Delik bazında rozetler (tek vuruş, geri alsız, riskli kestirme). Ortak ödül pul koleksiyonudur (Karar, 15 Kasım;
-  8. bölüm); rozetler pulların yerine geçmeyen küçük işaretler olabilir.
+- ~~Delik bazında rozetler (tek vuruş, geri alsız, riskli kestirme). Ortak ödül pul koleksiyonudur (Karar, 15 Kasım;
+  8. bölüm); rozetler pulların yerine geçmeyen küçük işaretler olabilir.~~ **Karar (Kemal, 19 Kasım):** rozetler evet,
+  küçük: delik listesinde küçük simgeler (tek vuruşta delik, geri almadan bitirme ve benzerleri); pulların yerine
+  geçmez (8. bölüm).
 - Delik arası kamera süzülmesi.
-- Dokunmatik titreşim (Kemal'e sorulacak).
+- ~~Dokunmatik titreşim (Kemal'e sorulacak).~~ **Karar (Kemal, 19 Kasım):** evet; seslerle birlikte, sonra (5.1).
 - Yüzeye göre sesler (sesler sonra).
 
 ## 7. Açık sorular
@@ -1038,6 +1048,10 @@ Kemal'in kararını bekleyenler.
 **Karar (Kemal, 15 Kasım):** minigolfün ödül sistemi bütün oyunların ortak pul koleksiyonudur: her ay
 bir pul, çeyrekte üç pul toplanınca büyük 4. pul ("3+1"), her pul ayrı tasarım ve yazısız, ortak
 koleksiyon sayfası (Kems Ajans `docs/pul-koleksiyonu.md`). Ayın pulu o ayın görevi bitince gelir.
+
+**Karar (Kemal, 19 Kasım): rozetler küçük.** Delik listesinde (skor kartı, 11. bölüm) her deliğin yanında küçük
+simgeler: tek vuruşta delik, geri almadan bitirme ve benzerleri. Rozetler pul koleksiyonunun yerine geçmez; ödül
+yine puldur. Hangi rozetlerin olacağı ve simgeleri DENEME.
 
 **Öneri:** kod yapısı kart oyunundaki `src/pul/` klasörü örnek alınarak kurulur. Pulların tasarımı
 İllüstratör'ün, onayı Kemal'in.
