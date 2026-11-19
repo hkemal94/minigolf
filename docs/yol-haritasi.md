@@ -5,9 +5,9 @@
 > her adımın sonunda Kemal'in telefonda açıp deneyebileceği bir şey olur. Kemal "şimdi" derse bir
 > adım öne geçer.
 
-## Oynanabilir prototip (19 Kasım 2026; öneri, `ajans/oynanabilir-prototip`)
+## Oynanabilir prototip (19 Kasım 2026; birleşti, PR #7)
 
-Kemal'in telefonda deneyeceği ilk oynanış: https://hkemal94.github.io/minigolf/?oyna=1 (ana dala birleşince).
+Kemal'in telefonda deneyeceği ilk oynanış: https://hkemal94.github.io/minigolf/?oyna=1.
 Üç delik, bu sırayla: 3 (kale), 1 (orta yuvarlak), 7 (tribün sıraları). Topa dokun, geri çek, bırak; çekerken
 nişan oku ve güç çubuğu. Top gerçek ölçüde (42,67 mm), delik 108 mm; top yuvarlanır, yavaşlar, kenardan ve
 eşyadan seker, deliğe düşer. Kamera topu izler; iki parmakla yakınlaşır ve döner, tek parmak boş yerde çevirir.
@@ -61,7 +61,7 @@ olduğu gibi duruyor. Geri al, kaldığı yerden devam, ses, vuruş sınırı bu
   ekranı, atış ekranı, ölçülü şema = 21) ve eski sürümler (26; git geçmişinden `docs/galeri/eski/` altına
   kopyalandı: ilk maketler, örnek deliklerin ve adım 1'in ilk hâli). Hepsi taslak (Kemal açıkça onaylamadı),
   birleşmiş PR'lardan. Kural: her yeni çizim aynı PR'la bu listeye girer. Oyunda değişiklik yok.
-- 19 Kasım 2026 (öneri; `ajans/delikler-adim-2`): adım 2. Açık tribünün çevresindeki üç delik yeni dille çizildi:
+- 19 Kasım 2026 (birleşti, PR #6; `ajans/delikler-adim-2`): adım 2. Açık tribünün çevresindeki üç delik yeni dille çizildi:
   6 (tribünün önü: çimden toprağa, korkuluğun altından, direklerin arasından merdivenin ayağına), 8 (üst sıranın
   oluğundan köşeyle köprüye; kenarsız, hafif inen köprüden taş duvarın üstüne), 9 (nefes; koridorda duvar
   dibindeki taş sırasının boşluğundan taş duvara, köprü ayağının yanından tribünün köşesinin arkasına; taş sırası DENEME; aynı gün bankla değişti). Maketler `?maket=delik|atis|sema&no=6|8|9`;
@@ -87,15 +87,22 @@ olduğu gibi duruyor. Geri al, kaldığı yerden devam, ses, vuruş sınırı bu
   sonraki turlar için yüzey tablosu; falso (sade, tek elle), dokunmatik titreşim (seslerle, sonra), delik listesinde
   küçük rozetler. Açık soru: vuruştan önce cezasız iptal. Raporun öbür fikirleri öneri havuzunda (6.5).
   Yalnız belge; oyunda değişiklik yok.
+- 19 Kasım 2026 (öneri; `ajans/stat-modeli-kulup-binasi`): **stat modelinin yeni hâli** (Kems-Ajans #182; Kemal):
+  kulüp binası açık tribün tarafındaki köşeye taşındı (B ucu), saha yüzünde 2 m direkli sundurma, taş duvarda sokak
+  kapısı; ortadaki pencere kalktı; doğu ve batı duvarları artık siyah görünmüyor. Yeni model maket ve oyuna kondu.
+  Yerleşim şemasında kulüp binası yeni yerinde. Ana ekran, tur seçimi ve tur sonu maketlerinin stat görüntüsü yeniden
+  alındı (bina kadrajın sağ ucunda); önceki hâlleri `docs/galeri/eski/kulup-binasi-oncesi/` altında. Delik ve atış
+  ekranlarında ve oynanabilir prototipte (3, 1, 7) görüntü değişmedi; bot üç deliği de yine deliğe soktu. 10. delik
+  kararı belgede: **kulüp binasının sundurmasının altında**. Gerçek telefonda denenmedi.
 
 ## Sıradaki
 
 1. **Kalan 8 delik yeni dille** (karar: Kemal, 18 Kasım; sıra öneri, tasarım belgesi 4.9). Her adım tek
    PR (şema, delik ve atış maketi, tarif); bir sonraki adım Kemal bir öncekini gördükten sonra:
    - Adım 1: **1, 2, 4, 5** (saha, çim). Bitti (PR #4 birleşti).
-   - Adım 2: **6, 8, 9** (açık tribünün önü, koridor köprüsü, duvar içi koridor). Çizildi (öneri;
-     `ajans/delikler-adim-2`), Kemal'in bakması bekleniyor.
-   - Adım 3: **10, 11** (kulüp binası, ışık direği).
+   - Adım 2: **6, 8, 9** (açık tribünün önü, koridor köprüsü, duvar içi koridor). Bitti (PR #6 birleşti).
+   - Adım 3: **10, 11** (kulüp binası, ışık direği). 10. delik kulüp binasının sundurmasının altında (Kemal,
+     19 Kasım; bina açık tribün köşesinde, yeni modelde var).
    - Adım 4: **12, 13, 15** (tünel, soyunma odası, kapı; yerler modelde yok, kodla çizilir).
    - Adım 5: **16, 17, 18** (kapalı tribün, bayrak direği, final; hareketli engeller en son).
 2. **Kemal'in bakması bekleniyor:** zorluk düzeltmesindeki yeni yerleşimler ve saha kenarı bankları (DENEME; tasarım
@@ -103,7 +110,7 @@ olduğu gibi duruyor. Geri al, kaldığı yerden devam, ses, vuruş sınırı bu
    kodla çizili).
 3. **Tünel ve soyunma odası** (duşlarıyla) modele eklenir: kapalı tribünün altı, tünel oradan sahaya
    (yeri karar, Kemal 16 Kasım; 3B iş). Makette o zamana kadar kodla çizilir.
-4. **İlk delik denemesi:** yapıldı (öneri; yukarıda "Oynanabilir prototip"): 3, 1 ve 7. delik oynanıyor.
+4. **İlk delik denemesi:** yapıldı (PR #7 birleşti; yukarıda "Oynanabilir prototip"): 3, 1 ve 7. delik oynanıyor.
    Kemal telefonda dener; DENEME değerleri (güç sınırı, çimin hızı, sekme, kamera, dışarı çıkma kuralı) onun
    denemesinden sonra ayarlanır. Eksik kalan: geri al, kaldığı yerden devam.
 5. Sonraki delikler oynanışa, delik delik; her biri Kemal denedikten sonra; hareketliler en son.
@@ -119,6 +126,8 @@ olduğu gibi duruyor. Geri al, kaldığı yerden devam, ses, vuruş sınırı bu
 
 ## Bitenler
 
+- Oynanabilir prototip: delik 3, 1, 7 (19 Kasım, PR #7 birleşti).
+- Adım 2: delik 6, 8, 9 (19 Kasım, PR #6 birleşti).
 - Adım 1: delik 1, 2, 4, 5 (18 Kasım, PR #4 birleşti).
 - 2. delikte taç (uç duvarsız) ve 8. delikte köprü (kenarsız düz beton, 0,6 m) kararları (Kemal, 19 Kasım).
 - Stat modeli düzeltildi (19 Kasım; Kemal): çim düzeyi, orta yuvarlak, yaylar, noktalar, köşe bayrakları.

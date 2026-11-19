@@ -44,7 +44,7 @@
       "baslik": "Yeni dille çizilen deliklerin yerleşimi",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 6,
+      "pr": 10,
       "yol": "docs/plan/ornek-delikler-yerlesim.png"
     },
     {
@@ -58,17 +58,17 @@
     {
       "bolum": "maket",
       "baslik": "Maket · Ana ekran",
-      "tarih": "2026-11-16",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 2,
+      "pr": 10,
       "yol": "docs/ekranlar/maket-1-ana-ekran.png"
     },
     {
       "bolum": "maket",
       "baslik": "Maket · Tur seçimi",
-      "tarih": "2026-11-16",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 2,
+      "pr": 10,
       "yol": "docs/ekranlar/maket-2-tur-secimi.png"
     },
     {
@@ -138,10 +138,18 @@
     {
       "bolum": "maket",
       "baslik": "Maket · Tur sonu",
-      "tarih": "2026-11-16",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 2,
+      "pr": 10,
       "yol": "docs/ekranlar/maket-6-tur-sonu.png"
+    },
+    {
+      "bolum": "maket",
+      "baslik": "Dirlik Stadı modeli · kulüp binası köşeye taşındı (önce / sonra)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 10,
+      "yol": "docs/ekranlar/stat-modeli-kulup-binasi.png"
     },
     {
       "bolum": "delik",
@@ -1241,6 +1249,46 @@
       "pr": 6,
       "yol": "docs/galeri/eski/adim-2-zorluk-oncesi/delik-2-tac-secenekleri.png",
       "not": "Soru hâli; Kemal 19 Kasım'da A'yı seçti."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Yeni dille çizilen deliklerin yerleşimi · kulüp binası eski yerinde",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/galeri/eski/kulup-binasi-oncesi/ornek-delikler-yerlesim.png",
+      "grup": "Kulüp binası taşınmadan önce · stat modelinin eski hâli",
+      "not": "Kulüp binası B ucundaki kalenin arkasındaydı."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Maket · Ana ekran · kulüp binası eski yerinde",
+      "tarih": "2026-11-16",
+      "durum": "taslak",
+      "pr": 2,
+      "yol": "docs/galeri/eski/kulup-binasi-oncesi/maket-1-ana-ekran.png",
+      "grup": "Kulüp binası taşınmadan önce · stat modelinin eski hâli",
+      "not": "Kulüp binası B ucundaki kalenin arkasındaydı."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Maket · Tur seçimi · kulüp binası eski yerinde",
+      "tarih": "2026-11-16",
+      "durum": "taslak",
+      "pr": 2,
+      "yol": "docs/galeri/eski/kulup-binasi-oncesi/maket-2-tur-secimi.png",
+      "grup": "Kulüp binası taşınmadan önce · stat modelinin eski hâli",
+      "not": "Kulüp binası B ucundaki kalenin arkasındaydı."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Maket · Tur sonu · kulüp binası eski yerinde",
+      "tarih": "2026-11-16",
+      "durum": "taslak",
+      "pr": 2,
+      "yol": "docs/galeri/eski/kulup-binasi-oncesi/maket-6-tur-sonu.png",
+      "grup": "Kulüp binası taşınmadan önce · stat modelinin eski hâli",
+      "not": "Kulüp binası B ucundaki kalenin arkasındaydı."
     }
   ]
 }
