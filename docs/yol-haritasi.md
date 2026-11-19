@@ -82,6 +82,14 @@ engelin arkasında kalınca deliğin çevresinde de aynı pencere açılır; top
 `oyna-karar-5-kolaj.jpg`; insanlı ortam görüntüsü `docs/galeri/eski/insan-oncesi/`. Bilgisayarda telefon boyutunda
 denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
 
+## Oynanabilir prototip · arka plan (19 Kasım 2026; öneri, PR #15, `ajans/oyna-arka-plan`)
+
+Kemal'in isteği: uzaklaşıp eğince sahanın dışında boşluk görünmesin. Artık gökyüzü, duvarın ötesinde mahalle, evler,
+ağaçlar, uzakta adanın arazisi ve deniz görünüyor. Çevre KKM haritasının 3B parçalarından, gerçek yerinde; stat oyunun
+kendi modeli. Engel sayılmaz, gölgeye ve fiziğe girmez; oyun yavaşlarsa evler ve ağaçlar gizlenir. Değerler DENEME
+(`ARKA_PLAN`). Bot üç deliği aynı vuruşlarla (1, 1, 4) bitirdi. Üçgen sayısı yaklaşık 2,5 katına çıktı (çizim çağrısı +4);
+**gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.** Görüntüler: `docs/ekranlar/oyna-arka-plan-kolaj.jpg`.
+
 ## Maketlerde kadraj (19 Kasım 2026; öneri, PR #11, aynı dal, ayrı commit)
 
 Karar (Kemal, 19 Kasım): köşeye taşınan kulüp binası tam görünsün. Ana ekran, tur seçimi ve tur sonu maketleri aynı stat
