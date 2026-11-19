@@ -5,6 +5,19 @@
 > her adımın sonunda Kemal'in telefonda açıp deneyebileceği bir şey olur. Kemal "şimdi" derse bir
 > adım öne geçer.
 
+## Oynanabilir prototip (19 Kasım 2026; öneri, `ajans/oynanabilir-prototip`)
+
+Kemal'in telefonda deneyeceği ilk oynanış: https://hkemal94.github.io/minigolf/?oyna=1 (ana dala birleşince).
+Üç delik, bu sırayla: 3 (kale), 1 (orta yuvarlak), 7 (tribün sıraları). Topa dokun, geri çek, bırak; çekerken
+nişan oku ve güç çubuğu. Top gerçek ölçüde (42,67 mm), delik 108 mm; top yuvarlanır, yavaşlar, kenardan ve
+eşyadan seker, deliğe düşer. Kamera topu izler; iki parmakla yakınlaşır ve döner, tek parmak boş yerde çevirir.
+Ekranda delik numarası, vuruş sayacı, deliğe uzaklık, deliği gösteren ok, köşede küçük plan. Top dışarı çıkarsa
+önceki yerine döner, vuruş sayılır. Delik bitince "sonraki delik"; üçü bitince delik delik vuruş kartı. Ses yok.
+Fizik hazır kütüphane değil, tek top için yazılmış küçük bir çözücü (neden: tasarım belgesi 6.4). Bütün
+değerler DENEME (`src/oyun/ayarlar.ts`). Bilgisayarda telefon boyutunda (390 × 844), dokunmatik olarak denendi:
+bot üç deliği de deliğe soktu (`scripts/oyna-bot.mjs`). **Gerçek telefonda denenmedi.** Maketler (`?maket=…`)
+olduğu gibi duruyor. Geri al, kaldığı yerden devam, ses, vuruş sınırı bu prototipte yok.
+
 ## Neredeyiz
 
 - 16 Kasım 2026 (PR #1, birleşti): iskelet. Dikey tek ekran: üstte ince şerit (oyunun adı
@@ -84,9 +97,9 @@
    kodla çizili).
 3. **Tünel ve soyunma odası** (duşlarıyla) modele eklenir: kapalı tribünün altı, tünel oradan sahaya
    (yeri karar, Kemal 16 Kasım; 3B iş). Makette o zamana kadar kodla çizilir.
-4. **İlk delik denemesi:** fizik kütüphanesi seçilir, tek parmak vuruş ve nişan çizgisi, geri al, delik
-   sonu; kamera topu izler, iki parmakla yakınlaştırılır ve çevrilir (Kemal, 18 Kasım). Hangi delikle
-   başlanacağı o zaman sorulur (yeni dille çizilmiş bir delik). DENEME değerleri burada denenir.
+4. **İlk delik denemesi:** yapıldı (öneri; yukarıda "Oynanabilir prototip"): 3, 1 ve 7. delik oynanıyor.
+   Kemal telefonda dener; DENEME değerleri (güç sınırı, çimin hızı, sekme, kamera, dışarı çıkma kuralı) onun
+   denemesinden sonra ayarlanır. Eksik kalan: geri al, kaldığı yerden devam.
 5. Sonraki delikler oynanışa, delik delik; her biri Kemal denedikten sonra; hareketliler en son.
 
 ## Sona kalanlar

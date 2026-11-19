@@ -15,6 +15,7 @@ Nasıl denenir: bağlantıyı telefonda dik tutarak açın. Bilgisayarda: `npm i
 Klasörler:
 - `src/sahne/`: 3B saha (zemin, kenarlar, top), kamera ve ışık
 - `src/metinler/`: ekrandaki yazılar (Türkçe, İngilizce)
+- `src/oyun/`: oynanabilir prototip (adresin sonuna `?oyna=1`; üç delik, değerler DENEME); `scripts/` deneme botu
 - `src/maket/`: ekran maketleri (öneri; adresin sonuna `?maket=ana-ekran` gibi yazınca açılır)
 - `public/modeller/`: 3B modeller (Dirlik Stadı; lisansı Kemal'e soruldu)
 - `docs/`: tasarım belgesi, yol haritası, lisanslar, ekran görüntüleri; `docs/plan/` delik şeması, `docs/ekranlar/` maket görüntüleri

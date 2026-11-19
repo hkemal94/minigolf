@@ -10,6 +10,10 @@
       "baslik": "Ekran maketleri"
     },
     {
+      "id": "oyun",
+      "baslik": "Oynanabilir prototip"
+    },
+    {
       "id": "delik",
       "baslik": "Delikler"
     },
@@ -66,6 +70,62 @@
       "durum": "taslak",
       "pr": 2,
       "yol": "docs/ekranlar/maket-2-tur-secimi.png"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · delik 3 · başlangıç (ok, uzaklık, küçük plan)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 7,
+      "yol": "docs/ekranlar/oyna-1-delik-3-baslangic.png"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · delik 3 · çek-bırak ve nişan oku",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 7,
+      "yol": "docs/ekranlar/oyna-2-delik-3-nisan.png"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · delik sonu kartı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 7,
+      "yol": "docs/ekranlar/oyna-3-delik-sonu.png"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · delik 1 · nişan",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 7,
+      "yol": "docs/ekranlar/oyna-4-delik-1-nisan.png"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · delik 7 · tribün sıraları",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 7,
+      "yol": "docs/ekranlar/oyna-5-delik-7-nisan.png"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · delik 7 · top dışarı çıktı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 7,
+      "yol": "docs/ekranlar/oyna-6-delik-7-disari.png"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · tur sonu kartı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 7,
+      "yol": "docs/ekranlar/oyna-7-tur-sonu.png"
     },
     {
       "bolum": "maket",
