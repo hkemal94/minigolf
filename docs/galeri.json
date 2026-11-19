@@ -22,26 +22,34 @@
     {
       "bolum": "plan",
       "baslik": "Stadyum turu · 18 delik planı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/stadyum-delik-plani.svg"
     },
     {
       "bolum": "plan",
       "baslik": "Stadyum turu · plan önizlemesi",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/plan-onizleme.png"
     },
     {
       "bolum": "plan",
       "baslik": "Yeni dille çizilen deliklerin yerleşimi",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/ornek-delikler-yerlesim.png"
+    },
+    {
+      "bolum": "plan",
+      "baslik": "Delik 2 · taç çizgisi seçenekleri (soru)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/plan/delik-2-tac-secenekleri.png"
     },
     {
       "bolum": "maket",
@@ -80,9 +88,9 @@
       "delik": 1,
       "tur": "delik",
       "baslik": "Delik 1 · orta yuvarlak · delik ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-1-delik.png"
     },
     {
@@ -90,9 +98,9 @@
       "delik": 1,
       "tur": "atis",
       "baslik": "Delik 1 · orta yuvarlak · atış ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-1-atis.png"
     },
     {
@@ -100,9 +108,9 @@
       "delik": 1,
       "tur": "sema",
       "baslik": "Delik 1 · orta yuvarlak · ölçülü şema",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/ornek-delik-1.png"
     },
     {
@@ -110,9 +118,9 @@
       "delik": 2,
       "tur": "delik",
       "baslik": "Delik 2 · taç çizgisi · delik ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-2-delik.png"
     },
     {
@@ -120,9 +128,9 @@
       "delik": 2,
       "tur": "atis",
       "baslik": "Delik 2 · taç çizgisi · atış ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-2-atis.png"
     },
     {
@@ -130,9 +138,9 @@
       "delik": 2,
       "tur": "sema",
       "baslik": "Delik 2 · taç çizgisi · ölçülü şema",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/ornek-delik-2.png"
     },
     {
@@ -140,9 +148,9 @@
       "delik": 3,
       "tur": "delik",
       "baslik": "Delik 3 · kale · delik ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-3-delik.png"
     },
     {
@@ -150,9 +158,9 @@
       "delik": 3,
       "tur": "atis",
       "baslik": "Delik 3 · kale · atış ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-3-atis.png"
     },
     {
@@ -160,9 +168,9 @@
       "delik": 3,
       "tur": "sema",
       "baslik": "Delik 3 · kale · ölçülü şema",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/ornek-delik-3.png"
     },
     {
@@ -170,9 +178,9 @@
       "delik": 4,
       "tur": "delik",
       "baslik": "Delik 4 · köşe bayrağı · delik ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-4-delik.png"
     },
     {
@@ -180,9 +188,9 @@
       "delik": 4,
       "tur": "atis",
       "baslik": "Delik 4 · köşe bayrağı · atış ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-4-atis.png"
     },
     {
@@ -190,9 +198,9 @@
       "delik": 4,
       "tur": "sema",
       "baslik": "Delik 4 · köşe bayrağı · ölçülü şema",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/ornek-delik-4.png"
     },
     {
@@ -200,9 +208,9 @@
       "delik": 5,
       "tur": "delik",
       "baslik": "Delik 5 · penaltı noktası · delik ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-5-delik.png"
     },
     {
@@ -210,9 +218,9 @@
       "delik": 5,
       "tur": "atis",
       "baslik": "Delik 5 · penaltı noktası · atış ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-5-atis.png"
     },
     {
@@ -220,19 +228,49 @@
       "delik": 5,
       "tur": "sema",
       "baslik": "Delik 5 · penaltı noktası · ölçülü şema",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/ornek-delik-5.png"
+    },
+    {
+      "bolum": "delik",
+      "delik": 6,
+      "tur": "delik",
+      "baslik": "Delik 6 · açık tribünün önü · delik ekranı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/ekranlar/ornek-delik-6-delik.png"
+    },
+    {
+      "bolum": "delik",
+      "delik": 6,
+      "tur": "atis",
+      "baslik": "Delik 6 · açık tribünün önü · atış ekranı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/ekranlar/ornek-delik-6-atis.png"
+    },
+    {
+      "bolum": "delik",
+      "delik": 6,
+      "tur": "sema",
+      "baslik": "Delik 6 · açık tribünün önü · ölçülü şema",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/plan/ornek-delik-6.png"
     },
     {
       "bolum": "delik",
       "delik": 7,
       "tur": "delik",
       "baslik": "Delik 7 · açık tribün sıraları · delik ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-7-delik.png"
     },
     {
@@ -240,9 +278,9 @@
       "delik": 7,
       "tur": "atis",
       "baslik": "Delik 7 · açık tribün sıraları · atış ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-7-atis.png"
     },
     {
@@ -250,19 +288,79 @@
       "delik": 7,
       "tur": "sema",
       "baslik": "Delik 7 · açık tribün sıraları · ölçülü şema",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/ornek-delik-7.png"
+    },
+    {
+      "bolum": "delik",
+      "delik": 8,
+      "tur": "delik",
+      "baslik": "Delik 8 · koridor köprüsü · delik ekranı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/ekranlar/ornek-delik-8-delik.png"
+    },
+    {
+      "bolum": "delik",
+      "delik": 8,
+      "tur": "atis",
+      "baslik": "Delik 8 · koridor köprüsü · atış ekranı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/ekranlar/ornek-delik-8-atis.png"
+    },
+    {
+      "bolum": "delik",
+      "delik": 8,
+      "tur": "sema",
+      "baslik": "Delik 8 · koridor köprüsü · ölçülü şema",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/plan/ornek-delik-8.png"
+    },
+    {
+      "bolum": "delik",
+      "delik": 9,
+      "tur": "delik",
+      "baslik": "Delik 9 · duvar içi koridor · delik ekranı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/ekranlar/ornek-delik-9-delik.png"
+    },
+    {
+      "bolum": "delik",
+      "delik": 9,
+      "tur": "atis",
+      "baslik": "Delik 9 · duvar içi koridor · atış ekranı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/ekranlar/ornek-delik-9-atis.png"
+    },
+    {
+      "bolum": "delik",
+      "delik": 9,
+      "tur": "sema",
+      "baslik": "Delik 9 · duvar içi koridor · ölçülü şema",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 6,
+      "yol": "docs/plan/ornek-delik-9.png"
     },
     {
       "bolum": "delik",
       "delik": 14,
       "tur": "delik",
       "baslik": "Delik 14 · duşlar · delik ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-14-delik.png"
     },
     {
@@ -270,9 +368,9 @@
       "delik": 14,
       "tur": "atis",
       "baslik": "Delik 14 · duşlar · atış ekranı",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/ekranlar/ornek-delik-14-atis.png"
     },
     {
@@ -280,9 +378,9 @@
       "delik": 14,
       "tur": "sema",
       "baslik": "Delik 14 · duşlar · ölçülü şema",
-      "tarih": "2026-11-18",
+      "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 4,
+      "pr": 6,
       "yol": "docs/plan/ornek-delik-14.png"
     },
     {
@@ -565,6 +663,288 @@
       "durum": "taslak",
       "pr": 4,
       "yol": "docs/galeri/eski/adim-1-ilk/ornek-delik-5-sema.png"
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 1,
+      "tur": "delik",
+      "baslik": "Delik 1 · orta yuvarlak · delik ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-1-delik.png",
+      "not": "Eski huniler ve eski model; 19 Kasım'da huniler gerçeğe yakın çizildi, model düzeltildi."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 1,
+      "tur": "atis",
+      "baslik": "Delik 1 · orta yuvarlak · atış ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-1-atis.png",
+      "not": "Eski huniler ve eski model; 19 Kasım'da huniler gerçeğe yakın çizildi, model düzeltildi."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 1,
+      "tur": "sema",
+      "baslik": "Delik 1 · orta yuvarlak · ölçülü şema · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-1-sema.png",
+      "not": "Eski huniler ve eski model; 19 Kasım'da huniler gerçeğe yakın çizildi, model düzeltildi."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 2,
+      "tur": "delik",
+      "baslik": "Delik 2 · taç çizgisi · delik ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-2-delik.png",
+      "not": "Eski sulama başlıkları ve eski model; 19 Kasım'da başlıklar gerçek ölçüde çizildi."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 2,
+      "tur": "atis",
+      "baslik": "Delik 2 · taç çizgisi · atış ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-2-atis.png",
+      "not": "Eski sulama başlıkları ve eski model; 19 Kasım'da başlıklar gerçek ölçüde çizildi."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 2,
+      "tur": "sema",
+      "baslik": "Delik 2 · taç çizgisi · ölçülü şema · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-2-sema.png",
+      "not": "Eski sulama başlıkları ve eski model; 19 Kasım'da başlıklar gerçek ölçüde çizildi."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 3,
+      "tur": "delik",
+      "baslik": "Delik 3 · kale · delik ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-3-delik.png",
+      "not": "Eski stat modeliyle (çim basamağı vardı)."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 3,
+      "tur": "atis",
+      "baslik": "Delik 3 · kale · atış ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-3-atis.png",
+      "not": "Eski stat modeliyle (çim basamağı vardı)."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 3,
+      "tur": "sema",
+      "baslik": "Delik 3 · kale · ölçülü şema · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-3-sema.png",
+      "not": "Eski stat modeliyle (çim basamağı vardı)."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 4,
+      "tur": "delik",
+      "baslik": "Delik 4 · köşe bayrağı · delik ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-4-delik.png",
+      "not": "Köşe bayrağı ve köşe yayı kodla çiziliydi; 19 Kasım'dan beri modelden."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 4,
+      "tur": "atis",
+      "baslik": "Delik 4 · köşe bayrağı · atış ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-4-atis.png",
+      "not": "Köşe bayrağı ve köşe yayı kodla çiziliydi; 19 Kasım'dan beri modelden."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 4,
+      "tur": "sema",
+      "baslik": "Delik 4 · köşe bayrağı · ölçülü şema · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-4-sema.png",
+      "not": "Köşe bayrağı ve köşe yayı kodla çiziliydi; 19 Kasım'dan beri modelden."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 5,
+      "tur": "delik",
+      "baslik": "Delik 5 · penaltı noktası · delik ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-5-delik.png",
+      "not": "Eski baraj mankenleri (düz levha); 19 Kasım'da gerçek manken biçiminde çizildi."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 5,
+      "tur": "atis",
+      "baslik": "Delik 5 · penaltı noktası · atış ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-5-atis.png",
+      "not": "Eski baraj mankenleri (düz levha); 19 Kasım'da gerçek manken biçiminde çizildi."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 5,
+      "tur": "sema",
+      "baslik": "Delik 5 · penaltı noktası · ölçülü şema · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-5-sema.png",
+      "not": "Eski baraj mankenleri (düz levha); 19 Kasım'da gerçek manken biçiminde çizildi."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 7,
+      "tur": "delik",
+      "baslik": "Delik 7 · açık tribün sıraları · delik ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-7-delik.png",
+      "not": "Eski numara şeridiyle; çizim aynı."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 7,
+      "tur": "atis",
+      "baslik": "Delik 7 · açık tribün sıraları · atış ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-7-atis.png",
+      "not": "Eski numara şeridiyle; çizim aynı."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 7,
+      "tur": "sema",
+      "baslik": "Delik 7 · açık tribün sıraları · ölçülü şema · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-7-sema.png",
+      "not": "Eski numara şeridiyle; çizim aynı."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 14,
+      "tur": "delik",
+      "baslik": "Delik 14 · duşlar · delik ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-14-delik.png",
+      "not": "Eski numara şeridiyle; çizim aynı."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 14,
+      "tur": "atis",
+      "baslik": "Delik 14 · duşlar · atış ekranı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-14-atis.png",
+      "not": "Eski numara şeridiyle; çizim aynı."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "delik": 14,
+      "tur": "sema",
+      "baslik": "Delik 14 · duşlar · ölçülü şema · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delik-14-sema.png",
+      "not": "Eski numara şeridiyle; çizim aynı."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "baslik": "Stadyum turu · 18 delik planı · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/stadyum-delik-plani.svg",
+      "not": "Yedi delikli hâli; adım 2'de on deliğe çıktı."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "baslik": "Stadyum turu · plan önizlemesi · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/plan-onizleme.png",
+      "not": "Yedi delikli hâli; adım 2'de on deliğe çıktı."
+    },
+    {
+      "bolum": "eski",
+      "grup": "Adım 2 öncesi · PR #4 son hâli",
+      "baslik": "Yeni dille çizilen deliklerin yerleşimi · adım 2 öncesi",
+      "tarih": "2026-11-18",
+      "durum": "taslak",
+      "pr": 4,
+      "yol": "docs/galeri/eski/adim-2-oncesi/ornek-delikler-yerlesim.png",
+      "not": "Yedi delikli hâli; adım 2'de on deliğe çıktı."
     }
   ]
 }

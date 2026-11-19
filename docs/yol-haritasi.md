@@ -58,6 +58,8 @@
   noktalar ve köşe bayrakları modelde); maket yeni modele uyarlandı, kodla çizilen işaretler kaldırıldı, 1–5, 7 ve
   14'ün ekranları yeniden alındı. Huni, sulama başlığı ve baraj mankeni **kalıyor, gerçeğe yakın çizildi**
   (boyları kaynakla). 2. delikteki taç sorusu için üç seçenekli çizim: `docs/plan/delik-2-tac-secenekleri.png`.
+  Galeri listesine (`docs/galeri.json`) 6, 8, 9'un çizimleri ve taç sayfası eklendi; değişen çizimlerin önceki
+  hâlleri `docs/galeri/eski/adim-2-oncesi/` altında.
 
 ## Sıradaki
 
