@@ -15,6 +15,10 @@ export function Uygulama() {
       <main className="sahne">
         <Saha />
       </main>
+      {/* Oynanabilir prototip ayrı adreste (?oyna=1); buradan da açılır. */}
+      <a className="alt-oyna" href="?oyna=1">
+        {m('alt.oyna')}
+      </a>
       <footer className="alt">{m('alt.iskelet')}</footer>
     </div>
   );

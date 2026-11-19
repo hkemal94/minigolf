@@ -83,6 +83,8 @@ En yeni üstte.
 - **16 Kasım:** Bütün ada değil; önce basit bir yer (Stadyum). Plan çizilir, delik delik denenir.
   Imperial'deki uzun tur sonra. Ayın görevi: ayın turunu bitirmek; takvim ayı; geçen ayın turu
   sonradan bitirilebilir.
+- **19 Kasım (öneri; Kemal telefonda deneyecek):** ilk oynanabilir prototip, üç delik (3, 1, 7). Fizik yaklaşımı
+  seçildi; bütün değerler DENEME (6.4).
 - **15 Kasım:** Fikir belgesinin 7 sorusu cevaplandı (kamera, ekran yönü, Düzada bağı, vuruş
   sınırı, delikler, yardımcılar, para modeli). Ödül: ortak pul koleksiyonu.
 
@@ -686,7 +688,8 @@ deliklere göre yeniden yazılır. 18 delik bitince 4.5 ve eski kartlı şema (4
 **Öneri:**
 - Vite + React + TypeScript; 3B için Three.js ve React Three Fiber (Dondurmacı Kızlar gibi). İskelet
   bu öneriyle kuruldu (16 Kasım).
-- Fizik: hazır bir fizik kütüphanesi (ör. Rapier); Oyun Geliştiricisi ilk delik denemesinde seçer.
+- Fizik: ~~hazır bir fizik kütüphanesi (ör. Rapier)~~ ilk delik denemesinde seçildi (19 Kasım): tek top için
+  yazılmış küçük bir çözücü, hazır kütüphane yok (6.4).
 - 3B Dirlik Stadı modeli (`dirlik-stadi.glb`) sahnenin temeli; pistler modelin üstüne ayrı parçalar
   olarak konur. **Karar (Kemal, 16 Kasım)**: model oyunda kullanılır (`docs/lisanslar.md`).
 - Her delik ayrı bir veri dosyası (pist parçaları, engeller, başlangıç ve delik yeri); kod delik delik büyür.
@@ -709,6 +712,63 @@ deliklere göre yeniden yazılır. 18 delik bitince 4.5 ve eski kartlı şema (4
 reklamla, birkaç delikte bir seyrek reklam, reklamsız paket. Sıklık ve fiyat [Kemal]. Web
 denemesinde reklam ve satın alma yok.
 
+### 6.4 Oynanabilir prototip (19 Kasım; öneri, Kemal telefonda deneyecek)
+
+Adres: `?oyna=1` (yayında https://hkemal94.github.io/minigolf/?oyna=1). Kod `src/oyun/`; maketlere dokunmaz.
+Delikler yeniden yazılmadı: yerleri ve ölçüleri maketin verisinden (`src/maket/ornekDelikler.ts`) okunur.
+Sıra: 3 (kale), 1 (orta yuvarlak), 7 (tribün sıraları).
+
+**Fizik yaklaşımı: kendi küçük çözücümüz** (`src/oyun/fizik.ts`), hazır kütüphane yok. Neden:
+- Oyunda hareket eden tek şey bir top; dünya düz zemin, basamak, bordür, direk, koltuk gibi kutulardan oluşuyor.
+  Bunun için genel bir fizik motoru (Rapier, cannon-es) gereğinden büyük: Rapier telefona yaklaşık 2 MB ek
+  indirme getirir; ikisinde de 2 cm'lik hızlı topun ince bordürden geçmemesi ve düz zeminde parçaların birleştiği
+  yerde zıplamaması için ayrıca ayar gerekir.
+- Aynı vuruş her telefonda aynı sonucu verir (hesap adımı sabit: saniyede 480). Deneme botu da aynı kodu
+  çalıştırıp oyundaki sonuçla karşılaştırıyor (fark 0).
+- Hareketli engeller ve eğim gelince (rampa, dönen kol) çözücü yetmezse kütüphaneye geçilir; delik verisi
+  aynı kalır, yalnız `fizik.ts` değişir.
+
+**Top nasıl davranıyor** (gerçek ölçü: top 42,67 mm, delik 108 mm):
+- Top gerçek bir küre: yerçekimiyle düşer (tribünde bir alt sıraya iner), zeminde yuvarlanıp yavaşlar, bordürden,
+  direkten, huniden, koltuktan seker; kale ağı topu yumuşak durdurur.
+- Delik gerçek bir oyuk (derinlik 10,16 cm): top kenarından döner; yavaşsa düşer, çok hızlıysa karşı kenara
+  çarpıp atlar. Hesapta top deliğe yaklaşık 1,8 m/s'ye kadar düşüyor, 2,2 m/s'de atlıyor.
+- Tribünde koltuklar gerçek boyunda: tam güçte vurulan top sırtlığın üstünden aşıp alt sıralara kaçabiliyor
+  (dışarı sayılır). Deneme notu: bu istenir mi, yoksa güç sınırı mı düşsün.
+
+**DENEME değerleri** (hepsi `src/oyun/ayarlar.ts`; Kemal onaylamadı):
+
+| Ne | Değer | Not |
+|---|---|---|
+| Güç sınırı (en güçlü vuruşta topun hızı) | 5 m/s | 3. delik tarifteki yolla gücün yaklaşık %90'ını istiyor |
+| Gücün dolduğu çekme boyu · en kısa çekme (altı iptal) | 150 · 14 piksel | |
+| Güç eğrisi (üs) | 1,5 | kısa vuruş daha ince ayarlanır |
+| Topa dokunma payı | 44 piksel | |
+| Çimde yavaşlama | 0,55 m/s² | orta hızda golf yeşili: Stimpmeter topu 1,83 m/s ile bırakır, 10 fit (3,05 m) giderse 0,55 (İngilizce Vikipedi "Stimpmeter", 19 Kasım'da okundu); "10 fit" seçimi DENEME |
+| Betonda yavaşlama | 0,4 m/s² | kaynağı yok |
+| Sekme: bordür · direk · huni ve koltuk · ağ | 0,72 · 0,6 · 0,5 · 0,1 | çarpmadan sonra kalan hız oranı; kaynağı yok |
+| Düşen topun zeminden sekmesi: çim · beton | 0,25 · 0,4 | kaynağı yok |
+| Delik: kenardan sekme · tabandan sekme · derinlik | 0,3 · 0,15 · 0,1016 m | derinlik golf kuralındaki en az 4 inç; bu oturumda kaynaktan okunmadı |
+| Duvara sürtünme | 0,12 | kaynağı yok |
+| Kamera: yakınlık · en uzak · en yakın | 200 · 55 · 420 piksel/m | 200: ekranın eni yaklaşık 1,95 m (maketteki uzaklık) |
+| Kamera başlangıç yönü | maketteki bakış | topun arkasından, biraz yandan |
+| Top dışarı çıkarsa | önceki yerine döner, vuruş sayılır, ek ceza 0 | 2. bölümdeki öneri; ek ceza istenirse tek sayı (`KURAL.disariCeza`) |
+| Bir vuruşun en uzun süresi | 30 sn | top sıkışırsa oyun kilitlenmesin diye |
+
+Yerçekimi 9,81 m/s² (gerçek). Kale direği 2,44 m (IFAB). Huni boyu maketteki gibi 0,3 m (DENEME).
+
+**Bu prototipte yok:** geri al, kaldığı yerden devam, ses, vuruş sınırı, zorluk yazısı, ana ekran, skor kartı
+ekranı, pul. Nişan oku yalnız yönü ve gücü gösterir, sekmeyi göstermez.
+
+**Nasıl denendi:** bilgisayarda telefon boyutunda (390 × 844), dokunmatik olarak; bot gerçek parmak hareketiyle
+üç deliği de deliğe soktu, sekmeyi, güç sınırını, kamerayı ve dışarı çıkıp geri dönmeyi doğruladı
+(`scripts/oyna-bot.mjs`). Tarifteki yollar hesapta çalışıyor: 3. delikte yakın direği sıyırıp köşeden dönen top
+deliğe 0,3 m kalıyor ya da giriyor; 1. delikte dış kenardan seken top deliğe 0,45 m kalıyor; 7. delikte oluk
+boyunca vurulan top köşeden dönüp bir alt sıranın oluğuna iniyor. **Gerçek telefonda denenmedi**; akıcılık
+ölçülmedi (çizim yükü hafif: karede 44 çizim, yaklaşık 28 bin üçgen).
+
+Görüntüler: `ekranlar/oyna-1-delik-3-baslangic.png` … `oyna-7-tur-sonu.png`.
+
 ## 7. Açık sorular
 
 Kemal'in kararını bekleyenler.
@@ -728,6 +788,9 @@ Kemal'in kararını bekleyenler.
 - **Nişan çizgisi sekmeyi göstersin mi?** (4. delik)
 - **Delik ölçüsü, tur süresi, hızlar, eğimler:** DENEME, denemeden sonra.
 - **Görsel dil:** İllüstratör'ün 2–3 denemesinden hangisi.
+- **Oynanabilir prototipten (6.4), telefonda denedikten sonra:** güç sınırı ve çekme boyu elde nasıl; çim hızlı mı
+  yavaş mı; top dışarı çıkınca ek ceza olsun mu; tribünde tam güçte top koltukların üstünden aşabilsin mi; kamera
+  başta bu kadar yandan mı baksın.
 - **Sonraki turların sırası** ve Imperial uzun turunun zamanı; turların zorluk sırası.
 - **Öbür ayların turu:** Stadyum Ocak 2027'nin; öbür aylar [Kemal].
 - Oyunun yayın adı, tur adları: [Kemal].
