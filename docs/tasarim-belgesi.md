@@ -289,7 +289,8 @@ Değerler DENEME, veri yok.
   ve zor bir tur). Turların zorluk sırası [Kemal].
 - Zorluk kelimeyle yazılır (en kolay, kolay, orta, zor, en zor); ~~"par" ya da sayı yok, denemeden sonra Kemal.~~
   **Karar (Kemal, 19 Kasım):** her deliğin hedef vuruş sayısı (par) ve yıldızı olur. Değerler DENEME; Kemal oynadıktan
-  sonra onaylar. Yıldızın nasıl verildiği DENEME.
+  sonra onaylar. Yıldızın nasıl verildiği DENEME. Prototipteki deneme değerleri (öneri, PR #12): kelimeden sayıya
+  kolay 2, orta 3, zor 4; par ya da altı 3 yıldız, par + 1 iki yıldız, daha fazlası 1 yıldız (6.4 "Par, yıldız, kutlama, ortam").
 - Stadyum turunun dalgası 4.4'te.
 
 ## 4. Stadyum turu (Dirlik Stadı, 18 delik)
@@ -992,7 +993,7 @@ Yerçekimi 9,81 m/s² (gerçek). Kale direği 2,44 m (IFAB). Huni boyu maketteki
 - **Bordür:** kiremit rengi aynı; yüzeyi boyalı beton gibi hafif pürüzlü.
 - **Top:** gamzeli beyaz golf topu; yuvarlanırken döner (yalnız görüntü). Gamzeler kodla hesaplanır.
 - **Kale filesi:** çizgiler yerine ip dokulu gerçek ağ (arası boş); titremez, uzaktan ipler incelip solar.
-- **Delik bayrağı:** donuk durmaz, hafif rüzgârda dalgalanır. Büyük kutlama dalgası sonraki adımda.
+- **Delik bayrağı:** donuk durmaz, hafif rüzgârda dalgalanır. Kutlama dalgası: aşağıda "Par, yıldız, kutlama, ortam".
 - **Işık:** sakin gün ışığı (maçsız gün): tek güneş, yumuşak gölge, gökten ve yerden dolgu ışığı; topta hafif gök
   yansıması. Gölge veren tek ışık var. Önceki sürümde güneş deliğe değil stadın köşesine bakıyordu, gölgeler
   çoğu delikte görünmüyordu; düzeltildi.
@@ -1030,6 +1031,69 @@ karşılaştırır. Üçgen ve çağrı artışının çoğu gölgenin artık de
 
 Görüntüler: `ekranlar/oyna-doku-1-delik-3.jpg` … `oyna-doku-7-oncesi-sonrasi.jpg`; önceki hâlleri
 `galeri/eski/doku-oncesi/`.
+
+**Par, yıldız, kutlama, ortam, rozetler (19 Kasım; öneri, PR #12; kararlar 3.1, 3.3, 8):**
+- **Par ve yıldız:** her deliğin par'ı üstteki bilgide, delik sonu kartında ve tur sonundaki listede yazar. Delik
+  bitince vuruş sayısına göre en çok üç yıldız verilir; tur sonunda delik delik yıldızlar ve toplamı görünür.
+  "Kaybettin" yok: en kötü sonuç bir yıldız.
+- **Kutlama:** top deliğe düşünce bayrak delikten kalkar, bir süre daha geniş dalgalanır; deliğin çevresinde iki ince
+  halka açılıp kaybolur (çimde krem, betonda lacivert). Delik sonu kartı kutlamadan sonra açılır. Konfeti, ses,
+  titreşim yok (ses ve titreşim sonra; 5.1).
+- **Maçsız gün ortamı:** rüzgâr yavaşça artıp azalan bir esinti; delik bayrağının dalgası esintiyle büyür, duvarın
+  dışındaki ağaçların (modeldeki zeytinler) yaprakları salınır, çimin üstünden hafif açılıp koyulan bantlar geçer.
+  Deliğin üstünde iki küme hâlinde beş kuş döner (kanat çırpar, arada süzülür). Uzakta beş kişi: A ucunda kale
+  çizgisinin gerisinde duran bir kişi, orta yuvarlağın içinde duran iki kişi, açık tribünün önünde korkuluğun yanında
+  duran bir kişi, A ucunda duvar içindeki toprak yolda yürüyen bir kişi. Ad, yüz, hikâye yok; tür adı yok. İnsanlar
+  pistlerin en az 2 m dışında; top onlara ulaşamaz, fizikte yoklar. Hepsi kodla çizilir (`src/oyun/Ortam.tsx`); dış
+  model eklenmedi.
+- **Rozetler:** tur sonundaki delik listesinde, delik numarasının yanında küçük simgeler: tek vuruşta delik (kiremit
+  daire içinde 1), par altı (aşağı ok), cezasız bitirme (onay işareti). Listenin altında tek satır açıklama. Rozetlere
+  ad konmadı; pulun yerine geçmez (8. bölüm).
+- **Kalite düşürme:** kare hızı düşüp gölgeler kapanınca ortam da azalır: 2 kuş, 3 kişi (yürüyen kalkar); ağaç ve çim
+  hareketi durur. Bayrak ve kutlama aynı kalır.
+- **Fizik değişmedi:** `fizik.ts`, delik verisi ve vuruş ayarlarına dokunulmadı; bot üç deliği aynı vuruşlarla bitirdi.
+
+DENEME değerleri (`src/oyun/ayarlar.ts` → `PUAN`, `KUTLAMA`, `ORTAM`; Kemal onaylamadı):
+
+| Ne | Değer | Not |
+|---|---|---|
+| Par: delik 3 · 1 · 7 | 3 · 2 · 4 | belgedeki zorluk kelimesinden (4.8): kolay 2, orta 3, zor 4; kelimeden sayıya geçiş onay bekler |
+| Yıldız | par ya da altı 3 · par + 1 vuruş 2 · daha fazlası 1 | en çok 3, bitmiş delikte en az 1 |
+| Rozetler | tek vuruş · par altı · cezasız | üçü aday; "geri almadan bitirme" geri al gelince |
+| Kutlamanın süresi (kart bu kadar sonra açılır) | 1,7 sn | |
+| Bayrağın kalkışı · süresi | 28 cm · 0,55 sn | |
+| Kutlamada dalga genliği · sönmesi | olağanın 3,2 katı · 1,1 sn | |
+| Halka: açıldığı çap · süre · ikincinin gecikmesi | 55 cm · 1,1 sn · 0,28 sn | |
+| Esintinin bayrağa katkısı | genlik esintiyle en çok %25 büyür ya da küçülür | |
+| Ağaç: tepedeki salınım | en çok 6 cm | yaprakların başladığı yükseklik (2,3 m) ve boyu (2,6 m) modelden ölçüldü |
+| Çim esintisi: parlaklık · dalga boyu · hız | %7 · 9 m · 2,2 m/sn | |
+| Kuş: sayı · kanat açıklığı · yükseklik · hız · dönüş yarıçapı | 5 · 32 cm · 5 ve 8 m · 5 m/sn · 12 ve 17 m | kaynağı yok |
+| İnsan: sayı · boy · yürüme hızı | 5 · 1,7 m · 0,9 m/sn | kaynağı yok; yerler yukarıda |
+| Düşük kalitede kuş · insan | 2 · 3 | |
+
+**Çizim yükü (bilgisayarda, telefon boyutunda 390 × 844, piksel oranı 1, yazılımla çizen tarayıcıda; delik 3 · 1 · 7):**
+
+| | Önce (ana dal, PR #11) | Sonra |
+|---|---|---|
+| Çizim çağrısı, gölge açık | 48 · 66 · 52 | 53 · 71 · 57 |
+| Üçgen, gölge açık | 25 616 · 27 532 · 39 164 | 26 486 · 28 402 · 40 034 |
+| Çizim çağrısı, gölge kapalı (ortam azaltılmış) | 24 · 32 · 27 | 29 · 37 · 32 |
+| Üçgen, gölge kapalı | 12 746 · 13 730 · 19 622 | 13 262 · 14 246 · 20 138 |
+| Doku belleği (yaklaşık) | 42 MB · gölge kapalı 26 MB | aynı (yeni doku yok) |
+| Saniyedeki kare, gölge açık | 6,1 · 6,2 · 2,1 | 9,1 · 7,5 · 2,7 |
+| Saniyedeki kare, gölge kapalı | 9,6 · 9,5 · 3,5 | 10,3 · 9,0 · 4,2 |
+| İndirilen yeni dosya | yok | yok |
+
+Ortam beş çizim çağrısı ekler (kuşların hepsi 1; insanlar 4: gövde, baş, bacak, yerdeki gölge) ve en çok 870 üçgen.
+Ağaç ve çim hareketi yeni çizim getirmez. Kare sayıları ekran kartı olmayan bir bilgisayarda, art arda 6 saniyelik
+ölçümlerle alındı (önce sonra, hemen ardından önce) ve çok oynak: aynı "önce" sürümü gün içinde 13,9 · 14,2 · 5,3 ve
+8,6 · 8,1 · 2,8 de ölçüldü (gölge açık). Bu ölçümle önce ile sonra arasında güvenilir bir fark gösterilemedi; sayılar
+telefondaki hızı göstermez.
+**Gerçek telefonda denenmedi; telefondaki kare hızı ölçülmedi.**
+
+Görüntüler: `ekranlar/oyna-par-1-ortam.jpg` (delik 3, biraz uzaklaştırılmış ve eğilmiş bakış), `oyna-par-2-kutlama.jpg`,
+`oyna-par-3-delik-sonu.jpg`, `oyna-par-4-tur-sonu.jpg`, `oyna-par-5-kolaj.jpg`; delik sonu ve tur sonu kartlarının
+önceki hâlleri `galeri/eski/par-oncesi/`.
 
 **Engel şeffaflığı ve kamera (19 Kasım; öneri, PR #13; Kemal'in isteği):**
 - **Engelin arkasındaki top:** top kameradan bakınca bir engelin arkasında kalırsa (tribünün taş duvarı, basamak,
@@ -1080,7 +1144,8 @@ deliğe 0,3 m kalıyor ya da giriyor; 1. delikte dış kenardan seken top deliğ
 boyunca vurulan top köşeden dönüp bir alt sıranın oluğuna iniyor. **Gerçek telefonda denenmedi**; akıcılık
 ölçülmedi (çizim yükü hafif: karede 44 çizim, yaklaşık 28 bin üçgen).
 
-Görüntüler: `ekranlar/oyna-1-delik-3-baslangic.png` … `oyna-7-tur-sonu.png`.
+Görüntüler: `ekranlar/oyna-1-delik-3-baslangic.png` … `oyna-6-delik-7-disari.png` (delik sonu ve tur sonu kartlarının o günkü
+hâli `galeri/eski/par-oncesi/` altında).
 Kontroller (19 Kasım): bot ayrıca tam tur çevirmeyi, eğmenin sınırlarını, izlemeyi, "Deliğe bak"ı, kolay mod halkasının
 topun durduğu yerle aynı olduğunu (sapma 0) ve dışarı çıkan vuruşta sayacın 2 arttığını doğruladı. Tarifteki yolla 3. delik
 tek vuruşta gücün %62–68'iyle deliğe giriyor (hesap). Görüntüler: `ekranlar/oyna-v2-1-baslangic.png` … `oyna-v2-9-disari-ceza.png`.
@@ -1152,7 +1217,11 @@ Kemal'in kararını bekleyenler.
 - **Nişan çizgisi sekmeyi göstersin mi?** (4. delik) Nişan yardımı karara bağlandı (Kemal, 19 Kasım; 2. bölüm: yön oku,
   güç çentikleri, kolay modda duracağı yer); sekme çizgisi bu kararda yok.
 - **Kolay modun açık ya da kapalı başlaması:** DENEME (2. bölüm).
-- **Par ve yıldız değerleri:** DENEME; Kemal oynadıktan sonra (3.3).
+- **Par ve yıldız değerleri:** DENEME; Kemal oynadıktan sonra (3.3). Prototipteki deneme değerleri 6.4'te: par 3 · 2 · 4
+  (delik 3 · 1 · 7); yıldız eşikleri par, par + 1.
+- **Rozetler:** hangi rozetler olsun, simgeleri ve adları (8. bölüm; prototipte üç aday).
+- **Ortam:** uzaktaki insanların sayısı ve yerleri, kuşların sayısı (6.4; DENEME). İnsanlar kodla çizilmiş basit
+  figürler; hazır CC0 modelle (ör. Kenney, Quaternius) değiştirilsin mi?
 - **Delik ölçüsü, tur süresi, hızlar, eğimler:** DENEME, denemeden sonra.
 - ~~**Görsel dil:** İllüstratör'ün 2–3 denemesinden hangisi.~~ Cevaplandı (Kemal, 19 Kasım): dokulu gerçekçi (5.2).
 - **Oynanabilir prototipten (6.4), telefonda denedikten sonra:** güç sınırı ve çekme boyu elde nasıl; çim hızlı mı
@@ -1178,7 +1247,9 @@ koleksiyon sayfası (Kems Ajans `docs/pul-koleksiyonu.md`). Ayın pulu o ayın g
 
 **Karar (Kemal, 19 Kasım): rozetler küçük.** Delik listesinde (skor kartı, 11. bölüm) her deliğin yanında küçük
 simgeler: tek vuruşta delik, geri almadan bitirme ve benzerleri. Rozetler pul koleksiyonunun yerine geçmez; ödül
-yine puldur. Hangi rozetlerin olacağı ve simgeleri DENEME.
+yine puldur. Hangi rozetlerin olacağı ve simgeleri DENEME. Prototipte (öneri, PR #12) üç aday var: tek vuruşta delik,
+par altı, cezasız bitirme; yalnız tur sonundaki delik listesinde, küçük simge olarak. "Geri almadan bitirme" geri al
+gelince eklenir. Rozetlere ad konmadı: ekranda yalnız ne oldukları yazar; adlar [Kemal].
 
 **Öneri:** kod yapısı kart oyunundaki `src/pul/` klasörü örnek alınarak kurulur. Pulların tasarımı
 İllüstratör'ün, onayı Kemal'in.

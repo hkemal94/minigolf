@@ -6,8 +6,9 @@ import { BoxGeometry, BufferGeometry, Color, DirectionalLight, DoubleSide, Float
 import { renk } from '../sahne/renkler';
 import { DENEME, GOLF, MODEL, TOP_YARICAP, WMF } from '../maket/olculer';
 import { BOS_KOLTUK, MERDIVEN_X0, TRIBUN_X1, koltukX, koltukZ, siraOn, siraY } from '../maket/ornekDelikler';
-import { FIZIK, GORUNTU, GORUNUS, KAMERA, SEFFAFLIK, VURUS } from './ayarlar';
+import { FIZIK, GORUNTU, GORUNUS, KAMERA, KUTLAMA, ORTAM, SEFFAFLIK, VURUS } from './ayarlar';
 import { engelArkasinda, seffafDegerler, seffafYap } from './seffaflik';
+import { Ortam, RUZGAR, agacMalzemesi, cimeRuzgar, yeniOrtamDurumu, type OrtamDurumu } from './Ortam';
 import { DOKU_DOSYALARI, dokuBellegi, dokulariHazirla, dunyaYerlesimi, fileDokusu, fileGeometrisi, gokYansimasi, modelDokusu, modelMalzemesi, modelYerlesimi, topKabartisi, type Dokular } from './dokular';
 import { adimAt, yeniTop, type Top } from './fizik';
 import { tahminEt, type Tahmin } from './tahmin';
@@ -43,6 +44,11 @@ export type Durum = {
   // engel: top bir engelin arkasında mı (0–1; şeffaflığın o anki gücü).
   cizim: { cagri: number; ucgen: number; kare: number; doku: number; dokuMB: number; golge: boolean; engel: number };
   bakisNoktasi: [number, number, number] | null; // deneme için (?bot=1): kamera topu değil bu noktayı izler
+  // Kutlama: top deliğe düştükten sonra geçen süre (sn); kutlama yokken -1.
+  kutlama: number;
+  kutlamaDur: number | null; // deneme için (?bot=1): kutlama bu saniyede bekler, kart açılmaz (görüntü almak için)
+  bayrakKalkis: number; // bayrağın o an yerden kalktığı boy (m; deneme için)
+  ortam: OrtamDurumu; // kuşlar ve insanlar (deneme için okunur)
 };
 
 export function yeniDurum(delik: OyunDeligi): Durum {
@@ -69,6 +75,10 @@ export function yeniDurum(delik: OyunDeligi): Durum {
     kilitli: false,
     cizim: { cagri: 0, ucgen: 0, kare: 0, doku: 0, dokuMB: 0, golge: true, engel: 0 },
     bakisNoktasi: null,
+    kutlama: -1,
+    kutlamaDur: null,
+    bayrakKalkis: 0,
+    ortam: yeniOrtamDurumu(),
   };
 }
 
@@ -131,6 +141,11 @@ function StatModeli({ koltuklu, dokular }: { koltuklu: boolean; dokular: Dokular
       if (dokulu && doku) {
         o.geometry = modelYerlesimi(o, GORUNUS.dokuBoyu[doku]);
         o.material = dokulu;
+        // Maçsız gün (Kemal, 19 Kasım): çimin üstünden esinti geçer.
+        if (doku === 'cim') cimeRuzgar(dokulu);
+      } else if (ad === 'zeytin') {
+        // Ağaçların yaprakları rüzgârda hafifçe salınır (model dosyası aynı kalır).
+        o.material = agacMalzemesi(o.material as Material);
       } else if (ad === 'demir') {
         const demir = (o.material as Material).clone() as Material & { metalness: number; roughness: number };
         demir.metalness = 0.5;
@@ -305,7 +320,8 @@ function Bordurler({ kutular, dokular }: { kutular: KutuCizimi[]; dokular: Dokul
   return <mesh geometry={geo} material={malzeme} castShadow receiveShadow />;
 }
 
-// Delik bayrağı: donuk durmaz, hafif rüzgârda dalgalanır (Kemal, 19 Kasım). Büyük kutlama dalgası sonraki adımda.
+// Delik bayrağı: donuk durmaz, hafif rüzgârda dalgalanır (Kemal, 19 Kasım); esinti arttıkça dalga büyür.
+// Top deliğe düşünce kutlama: bayrak delikten kalkar ve bir süre daha geniş dalgalanır (carpan; KUTLAMA).
 // Bez direğe bağlı kenarda durur, uca doğru daha çok oynar. Genlik ve hız DENEME (GORUNUS).
 const BAYRAK = { boy: 0.22, en: 0.16, dilim: 10, sira: 3 };
 function bayrakGeometrisi(): BufferGeometry {
@@ -323,13 +339,13 @@ function bayrakGeometrisi(): BufferGeometry {
   g.setIndex(sirala);
   return g;
 }
-function bayrakDalgalandir(g: BufferGeometry, t: number) {
+function bayrakDalgalandir(g: BufferGeometry, t: number, carpan: number) {
   const p = g.getAttribute('position');
   const { boy, en, dilim, sira } = BAYRAK;
   for (let i = 0; i <= dilim; i++) {
     const u = i / dilim; // 0 direk, 1 uç
     const dalga = Math.sin(u * GORUNUS.bayrakDalga * 2 * Math.PI - t * GORUNUS.bayrakHiz) + 0.4 * Math.sin(u * 5.1 - t * GORUNUS.bayrakHiz * 1.7 + 1);
-    const yana = GORUNUS.bayrakGenlik * u * dalga;
+    const yana = GORUNUS.bayrakGenlik * carpan * u * dalga;
     for (let j = 0; j <= sira; j++) {
       // Uç hafifçe sarkar (dalgayla birlikte)
       const sarkma = 0.006 * u * u * (1 + 0.5 * Math.sin(t * GORUNUS.bayrakHiz * 0.6));
@@ -378,9 +394,10 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
   const cekmeRef = useRef<Mesh>(null);
   const bayrakRef = useRef<Group>(null);
   const engelRef = useRef<Group>(null);
-  const halkaRef = useRef<Mesh>(null);
+  const seffafHalkaRef = useRef<Mesh>(null);
   // Engelin arkasında kalan top: ışının zamanlayıcısı, sonucu ve şeffaflığın o anki gücü (SEFFAFLIK; DENEME).
   const seffaf = useMemo(() => ({ bekle: 0, arkada: false, guc: 0, yon: new Vector3(), top: new Vector3(), ara: new Vector3(), sonTop: new Vector3(1e9, 0, 0), sonYon: new Vector3() }), []);
+  const halkaRef = useRef<(Mesh | null)[]>([null, null]);
   const gl = useThree((s) => s.gl);
   // Dokular (Poly Haven, ambientCG; docs/lisanslar.md) ve kodla hesaplananlar (top gamzeleri, file, gök yansıması).
   const yuklenen = useLoader(TextureLoader, DOKU_DOSYALARI);
@@ -514,7 +531,7 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
     seffafDegerler.uYaricap.value = SEFFAFLIK.pencere / d.yakinlik;
     seffafDegerler.uTopYaricap.value = TOP_YARICAP;
     d.cizim.engel = yumusak;
-    const halka = halkaRef.current;
+    const halka = seffafHalkaRef.current;
     if (halka) {
       halka.visible = yumusak > 0.01;
       if (halka.visible) {
@@ -572,11 +589,37 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
       tg.visible = false;
     }
 
-    // --- Bayrak: top deliğin dibindeyken kalkar (topun önünü kapatmasın)
-    if (bayrakRef.current) bayrakRef.current.visible = Math.hypot(t.x - c.x, t.z - c.z) > 0.45;
+    // --- Kutlama (Kemal, 19 Kasım): top deliğe düşünce bayrak delikten kalkar, daha geniş dalgalanır; deliğin
+    // çevresinde iki ince halka açılıp kaybolur. Kısa ve sakin; konfeti, ses, titreşim yok. Değerler DENEME.
+    if (d.kutlama >= 0) d.kutlama = d.kutlamaDur === null ? d.kutlama + gecen : Math.min(d.kutlama + gecen, d.kutlamaDur);
+    const kt = d.kutlama;
+    let dalgaCarpani = 1 + ORTAM.bayrakEsinti * (RUZGAR.esinti.value - 0.5);
+    d.bayrakKalkis = 0;
+    if (kt >= 0) {
+      const o = Math.min(1, kt / KUTLAMA.kalkisSuresi);
+      // Yumuşak kalkış: sona doğru yavaşlar, hafifçe aşıp yerine oturur.
+      const yumusak = 1 + 2.2 * Math.pow(o - 1, 3) + 1.2 * Math.pow(o - 1, 2);
+      d.bayrakKalkis = KUTLAMA.kalkis * yumusak;
+      dalgaCarpani *= 1 + (KUTLAMA.dalga - 1) * Math.exp(-kt / KUTLAMA.dalgaSonme);
+    }
+    halkaRef.current.forEach((halka, i) => {
+      if (!halka) return;
+      const o = kt < 0 ? -1 : (kt - i * KUTLAMA.halkaGecikme) / KUTLAMA.halkaSuresi;
+      halka.visible = o >= 0 && o < 1;
+      if (!halka.visible) return;
+      const acilma = 1 - Math.pow(1 - o, 3);
+      halka.scale.setScalar(1 + (KUTLAMA.halkaCap / (2 * r) - 1) * acilma);
+      (halka.material as Material).opacity = 0.85 * (1 - o) * (1 - o);
+    });
 
-    // --- Bayrak: hafif rüzgâr
-    if (bayrakRef.current?.visible) bayrakDalgalandir(bayrakGeo, s.clock.elapsedTime);
+    // --- Bayrak: top deliğin dibindeyken kalkar (topun önünü kapatmasın); kutlamada geri gelir.
+    if (bayrakRef.current) {
+      bayrakRef.current.visible = kt >= 0 || Math.hypot(t.x - c.x, t.z - c.z) > 0.45;
+      bayrakRef.current.position.y = d.bayrakKalkis;
+    }
+
+    // --- Bayrak: hafif rüzgâr (esintiyle büyür)
+    if (bayrakRef.current?.visible) bayrakDalgalandir(bayrakGeo, s.clock.elapsedTime, dalgaCarpani);
 
     // --- Kalite: kare hızı düşükse gölgeler kapanır (bir kez; o açılış için)
     const o = olcum.current;
@@ -666,6 +709,26 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
         </mesh>
       </group>
 
+      {/* Kutlama halkaları: deliğin çevresinde açılıp kaybolur (çimde krem, betonda lacivert) */}
+      {[0, 1].map((i) => (
+        <mesh
+          key={i}
+          ref={(ag) => {
+            halkaRef.current[i] = ag;
+          }}
+          position={[c.x, isaretY + 0.004, c.z]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          visible={false}
+          renderOrder={3}
+        >
+          <ringGeometry args={[r + 0.006, r + 0.018, 48]} />
+          <meshBasicMaterial color={delik.kaldirma > 0 ? renk.krem : renk.lacivert} transparent opacity={0} depthWrite={false} />
+        </mesh>
+      ))}
+
+      {/* Maçsız gün: kuşlar ve uzakta birkaç kişi (rüzgâr ağaçta, çimde ve bayrakta) */}
+      <Ortam delik={delik} hal={durum.ortam} dusuk={() => golgeKapandi} />
+
       {/* Kolay mod: topun duracağı yer (halka; top dışarı çıkacaksa kiremit). Engellerin arkasında da görünür. */}
       <group ref={tahminRef} visible={false} renderOrder={10}>
         <mesh ref={tahminHalkaRef} rotation={[-Math.PI / 2, 0, 0]} renderOrder={10}>
@@ -685,7 +748,7 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
       </mesh>
 
       {/* Engelin arkasındaki top: topun çevresinde ince krem halka, engellerin önünde çizilir. */}
-      <mesh ref={halkaRef} visible={false} renderOrder={11}>
+      <mesh ref={seffafHalkaRef} visible={false} renderOrder={11}>
         <ringGeometry args={[TOP_YARICAP * (SEFFAFLIK.halkaBoy - 0.35), TOP_YARICAP * SEFFAFLIK.halkaBoy, 32]} />
         <meshBasicMaterial color={renk.krem} depthTest={false} depthWrite={false} transparent opacity={0} />
       </mesh>

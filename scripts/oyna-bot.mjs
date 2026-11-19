@@ -6,14 +6,15 @@
 // Kullanım (Playwright ayrıca kurulu olmalı; depoya bağımlılık olarak eklenmedi):
 //   npm run dev -- --port 5311          (ayrı pencerede)
 //   node scripts/derle-fizik.mjs /tmp/minigolf-fizik.mjs
-//   node scripts/oyna-bot.mjs http://localhost:5311/ /tmp/minigolf-fizik.mjs <görüntü klasörü>
+//   node scripts/oyna-bot.mjs http://localhost:5311/ /tmp/minigolf-fizik.mjs <görüntü klasörü> [kalite=yuksek]
 import { createRequire } from 'node:module';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 
-const [adres = 'http://localhost:5311/', fizikYolu = '/tmp/minigolf-fizik.mjs', klasor = '/tmp/minigolf-bot'] = process.argv.slice(2);
+// Dördüncü değer (isteğe bağlı): adrese eklenecek deneme ayarı, ör. kalite=yuksek (gölgeler ve ortam hep tam).
+const [adres = 'http://localhost:5311/', fizikYolu = '/tmp/minigolf-fizik.mjs', klasor = '/tmp/minigolf-bot', ek = ''] = process.argv.slice(2);
 const F = await import(pathToFileURL(fizikYolu).href);
 mkdirSync(klasor, { recursive: true });
 const yaz = (...a) => console.log(...a);
@@ -194,9 +195,33 @@ async function deligiOyna(no, ad) {
     sekme += son.top.carpma;
     yaz(`  vuruş ${v}: yön ${((plan.aci * 180) / Math.PI).toFixed(1)}°, güç %${Math.round(plan.guc * 100)} → top (${son.top.x.toFixed(2)}, ${son.top.y.toFixed(2)}, ${son.top.z.toFixed(2)})` +
       `, çarpma ${son.top.carpma}, beklenenden sapma ${(sapma * 100).toFixed(1)} cm${son.top.delikte ? ' · DELİKTE' : ''}`);
-    if (son.asama === 'delikSonu') break;
+    if (son.top.delikte || son.asama === 'delikSonu') break;
+  }
+  // Kutlama (Kemal, 19 Kasım): top düşünce bayrak delikten kalkar, dalgalanır; kart ondan sonra açılır.
+  const dusus = Date.now();
+  let kalkis = 0;
+  let kutlamaGoruldu = false;
+  let cekildi = false;
+  for (let i = 0; i < 80; i++) {
+    const k = await durum();
+    if (k.asama === 'kutlama') kutlamaGoruldu = true;
+    kalkis = Math.max(kalkis, k.bayrakKalkis);
+    if (k.asama === 'kutlama' && !cekildi && k.kutlama > 0.15) {
+      cekildi = true;
+      await goruntu(`${ad}-kutlama`);
+    }
+    if (k.asama === 'delikSonu') break;
+    await bekle(60);
   }
   const d = await durum();
+  dogrula(kutlamaGoruldu && kalkis > F.KUTLAMA.kalkis * 0.5, `delik ${no}: kutlama: bayrak delikten kalktı (${(kalkis * 100).toFixed(0)} cm), kart ${((Date.now() - dusus) / 1000).toFixed(1)} sn sonra açıldı`);
+  {
+    const vurus = d.vuruslar[d.sira];
+    const par = F.parDegeri(no);
+    const yildiz = Number(await sayfa.getAttribute('[data-deneme="delik-sonu"] [data-deneme="yildiz"]', 'data-adet'));
+    dogrula((await sayfa.textContent('[data-deneme="delik-par"]')).includes(String(par)), `delik ${no}: delik sonunda par ${par} yazıyor`);
+    dogrula(yildiz === F.yildizSayisi(no, vurus) && yildiz >= 1 && yildiz <= F.PUAN.yildizSayisi, `delik ${no}: ${vurus} vuruş, par ${par} → ${yildiz} yıldız`);
+  }
   dogrula(d.asama === 'delikSonu' && d.top.delikte, `delik ${no}: top deliğe düştü (${d.vuruslar[d.sira]} vuruş)`);
   dogrula(sekme > 0, `delik ${no}: top kenardan ya da eşyadan sekti (${sekme} çarpma)`);
   dogrula(enCokSapma < 0.05, `delik ${no}: oyundaki sonuç hesapla aynı (en çok sapma ${(enCokSapma * 100).toFixed(1)} cm)`);
@@ -208,7 +233,7 @@ async function deligiOyna(no, ad) {
   return d.vuruslar[d.sira];
 }
 
-await sayfa.goto(`${adres}?oyna=1&bot=1`);
+await sayfa.goto(`${adres}?oyna=1&bot=1${ek ? `&${ek}` : ''}`);
 await hazirOl();
 const sonuc = {};
 
@@ -223,6 +248,17 @@ dogrula(await sayfa.isVisible('[data-deneme="plan"]'), 'köşede küçük plan')
 dogrula(await sayfa.isVisible('[data-deneme="delik-oku"]'), 'delik ekranın dışında: ok görünüyor');
 dogrula((await sayfa.locator('[data-deneme="guc-centik"]').count()) === 3, 'güç çubuğunda üç çentik (%25, %50, %75)');
 dogrula(await sayfa.isVisible('[data-deneme="delige-bak"]'), '"Deliğe bak" düğmesi ekranda');
+dogrula((await sayfa.textContent('[data-deneme="par"]')).includes(String(F.parDegeri(3))), `par ekranda (${F.parDegeri(3)}; DENEME)`);
+// Ortam (Kemal, 19 Kasım): kuşlar ve uzakta birkaç kişi; kalite düşükse azalır. Hiçbiri pistin içinde değil.
+{
+  const o = d.ortam;
+  const dusuk = !d.cizim.golge;
+  dogrula(o.kus === (dusuk ? F.ORTAM.dusukKus : F.ORTAM.kusSayisi) && o.insan === (dusuk ? F.ORTAM.dusukInsan : F.ORTAM.insanlar.length), `ortam: ${o.kus} kuş, ${o.insan} insan (${dusuk ? 'düşük kalite: azaltılmış' : 'tam'})`);
+  const pay = 2;
+  const uclar = F.ORTAM.insanlar.flatMap((k) => (k.x2 === undefined ? [[k.x, k.z]] : Array.from({ length: 41 }, (_, i) => [k.x + ((k.x2 - k.x) * i) / 40, k.z + ((k.z2 - k.z) * i) / 40])));
+  const icinde = [3, 1, 7].filter((n) => { const c = F.oyunDeligi(n).cerceve; return uclar.some(([x, z]) => x > c.x0 - pay && x < c.x1 + pay && z > c.z0 - pay && z < c.z1 + pay); });
+  dogrula(icinde.length === 0, `ortam: insanlar pistlerin en az ${pay} m dışında`);
+}
 await goruntu('01-delik3-baslangic');
 // Ayar menüsü: kolay mod başta açık (DENEME).
 await sayfa.tap('[data-deneme="ayarlar"]');
@@ -457,8 +493,18 @@ d = await durum();
 dogrula(d.asama === 'turSonu', 'son delikten sonra sonuç kartı açıldı');
 const toplam = Number((await sayfa.textContent('[data-deneme="toplam"]')).trim());
 dogrula(toplam === d.vuruslar.reduce((a, b) => a + b, 0), `kartta delik delik vuruşlar ve toplam (${d.vuruslar.join(' + ')} = ${toplam})`);
+// Par, yıldız ve rozetler listede (değerler DENEME).
+{
+  const satirlar = await sayfa.$$eval('[data-deneme="liste-satir"]', (l) => l.map((s) => ({ rozet: [...s.querySelectorAll('[data-rozet]')].map((r) => r.getAttribute('data-rozet')), yildiz: Number(s.querySelector('[data-deneme="yildiz"]').getAttribute('data-adet')) })));
+  const beklenen = F.OYUN_SIRASI.map((n, i) => ({ rozet: F.rozetler(n, d.vuruslar[i], d.cezalar[i]), yildiz: F.yildizSayisi(n, d.vuruslar[i]) }));
+  dogrula(JSON.stringify(satirlar) === JSON.stringify(beklenen), `listede yıldız ve rozetler: ${satirlar.map((s, i) => `delik ${F.OYUN_SIRASI[i]}: ${s.yildiz} yıldız [${s.rozet.join(', ') || 'rozet yok'}]`).join(' · ')}`);
+  dogrula(d.cezalar.join() === '0,0,1' && !satirlar[2].rozet.includes('cezasiz') && satirlar[0].rozet.includes('cezasiz'), 'cezalı delikte "cezasız" rozeti yok, cezasız delikte var');
+  const ty = await sayfa.textContent('[data-deneme="toplam-yildiz"]');
+  dogrula(ty.includes(String(beklenen.reduce((a, b) => a + b.yildiz, 0))), `toplam yıldız listede (${ty.trim()})`);
+  dogrula(await sayfa.isVisible('[data-deneme="rozet-aciklama"]'), 'rozet açıklaması listede');
+}
 await goruntu('40-tur-sonu');
-yaz(`Çizim yükü (son kare): ${d.cizim.cagri} çizim çağrısı, ${d.cizim.ucgen} üçgen`);
+yaz(`Çizim yükü (son kare): ${d.cizim.cagri} çizim çağrısı, ${d.cizim.ucgen} üçgen; ortam ${d.ortam.kus} kuş, ${d.ortam.insan} insan`);
 {
   const yaklasan = takipDonmeleri.filter(([, a, b]) => b < a).length;
   dogrula(takipDonmeleri.length > 0 && yaklasan === takipDonmeleri.length, `takip: top düz giderken kamera hep topun gittiği yöne döndü (${yaklasan}/${takipDonmeleri.length} ölçüm; delikler ${[...new Set(takipDonmeleri.map(([n]) => n))].join(', ')})`);
