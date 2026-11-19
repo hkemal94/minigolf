@@ -1,11 +1,13 @@
-import { useLayoutEffect, useMemo, useRef } from 'react';
-import { useFrame, useLoader } from '@react-three/fiber';
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { BufferGeometry, Color, DoubleSide, Float32BufferAttribute, Mesh, Object3D, Plane, Vector3, type Group, type InstancedMesh, type Material, type OrthographicCamera } from 'three';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { BoxGeometry, BufferGeometry, Color, DirectionalLight, DoubleSide, Float32BufferAttribute, Mesh, MeshStandardMaterial, Object3D, Plane, Quaternion, TextureLoader, Vector3, type Group, type InstancedMesh, type Material, type OrthographicCamera } from 'three';
 import { renk } from '../sahne/renkler';
-import { DENEME, GOLF, IFAB, MODEL, TOP_YARICAP, WMF } from '../maket/olculer';
+import { DENEME, GOLF, MODEL, TOP_YARICAP, WMF } from '../maket/olculer';
 import { BOS_KOLTUK, MERDIVEN_X0, TRIBUN_X1, koltukX, koltukZ, siraOn, siraY } from '../maket/ornekDelikler';
-import { FIZIK, GORUNTU, KAMERA, VURUS } from './ayarlar';
+import { FIZIK, GORUNTU, GORUNUS, KAMERA, VURUS } from './ayarlar';
+import { DOKU_DOSYALARI, dokuBellegi, dokulariHazirla, dunyaYerlesimi, fileDokusu, fileGeometrisi, gokYansimasi, modelDokusu, modelMalzemesi, modelYerlesimi, topKabartisi, type Dokular } from './dokular';
 import { adimAt, yeniTop, type Top } from './fizik';
 import { tahminEt, type Tahmin } from './tahmin';
 import type { OyunDeligi } from './dunya';
@@ -36,7 +38,9 @@ export type Durum = {
   en: number;
   boy: number;
   kilitli: boolean; // delik bitti: vuruş alınmaz
-  cizim: { cagri: number; ucgen: number; kare: number }; // son karenin çizim yükü ve süresi (deneme için)
+  // Son karenin çizim yükü ve süresi (deneme için); doku sayısı, dokuların yaklaşık belleği (MB), gölge açık mı.
+  cizim: { cagri: number; ucgen: number; kare: number; doku: number; dokuMB: number; golge: boolean };
+  bakisNoktasi: [number, number, number] | null; // deneme için (?bot=1): kamera topu değil bu noktayı izler
 };
 
 export function yeniDurum(delik: OyunDeligi): Durum {
@@ -61,7 +65,8 @@ export function yeniDurum(delik: OyunDeligi): Durum {
     en: 1,
     boy: 1,
     kilitli: false,
-    cizim: { cagri: 0, ucgen: 0, kare: 0 },
+    cizim: { cagri: 0, ucgen: 0, kare: 0, doku: 0, dokuMB: 0, golge: true },
+    bakisNoktasi: null,
   };
 }
 
@@ -99,7 +104,7 @@ export function ekranNoktasi(d: Durum, x: number, y: number, z: number): [number
 // (Kemal, 18 Kasım 2026). Model dosyasına dokunulmaz. (Maketteki OrnekDelik.tsx ile aynı bölge.)
 const KOLTUK_BOLGE = { x0: MERDIVEN_X0 - 4.5, x1: TRIBUN_X1 + 3.5, z0: siraOn(MODEL.acikTribunSira) - 0.7, z1: siraOn(1) };
 
-function StatModeli({ koltuklu }: { koltuklu: boolean }) {
+function StatModeli({ koltuklu, dokular }: { koltuklu: boolean; dokular: Dokular }) {
   const gltf = useLoader(GLTFLoader, STAT_MODELI);
   const sahne = useMemo(() => {
     const kopya = gltf.scene.clone(true);
@@ -114,6 +119,19 @@ function StatModeli({ koltuklu }: { koltuklu: boolean }) {
       o.castShadow = true;
       o.receiveShadow = true;
       const ad = (o.material as Material).name;
+      // Dokulu gerçekçi görünüş (Kemal, 19 Kasım): çim, toprak, beton, taş, ahşap. Modelde doku yerleşimi yok;
+      // dünyadaki yerinden verilir. Modelin kendi rengi korunur (dokular.ts).
+      const dokulu = modelMalzemesi(dokular, o.material as Material);
+      const doku = modelDokusu(ad);
+      if (dokulu && doku) {
+        o.geometry = modelYerlesimi(o, GORUNUS.dokuBoyu[doku]);
+        o.material = dokulu;
+      } else if (ad === 'demir') {
+        const demir = (o.material as Material).clone() as Material & { metalness: number; roughness: number };
+        demir.metalness = 0.5;
+        demir.roughness = 0.55;
+        o.material = demir;
+      }
       if (ad === 'zemin') {
         // Toprak zemin ile çimin tabanı üst üste titremesin diye zemin geriye itilir.
         const zemin = (o.material as Material).clone();
@@ -137,7 +155,7 @@ function StatModeli({ koltuklu }: { koltuklu: boolean }) {
       }
     });
     return kopya;
-  }, [gltf, koltuklu]);
+  }, [gltf, koltuklu, dokular]);
   return <primitive object={sahne} />;
 }
 
@@ -165,7 +183,7 @@ function KutuYigini({ kutular, golge = true }: { kutular: KutuCizimi[]; golge?: 
   return (
     <instancedMesh ref={ref} args={[undefined, undefined, kutular.length]} castShadow={golge} receiveShadow>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial roughness={1} />
+      <meshStandardMaterial roughness={0.7} />
     </instancedMesh>
   );
 }
@@ -232,59 +250,78 @@ function Huniler({ delik }: { delik: OyunDeligi }) {
   );
 }
 
-// Kale filesi (Kemal, 19 Kasım: "titriyor, cam gibi"): ince çizgilerden ağ; titremez, içi görünür.
+// Kale filesi (Kemal, 19 Kasım: "titriyor, cam gibi"; sonra: "gerçek ağ"): ip dokulu, arası boş yüzeyler.
 // Fizikteki ağlarla aynı yerde: iki yan file, arka file ve üstte kale direğinden arkaya inen file.
-// Göz aralığı DENEME (GORUNTU.fileGoz). Gerçeğe yakın file sonraki adımda.
-function fileCizgileri(): Float32Array {
-  const n: number[] = [];
-  const cizgi = (a: [number, number, number], b: [number, number, number]) => n.push(...a, ...b);
-  const g = GORUNTU.fileGoz;
-  const h = IFAB.kaleYukseklik;
-  const hb = GORUNTU.fileArkaBoy;
-  const D = MODEL.agDerinlik;
-  const z0 = MODEL.yakinDirekZ;
-  const z1 = MODEL.uzakDirekZ;
-  const alt = 0.006; // çimin hemen üstü (çimle üst üste binmesin)
-  const adimlar = (bas: number, son: number) => {
-    const k = Math.max(1, Math.round((son - bas) / g));
-    return Array.from({ length: k + 1 }, (_, i) => bas + ((son - bas) * i) / k);
-  };
-  // İki kale: A ucunda (x = 0, file eksi x'e), B ucunda (x = saha boyu, file artı x'e).
-  for (const [xk, s] of [[MODEL.kaleCizgisiX, -1], [MODEL.kaleCizgisiX + MODEL.sahaBoy, 1]] as const) {
-    const xa = xk + s * D; // arka file
-    // Arka file: dikey ve yatay çizgiler
-    for (const z of adimlar(z0, z1)) cizgi([xa, alt, z], [xa, hb, z]);
-    for (const y of adimlar(alt, hb)) cizgi([xa, y, z0], [xa, y, z1]);
-    // Üst file: kale direğinden (y = h) arka filenin üstüne (y = hb)
-    for (const z of adimlar(z0, z1)) cizgi([xk, h, z], [xa, hb, z]);
-    for (const u of adimlar(0, 1)) {
-      const x = xk + s * D * u;
-      const y = h + (hb - h) * u;
-      cizgi([x, y, z0], [x, y, z1]);
-    }
-    // Yan fileler: üst kenarı kale direğinden arkaya iner
-    for (const z of [z0, z1]) {
-      for (const u of adimlar(0, 1)) cizgi([xk + s * D * u, alt, z], [xk + s * D * u, h + (hb - h) * u, z]);
-      for (const y of adimlar(alt, h)) {
-        const uSon = y <= hb ? 1 : (h - y) / (h - hb);
-        cizgi([xk, y, z], [xk + s * D * uSon, y, z]);
-      }
-    }
-  }
-  return new Float32Array(n);
+// Derinliğe yazmaz (yüzeyler birbirini kesmez, titremez); uzaktan ipler incelip solar.
+// Göz aralığı ve ip kalınlığı DENEME (GORUNTU.fileGoz, GORUNUS.fileIp).
+function KaleFilesi() {
+  const geo = useMemo(() => fileGeometrisi(), []);
+  const doku = useMemo(() => fileDokusu(), []);
+  return (
+    <mesh geometry={geo} renderOrder={2}>
+      <meshBasicMaterial map={doku} transparent depthWrite={false} side={DoubleSide} />
+    </mesh>
+  );
 }
 
-function KaleFilesi() {
+// Bordür: kiremit rengi korunur (düz renk); yüzeyi boyalı beton gibi hafif pürüzlü (beton kabartısı). Tek çizim.
+function Bordurler({ kutular, dokular }: { kutular: KutuCizimi[]; dokular: Dokular }) {
   const geo = useMemo(() => {
-    const g = new BufferGeometry();
-    g.setAttribute('position', new Float32BufferAttribute(fileCizgileri(), 3));
-    return g;
-  }, []);
-  return (
-    <lineSegments geometry={geo}>
-      <lineBasicMaterial color={renk.krem} />
-    </lineSegments>
-  );
+    const parcalar = kutular.map((k) => {
+      const g = new BoxGeometry(k.sx, k.sy, k.sz);
+      g.rotateY(k.aci ?? 0);
+      g.translate(k.x, k.y, k.z);
+      return g;
+    });
+    const hepsi = mergeGeometries(parcalar);
+    parcalar.forEach((g) => g.dispose());
+    const sonuc = dunyaYerlesimi(hepsi, null, GORUNUS.dokuBoyu.beton);
+    hepsi.dispose();
+    return sonuc;
+  }, [kutular]);
+  const malzeme = useMemo(() => {
+    const m = new MeshStandardMaterial({ color: renk.kiremit, roughness: 0.8, normalMap: dokular.beton.normal });
+    m.normalScale.setScalar(GORUNUS.kabarti.bordur);
+    return m;
+  }, [dokular]);
+  useEffect(() => () => geo.dispose(), [geo]);
+  useEffect(() => () => malzeme.dispose(), [malzeme]);
+  return <mesh geometry={geo} material={malzeme} castShadow receiveShadow />;
+}
+
+// Delik bayrağı: donuk durmaz, hafif rüzgârda dalgalanır (Kemal, 19 Kasım). Büyük kutlama dalgası sonraki adımda.
+// Bez direğe bağlı kenarda durur, uca doğru daha çok oynar. Genlik ve hız DENEME (GORUNUS).
+const BAYRAK = { boy: 0.22, en: 0.16, dilim: 10, sira: 3 };
+function bayrakGeometrisi(): BufferGeometry {
+  const g = new BufferGeometry();
+  const { dilim, sira } = BAYRAK;
+  const sira1 = sira + 1;
+  g.setAttribute('position', new Float32BufferAttribute(new Float32Array((dilim + 1) * sira1 * 3), 3));
+  const sirala: number[] = [];
+  for (let i = 0; i < dilim; i++) {
+    for (let j = 0; j < sira; j++) {
+      const a = i * sira1 + j;
+      sirala.push(a, a + sira1, a + 1, a + 1, a + sira1, a + sira1 + 1);
+    }
+  }
+  g.setIndex(sirala);
+  return g;
+}
+function bayrakDalgalandir(g: BufferGeometry, t: number) {
+  const p = g.getAttribute('position');
+  const { boy, en, dilim, sira } = BAYRAK;
+  for (let i = 0; i <= dilim; i++) {
+    const u = i / dilim; // 0 direk, 1 uç
+    const dalga = Math.sin(u * GORUNUS.bayrakDalga * 2 * Math.PI - t * GORUNUS.bayrakHiz) + 0.4 * Math.sin(u * 5.1 - t * GORUNUS.bayrakHiz * 1.7 + 1);
+    const yana = GORUNUS.bayrakGenlik * u * dalga;
+    for (let j = 0; j <= sira; j++) {
+      // Uç hafifçe sarkar (dalgayla birlikte)
+      const sarkma = 0.006 * u * u * (1 + 0.5 * Math.sin(t * GORUNUS.bayrakHiz * 0.6));
+      p.setXYZ(i * (sira + 1) + j, yana, (j / sira - 0.5) * en - sarkma, u * boy);
+    }
+  }
+  p.needsUpdate = true;
+  g.computeVertexNormals();
 }
 
 // Nişan okunun ucu: yere yatık üçgen.
@@ -296,6 +333,16 @@ function useUcgen() {
     return g;
   }, []);
 }
+
+// Güneşin hedefe uzaklığı (m). Gölge kutusunun derinliği bunun 25 m önü ve arkası: dar tutulur ki küçük
+// eşyaların (top 4 cm, bordür 8 cm) gölgesi kaybolmasın.
+const GUNES_UZAKLIK = Math.hypot(...GORUNUS.gunesYon);
+
+// Kalite (yalnız deneme için adresle): ?kalite=yuksek gölgeleri hep açık tutar, ?kalite=dusuk baştan kapatır.
+// Yazılmazsa oyun kare hızını ölçüp kendisi karar verir.
+const KALITE = new URLSearchParams(window.location.search).get('kalite');
+// Gölgeler bir kez kapandıysa sonraki deliklerde de kapalı kalır (her delikte yeniden ölçülüp takılmasın).
+let golgeKapandi = KALITE === 'dusuk';
 
 export type Olay = 'durdu' | 'delik' | 'disari';
 
@@ -314,6 +361,23 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
   const ucRef = useRef<Mesh>(null);
   const cekmeRef = useRef<Mesh>(null);
   const bayrakRef = useRef<Group>(null);
+  const gl = useThree((s) => s.gl);
+  // Dokular (Poly Haven, ambientCG; docs/lisanslar.md) ve kodla hesaplananlar (top gamzeleri, file, gök yansıması).
+  const yuklenen = useLoader(TextureLoader, DOKU_DOSYALARI);
+  const dokular = useMemo(() => dokulariHazirla(yuklenen, gl), [yuklenen, gl]);
+  const gamze = useMemo(() => topKabartisi(), []);
+  const gok = useMemo(() => gokYansimasi(gl), [gl]);
+  const bayrakGeo = useMemo(() => bayrakGeometrisi(), []);
+  useEffect(() => () => bayrakGeo.dispose(), [bayrakGeo]);
+  const isik = useMemo(() => new DirectionalLight(), []);
+  // Kalite ölçümü: kare hızı düşükse gölgeler kapanır (GORUNUS.golgeKapatFps; DENEME).
+  const olcum = useRef({ sure: 0, kare: 0, bekleme: GORUNUS.olcumBekleme as number, dusuk: 0, bitti: KALITE === 'yuksek' || golgeKapandi });
+  const donus = useMemo(() => ({ eksen: new Vector3(), q: new Quaternion() }), []);
+  useLayoutEffect(() => {
+    durum.cizim.golge = !golgeKapandi;
+    durum.cizim.dokuMB = dokuBellegi([...yuklenen, gamze, fileDokusu()], golgeKapandi ? 0 : GORUNUS.golgeBoyu);
+  }, [durum, yuklenen, gamze]);
+  useEffect(() => () => isik.dispose(), [isik]);
   const tahminRef = useRef<Group>(null);
   const tahminHalkaRef = useRef<Mesh>(null);
   const ucgen = useUcgen();
@@ -371,6 +435,7 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
     d.hedef.x += (t.x - d.hedef.x) * k;
     d.hedef.y += (Math.max(t.y, d.delik.zeminY) - d.hedef.y) * k;
     d.hedef.z += (t.z - d.hedef.z) * k;
+    if (d.bakisNoktasi) d.hedef.set(...d.bakisNoktasi);
     const fx = Math.cos(d.aci);
     const fz = Math.sin(d.aci);
     const ileri = (KAMERA.topAsagi * d.boy) / (d.yakinlik * Math.sin(d.egim));
@@ -385,7 +450,17 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
 
     // --- Top
     const ty = t.y + d.delik.kaldirma;
-    topRef.current?.position.set(t.x, ty, t.z);
+    const topAgi = topRef.current;
+    if (topAgi) {
+      topAgi.position.set(t.x, ty, t.z);
+      // Top yuvarlanırken döner (yalnız görüntü; gamzeler kayıyor gibi durmasın). Fiziğe dokunmaz.
+      const hiz = Math.hypot(t.vx, t.vz);
+      if (hiz > 1e-4 && !t.duruyor) {
+        donus.eksen.set(t.vz / hiz, 0, -t.vx / hiz);
+        donus.q.setFromAxisAngle(donus.eksen, (hiz * gecen) / TOP_YARICAP);
+        topAgi.quaternion.premultiply(donus.q);
+      }
+    }
     d.topEkran = ekranNoktasi(d, t.x, ty, t.z);
 
     // --- Nişan oku: yön ve güç
@@ -438,6 +513,34 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
     // --- Bayrak: top deliğin dibindeyken kalkar (topun önünü kapatmasın)
     if (bayrakRef.current) bayrakRef.current.visible = Math.hypot(t.x - c.x, t.z - c.z) > 0.45;
 
+    // --- Bayrak: hafif rüzgâr
+    if (bayrakRef.current?.visible) bayrakDalgalandir(bayrakGeo, s.clock.elapsedTime);
+
+    // --- Kalite: kare hızı düşükse gölgeler kapanır (bir kez; o açılış için)
+    const o = olcum.current;
+    if (!o.bitti) {
+      if (o.bekleme > 0) o.bekleme -= gecen;
+      else {
+        o.sure += gecen;
+        o.kare += 1;
+        if (o.sure >= GORUNUS.olcumSuresi) {
+          o.dusuk = o.kare / o.sure < GORUNUS.golgeKapatFps ? o.dusuk + 1 : 0;
+          o.sure = 0;
+          o.kare = 0;
+          if (o.dusuk >= 2) {
+            o.bitti = true;
+            golgeKapandi = true;
+            isik.castShadow = false;
+            isik.shadow.map?.dispose();
+            isik.shadow.map = null;
+            d.cizim.golge = false;
+            d.cizim.dokuMB = dokuBellegi([...yuklenen, gamze, fileDokusu()], 0);
+          }
+        }
+      }
+    }
+
+    d.cizim.doku = s.gl.info.memory.textures;
     d.cizim.cagri = s.gl.info.render.calls;
     d.cizim.ucgen = s.gl.info.render.triangles;
     d.cizim.kare = gecen;
@@ -447,24 +550,30 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
   return (
     <>
       <color attach="background" args={[renk.krem]} />
-      <hemisphereLight args={[renk.krem, '#6b5a43', 1.1]} />
-      <directionalLight
-        position={[ox + 30, 60, oz + 20]}
-        target-position={[ox, 0, oz]}
-        intensity={2}
-        castShadow
-        shadow-mapSize={[2048, 2048]}
+      {/* Işık: sakin gün ışığı. Tek güneş (gölge veren tek ışık) ve gökten, yerden gelen dolgu. Değerler DENEME. */}
+      <hemisphereLight args={[GORUNUS.gokRenk, GORUNUS.yerRenk, GORUNUS.dolguGuc]} />
+      <primitive
+        object={isik}
+        position={[ox + GORUNUS.gunesYon[0], GORUNUS.gunesYon[1], oz + GORUNUS.gunesYon[2]]}
+        color={GORUNUS.gunesRenk}
+        intensity={GORUNUS.gunesGuc}
+        castShadow={!golgeKapandi}
+        shadow-mapSize={[GORUNUS.golgeBoyu, GORUNUS.golgeBoyu]}
         shadow-camera-left={-yari}
         shadow-camera-right={yari}
         shadow-camera-top={yari}
         shadow-camera-bottom={-yari}
-        shadow-camera-far={200}
-        shadow-bias={-0.0005}
+        shadow-camera-near={GUNES_UZAKLIK - 25}
+        shadow-camera-far={GUNES_UZAKLIK + 25}
+        shadow-bias={-0.0001}
+        shadow-normalBias={0.008}
       />
-      <StatModeli koltuklu={delik.no === 7} />
+      {/* Işığın baktığı yer sahnede durmalı; yoksa güneş deliğe değil stadın köşesine bakar (gölge kutusu kayar). */}
+      <primitive object={isik.target} position={[ox, 0, oz]} />
+      <StatModeli koltuklu={delik.no === 7} dokular={dokular} />
       <KaleFilesi />
       {koltuklar.length > 0 && <KutuYigini kutular={koltuklar} />}
-      <KutuYigini kutular={bordurler} />
+      <Bordurler kutular={bordurler} dokular={dokular} />
       <Huniler delik={delik} />
 
       {/* Başlangıç işareti: krem halka (çap WMF beton pistteki gibi 30 cm) */}
@@ -487,9 +596,8 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
           <cylinderGeometry args={[0.008, 0.008, DENEME.bayrakBoy, 8]} />
           <meshStandardMaterial color={renk.lacivert} />
         </mesh>
-        <mesh position={[c.x, isaretY + DENEME.bayrakBoy - 0.08, c.z + 0.11]} castShadow>
-          <boxGeometry args={[0.008, 0.16, 0.22]} />
-          <meshStandardMaterial color={renk.kiremit} roughness={1} />
+        <mesh position={[c.x, isaretY + DENEME.bayrakBoy - 0.08, c.z]} geometry={bayrakGeo} castShadow frustumCulled={false}>
+          <meshStandardMaterial color={renk.kiremit} roughness={0.9} side={DoubleSide} />
         </mesh>
       </group>
 
@@ -507,8 +615,8 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
 
       {/* Top */}
       <mesh ref={topRef} castShadow>
-        <sphereGeometry args={[TOP_YARICAP, 24, 16]} />
-        <meshStandardMaterial color="#FFFFFF" roughness={0.6} />
+        <sphereGeometry args={[TOP_YARICAP, 40, 28]} />
+        <meshStandardMaterial color="#FFFFFF" roughness={0.38} normalMap={gamze} envMap={gok} envMapIntensity={0.55} />
       </mesh>
 
       {/* Nişan oku (kiremit) ve geri çekme çizgisi (lacivert) */}

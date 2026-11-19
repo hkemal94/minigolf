@@ -116,3 +116,50 @@ export const GORUNTU = {
   // Modeldeki arka filenin boyu (m; dirlik-stadi.glb).
   fileArkaBoy: 1.7,
 } as const;
+
+// --- Görünüş: dokulu gerçekçi (Karar: Kemal, 19 Kasım 2026; tasarım belgesi 5.2). Dokuların kaynağı
+// docs/lisanslar.md'de. Buradaki her değer DENEME; fizikle ilgisi yok.
+export const GORUNUS = {
+  // Dokunun yerde kapladığı kenar (m): kaynağın kendi ölçüsü (ambientCG ve Poly Haven sayfalarındaki boyut).
+  dokuBoyu: { cim: 1.4, toprak: 2.07, beton: 2.0, tas: 2.0, ahsap: 1.5 },
+  // Renk dokularının ortalama rengi (doğrusal; dosyalardan ölçüldü: scripts/dokulari-hazirla.py). Modelin kendi rengi korunsun diye
+  // doku bu ortalamaya bölünür: yüzey uzaktan modelin renginde, yakından dokulu görünür.
+  dokuOrtalama: {
+    cim: [0.0581, 0.1061, 0.0217],
+    toprak: [0.4709, 0.2611, 0.1272],
+    beton: [0.1878, 0.1573, 0.1047],
+    tas: [0.4333, 0.3127, 0.189],
+    ahsap: [0.191, 0.0992, 0.0413],
+  },
+  // DENEME · Kabartının (normal dokusu) gücü.
+  kabarti: { cim: 0.7, toprak: 0.8, beton: 0.7, tas: 1.2, ahsap: 0.8, bordur: 0.5 },
+  // DENEME · Eğik bakışta dokunun netliği (telefonun izin verdiği kadar; en çok bu).
+  netlik: 4,
+  // DENEME · Güneş: yönü (hedefe göre; x, y, z), rengi, gücü. Sakin gün ışığı (maçsız gün).
+  gunesYon: [22, 40, 26],
+  gunesRenk: '#FFF3DC',
+  gunesGuc: 2.8,
+  // DENEME · Gökten ve yerden gelen dolgu ışığı.
+  gokRenk: '#DCE9F5',
+  yerRenk: '#7A6A4F',
+  dolguGuc: 1.7,
+  // DENEME · Gölge dokusunun kenarı (piksel). Tek gölge veren ışık; kutu deliğin tamamını kaplar.
+  golgeBoyu: 2048,
+  // DENEME · Kalite düşürme: saniyedeki kare sayısı art arda iki ölçümde bunun altındaysa gölgeler kapanır
+  // (o açılış için; geri açılmaz). Açılıştan sonraki ilk süre sayılmaz (yükleme takılmaları).
+  golgeKapatFps: 30,
+  olcumSuresi: 2, // bir ölçümün süresi (sn)
+  olcumBekleme: 2, // açılıştan sonra ölçüme başlamadan beklenen süre (sn)
+  // DENEME · Golf topu: gamze sayısı ve derinliğin görünüşü. Gerçek toplarda gamze sayısı markaya göre değişir;
+  // kaynaktan okunmadı.
+  gamzeSayisi: 336,
+  gamzeGucu: 0.8,
+  // DENEME · Kale filesi: ipin kalınlığı (m; telefonda seçilsin diye gerçeğinden kalın). Göz aralığı GORUNTU.fileGoz.
+  fileIp: 0.009,
+  // DENEME · Uzaktan bakınca ipin solmasını azaltan üs (1: olduğu gibi; küçüldükçe ip uzaktan daha belirgin).
+  fileUzakUs: 0.6,
+  // DENEME · Delik bayrağı: hafif rüzgârda dalgalanma (genlik m, hız, bayrak boyunca dalga sayısı).
+  bayrakGenlik: 0.014,
+  bayrakHiz: 3.2,
+  bayrakDalga: 1.3,
+} as const;

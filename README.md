@@ -18,5 +18,6 @@ Klasörler:
 - `src/oyun/`: oynanabilir prototip (adresin sonuna `?oyna=1`; üç delik, değerler DENEME); `scripts/` deneme botu
 - `src/maket/`: ekran maketleri (öneri; adresin sonuna `?maket=ana-ekran` gibi yazınca açılır)
 - `public/modeller/`: 3B modeller (Dirlik Stadı; lisansı Kemal'e soruldu)
+- `public/dokular/`: oynanabilir prototipin dokuları (Poly Haven ve ambientCG, CC0; `docs/lisanslar.md`); `scripts/dokulari-hazirla.py` ile hazırlanır
 - `docs/`: tasarım belgesi, yol haritası, lisanslar, ekran görüntüleri; `docs/plan/` delik şeması, `docs/ekranlar/` maket görüntüleri
 - `.github/workflows/yayinla.yml`: ana dala her birleştirmede deneme bağlantısını günceller

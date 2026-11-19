@@ -107,7 +107,8 @@ export default function Oyun() {
       }),
       ekran: (x: number, y: number, z: number) => ekranNoktasi(durum, x, y, z),
       // Görüntü almak için kamerayı yerleştirir (oyunda parmakla yapılanın aynısı; fiziğe dokunmaz).
-      kamera: (k: { aci?: number; egim?: number; yakinlik?: number }) => {
+      kamera: (k: { aci?: number; egim?: number; yakinlik?: number; bak?: [number, number, number] | null }) => {
+        if (k.bak !== undefined) durum.bakisNoktasi = k.bak;
         if (k.aci !== undefined) durum.aci = k.aci;
         if (k.egim !== undefined) durum.egim = k.egim;
         if (k.yakinlik !== undefined) durum.yakinlik = k.yakinlik;
