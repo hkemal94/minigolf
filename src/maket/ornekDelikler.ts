@@ -1,5 +1,5 @@
 import type { MetinAnahtari } from '../metinler';
-import { IFAB, WMF, MODEL, DENEME, ESYA, TOP_YARICAP } from './olculer';
+import { IFAB, WMF, MODEL, DENEME, ESYA, KARAR, TOP_YARICAP } from './olculer';
 
 // YENİ DİLLE DELİKLER (öneri; Kemal, 18 Kasım 2026): önce üç örnek (3, 7, 14), sonra adım adım öbürleri
 // (tasarım belgesi 4.9). Adım 1: 1, 2, 4, 5 (saha, çim). Adım 2: 6, 8, 9 (açık tribünün önü, köprü, koridor). Pist gerçek minigolf ölçüsünde,
@@ -8,7 +8,7 @@ import { IFAB, WMF, MODEL, DENEME, ESYA, TOP_YARICAP } from './olculer';
 
 export type N2 = [number, number]; // x, z
 export type N3 = [number, number, number];
-export type Kaynak = 'ifab' | 'wmf' | 'model' | 'deneme';
+export type Kaynak = 'ifab' | 'wmf' | 'model' | 'deneme' | 'kemal';
 
 export type Olcu = { a: N2; b: N2; kaydir: number; deger: number; kaynak: Kaynak };
 export type Dikdortgen = { x0: number; x1: number; z0: number; z1: number };
@@ -25,7 +25,7 @@ export type OrnekDelik = {
   // Şemada: çerçeve, zemin çizgileri, eşyalar
   cerceve: Dikdortgen;
   cizgiler: { a: N2; b: N2; tur: 'saha' | 'basamak' | 'merdiven' | 'ag' | 'korkuluk' }[];
-  kutular: (Dikdortgen & { tur: 'direk' | 'koltuk' | 'koltukAcik' | 'bolme' | 'duvar' | 'tas' | 'merdivenTas' | 'ayak' | 'huni' | 'sulama' | 'manken' })[];
+  kutular: (Dikdortgen & { tur: 'direk' | 'koltuk' | 'koltukAcik' | 'bolme' | 'duvar' | 'tas' | 'merdivenTas' | 'ayak' | 'huni' | 'sulama' | 'manken' | 'bank' | 'bankAyak' })[];
   // Şemada zeminin parçaları (çim, toprak, beton, köprü): çerçevenin rengi tek zemine yetmediğinde.
   alanlar?: (Dikdortgen & { renk: string })[];
   // Kenarı olmayan pist sınırı (köprünün yanları): şemada ve küçük planda kesik kiremit çizgi.
@@ -243,7 +243,23 @@ const ortaSekme: N2 = [42.8865, -38.522];
 // Antrenman hunileri (modelde ve künyede yok; DENEME, Kemal onaylamadı): çizginin üstünde, yayın başında üç huni.
 // Çizgiyi izleyen top hunilere çarpar; önerilen yol hunilerin dışından, dış kenara yaslanarak dolanır.
 export const HUNI_ACILARI = [7, 12, 17].map((d) => (d * Math.PI) / 180); // DENEME
-export const HUNILER: N2[] = HUNI_ACILARI.map((a) => oy(R, a));
+// Zorluk (19 Kasım; DENEME): deliğin önünde, sekmeden sonraki yolun üstünde iki hunilik bir kapı (antrenmanda
+// kurulan huni kapısı). Kapı yolun %60'ında, yola dik; iç aralığı 0,30 m. Sekmeden sonra top bu kapıdan geçmeli.
+const kapi = ((): { orta: N2; huniler: N2[]; icKenar: N2[] } => {
+  const dx = ortaCukur[0] - ortaSekme[0];
+  const dz = ortaCukur[1] - ortaSekme[1];
+  const b = Math.hypot(dx, dz);
+  const orta: N2 = [ortaSekme[0] + dx * 0.6, ortaSekme[1] + dz * 0.6];
+  const k = DENEME.huniKapiAraligi / 2 + DENEME.huniTaban / 2;
+  const ic = DENEME.huniKapiAraligi / 2;
+  return {
+    orta,
+    huniler: [1, -1].map((i): N2 => [orta[0] + (i * -dz * k) / b, orta[1] + (i * dx * k) / b]),
+    icKenar: [1, -1].map((i): N2 => [orta[0] + (i * -dz * ic) / b, orta[1] + (i * dx * ic) / b]),
+  };
+})();
+export const HUNI_KAPISI = kapi.orta;
+export const HUNILER: N2[] = [...HUNI_ACILARI.map((a) => oy(R, a)), ...kapi.huniler];
 const hy = DENEME.huniTaban / 2;
 
 const ortaYuvarlak: OrnekDelik = {
@@ -262,11 +278,13 @@ const ortaYuvarlak: OrnekDelik = {
   yollar: [[ortaBas, ortaSekme, ortaCukur]],
   olculer: [
     { a: oy(R - h, y1), b: oy(R + h, y1), kaydir: -0.4, deger: WMF.betonEn, kaynak: 'wmf' },
+    { a: kapi.icKenar[0], b: kapi.icKenar[1], kaydir: -0.35, deger: DENEME.huniKapiAraligi, kaynak: 'deneme' },
   ],
   etiketler: [
     { n: [43.75, -35.6], metin: 'maket.sema.yayBoyu', deger: YAY_BOYU, metre: true, hiza: 'orta' },
     { n: [44.15, -35.6], metin: 'maket.sema.yaricap', deger: IFAB.ortaYuvarlakYaricap, metre: true, hiza: 'orta' },
     { n: [43.2, -37.15], metin: 'maket.sema.huni', hiza: 'sag' },
+    { n: [HUNI_KAPISI[0] + 0.85, HUNI_KAPISI[1] + 0.1], metin: 'maket.sema.huniKapisi', hiza: 'sag' },
     { n: [ortaSekme[0] - 1.1, -39.1], metin: 'maket.sema.disKenar', hiza: 'orta' },
     { n: [ORTA[0] - 0.2, -35.0], metin: 'maket.sema.ortaCizgi', hiza: 'orta' },
     { n: [46.2, -37.75], metin: 'maket.sema.ortaYuvarlak', hiza: 'sag' },
@@ -281,10 +299,12 @@ const zTac = MODEL.tacCizgisiZ;
 const tacBas = zTac + WMF.minyaturBoy; // başlangıç taç çizgisinden 6,25 m içeride (minyatür norm pist boyu)
 const tacCukurZ = zTac + DENEME.tacPayi;
 
-// Sulama başlıkları (modelde ve künyede yok; DENEME, Kemal onaylamadı): pistin ortasında, yerden çıkmış iki başlık.
-// Düz giden top başlığa çarpar; önerilen yol yan kenardan bir kez sekip ikisinin yanından dolanır.
+// Sulama başlıkları (modelde ve künyede yok; Kemal, 19 Kasım 2026: kalsın, büyük saha tipi, üç tane). Yerleri DENEME.
+// Üçgen dizilim (sulamada başlıklar kaydırılarak dizilir): ikisi pistin ortasında düz yolu keser, üçüncüsü sağ
+// kenara yakın, sağdan sektirme yolunu kapatır (kenarla arası topun çapından dar). Tek yol: sol kenardan sekme.
 export const SULAMA: N2[] = [
   [X2, tacBas - 2.0],
+  [X2 + 0.52, (tacBas + tacCukurZ) / 2],
   [X2, tacBas - 4.0],
 ]; // DENEME
 const sy = ESYA.sulamaCap / 2;
@@ -292,7 +312,7 @@ const tacSekme: N2 = [X2 - h + TOP_YARICAP, (tacBas + tacCukurZ) / 2];
 
 const kenarCizgisi: OrnekDelik = {
   no: 2,
-  zorluk: 'maket.zorluk.kolay',
+  zorluk: 'maket.zorluk.orta',
   eksen: '-z',
   // Kenar taç çizgisinde biter: uç açık, sınır çizginin kendisi (çizgiyi geçen top taca çıkar).
   bordurler: [
@@ -308,8 +328,8 @@ const kenarCizgisi: OrnekDelik = {
   ],
   baslangic: [X2, yCim, tacBas],
   cukur: [X2, yCim, tacCukurZ],
-  cerceve: { x0: X2 - 2.5, x1: X2 + 2.5, z0: zTac - 1.6, z1: tacBas + 1.5 },
-  cizgiler: [{ a: [X2 - 2.5, zTac + MODEL.cizgiEn / 2], b: [X2 + 2.5, zTac + MODEL.cizgiEn / 2], tur: 'saha' }],
+  cerceve: { x0: X2 - 3.2, x1: X2 + 3.2, z0: zTac - 1.6, z1: tacBas + 1.5 },
+  cizgiler: [{ a: [X2 - 3.2, zTac + MODEL.cizgiEn / 2], b: [X2 + 3.2, zTac + MODEL.cizgiEn / 2], tur: 'saha' }],
   kutular: SULAMA.map((n) => ({ tur: 'sulama' as const, x0: n[0] - sy, x1: n[0] + sy, z0: n[1] - sy, z1: n[1] + sy })),
   yollar: [[[X2, tacBas], tacSekme, [X2, tacCukurZ]]],
   olculer: [
@@ -321,7 +341,8 @@ const kenarCizgisi: OrnekDelik = {
     { n: [X2 + 0.85, zTac - 0.2], metin: 'maket.sema.tacCizgisi', hiza: 'sol' },
     { n: [X2, zTac - 0.75], metin: 'maket.sema.acikUc', hiza: 'orta' },
     { n: [X2 - 0.8, SULAMA[0][1] + 0.05], metin: 'maket.sema.sulama', hiza: 'sag' },
-    { n: [X2 - 0.8, SULAMA[1][1] + 0.05], metin: 'maket.sema.sulama', hiza: 'sag' },
+    { n: [X2 - 0.8, SULAMA[2][1] + 0.05], metin: 'maket.sema.sulama', hiza: 'sag' },
+    { n: [X2 + 1.2, SULAMA[1][1] + 0.55], metin: 'maket.sema.sulamaKenar', hiza: 'sol' },
     { n: [X2 - 0.8, tacSekme[1] + 0.05], metin: 'maket.sema.sektirmeYan', hiza: 'sag' },
     { n: [X2 + 1.7, tacBas + 1.0], metin: 'maket.sema.sahaIci', hiza: 'orta' },
     { n: [X2 - 1.6, zTac - 1.2], metin: 'maket.sema.sahaDisi', hiza: 'orta' },
@@ -333,29 +354,46 @@ const kenarCizgisi: OrnekDelik = {
 // ---------- 4 · Köşe (A ucu): L pist taç çizgisinden kale çizgisine döner; dönüşün ortasında köşe bayrağı ----------
 export const KOSE: N2 = [MODEL.kaleCizgisiX, MODEL.tacCizgisiZ]; // sahanın köşesi (0, -58)
 const KOL = WMF.minyaturBoy / 2; // iki kol eşit; yolun toplamı 6,25 m (minyatür norm pist boyu). Bölüşüm DENEME.
-const pah = DENEME.kosePah;
+// Zorluk (19 Kasım): bu delikte pist minyatür norm pistin eninde, 0,90 m (WMF); eğik kenar ona göre 0,6 m (DENEME).
+const h4 = WMF.minyaturEn / 2;
+const pah = DENEME.kosePahDar;
 const koseBasX = KOSE[0] + KOL;
 const koseCukurZ = KOSE[1] + KOL;
 // Önerilen yol: top direğin dışından geçer, 45° kenardan sekip kale çizgisi boyunca döner.
 // (Deliğin 45° kenara göre aynası başlangıçla birleştirilince kenarı kestiği yer.)
-const koseSekme: N2 = [-0.225, -58.225];
+const koseSekme = ((): N2 => {
+  const c = KOSE[0] - h4 + pah + KOSE[1] - h4; // eğik kenarın doğrusu: x + z = c
+  const d: N2 = [KOSE[0] + MODEL.cizgiEn / 2, koseCukurZ];
+  const k = (d[0] + d[1] - c) / 2;
+  const ayna: N2 = [d[0] - 2 * k, d[1] - 2 * k];
+  const b: N2 = [koseBasX, KOSE[1] + MODEL.cizgiEn / 2];
+  const t = (c - b[0] - b[1]) / (ayna[0] - b[0] + ayna[1] - b[1]);
+  return [b[0] + (ayna[0] - b[0]) * t, b[1] + (ayna[1] - b[1]) * t];
+})();
+const atis4: N2 = [1.0, KOSE[1] - 0.17];
+const yon4 = ((): N2 => {
+  const dx = koseSekme[0] - atis4[0];
+  const dz = koseSekme[1] - atis4[1];
+  const b = Math.hypot(dx, dz);
+  return [dx / b, dz / b];
+})();
 
 const koseDeligi: OrnekDelik = {
   no: 4,
-  zorluk: 'maket.zorluk.orta',
+  zorluk: 'maket.zorluk.zor',
   eksen: '-x',
   bordurler: [
     {
       y: yCim,
       noktalar: [
-        [koseBasX + DENEME.baslangicPayi, KOSE[1] + h],
-        [koseBasX + DENEME.baslangicPayi, KOSE[1] - h],
-        [KOSE[0] - h + pah, KOSE[1] - h],
-        [KOSE[0] - h, KOSE[1] - h + pah],
-        [KOSE[0] - h, koseCukurZ + DENEME.delikPayi],
-        [KOSE[0] + h, koseCukurZ + DENEME.delikPayi],
-        [KOSE[0] + h, KOSE[1] + h],
-        [koseBasX + DENEME.baslangicPayi, KOSE[1] + h],
+        [koseBasX + DENEME.baslangicPayi, KOSE[1] + h4],
+        [koseBasX + DENEME.baslangicPayi, KOSE[1] - h4],
+        [KOSE[0] - h4 + pah, KOSE[1] - h4],
+        [KOSE[0] - h4, KOSE[1] - h4 + pah],
+        [KOSE[0] - h4, koseCukurZ + DENEME.delikPayi],
+        [KOSE[0] + h4, koseCukurZ + DENEME.delikPayi],
+        [KOSE[0] + h4, KOSE[1] + h4],
+        [koseBasX + DENEME.baslangicPayi, KOSE[1] + h4],
       ],
     },
   ],
@@ -370,14 +408,14 @@ const koseDeligi: OrnekDelik = {
   ],
   kutular: [{ tur: 'direk', x0: KOSE[0] - MODEL.koseDirekEn / 2, x1: KOSE[0] + MODEL.koseDirekEn / 2, z0: KOSE[1] - MODEL.koseDirekEn / 2, z1: KOSE[1] + MODEL.koseDirekEn / 2 }],
   vurguKenar: [
-    [KOSE[0] - h + pah, KOSE[1] - h],
-    [KOSE[0] - h, KOSE[1] - h + pah],
+    [KOSE[0] - h4 + pah, KOSE[1] - h4],
+    [KOSE[0] - h4, KOSE[1] - h4 + pah],
   ],
   yollar: [[[koseBasX, KOSE[1]], koseSekme, [KOSE[0], koseCukurZ]]],
   olculer: [
-    { a: [koseBasX, KOSE[1] - h], b: [KOSE[0], KOSE[1] - h], kaydir: 0.5, deger: KOL, kaynak: 'deneme' },
-    { a: [KOSE[0] - h, KOSE[1]], b: [KOSE[0] - h, koseCukurZ], kaydir: 0.5, deger: KOL, kaynak: 'deneme' },
-    { a: [koseBasX + DENEME.baslangicPayi, KOSE[1] - h], b: [koseBasX + DENEME.baslangicPayi, KOSE[1] + h], kaydir: -0.4, deger: WMF.betonEn, kaynak: 'wmf' },
+    { a: [koseBasX, KOSE[1] - h4], b: [KOSE[0], KOSE[1] - h4], kaydir: 0.5, deger: KOL, kaynak: 'deneme' },
+    { a: [KOSE[0] - h4, KOSE[1]], b: [KOSE[0] - h4, koseCukurZ], kaydir: 0.5, deger: KOL, kaynak: 'deneme' },
+    { a: [koseBasX + DENEME.baslangicPayi, KOSE[1] - h4], b: [koseBasX + DENEME.baslangicPayi, KOSE[1] + h4], kaydir: -0.4, deger: WMF.minyaturEn, kaynak: 'wmf' },
   ],
   etiketler: [
     { n: [KOSE[0] + 0.05, KOSE[1] - 0.9], metin: 'maket.sema.koseBayragi', hiza: 'sol' },
@@ -388,7 +426,7 @@ const koseDeligi: OrnekDelik = {
     { n: [KOSE[0] + 2.6, KOSE[1] + 2.9], metin: 'maket.sema.yolBoyu', deger: WMF.minyaturBoy, metre: true, hiza: 'orta' },
   ],
   // Atış anı: ikinci vuruş, top dönüşün önünde; nişan direğin dışından 45° kenara
-  atis: { top: [1.0, yCim, KOSE[1] - 0.17], yon: [-0.999, -0.0449], boy: 1.1 },
+  atis: { top: [atis4[0], yCim, atis4[1]], yon: yon4, boy: 1.1 },
 };
 
 // ---------- 5 · Penaltı noktası (nefes): baraj mankenlerinin yanından, kavisli kenardan noktaya ----------
@@ -463,14 +501,11 @@ const bas6: N2 = [X6, seritOrta + kol1];
 // Delik korkulukla ilk basamağın arasındaki dar yanda (0,36 m), merdivenin ayağında.
 const darYanOrta = (zOn + zKork - direkY) / 2;
 const cukur6: N2 = [merdivenOrta, darYanOrta];
-// İkinci vuruşun anı: top köşeyi dönmüş, şeridin geniş yanında durur.
-const ara6: N2 = [X6, zCimKenar - 0.3];
-const yon6 = ((): N2 => {
-  const dx = cukur6[0] - ara6[0];
-  const dz = cukur6[1] - ara6[1];
-  const b = Math.hypot(dx, dz);
-  return [dx / b, dz / b];
-})();
+// Zorluk (19 Kasım): kol direğin tam üstüne iner, 42'deki direk kolun ağzında durur. Önerilen yol: ilk vuruşta top
+// direğin solundan geçip ilk basamağın dibindeki dar yana iner; ikinci vuruşta dar yan boyunca (0,36 m) iki direğin
+// yanından merdivenin ayağına.
+const ara6: N2 = [X6 - 0.25, darYanOrta];
+const yon6: N2 = [1, 0];
 const c6 = { x0: 39.6, x1: 46.4, z0: -66.0, z1: -57.4 };
 
 const tribunOnu: OrnekDelik = {
@@ -518,8 +553,9 @@ const tribunOnu: OrnekDelik = {
     { a: [42, zKork], b: [44, zKork], kaydir: -1.55, deger: MODEL.korkulukDirekAralik, kaynak: 'model' },
   ],
   etiketler: [
-    { n: [43.5, zCimKenar + 0.3], metin: 'maket.sema.korkuluk', hiza: 'orta' },
-    { n: [42.2, zOn - 0.3], metin: 'maket.sema.ilkBasamak', hiza: 'orta' },
+    { n: [43.7, zCimKenar + 0.3], metin: 'maket.sema.korkuluk', hiza: 'orta' },
+    { n: [X6 - 0.15, zOn - 0.3], metin: 'maket.sema.agizDirek', hiza: 'sag' },
+    { n: [43.5, zOn - 0.3], metin: 'maket.sema.ilkBasamak', hiza: 'orta' },
     { n: [46.3, zOn - 2.3], metin: 'maket.sema.merdivenAyagi', hiza: 'sag' },
     { n: [45.9, -59.7], metin: 'maket.sema.cim', hiza: 'orta' },
     { n: [46.35, seritOrta + 0.07], metin: 'maket.sema.toprak', hiza: 'sag' },
@@ -527,7 +563,7 @@ const tribunOnu: OrnekDelik = {
     { n: [46.3, MODEL.tacCizgisiZ + 0.42], metin: 'maket.sema.tacCizgisi', hiza: 'sag' },
     { n: [39.7, -65.75], metin: 'maket.yerlesim.acikTribun', hiza: 'sol' },
   ],
-  // Atış anı: ikinci vuruş; nişan iki direğin arasından dar yana, merdivenin ayağındaki deliğe
+  // Atış anı: ikinci vuruş; top dar yanda, nişan dar yan boyunca direklerin yanından merdivenin ayağındaki deliğe
   atis: { top: [ara6[0], 0, ara6[1]], yon: yon6, boy: 1.2 },
 };
 
@@ -539,7 +575,7 @@ const zTasIc = MODEL.tasDuvarIcZ;
 const zTasDis = MODEL.tasDuvarDisZ;
 // Köprü B ucundaki merdivenin hemen batısında; arka duvarda köprünün eninde geçit açılır (modelde yok).
 export const KOPRU = {
-  x0: MODEL.bMerdivenX0 - DENEME.kopruEn,
+  x0: MODEL.bMerdivenX0 - KARAR.kopruEn,
   x1: MODEL.bMerdivenX0,
   y0: siraY(UST), // tribün yanı: üst sıranın düzeyi (2,52)
   y1: DENEME.kopruSahanlikY, // duvar yanı (2,40)
@@ -555,7 +591,7 @@ const KOPRU_AYAK = KOPRU_AYAKLAR[0];
 const olukOrta8 = siraArka(UST) + OLUK / 2;
 const bas8: N2 = [kopruOrta - DENEME.kopruOluk, olukOrta8];
 const cukur8: N2 = [kopruOrta, (zTasIc + zTasDis) / 2];
-const c8 = { x0: 56.3, x1: 62.4, z0: -73.0, z1: -66.95 };
+const c8 = { x0: 54.9, x1: 62.4, z0: -73.0, z1: -66.2 };
 // Üst iki sıranın koltukları (şemada): koltuk dizisi ortadaki merdivenden başlar, B ucundaki merdivende biter.
 const koltuklar8 = [UST].flatMap((k) =>
   Array.from({ length: 34 }, (_, i) => koltukX(i))
@@ -607,18 +643,17 @@ const kopru: OrnekDelik = {
   olculer: [
     { a: [bas8[0], zArkaIc + OLUK], b: [kopruOrta, zArkaIc + OLUK], kaydir: 0.5, deger: DENEME.kopruOluk, kaynak: 'deneme' },
     { a: [KOPRU.x1, zArkaDis], b: [KOPRU.x1, zTasIc], kaydir: 0.45, deger: KOPRU_BOY, kaynak: 'model' },
-    { a: [KOPRU.x0, zTasDis], b: [KOPRU.x1, zTasDis], kaydir: -0.4, deger: DENEME.kopruEn, kaynak: 'deneme' },
+    { a: [KOPRU.x0, zTasDis], b: [KOPRU.x1, zTasDis], kaydir: -0.4, deger: KARAR.kopruEn, kaynak: 'kemal' },
     { a: [KOPRU.x1, zTasIc], b: [KOPRU.x1, zTasDis], kaydir: 0.45, deger: zTasIc - zTasDis, kaynak: 'model' },
-    { a: [bas8[0] - DENEME.baslangicPayi, zArkaIc], b: [bas8[0] - DENEME.baslangicPayi, zArkaIc + OLUK], kaydir: 0.25, deger: OLUK, kaynak: 'model' },
   ],
   etiketler: [
     { n: [kopruOrta - 0.25, zArkaIc + OLUK + 0.3], metin: 'maket.sema.sektirme', hiza: 'sag' },
     { n: [KOPRU.x0 - 0.15, -69.3], metin: 'maket.sema.kopru', hiza: 'sag' },
     { n: [KOPRU.x0 - 0.15, -69.65], metin: 'maket.sema.kopruInis', deger: KOPRU_INIS, metre: true, hiza: 'sag' },
     { n: [KOPRU.x0 - 0.15, -70.0], metin: 'maket.sema.kopruAcik', hiza: 'sag' },
-    { n: [57.6, -70.9], metin: 'maket.sema.koridorAsagida', hiza: 'orta' },
-    { n: [57.4, (zTasIc + zTasDis) / 2 + 0.07], metin: 'maket.sema.tasDuvar', hiza: 'orta' },
-    { n: [58.5, (zArkaIc + zArkaDis) / 2 + 0.07], metin: 'maket.sema.arkaDuvar', hiza: 'orta' },
+    { n: [57.0, -70.9], metin: 'maket.sema.koridorAsagida', hiza: 'orta' },
+    { n: [56.8, (zTasIc + zTasDis) / 2 + 0.07], metin: 'maket.sema.tasDuvar', hiza: 'orta' },
+    { n: [57.4, (zArkaIc + zArkaDis) / 2 + 0.07], metin: 'maket.sema.arkaDuvar', hiza: 'orta' },
     { n: [KOPRU.x0 - 0.15, (zTasIc + zTasDis) / 2 + 0.07], metin: 'maket.sema.sahanlik', hiza: 'sag' },
     { n: [(MODEL.bMerdivenX0 + MODEL.yanDuvarX0) / 2, -67.3], metin: 'maket.sema.merdivenKisa', hiza: 'orta' },
   ],
@@ -637,26 +672,18 @@ const zSek = zTasIc + TOP_YARICAP;
 const sek9: N2 = [bas9[0] + ((cukur9[0] - bas9[0]) * (bas9[1] - zSek)) / (bas9[1] - zSek + (cukur9[1] - zSek)), zSek];
 export const KORIDOR_EN = zArkaDis - zTasIc; // 3,1 m (model)
 const ay = DENEME.kopruAyak / 2;
-// Taş duvarın dibindeki taş sırası (duvardan dökülmüş, dibe dizilmiş taşlar; modelde ve künyede yok: DENEME,
-// Kemal onaylamadı). Taşlar düzensiz: üstlerine gelen top düzgün sekmez. Sırada tek boşluk var; top duvardan
-// yalnız oradan temiz seker. Taşların eni, derinliği ve boyu sabit bir diziden (rastgele değil).
-const tasBosluk: [number, number] = [sek9[0] - DENEME.tasSirasiBosluk / 2, sek9[0] + DENEME.tasSirasiBosluk / 2];
-export const TAS_SIRASI = ((): { x0: number; x1: number; derinlik: number; boy: number; ton: number }[] => {
-  const enler = [0.42, 0.34, 0.5, 0.38, 0.46, 0.36];
-  const derinlikler = [1, 0.8, 0.93, 0.73, 0.87, 0.97];
-  const boylar = [0.22, 0.16, 0.26, 0.18, 0.24, 0.2];
-  const liste: { x0: number; x1: number; derinlik: number; boy: number; ton: number }[] = [];
-  let x = bas9[0] - DENEME.baslangicPayi;
-  for (let i = 0; x < cepX1 - 0.05; i++) {
-    const x1 = Math.min(x + enler[i % 6], cepX1);
-    // Boşluğa giren taş konmaz.
-    if (x1 <= tasBosluk[0] || x >= tasBosluk[1]) liste.push({ x0: x, x1, derinlik: DENEME.tasSirasiDerinlik * derinlikler[i % 6], boy: boylar[i % 6], ton: i % 4 });
-    x = x1 + 0.03;
-  }
-  return liste;
+// Taş duvarın dibinde saha kenarı bankları (Kemal, 19 Kasım 2026: taş sırasının yerine). Sırtsız alüminyum oyuncu
+// bankı; ölçüleri DENEME. Top oturağın altından geçer; uçlardaki ayaklar (yerde bütün derinlik boyunca taban) engeldir:
+// ayağa gelen top duvara ulaşmaz. İki bankın arası açık (0,9 m, DENEME); önerilen sekme o aralıkta.
+export type Bank = { x0: number; x1: number; ayaklar: number[] };
+export const BANKLAR: Bank[] = ((): Bank[] => {
+  const ilkBit = sek9[0] - DENEME.bankAralik / 2;
+  const x0lar = [ilkBit - DENEME.bankBoy, ilkBit + DENEME.bankAralik, ilkBit + 2 * DENEME.bankAralik + DENEME.bankBoy];
+  const p = DENEME.bankAyakPayi + DENEME.bankAyakEn / 2;
+  return x0lar.map((x0) => ({ x0, x1: x0 + DENEME.bankBoy, ayaklar: [x0 + p, x0 + DENEME.bankBoy - p] }));
 })();
 const c9 = { x0: 57.6, x1: 65.4, z0: -72.6, z1: -66.0 };
-// Atış anı: ilk vuruş; nişan taş sırasındaki boşluğa, taş duvara.
+// Atış anı: ilk vuruş; nişan iki bankın arasındaki açık yere, taş duvara.
 const ara9: N2 = bas9;
 const yon9 = ((): N2 => {
   const dx = sek9[0] - ara9[0];
@@ -693,7 +720,8 @@ const koridor: OrnekDelik = {
     { tur: 'duvar', x0: MODEL.yanDuvarX0, x1: MODEL.yanDuvarX1, z0: zArkaIc, z1: c9.z1 },
     { tur: 'tas', x0: c9.x0, x1: c9.x1, z0: zTasDis, z1: zTasIc },
     ...KOPRU_AYAKLAR.map((a) => ({ tur: 'ayak' as const, x0: a[0] - ay, x1: a[0] + ay, z0: a[1] - ay, z1: a[1] + ay })),
-    ...TAS_SIRASI.map((t) => ({ tur: 'tas' as const, x0: t.x0, x1: t.x1, z0: zTasIc, z1: zTasIc + t.derinlik })),
+    ...BANKLAR.map((b) => ({ tur: 'bank' as const, x0: b.x0, x1: b.x1, z0: zTasIc, z1: zTasIc + DENEME.bankDerinlik })),
+    ...BANKLAR.flatMap((b) => b.ayaklar.map((x) => ({ tur: 'bankAyak' as const, x0: x - DENEME.bankAyakEn / 2, x1: x + DENEME.bankAyakEn / 2, z0: zTasIc, z1: zTasIc + DENEME.bankDerinlik }))),
   ],
   // Köprü üstte: şemada iki kenarı kesik çizgiyle (top altından geçer).
   acikKenarlar: [
@@ -706,18 +734,19 @@ const koridor: OrnekDelik = {
     { a: [bas9[0], zArkaDis], b: [KOPRU_AYAK[0], zArkaDis], kaydir: 0.75, deger: DENEME.koridorBaslangic, kaynak: 'deneme' },
     { a: [kose9[0], cepZ1], b: [cepX1, cepZ1], kaydir: 0.4, deger: DENEME.koridorCepBoy, kaynak: 'deneme' },
     { a: [cepX1, zArkaDis], b: [cepX1, cepZ1], kaydir: -0.4, deger: DENEME.koridorCepDerinlik, kaynak: 'deneme' },
+    { a: [BANKLAR[1].x0, zTasIc + DENEME.bankDerinlik], b: [BANKLAR[1].x1, zTasIc + DENEME.bankDerinlik], kaydir: 0.35, deger: DENEME.bankBoy, kaynak: 'deneme' },
   ],
   etiketler: [
     { n: [61.6, (zTasIc + zTasDis) / 2 + 0.07], metin: 'maket.sema.tasDuvar', hiza: 'orta' },
     { n: [58.3, (zArkaIc + zArkaDis) / 2 + 0.07], metin: 'maket.sema.arkaDuvar', hiza: 'orta' },
     { n: [KOPRU_AYAK[0] - 0.5, -69.5], metin: 'maket.sema.kopruAyagi', hiza: 'orta' },
-    { n: [sek9[0] - 0.25, zTasIc + 0.1], metin: 'maket.sema.tasBosluk', hiza: 'sol' },
-    { n: [62.6, zTasIc + 0.55], metin: 'maket.sema.tasSirasi', hiza: 'orta' },
+    { n: [sek9[0] - 0.25, zTasIc + 0.1], metin: 'maket.sema.bankArasi', hiza: 'sol' },
+    { n: [62.6, zTasIc + 1.0], metin: 'maket.sema.banklar', hiza: 'orta' },
     { n: [KOPRU.x1 + 0.13, -69.3], metin: 'maket.sema.kopruUstte', hiza: 'orta' },
     { n: [kose9[0] - 0.25, zArkaDis + 0.75], metin: 'maket.sema.tribunKosesi', hiza: 'sag' },
     { n: [63.5, -70.2], metin: 'maket.sema.toprak', hiza: 'orta' },
   ],
-  // Atış anı: ilk vuruş; nişan taş sırasındaki boşluktan taş duvara
+  // Atış anı: ilk vuruş; nişan iki bankın arasından taş duvara
   atis: { top: [ara9[0], 0, ara9[1]], yon: yon9, boy: 1.2 },
 };
 

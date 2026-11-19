@@ -15,7 +15,7 @@ import {
   KOPRU_BOY,
   KOPRU_INIS,
   KOPRU_AYAKLAR,
-  TAS_SIRASI,
+  BANKLAR,
   kopruY,
   BOS_KOLTUK,
   koltukX,
@@ -48,15 +48,17 @@ const eksiZ = {
 } satisfies { genel: Bakis; atis: Bakis };
 const BAKISLAR: Record<number, { genel: Bakis; atis: Bakis }> = {
   1: eksiX,
-  2: eksiZ,
+  // 2: üç sulama başlığı ekrana girsin diye kamera biraz daha ileriye bakar.
+  2: { genel: { ...eksiZ.genel, ileri: [0.15, 0, -1.5] }, atis: eksiZ.atis },
   4: eksiX,
   // 5: baraj 2,75 m ileride; ekrana girsin diye kamera biraz daha ileriye bakar.
   5: { genel: { ...eksiX.genel, ileri: [-1.75, 0, -0.1] }, atis: eksiX.atis },
   // 6: başlangıçta oyun yönü -z (tribüne doğru); korkuluk ve ilk basamak ekrana girsin diye ileriye bakar.
   // Atış anında oyun yönü +x (tribün boyunca).
+  // Atış anında top korkuluğun arkasındaki dar yanda; kamera sahadan bakar ki korkuluğun borusu topu örtmesin.
   6: {
-    genel: { ...eksiZ.genel, ileri: [0.1, 0, -1.8] },
-    atis: { uzak: [-12, 17, 4.45], ileri: [0.42, 0, -0.16], zoom: 340, golge: 3 },
+    genel: { ...eksiZ.genel, ileri: [0.1, 0, -1.75] },
+    atis: { uzak: [-1.5, 17, 13.3], ileri: [0.38, 0, 0.05], zoom: 340, golge: 3 },
   },
   // 8: başlangıçta oyun yönü +x (oluk boyunca); atış anında -z (köprü boyunca).
   8: {
@@ -299,32 +301,41 @@ function Huniler() {
   );
 }
 
-// Sulama başlıkları (2. delik). Kemal, 19 Kasım 2026: kalsın, gerçeğe yakın. Yerden çıkan (pop-up) başlık:
-// çimde yuvası, yerle bir gövde ağzı, ince yükselen boru ve üstünde kapak. Görünen çap 4,1 cm, çıkma boyu
-// 10,2 cm (ESYA; kaynak olculer.ts). Yuvanın ölçüsü DENEME.
+// Sulama başlıkları (2. delik). Kemal, 19 Kasım 2026: büyük, saha tipi, üç tane. Futbol sahası tipi yerden çıkan
+// (pop-up) rotor, gerçek ölçüsünde (Rain Bird 11000 serisi; ESYA, kaynak olculer.ts): yerle bir duran lastik kapaklı
+// gövde ağzı (dış çap 13,3 cm), ondan yükselen gövde (çap 6,9 cm; memenin ortasına kadar 9,1 cm) ve memeli başlık.
+// Çimdeki yuva ve memenin üstü DENEME. Renkler gerçek üründeki gibi koyu; yazı, logo yok.
 function SulamaBasliklari() {
   const r = ESYA.sulamaCap / 2;
-  const b = ESYA.sulamaBoy;
-  const kapak = 0.022;
+  const R = ESYA.sulamaGovdeCap / 2;
+  const boy = ESYA.sulamaBoy + DENEME.sulamaUstPay; // görünen boy: meme ortası + üstü
+  const kafa = 0.045; // memeli başlık (gövdenin üst kısmı), DENEME
   return (
     <group>
       {SULAMA.map((n, i) => (
         <group key={i} position={[n[0], MODEL.cimUstu, n[1]]}>
           <mesh position={[0, 0.003, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <circleGeometry args={[DENEME.sulamaYuva, 28]} />
+            <circleGeometry args={[DENEME.sulamaYuva, 32]} />
             <meshStandardMaterial color="#8E7F62" roughness={1} />
           </mesh>
-          <mesh position={[0, 0.006, 0]} castShadow>
-            <cylinderGeometry args={[r + 0.012, r + 0.012, 0.012, 24]} />
+          {/* Gövde ağzı ve lastik kapak: yerle bir */}
+          <mesh position={[0, 0.008, 0]} castShadow receiveShadow>
+            <cylinderGeometry args={[R, R, 0.016, 32]} />
+            <meshStandardMaterial color="#2F3A2C" roughness={0.95} />
+          </mesh>
+          {/* Yükselen gövde */}
+          <mesh position={[0, (boy - kafa) / 2 + 0.01, 0]} castShadow>
+            <cylinderGeometry args={[r * 0.94, r * 0.94, boy - kafa, 28]} />
+            <meshStandardMaterial color="#4A4D50" roughness={0.6} />
+          </mesh>
+          {/* Memeli başlık ve üstündeki lastik kapak */}
+          <mesh position={[0, boy - kafa / 2 + 0.01, 0]} castShadow>
+            <cylinderGeometry args={[r, r, kafa, 28]} />
             <meshStandardMaterial color="#2B2A28" roughness={0.7} />
           </mesh>
-          <mesh position={[0, (b - kapak) / 2, 0]} castShadow>
-            <cylinderGeometry args={[r * 0.72, r * 0.72, b - kapak, 20]} />
-            <meshStandardMaterial color="#8C9299" roughness={0.45} />
-          </mesh>
-          <mesh position={[0, b - kapak / 2, 0]} castShadow>
-            <cylinderGeometry args={[r, r, kapak, 24]} />
-            <meshStandardMaterial color="#2B2A28" roughness={0.7} />
+          <mesh position={[0, ESYA.sulamaBoy + 0.01, r - 0.004]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.009, 0.009, 0.01, 12]} />
+            <meshStandardMaterial color="#8C9299" roughness={0.5} />
           </mesh>
         </group>
       ))}
@@ -382,17 +393,45 @@ function BarajMankenleri() {
   );
 }
 
-// Taş duvarın dibindeki taş sırası (9. delik). Modelde ve künyede yok: DENEME, Kemal onaylamadı.
-// Renkler modeldeki duvar taşlarının renkleri.
-const TAS_TONLARI = ['#D6C7A8', '#C9B48F', '#BFA987', '#DDD0B4'];
-function TasSirasi() {
+// Saha kenarı bankları (9. delik; Kemal, 19 Kasım 2026: taş sırasının yerine). Sırtsız alüminyum oyuncu bankı:
+// oturak, uçlarda iki ayak (önde ve arkada dik direk, yerde bütün derinlik boyunca taban, oturağın altında kiriş).
+// Bütün ölçüler DENEME. Top oturağın altından geçer; ayağın tabanı topu durdurur.
+function SahaKenariBanklari() {
+  const z0 = MODEL.tasDuvarIcZ;
+  const d = DENEME.bankDerinlik;
+  const y = DENEME.bankYukseklik;
+  const k = DENEME.bankOturakKalinlik;
+  const a = DENEME.bankAyakEn;
+  const t = DENEME.bankTabanYukseklik;
+  const alu = '#C9CDD2';
+  const demir = '#7C8288';
   return (
     <group>
-      {TAS_SIRASI.map((t, i) => (
-        <mesh key={i} position={[(t.x0 + t.x1) / 2, t.boy / 2, MODEL.tasDuvarIcZ + t.derinlik / 2]} castShadow receiveShadow>
-          <boxGeometry args={[t.x1 - t.x0, t.boy, t.derinlik]} />
-          <meshStandardMaterial color={TAS_TONLARI[t.ton]} roughness={1} />
-        </mesh>
+      {BANKLAR.map((b, i) => (
+        <group key={i}>
+          <mesh position={[(b.x0 + b.x1) / 2, y - k / 2, z0 + d / 2]} castShadow receiveShadow>
+            <boxGeometry args={[b.x1 - b.x0, k, d]} />
+            <meshStandardMaterial color={alu} roughness={0.55} />
+          </mesh>
+          {b.ayaklar.map((x) => (
+            <group key={x}>
+              <mesh position={[x, t / 2, z0 + d / 2]} castShadow receiveShadow>
+                <boxGeometry args={[a, t, d]} />
+                <meshStandardMaterial color={demir} roughness={0.6} />
+              </mesh>
+              {[z0 + a / 2 + 0.01, z0 + d - a / 2 - 0.01].map((z) => (
+                <mesh key={z} position={[x, (y - k) / 2, z]} castShadow>
+                  <boxGeometry args={[a, y - k, a]} />
+                  <meshStandardMaterial color={demir} roughness={0.6} />
+                </mesh>
+              ))}
+              <mesh position={[x, y - k - 0.02, z0 + d / 2]}>
+                <boxGeometry args={[a, 0.04, d]} />
+                <meshStandardMaterial color={demir} roughness={0.6} />
+              </mesh>
+            </group>
+          ))}
+        </group>
       ))}
     </group>
   );
@@ -519,7 +558,7 @@ export function OrnekSahne({ no, atis = false, parmakBildir, delikBildir }: Sahn
       {delik.vurguKenar && <VurguKenar a={delik.vurguKenar[0]} b={delik.vurguKenar[1]} y={delik.bordurler[0].y} />}
       {KOLTUK_BOLGELERI[delik.no] && <TribunKoltuklari bolge={KOLTUK_BOLGELERI[delik.no]} bos={delik.no === 7 ? BOS_KOLTUK : undefined} />}
       {(delik.no === 8 || delik.no === 9) && <Kopru />}
-      {delik.no === 9 && <TasSirasi />}
+      {delik.no === 9 && <SahaKenariBanklari />}
       {delik.no === 14 && <DusOdasi />}
       {delik.birikinti && <Birikinti n={delik.birikinti.n} r={delik.birikinti.r} />}
       {delik.bordurler.map((b, i) => (

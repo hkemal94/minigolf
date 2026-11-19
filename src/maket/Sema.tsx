@@ -1,7 +1,7 @@
 import { m, seciliDil, type MetinAnahtari } from '../metinler';
 import { renk } from '../sahne/renkler';
 import { metre } from './metre';
-import { DENEME, GOLF, IFAB, MODEL, WMF } from './olculer';
+import { DENEME, GOLF, IFAB, KARAR, MODEL, WMF } from './olculer';
 import { ORNEK_DELIKLER, KALAN_DELIK_SAYISI, YAY_BOYU, OVAL_BOY, ornekDelik, DUS_BOY, DUS_EN, MERDIVEN_X1, KORIDOR_EN, type Kaynak, type N2, type OrnekDelik } from './ornekDelikler';
 
 // MAKET (öneri): yeni dille çizilen deliklerin üstten şeması, ölçü çizgileriyle. Veri 3B maketle aynı (ornekDelikler.ts).
@@ -17,6 +17,8 @@ const KUTU_RENGI: Partial<Record<OrnekDelik['kutular'][number]['tur'], string>> 
   tas: '#D6C7A8',
   merdivenTas: '#BFA987',
   ayak: '#B9B09D',
+  bank: '#D9DCE0', // saha kenarı bankının oturağı (alüminyum)
+  bankAyak: '#6E7379',
 };
 
 // Uzun eksen ekranda dikey, başlangıç altta: 'z' (x, z) -> (-x, -z); '-z' -> (x, z); 'x' -> (z, -x); '-x' -> (-z, x).
@@ -27,6 +29,7 @@ const KAYNAK_ADI: Record<Kaynak, MetinAnahtari> = {
   wmf: 'maket.kaynak.wmf',
   model: 'maket.kaynak.model',
   deneme: 'maket.deneme',
+  kemal: 'maket.kaynak.kemal',
 };
 
 // Önerilen yol (kesik kiremit) ve kestirme: bulmacayı anlatmak için; oynanışta çizilmez.
@@ -181,11 +184,11 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
     { no: 1, n: P(40.4, -37), boyut: [YAY_BOYU, WMF.betonEn], yazi: P(31, -39), hiza: 'start', sekil: sekil(1) },
     { no: 2, n: P(22.5, -55), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(22.5, -45), hiza: 'start', sekil: sekil(2) },
     { no: 3, n: P(-0.7, -32), boyut: [2.6, 13.4], yazi: P(-9, -32), hiza: 'start' },
-    { no: 4, n: P(0.4, -57.6), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(-9, -60), hiza: 'start', sekil: sekil(4) },
+    { no: 4, n: P(0.4, -57.6), boyut: [WMF.minyaturBoy, WMF.minyaturEn], yazi: P(-9, -60), hiza: 'start', sekil: sekil(4) },
     { no: 5, n: P(13.75, -29), boyut: [OVAL_BOY, 2 * DENEME.ovalYariEn], yazi: P(13.75, -17), hiza: 'start', sekil: sekil(5) },
     { no: 6, n: P(43, -62.5), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(38, -50), hiza: 'start', sekil: sekil(6) },
     { no: 7, n: P(48.7, -66), boyut: [6.25, 2.55], yazi: P(48.7, -54), hiza: 'start' },
-    { no: 8, n: P(60.5, -70), boyut: [MODEL.arkaDuvarIcZ - MODEL.tasDuvarDisZ, DENEME.kopruEn], yazi: P(60, -53), hiza: 'start', sekil: sekil(8) },
+    { no: 8, n: P(60.5, -70), boyut: [MODEL.arkaDuvarIcZ - MODEL.tasDuvarDisZ, KARAR.kopruEn], yazi: P(60, -53), hiza: 'start', sekil: sekil(8) },
     { no: 9, n: P(63.5, -69.5), boyut: [ornekDelik(9).dis![4][0] - ornekDelik(9).dis![0][0], KORIDOR_EN], yazi: P(71, -60), hiza: 'start', sekil: sekil(9) },
     { no: 14, n: P(dusX + DUS_BOY / 2, dusZ + DUS_EN / 2), boyut: [DUS_BOY, DUS_EN], yazi: P(dusX + DUS_BOY / 2, -3), hiza: 'end' },
   ];
@@ -243,7 +246,7 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
 
 const santim = (n: number) => (n * 100).toLocaleString(seciliDil(), { maximumFractionDigits: 2 });
 
-const KAYNAK_SATIRLARI: MetinAnahtari[] = ['maket.kaynak.ifabUzun', 'maket.kaynak.wmfUzun', 'maket.kaynak.modelUzun', 'maket.kaynak.denemeUzun'];
+const KAYNAK_SATIRLARI: MetinAnahtari[] = ['maket.kaynak.ifabUzun', 'maket.kaynak.wmfUzun', 'maket.kaynak.modelUzun', 'maket.kaynak.kemalUzun', 'maket.kaynak.denemeUzun'];
 
 export function Sema({ no }: { no: number }) {
   if (no === 0) {

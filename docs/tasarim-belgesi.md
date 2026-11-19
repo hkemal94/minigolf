@@ -36,6 +36,16 @@ modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik
 
 En yeni üstte.
 
+- **19 Kasım (Kemal, PR #6'nın soruları; kesin):**
+  1. **2. delik, taç:** uç duvarsız kalır, sınır taç çizgisinin kendisi (seçenek A; 7. bölüm).
+  2. **8. delik, köprü:** kenarsız ve korkuluksuz düz beton, **en 0,6 m**. En artık Kemal'in değeri, DENEME değil.
+  3. **2. delik, sulama başlığı:** daha büyük, futbol sahası tipi bir başlık; gerçek ölçüsünde ve **üç tane**. Seçilen
+     ürün Rain Bird 11000 serisi rotor (kaynak 4.8 tablosunda). Yerleri DENEME.
+  4. **Zorluk:** bazı delikler fazla kolay görünüyor; 1, 2, 4, 5, 6, 8, 9 gözden geçirilsin, kolay görünenler biraz
+     zorlaşsın (gerçekçi, yere uygun; hareketli engel yok). Nefes delikleri görece kolay kalabilir. Yeni değerler
+     DENEME (4.4, 4.8).
+  5. **9. delik:** duvar dibindeki taş sırası yerine **saha kenarı bankları** (gerçek stat bankı gibi; ölçüleri
+     DENEME). Köprünün iki ayağı kalır.
 - **19 Kasım (Kemal; kesin):**
   1. **Huni, sulama başlığı ve baraj mankeni kalsın, gerçeğe yakın modellensin** (1, 2 ve 5. delik). Biçim ve
      ölçü gerçek eşyadan; ölçüler kaynağıyla, kaynağı olmayan DENEME (4.8). Yerleri hâlâ DENEME.
@@ -291,6 +301,11 @@ Kullanılmayan parça: B ucundaki ceza sahası ve kale (yedek; Kemal isterse bir
   (koltukların arkası, iki basamak iniş; 4.8) · 8 zor (köşeden köprüye, kenarsız ve inişli köprü) · **9 kolay
   (nefes; geniş koridor, taş duvardan tek sekme)**. Tribüne çıkış orta ile başlar, iki zor delik art arda gelir,
   koridorda nefes alınır. Eski dalgada 7 "orta"ydı; 7 ve 8 art arda zor olduğu için 9'un nefes olması önem kazandı.
+- **Zorluk düzeltmesi (19 Kasım; Kemal "bazı delikler fazla kolay görünüyor" dedi; öneri):** 1 kolay (huni kapısı
+  eklendi; ilk delik olduğu için "kolay" kaldı) · **2 orta** (eskisi kolay; üç büyük başlık, tek yol) · 3 orta · **4 zor**
+  (eskisi orta; pist 0,90 m'ye daraldı) · **5 kolay (nefes; değişmedi)** · 6 orta (kol direğin üstüne iner, dar yanda
+  uzun yol; etiket aynı, iş zorlaştı) · 7 zor · 8 zor (oluktaki yol 4,5 m'ye uzadı) · **9 kolay (nefes; bankla
+  değişti, zorluk aynı)**. Bu turda nefes delikleri 5 ve 9 (4.4'teki dalga); ikisi de görece kolay kaldı.
 - Yeni engel türlerinin ilk geldiği delik: dar geçit (3), bant sektirme (4), yerin sabit eşyası arasından
   geçiş (6: korkuluk direkleri), basamak (7), köprü ve eğim (8: köprü duvara doğru iner), görünmeyen delik (9),
   kapalı bölüm (10), kum (11), tünel (12), dağınık engel (13), su (14), hareketli: kapı (15),
@@ -529,7 +544,9 @@ Hareketli engel yok (en sona).
 | Tribünün arka duvarı: kalınlık · yükseklik (üst sıradan 1,1 m yüksek) | 0,3 · 3,62 | 3B model |
 | Penaltı ve orta noktası çapı · köşe bayrağı direği (en · boy) | 0,22 · 0,04 · 1,5 | 3B model (19 Kasım sürümü) |
 | Antrenman hunisi: boy (en küçük yaygın boy, 12 inç) | 0,305 | İngilizce Vikipedi "Traffic cone" (ABD boyları), 19 Kasım'da okundu |
-| Yerden çıkan sulama başlığı: görünen çap · çıkma boyu | 0,041 · 0,102 | Rain Bird 5000 serisi rotor ürün sayfası ("Dimensions"), 19 Kasım'da okundu; tek ürün, örnek ölçü |
+| Yerden çıkan sulama başlığı (saha tipi büyük rotor): görünen gövde çapı · gövdenin dış çapı (yerle bir kapak) · çıkma boyu (memenin ortasına) · gövde boyu (yerin altında) | 0,069 · 0,133 · 0,091 · 0,32 | Rain Bird 11000 serisi rotor ürün sayfası (https://www.rainbird.com/products/11000-series, "Dimensions": exposed diameter 2.7", overall diameter 5.25", pop-up height to mid-nozzle 3.6", overall height 12.6"), 19 Kasım'da okundu. Üretici "spor sahaları ve büyük çim alanlar için" diyor; tek üreticinin tek ürünü, örnek ölçü. Eskisi (Rain Bird 5000 serisi, 0,041 · 0,102) kalktı |
+| Pist eni (4. delik; minyatür norm pist) | 0,90 | Almanca Vikipedi "Bahnengolf" (yukarıdaki minyatür pist satırı) |
+| Köprünün eni (8. delik) | 0,6 | **Karar: Kemal, 19 Kasım** |
 | Baraj (serbest vuruş) mankeni: boy | 1,8 | Precision Training "Senior Pro Club Mannequin" ürün sayfası, 19 Kasım'da okundu |
 
 Kaynak notları: IFAB sayfası (theifab.com, Kural 1) ve ÖBGV kural kitabı 2.3 (oebgv.at) 18 Kasım'da
@@ -547,7 +564,13 @@ aralığı (0,55) ve ayak tabanı (0,4). Penaltı noktasının çapı ve köşe 
 DENEME değerleri: 6. delikte pistin tribün boyunca yeri ve iki kolun bölüşümü (2,25 + 4); 8. delikte köprünün
 biçimi, eni (0,6), kalınlığı, duvarın üstündeki sahanlığın yüksekliği (2,40; iniş 0,12), ayağı (0,3) ve oluktaki
 yol (3); 9. delikte başlangıcın ayağa uzaklığı (1,5), cebin ölçüsü (2,2 × 1,4), köprünün ikinci ayağı ve duvar
-dibindeki taş sırası (derinlik 0,3, boşluk 0,9).
+dibindeki taş sırası (derinlik 0,3, boşluk 0,9). **19 Kasım düzeltmesi:** köprünün eni (0,6) Kemal'in kararı oldu;
+taş sırası kalktı. Zorluk için eklenen DENEME değerleri: 1. delikte huni kapısı (iç aralık 0,30; yolun %60'ında); 2.
+delikte üç başlığın yeri (ikisi ortada, başlangıçtan 2 ve 4 m; üçüncüsü pistin ortasından 0,52 m sağda, yolun
+yarısında), başlığın çimdeki yuvası (yarıçap 0,10) ve memenin üstü (0,02); 4. delikte eğik kenar (0,6); 6. delikte
+pistin yeri (kol x 42'de, direğin üstünde; kollar 3,25 + 3); 8. delikte oluktaki yol (4,5); 9. delikte saha kenarı
+bankları (boy 2,0, oturak derinliği 0,30, yüksekliği 0,45, kalınlığı 0,05; uçlardan 0,10 içeride iki ayak, ayak eni
+0,05, yerde taban 0,05 yüksek; banklar arası 0,9).
 
 **Ortak dil:**
 - Pistin eni ve boyu gerçek minigolf pistinden: boy 6–13,4 m; en 1,25 m (sahada; 5. delik oval, 2,5 m), tribünde
@@ -607,41 +630,50 @@ Kems'in ön elemesi (18 Kasım): 1, 2 ve 5 boş çimde düz kutu gibi duruyordu;
 **Karar (Kemal, 19 Kasım): bu üç eşya (antrenman hunisi, sulama başlığı, baraj mankeni) kalsın, gerçeğe
 yakın modellensin.** Künyede ve modelde yoklar; her sahada olan genel eşya. Yeniden çizildiler: huni kare tabanlı,
 kesik uçlu, ortası açık kuşaklı (boy 30,5 cm); sulama başlığı yerden çıkan tip, çimdeki yuvasıyla (görünen çap
-4,1 cm, çıkma boyu 10,2 cm); manken baş, omuz ve gövde silüetli düz kalıp, direk ve yuvarlak ayak tabanıyla
+4,1 cm, çıkma boyu 10,2 cm; **19 Kasım'da büyük saha tipiyle değişti**, 2. delikte); manken baş, omuz ve gövde silüetli düz kalıp, direk ve yuvarlak ayak tabanıyla
 (boy 1,80 m; insan yüzü yok). Boylar kaynaktan (tablo), öbür ölçüler ve eşyaların yerleri DENEME. Renkler marka
-paletinden (kiremit, krem, lacivert); yazı, logo yok. Sulama başlığı gerçek ölçüsünde topla aynı ende (4 cm):
-engel olarak eskisinden küçük, denemede bakılacak.
+paletinden (kiremit, krem, lacivert); yazı, logo yok. Sulama başlığı ilk hâlinde topla aynı endeydi (4 cm); 19 Kasım'da
+Kemal daha büyük, saha tipi bir başlık istedi (2. delik).
 
 **1 · Orta yuvarlak** · zemin: sahanın çimi · zorluk: kolay
 - Yer: orta yuvarlağın çizgisi (IFAB: yarıçap 9,15 m; modelde var). Tur burada başlar (Kemal, 16 Kasım).
   Başlangıç orta çizginin yuvarlağı açık tribün yanında kestiği yerde; pist çizginin üstünde A ucuna doğru kıvrılır.
 - Ölçü: çizgi boyunca 7,19 m (yuvarlağın 45°'lik yayı; açı ve boy DENEME).
-- Eşya: çizginin üstünde, yayın başında üç antrenman hunisi (DENEME; yayın 7°, 12° ve 17°'sinde).
+- Eşya: çizginin üstünde, yayın başında üç antrenman hunisi (DENEME; yayın 7°, 12° ve 17°'sinde). **19 Kasım
+  (zorluk):** deliğin önünde, sekmeden sonraki yolun üstünde iki hunilik bir kapı (antrenmanda kurulan huni kapısı;
+  iç aralık 0,30 m, yolun %60'ında; DENEME).
 - Bulmaca: pist yuvarlağın kavsi. Çizgiyi izleyen top hunilere çarpar; top hunilerin dışından dış kenara
-  gider, kenardan bir kez sekip çizgiye geri döner. Delik çizginin üstünde, yayın sonunda.
+  gider, kenardan bir kez sekip çizgiye geri döner. Dönüşte top huni kapısından geçmeli: sekme açısı tutmazsa
+  huniye çarpar. Delik çizginin üstünde, yayın sonunda.
 - Öğretir: çek-bırak ve nişan çizgisi.
 - Deneme notu: kavisli kenardan sekme tahmin edilir mi; huniler ilk delik için fazla mı (fazlaysa bir huni kalır).
 
-**2 · Kenar çizgisi** · zemin: sahanın çimi · zorluk: kolay
+**2 · Kenar çizgisi** · zemin: sahanın çimi · zorluk: orta (19 Kasım; eskisi kolay)
 - Yer: açık tribün yanındaki taç çizgisi, A yarısı (modelde var). Pist çizgiye dik: sahanın içinden taç çizgisine iner.
 - Ölçü: 6,25 m (minyatür norm pist boyu). Delik çizgiden 1 m içeride (DENEME). Pistin çizgi boyunca yeri DENEME
   (A yarısının ortası).
-- Eşya: pistin ortasında, yerden çıkmış iki sulama başlığı (DENEME; başlangıçtan 2 ve 4 m).
-- Bulmaca: düz giden top başlığa çarpar; top yan kenardan bir kez sekip iki başlığın yanından dolanır. Pistin
+- Eşya: yerden çıkmış **üç büyük sulama başlığı** (Kemal, 19 Kasım; futbol sahası tipi rotor, Rain Bird 11000 serisi,
+  gerçek ölçüsünde: görünen gövde 6,9 cm, yerle bir kapak 13,3 cm, çıkma boyu 9,1 cm). Üçgen dizilim (sulamada
+  başlıklar kaydırılarak dizilir): ikisi pistin ortasında, başlangıçtan 2 ve 4 m; üçüncüsü yolun yarısında, sağ
+  kenara yakın (pistin ortasından 0,52 m). Yerleri DENEME.
+- Bulmaca: düz giden top başlığa çarpar. Sağdaki başlıkla kenarın arası topun çapından dar: sağdan sektirme yolu
+  kapalı. Tek yol sol kenardan bir kez sekip başlıkların yanından dolanmak. **Karar (Kemal, 19 Kasım):** pistin
   ucu açık, sınır taç çizgisinin kendisi: çizgiyi geçen top taca çıkar (dışarı sayılır; kural 2. bölümde,
-  DENEME). Delik çizginin hemen önünde.
+  DENEME). Delik çizginin hemen önünde: güç ayarı.
 - Öğretir: güç ayarı.
 - Deneme notu: taca çıkmak ikinci delikte kızdırıyor mu (kızdırıyorsa delik çizgiden uzaklaşır ya da uca alçak kenar gelir).
 - Eski tarifte pist çizgiye paraleldi; açık uç için dik çevrildi.
 
-**4 · Köşe (A ucu)** · zemin: sahanın çimi · zorluk: orta
+**4 · Köşe (A ucu)** · zemin: sahanın çimi · zorluk: zor (19 Kasım; eskisi orta)
 - Yer: A ucunda, açık tribün yanındaki saha köşesi (modelde var); köşe bayrağı ve köşe yayı eklendi (IFAB: direk
   en az 1,5 m, yay 1 m).
 - Ölçü: L pist; bir kol taç çizgisinin, öbürü kale çizgisinin üstünde. Yolun toplamı 6,25 m (minyatür norm pist
-  boyu); kollar eşit, 3,13 m (bölüşüm DENEME). Dış köşede 45° eğik kenar (0,8 m, DENEME); görünsün diye öbür
-  kenarın iki katı yüksek ve üstü krem.
+  boyu); kollar eşit, 3,13 m (bölüşüm DENEME). **19 Kasım (zorluk):** pist bu delikte minyatür norm pistin eninde,
+  **0,90 m** (WMF; sahadaki öbür deliklerde 1,25). Dış köşede 45° eğik kenar, dar piste göre 0,6 m (DENEME; eskisi
+  0,8); görünsün diye öbür kenarın iki katı yüksek ve üstü krem.
 - Bulmaca: köşe bayrağının direği dönüşün tam ortasında durur; çizginin üstünden düz giden top direğe çarpar. Top
-  direğin dışından dolanmalı, eğik kenardan sekip kale çizgisi boyunca dönmeli. Delik kale çizgisinin üstünde.
+  direğin dışından dolanmalı, eğik kenardan sekip kale çizgisi boyunca dönmeli. Dar pistte direkle eğik kenarın arası
+  az (yaklaşık 0,15 m): açı tutmalı. Delik kale çizgisinin üstünde.
 - Öğretir: banttan sektirme.
 - Deneme notu: direğin çevresindeki aralık adil mi; nişan çizgisi sekmeyi göstersin mi (DENEME, karar Kemal'in).
 
@@ -654,28 +686,31 @@ engel olarak eskisinden küçük, denemede bakılacak.
 - Bulmaca: baraj düz vuruşu keser. Top barajın yanından geçer; oval kenara bir kez değen top penaltı noktasına
   döner (ovalin odak özelliği). Hangi yandan vurulursa vurulsun olur; tek vuruşla bitme sevinci.
 - Deneme notu: oval kenar topu gerçekten deliğe getiriyor mu (hız fazlaysa top delikten atlar mı); fazla mı kolay.
+- 19 Kasım (zorluk gözden geçirmesi): nefes deliği olduğu için değişmedi.
 
 **Model düzeltildi (19 Kasım, Kems Ajans; Kemal):** sahanın çimi çevre çimle aynı düzeyde (4 cm'lik basamak
 kalktı), orta yuvarlak sürekli çizgi, çizgi eni 0,12; köşe ve penaltı yayları, penaltı ve orta noktaları, köşe
 bayrakları modelde. Makette çevre çimi yükselten düzlem, orta yuvarlağın üstüne çizilen çizgi, kodla çizilen köşe
 bayrağı, köşe yayı ve penaltı noktası kaldırıldı; pistlerin ve deliklerin yüksekliği yeni düzeye göre.
 
-**Adım 2 (19 Kasım; öneri, Kemal görmedi): 6, 8, 9.** Yer açık tribünün önü, arkası ve üstü. Korkuluk,
+**Adım 2 (19 Kasım; öneri; Kemal baktı, aynı gün cevapları işlendi): 6, 8, 9.** Yer açık tribünün önü, arkası ve üstü. Korkuluk,
 basamaklar, merdivenler, tribünün duvarları ve taş duvar modelde var; ölçüleri modelden. Hareketli engel yok.
 **Köprü modelde yok:** yeri karar (Kemal: açık tribünün kulüp binası ucunda, tribünün arkasından taş duvara);
-**biçimi, ölçüsü ve ayakları DENEME, Kemal onaylamadı.** Makette kodla çizildi; tribünün arka duvarında köprünün
+**biçimi karar (Kemal, 19 Kasım): kenarsız ve korkuluksuz düz beton, en 0,6 m.** Kalınlığı ve ayakları DENEME. Makette kodla çizildi; tribünün arka duvarında köprünün
 eninde bir geçit açıldı (model dosyası değişmedi). Tribünde 7. deliktekiyle aynı koltuklar.
 
 **6 · Açık tribünün önü** · zemin: çim ve toprak · zorluk: orta
 - Yer: açık tribünün önü, ortadaki merdivenin A ucu yanı (modelde var). Sahayı saran çim tribünden 1 m önce
   biter; arada toprak şerit var. Şeridin içinde tribün boyunca demir korkuluk durur: 2 m'de bir direk, üstte tek
   boru; direklerin arası boş (model).
-- Ölçü: L pist, yol 6,25 m (minyatür norm pist boyu): çimden tribüne inen kol 2,25 m (en 1,25), ilk basamağın
-  dibinde merdivene giden kol 4 m (en 1 m: şeridin kendisi). Bölüşüm ve pistin tribün boyunca yeri DENEME.
-- Bulmaca: top çimden başlar, korkuluğun borusunun altından geçip toprağa girer. Tribün yanında kenar yok: sınır
-  ilk basamağın alnı (0,42 m), top ondan seker. İkinci kolda korkuluğun iki direği şeridin içinde kalır ve şeridi
-  ikiye böler: saha yanı geniş (0,56 m), basamak yanı dar (0,36 m). Delik dar yanda, merdivenin ayağında: top iki
-  direğin arasından dar yana süzülmeli; direğe çarpan top geri gelir. İki zemin: çim ve toprak (hız farkı denemede).
+- Ölçü: L pist, yol 6,25 m (minyatür norm pist boyu): çimden tribüne inen kol 3,25 m (en 1,25), ilk basamağın
+  dibinde merdivene giden kol 3 m (en 1 m: şeridin kendisi). Bölüşüm ve pistin tribün boyunca yeri DENEME.
+  **19 Kasım (zorluk):** kol x 41'den 42'ye kaydı; korkuluğun 42'deki direği kolun ağzında, tam ortada durur.
+- Bulmaca: top çimden başlar, korkuluğun borusunun altından geçip toprağa girer. Düz giden top ağızdaki direğe
+  çarpar. Tribün yanında kenar yok: sınır ilk basamağın alnı (0,42 m), top ondan seker. Korkuluğun direkleri şeridi
+  ikiye böler: saha yanı geniş (0,56 m), basamak yanı dar (0,36 m). Önerilen yol: top direğin yanından geçip dar yana
+  iner; ikinci vuruşta dar yan boyunca, iki direğin yanından merdivenin ayağındaki deliğe gider (3 m boyunca 0,36 m'lik
+  yol). Direğe çarpan top geri gelir. İki zemin: çim ve toprak (hız farkı denemede).
 - Öğretir: yerin sabit eşyasının (direk) arasından açıyla geçmek.
 - Deneme notu: direkle basamak arasındaki 0,36 m adil mi; üstteki boru topu görmeyi zorlaştırıyor mu; çimden
   toprağa geçiş hissediliyor mu.
@@ -683,34 +718,37 @@ eninde bir geçit açıldı (model dosyası değişmedi). Tribünde 7. delikteki
 
 **8 · Koridor köprüsü** · zemin: beton basamak ve köprü · zorluk: zor
 - Yer: açık tribünün en üst (6.) sırası, B ucundaki merdivenin yanı; köprü oradan arkadaki toprak koridorun
-  üstünden taş duvara uzanır. Köprünün yeri karar (Kemal); biçimi DENEME: düz beton döşeme, kenarsız, korkuluksuz.
-- Ölçü: üst sıranın oluğunda 3 m (oluk 0,35 m, model; boy DENEME), köprü 3,1 m (koridorun eni, model), en 0,6 m
-  (DENEME). Üst sıra 2,52 m, taş duvarın taşları 2,2–2,5 m (model): köprü duvara doğru 0,12 m iner (sahanlık
+  üstünden taş duvara uzanır. Köprünün yeri karar (Kemal); **biçimi karar (Kemal, 19 Kasım): düz beton döşeme,
+  kenarsız, korkuluksuz.**
+- Ölçü: üst sıranın oluğunda 4,5 m (oluk 0,35 m, model; boy DENEME; **19 Kasım'da zorluk için 3 m'den uzadı**),
+  köprü 3,1 m (koridorun eni, model), **en 0,6 m (karar: Kemal, 19 Kasım)**. Üst sıra 2,52 m, taş duvarın taşları 2,2–2,5 m (model): köprü duvara doğru 0,12 m iner (sahanlık
   2,40 m, DENEME). Duvarın üstündeki sahanlık 0,5 m (duvarın kalınlığı, model).
-- Bulmaca: top koltukların arkasındaki olukta gider. Oluğun ucundaki 45° köşe topu arka duvardaki geçitten
+- Bulmaca: top koltukların arkasındaki dar olukta uzun bir yol gider (koltuğa sürten top yavaşlar). Oluğun ucundaki 45° köşe topu arka duvardaki geçitten
   köprüye çevirir. Köprünün yanları açık: yandan düşen top koridora iner, dışarı sayılır (DENEME). Köprü iner,
   top hızlanır; delik duvarın üstündeki dar sahanlıkta. Sahanlığın üç yanı kenarlı (arkası zeytinlik): fazla
   hızlı top arka kenardan sekip köprüye geri döner.
 - Öğretir: düz ve kararlı vuruş; inişte güç.
-- Deneme notu: 0,6 m tek elle vurulabilir mi; düşmek kızdırıyor mu; köşeden tek vuruşla geçmek mümkün mü
+- Deneme notu: 0,6 m tek elle vurulabilir mi (en karar; zorluk denemede bakılır); düşmek kızdırıyor mu; köşeden tek vuruşla geçmek mümkün mü
   (değilse iki vuruşluk delik: önce köprünün ağzına, sonra karşıya).
 
 **9 · Duvar içi koridor (nefes)** · zemin: toprak yol · zorluk: kolay
 - Yer: açık tribünün arkasındaki toprak koridor, B ucuna doğru; köprünün altı ve tribünün B ucundaki köşesi (modelde var).
 - Ölçü: pist koridorun kendisi, en 3,1 m (model); boy 5,95 m (DENEME). İki yanında kenar yok: bir yan tribünün
   arka duvarı, öbür yan taş duvar. Kiremit kenar yalnız iki uçta ve köşenin arkasındaki cepte (2,2 × 1,4 m, DENEME).
-- Eşya: köprünün koridordaki iki ayağı (0,3 m; açıklığın üçte birlerinde; DENEME); taş duvarın dibinde düzensiz
-  bir taş sırası (duvardan en çok 0,3 m çıkar; **modelde ve künyede yok: DENEME, Kemal onaylamadı**). Sırada
-  0,9 m'lik tek boşluk var.
+- Eşya: köprünün koridordaki iki ayağı (0,3 m; açıklığın üçte birlerinde; DENEME); **taş duvarın dibinde saha kenarı
+  bankları** (Kemal, 19 Kasım; taş sırasının yerine). Statlarda saha kenarında duran sırtsız alüminyum oyuncu bankı:
+  oturak, uçlarda iki ayak (önde ve arkada dik direk, yerde bütün derinlik boyunca taban). Üç bank yan yana, aralarında
+  0,9 m açıklık. Ölçüler gerçeğe yakın ama kaynaksız: **DENEME** (boy 2,0 m, oturak derinliği 0,30, yüksekliği 0,45 m).
+  Modelde ve künyede yok.
 - Bulmaca: başlangıç taş duvara yakın; duvar yanındaki ayak 1,5 m ileride düz yolu keser. Delik tribünün
-  köşesinin arkasındaki cepte, başlangıçtan görünmez (ok ve küçük plan gösterir). Taş sırasına gelen top düzgün
-  sekmez; top duvardan yalnız sıradaki boşluktan temiz seker. Oradan sekip ayakla duvarın arasından geçer ve
-  köşeyi döner. Koridor geniş: tutmazsa iki ayağın arasından iki rahat vuruşla da biter.
+  köşesinin arkasındaki cepte, başlangıçtan görünmez (ok ve küçük plan gösterir). Top bankın oturağının altından
+  geçer, ama uçlardaki ayaklara gelen top duvara ulaşmaz. İki bankın arasından duvara vurulan top temiz seker,
+  ayakla duvarın arasından geçer ve köşeyi döner. Koridor geniş: tutmazsa iki ayağın arasından iki rahat vuruşla da biter.
 - Öğretir: yeni şey yok; sektirmenin rahat tekrarı, görünmeyen deliğe ok ve planla oynamak.
-- Deneme notu: taş duvar (taşlar tek tek) düzgün sektiriyor mu; taş sırası nefes deliği için fazla mı (fazlaysa
-  boşluk genişler); delik görünmeyince ok ve plan yetiyor mu; yüksek duvarlar topu kapatıyor mu (kamera çevrilebilir).
+- Deneme notu: taş duvar (taşlar tek tek) düzgün sektiriyor mu; banklar nefes deliği için fazla mı (fazlaysa
+  aralık genişler); bankın altındaki top görünüyor mu; delik görünmeyince ok ve plan yetiyor mu; yüksek duvarlar topu kapatıyor mu (kamera çevrilebilir).
 - Kems'in ön elemesi (19 Kasım): ilk hâlinde delik ekranı düz toprak gibiydi; başlangıç duvara ve ayağa
-  yaklaştırıldı, taş sırası ve ikinci ayak eklendi.
+  yaklaştırıldı, taş sırası ve ikinci ayak eklendi. 19 Kasım (Kemal): taş sırası yerine saha kenarı bankları.
 
 Üstten şemalar (ölçü çizgili) ve on deliğin stattaki yeri (ölçekli):
 
@@ -741,7 +779,7 @@ Delikler yere göre toplandı; turun sırası (1–18) değişmez.
 | Adım | Delikler | Yer | Zemin | Not |
 |---|---|---|---|---|
 | 1 | 1, 2, 4, 5 | Saha: orta yuvarlak, kenar çizgisi, köşe, penaltı noktası | çim | **Çizildi (18 Kasım; birleşti, PR #4).** Tarifleri 4.8'de. Eşyalar 19 Kasım'da gerçeğe yakın çizildi |
-| 2 | 6, 8, 9 | Açık tribünün önü, koridor köprüsü, duvar içi koridor | çim ve toprak, beton basamak ve köprü, toprak yol | **Çizildi (19 Kasım, öneri; Kemal görmedi).** Tarifleri 4.8'de |
+| 2 | 6, 8, 9 | Açık tribünün önü, koridor köprüsü, duvar içi koridor | çim ve toprak, beton basamak ve köprü, toprak yol | **Çizildi (19 Kasım, öneri).** Kemal'in aynı gün cevapları işlendi (taç, köprü, sulama, zorluk, banklar). Tarifleri 4.8'de |
 | 3 | 10, 11 | Kulüp binası, ışık direği | binanın önü (zemini modelden bakılacak), toprak yol | B ucu |
 | 4 | 12, 13, 15 | Oyuncu tüneli, soyunma odası, soyunma odası kapısı | beton ya da zift, karo | Bu yerler modelde yok; 14 gibi kodla çizilir. 15'in hareketli kapısı en sona kalır, önce durağan hâli |
 | 5 | 16, 17, 18 | Kapalı tribün, bayrak direği, final (orta yuvarlak) | beton basamak ve koltuklar, toprak, çim | Hareketli engeller burada; en son |
@@ -808,15 +846,16 @@ denemesinde reklam ve satın alma yok.
 
 Kemal'in kararını bekleyenler.
 
-- **2. delik: taç çizgisi duvarsız sınır mı olacak?** (Kemal sordu, 19 Kasım.) Bugünkü makette evet, yalnız bu
-  delikte: pistin ucunda kenar yok, sınır taç çizgisinin kendisi. Üç seçenek, çizimi `plan/delik-2-tac-secenekleri.png`:
-  - (a) Uç duvarsız, taç çizgisi sınır: çizgiyi geçen top dışarı sayılır, önceki yere döner, vuruş sayılır (bugünkü maket).
-  - (b) Uca alçak kenar (bordür) gelir: top çıkmaz, geri seker.
-  - (c) Delik çizgiden uzaklaşır (1,5–2 m): uç yine duvarsız, ama hata payı büyür.
+- ~~2. delik: taç çizgisi duvarsız sınır mı olacak?~~ Cevaplandı (Kemal, 19 Kasım): **(a)**, uç duvarsız, sınır taç
+  çizgisinin kendisi. Çizgiyi geçen top dışarı sayılır (kuralın ayrıntısı 2. bölümde, DENEME). Seçilmeyenler: (b) uca
+  alçak kenar, (c) delik çizgiden 1,5–2 m uzak. Çizim: `plan/delik-2-tac-secenekleri.png` (karar hâli).
 
-  ![2. delik taç seçenekleri](plan/delik-2-tac-secenekleri.png)
-- **8. delik: köprünün biçimi** (DENEME): kenarsız ve korkuluksuz düz döşeme, en 0,6 m, koridorda iki ayak. Yeri karar; biçim Kemal'in.
-- **9. delik: duvar dibindeki taş sırası** (DENEME): modelde ve künyede yok; kalsın mı, Kemal'in kararı.
+  ![2. delik taç kararı](plan/delik-2-tac-secenekleri.png)
+- ~~8. delik: köprünün biçimi~~ Cevaplandı (Kemal, 19 Kasım): kenarsız ve korkuluksuz düz beton, en 0,6 m. Kalınlığı
+  ve koridordaki iki ayağı DENEME.
+- ~~9. delik: duvar dibindeki taş sırası~~ Cevaplandı (Kemal, 19 Kasım): taş sırası yerine saha kenarı bankları.
+- **Zorluk düzeltmesindeki yeni yerleşimler** (19 Kasım; 4.4, 4.8): huni kapısı (1), üç başlığın yeri (2), dar pist (4),
+  direğin üstüne inen kol (6), uzun oluk (8), bankların ölçüsü ve yeri (9). Hepsi DENEME; uygun mu, Kemal'in kararı.
 - ~~Huni, sulama başlığı, baraj mankeni kalsın mı?~~ Cevaplandı (Kemal, 19 Kasım): kalsın, gerçeğe yakın (4.8).
 - ~~3B model eksikleri (çim basamağı, orta yuvarlak, yaylar, noktalar, köşe bayrakları)~~ Düzeltildi (19 Kasım; model).
 - **Kalan 8 deliğin adım sırası** (4.9): öneri; Kemal değiştirebilir.
@@ -901,7 +940,7 @@ ekranına karışmaz. Görüntüler iPhone 13 boyutunda çekildi.
 4. **Atış ve nişan** (`?maket=atis&no=…`, aynı numaralar): kamera topa daha da yaklaşır; parmakla geri çekme
    göstergesi, kiremit kesik nişan çizgisi, topun çevresinde güç halkası. 2 ve 4'te atış ekranı ikinci
    vuruşun anıdır (top deliğin ya da dönüşün yakınında), yerin eşyası görünsün diye.
-   6 ve 8'de de atış ekranı ikinci vuruşun anıdır (6: direklerin önü; 8: köprünün üstü); 9'da ilk vuruş (nişan taş sırasındaki boşluğa).
+   6 ve 8'de de atış ekranı ikinci vuruşun anıdır (6: dar yanda, nişan dar yan boyunca; 6'da kamera sahadan bakar ki korkuluğun borusu topu örtmesin; 8: köprünün üstü); 9'da ilk vuruş (nişan iki bankın arasına).
    Ayrıca **üstten şema** (`?maket=sema&no=…`; `no=0` on deliğin stattaki yeri): ölçü çizgili.
 5. **Skor kartı** (`?maket=skor-karti`): 18 deliğin listesi (plandaki yerleriyle), vuruşlar "–", DENEME.
 6. **Tur sonu** (`?maket=tur-sonu`): toplam vuruş "–", ayın turu ilerlemesi (18 parça, boş), ayın pulu yer
