@@ -163,3 +163,68 @@ export const GORUNUS = {
   bayrakHiz: 3.2,
   bayrakDalga: 1.3,
 } as const;
+
+// --- Par, yıldız, rozet (Karar: Kemal, 19 Kasım 2026: her deliğin hedef vuruş sayısı ve yıldızı olur; delik
+// listesinde küçük rozetler. Değerlerin HEPSİ DENEME: Kemal oynadıktan sonra onaylar; tasarım belgesi 3.3 ve 8).
+export const PUAN = {
+  // DENEME · Par (hedef vuruş sayısı). Kaynağı belgedeki zorluk kelimesi (4.8): kolay 2, orta 3, zor 4.
+  // Delik 1 "kolay", delik 3 "orta", delik 7 "zor". Kelimeden sayıya geçiş Kemal'in onayını bekler.
+  par: { 1: 2, 3: 3, 7: 4 } as Record<number, number>,
+  // DENEME · Yıldız: en çok 3. Par ya da altı 3 yıldız; par + 1 vuruş 2 yıldız; daha fazlası 1 yıldız.
+  // Liste: [3 yıldız için par'dan en çok kaç fazla, 2 yıldız için en çok kaç fazla].
+  yildizSayisi: 3,
+  yildizEsik: [0, 1],
+  // DENEME · Rozetler (yalnız delik listesinde küçük simge; pulun yerine geçmez). Hangi rozetlerin olacağı,
+  // simgeleri ve adları Kemal'in; buradaki üçü aday. Ad konmadı: ekranda yalnız ne olduğu yazar.
+  rozetler: ['tekVurus', 'parAlti', 'cezasiz'],
+} as const;
+
+// --- Kutlama: top deliğe düşünce kısa, sakin bir an (Karar: Kemal, 19 Kasım 2026). Bayrak delikten kalkar ve
+// dalgalanır, deliğin çevresinde ince bir halka açılır. Ses ve titreşim yok (sonra). Hepsi DENEME.
+export const KUTLAMA = {
+  sure: 1.7, // delik sonu kartı bu kadar sonra açılır (sn)
+  kalkis: 0.28, // bayrağın yükseldiği boy (m)
+  kalkisSuresi: 0.55, // yükselmenin süresi (sn)
+  dalga: 3.2, // dalga genliği olağanın kaç katına çıkar
+  dalgaSonme: 1.1, // genliğin olağana dönme süresi (sn; üstel)
+  halkaCap: 0.55, // halkanın açıldığı çap (m)
+  halkaSuresi: 1.1, // halkanın açılıp kaybolma süresi (sn)
+  halkaGecikme: 0.28, // ikinci halkanın gecikmesi (sn)
+} as const;
+
+// --- Ortam: maç olmayan, sakin bir gün (Karar: Kemal, 19 Kasım 2026: rüzgâr, kuşlar, uzakta birkaç kişi; ad ve
+// hikâye yok). Hepsi kodla çizilir (dış model yok), fizikle ilgisi yok. Sayılar ve yerler DENEME.
+export const ORTAM = {
+  // Rüzgâr: esinti yavaş yavaş artıp azalır (0…1). Bayrağın dalgası esintiyle büyür.
+  esintiHizi: 0.35,
+  bayrakEsinti: 0.5, // esintinin bayrak genliğine katkısı (oran)
+  // Ağaçlar (modeldeki zeytinler): tepesi en çok bu kadar salınır (m).
+  agacSalinim: 0.06,
+  agacAltY: 2.3, // modelde yaprakların başladığı yükseklik (dirlik-stadi.glb'den ölçüldü)
+  agacBoy: 2.6, // yaprakların boyu (modelden)
+  // Çim: üstünden geçen esinti, hafif açılıp koyulan bantlar (parlaklık oranı; dalga boyu m; hız m/sn).
+  cimEsinti: 0.07,
+  cimDalgaBoyu: 9,
+  cimHiz: 2.2,
+  // Kuşlar: sayı, kanat açıklığı (m), uçuş yüksekliği (m), hız (m/sn), dönüş yarıçapı (m). Tür adı yok.
+  kusSayisi: 5,
+  kusKanat: 0.32,
+  kusYukseklik: [5, 8],
+  kusHiz: 5,
+  kusYaricap: [12, 17],
+  // Uzaktaki insanlar: yer (x, z), baktığı ya da yürüdüğü yön; yürüyenlerde gidip geldiği öbür uç.
+  // Yerler pistlerin dışında, toptan uzakta (top onlara ulaşamaz; fizikte yoklar). Boy 1,7 m (kaynağı yok).
+  insanBoy: 1.7,
+  yurumeHizi: 0.9, // m/sn
+  insanlar: [
+    { x: -2.6, z: -20.6, yon: -0.4 }, // A ucunda, kale çizgisinin gerisinde, kalenin yanında duran
+    { x: 51.2, z: -31, yon: 0.5 }, // sahada, orta yuvarlağın içinde duran iki kişi
+    { x: 38.5, z: -61.1, yon: Math.PI / 2 }, // açık tribünün önünde, korkuluğun yanında duran
+    { x: 51.9, z: -30.5, yon: 0.5 + Math.PI },
+    { x: -8.5, z: -44, x2: -8.5, z2: -20 }, // A ucunda, duvar içindeki toprak yolda yürüyen
+  ] as { x: number; z: number; yon?: number; x2?: number; z2?: number }[],
+  // Düşük kalitede (kare hızı düşünce; gölgelerle birlikte): kuş ve insan azalır (listenin başındakiler kalır;
+  // yürüyen sonda), ağaç ve çim durur.
+  dusukKus: 2,
+  dusukInsan: 3,
+} as const;

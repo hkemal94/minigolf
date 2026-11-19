@@ -70,3 +70,28 @@
 .oy-ayar-satir input:checked + .oy-anahtar { background: var(--lacivert); }
 .oy-ayar-satir input:checked + .oy-anahtar::after { left: 21px; }
 .oy-ayar .oy-dugme-ince { align-self: flex-end; }
+
+/* Par ve yıldız (değerler deneme): delik sonu kartında büyük, listede küçük. Dolu yıldız lacivert. */
+.oy-yildizlar { display: flex; justify-content: center; gap: 4px; margin: 0 0 6px; }
+.oy-yildizlar-kucuk { display: inline-flex; gap: 1px; margin: 0; vertical-align: middle; }
+.oy-yildiz-dolu path { fill: var(--lacivert); stroke: var(--lacivert); }
+.oy-yildiz-bos path { fill: none; stroke: var(--lacivert); opacity: 0.3; }
+
+/* Tur sonu listesi: delik (rozetleriyle), par, vuruş, yıldız */
+.oy-tablo th { padding: 0 4px 4px; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.55; text-align: left; }
+.oy-tablo .oy-tablo-orta { text-align: center; }
+.oy-tablo .oy-tablo-sag { text-align: right; white-space: nowrap; }
+.oy-tablo-delik { display: flex; align-items: center; gap: 6px; }
+.oy-tablo-delik b { font-weight: 600; }
+.oy-tablo-toplam .oy-tablo-sag { font-size: 12px; }
+
+/* Rozetler: küçük simge, yalnız listede. Tek vuruş kiremit (az), öbürleri lacivert çizgi. */
+.oy-rozetler { display: inline-flex; gap: 3px; }
+.oy-rozet-simge { flex: none; }
+.oy-rozet-simge circle { fill: none; stroke: var(--lacivert); stroke-width: 1.6; }
+.oy-rozet-simge path { fill: none; stroke: var(--lacivert); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.oy-rozet-tekVurus circle { fill: var(--kiremit); stroke: var(--kiremit); }
+.oy-rozet-aciklama { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 3px 9px; margin: -2px 0 4px; font-size: 9.5px; opacity: 0.75; }
+.oy-rozet-aciklama span { display: inline-flex; align-items: center; gap: 3px; }
+.oy-rozet-aciklama .oy-rozet-simge { width: 12px; height: 12px; }
+.oy-yildiz-toplam { vertical-align: -1px; margin-right: 3px; }

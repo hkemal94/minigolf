@@ -27,6 +27,11 @@ On dosya, toplam 0,77 MB. Dokunun rengi modelin kendi rengine göre ayarlanır (
 gibi kalır). Golf topunun gamzeleri, kale filesinin ağı ve toptaki gök yansıması indirilmiş dosya değil; kodla
 hesaplanır (`src/oyun/dokular.ts`).
 
+Ortam (maçsız gün; PR #12, 19 Kasım 2026): kuşlar ve uzaktaki insanlar hazır model değil, kodla çizilen düşük çokgenli
+biçimler (`src/oyun/Ortam.tsx`); insanların yüzü, üstlerinde yazı ya da logo yok. Rüzgâr (ağaç, çim, bayrak) modelin kendi
+malzemesinde hesaplanır. Yıldız ve rozet simgeleri kodla çizilen basit çizgiler (`src/oyun/Oyun.tsx`). Bu adımda yeni dış
+model, doku, simge, ses ya da yazı tipi eklenmedi.
+
 Saha, bordür, top, tribün koltukları, duş odası (karosu dahil), köprü, antrenman hunisi, sulama başlığı, baraj
 mankeni ve maketlerdeki simgeler kodla çiziliyor (eşyaların üstünde yazı, logo yok; ölçü kaynakları tasarım belgesi 4.8'de);
 yeni dış model eklenmedi. Ses yok; hazır görsel yalnız yukarıdaki dokular. 3B stat modeli

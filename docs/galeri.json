@@ -89,14 +89,6 @@
     },
     {
       "bolum": "oyun",
-      "baslik": "Oynanabilir prototip · delik sonu kartı",
-      "tarih": "2026-11-19",
-      "durum": "taslak",
-      "pr": 7,
-      "yol": "docs/ekranlar/oyna-3-delik-sonu.png"
-    },
-    {
-      "bolum": "oyun",
       "baslik": "Oynanabilir prototip · delik 1 · nişan",
       "tarih": "2026-11-19",
       "durum": "taslak",
@@ -118,14 +110,6 @@
       "durum": "taslak",
       "pr": 7,
       "yol": "docs/ekranlar/oyna-6-delik-7-disari.png"
-    },
-    {
-      "bolum": "oyun",
-      "baslik": "Oynanabilir prototip · tur sonu kartı",
-      "tarih": "2026-11-19",
-      "durum": "taslak",
-      "pr": 7,
-      "yol": "docs/ekranlar/oyna-7-tur-sonu.png"
     },
     {
       "bolum": "oyun",
@@ -254,6 +238,46 @@
       "durum": "taslak",
       "pr": 11,
       "yol": "docs/ekranlar/oyna-doku-7-oncesi-sonrasi.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · maçsız gün ortamı · delik 3 (kuşlar, uzakta bir kişi; biraz uzaklaştırılmış ve eğilmiş bakış)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 12,
+      "yol": "docs/ekranlar/oyna-par-1-ortam.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · kutlama · top deliğe düşünce bayrak kalkar, halkalar açılır",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 12,
+      "yol": "docs/ekranlar/oyna-par-2-kutlama.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · delik sonu kartı · par ve yıldız",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 12,
+      "yol": "docs/ekranlar/oyna-par-3-delik-sonu.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · tur sonu · par, yıldız ve rozetli delik listesi",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 12,
+      "yol": "docs/ekranlar/oyna-par-4-tur-sonu.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · par, yıldız, kutlama, ortam, rozetler (dört görüntü yan yana)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 12,
+      "yol": "docs/ekranlar/oyna-par-5-kolaj.jpg"
     },
     {
       "bolum": "maket",
@@ -1507,6 +1531,26 @@
       "yol": "docs/galeri/eski/kadraj-oncesi/maket-6-tur-sonu.png",
       "grup": "Kadraj kaydırılmadan önce · kulüp binası kenarda",
       "not": "Kulüp binası kadrajın sağ kenarında kalıyor, tamamı görünmüyordu."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · delik sonu kartı · par ve yıldızdan önce",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 7,
+      "yol": "docs/galeri/eski/par-oncesi/oyna-3-delik-sonu.png",
+      "grup": "Par ve yıldızdan önce · yalnız vuruş sayısı",
+      "not": "Kartta yalnız vuruş sayısı vardı; par, yıldız ve rozet yoktu (PR #7'deki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · tur sonu kartı · par ve yıldızdan önce",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 7,
+      "yol": "docs/galeri/eski/par-oncesi/oyna-7-tur-sonu.png",
+      "grup": "Par ve yıldızdan önce · yalnız vuruş sayısı",
+      "not": "Kartta yalnız vuruş sayısı vardı; par, yıldız ve rozet yoktu (PR #7'deki hâl)."
     }
   ]
 }
