@@ -44,7 +44,7 @@
       "baslik": "Yeni dille çizilen deliklerin yerleşimi",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 10,
       "yol": "docs/plan/ornek-delikler-yerlesim.png"
     },
     {
@@ -60,7 +60,7 @@
       "baslik": "Maket · Ana ekran",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 10,
       "yol": "docs/ekranlar/maket-1-ana-ekran.png"
     },
     {
@@ -68,7 +68,7 @@
       "baslik": "Maket · Tur seçimi",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 10,
       "yol": "docs/ekranlar/maket-2-tur-secimi.png"
     },
     {
@@ -140,7 +140,7 @@
       "baslik": "Maket · Tur sonu",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 10,
       "yol": "docs/ekranlar/maket-6-tur-sonu.png"
     },
     {
@@ -148,7 +148,7 @@
       "baslik": "Dirlik Stadı modeli · kulüp binası köşeye taşındı (önce / sonra)",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": null,
+      "pr": 10,
       "yol": "docs/ekranlar/stat-modeli-kulup-binasi.png"
     },
     {
