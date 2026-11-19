@@ -216,7 +216,8 @@ köprü); su ve kum tuzakları; hareketli engeller. **Hareketli engeller en son 
 ### Delik şeması (4. bölümün eki)
 
 Kuşbakışı düzen ve 18 deliğin kartları (öneri, ölçeksiz; ad ve sayı yok). **18 Kasım:** 3, 7 ve 14
-yeni dille örnek çizildi (4.8); şemada işaretli. Öbür 15 kart eski dildedir, yeniden çizilecek. Asıl dosya
+yeni dille örnek çizildi, ardından adım 1'de 1, 2, 4 ve 5 (4.8, 4.9); yedisi şemada kiremit çerçeveyle
+işaretli, gerçek ölçüleri yanlarında. Kalan 11 kart eski dildedir, "yeniden çizilecek" diye işaretli. Asıl dosya
 `plan/stadyum-delik-plani.svg`, aşağıdaki önizlemesi `plan/plan-onizleme.png`.
 
 ![Stadyum turu delik planı (öneri)](plan/plan-onizleme.png)
@@ -272,14 +273,19 @@ Kullanılmayan parça: B ucundaki ceza sahası ve kale (yedek; Kemal isterse bir
 - Dalga: 1 en kolay · 2 kolay · 3 kolay · 4 orta · **5 kolay (nefes)** · 6 orta · 7 orta · 8 zor ·
   **9 kolay (nefes)** · 10 orta · 11 orta · **12 kolay (nefes)** · 13 zor · 14 zor · 15 orta (ilk
   hareketli) · 16 zor · **17 orta (nefes)** · 18 en zor.
+- **Adım 1 sonrası ilk beş delik (öneri):** 1 kolay (hunilerin dışından, dış kenardan sekme) · 2 kolay (güç
+  ayarı; açık uç, sulama başlıkları) · 3 orta (dar açı ve köşeden sektirme; 4.8) · 4 orta (direğin çevresinden
+  sektirme) · **5 kolay (nefes; baraj, oval kenar)**. İki delik ısınma, iki delik zorlaşma, ardından nefes.
+  Kems'in ön elemesinden sonra (18 Kasım) 1, 2 ve 5'e yerin eşyası eklendi; 1 "en kolay" yerine "kolay" oldu.
 - Yeni engel türlerinin ilk geldiği delik: dar geçit (3), bant sektirme (4), rampa (6), basamak (7),
   köprü (8), kapalı bölüm (10), kum (11), tünel (12), dağınık engel (13), su (14), hareketli: kapı (15),
   kayan blok (16), dönen kol (17).
 
 ### 4.5 Delikler
 
-> **18 Kasım (Kemal):** bu bölümdeki delikler eski dildedir (jenerik pist, ölçeksiz). 3, 7 ve 14'ün
-> yeni hâli 4.8'de; öbür 15 delik aynı dille **yeniden çizilecek** (karar; adımlar 4.9'da).
+> **18 Kasım (Kemal):** bu bölümdeki delikler eski dildedir (jenerik pist, ölçeksiz). 1, 2, 3, 4, 5, 7 ve
+> 14'ün yeni hâli 4.8'de (geçerli olan odur); kalan 11 delik aynı dille **yeniden çizilecek** (karar;
+> adımlar 4.9'da).
 
 Her delik aynı sırayla: yer (modelin hangi parçası) · standın yerleşimi · pist biçimi · engeller ·
 zorluk · öğretir · deneme notu. Hepsi **Öneri**.
@@ -498,6 +504,8 @@ Hareketli engel yok (en sona).
 | Minigolf topu çapı (aralık) | 0,037–0,043 | Almanca Vikipedi "Minigolf" |
 | **Top (oyunda)** | 0,04267 | Golf topu en küçük çap 1,680 inç; R&A ve USGA Ekipman Kuralları (İngilizce Vikipedi "Golf ball") |
 | **Delik (oyunda)** | 0,108 | Karar: Kemal, 18 Kasım (golf deliğinin çapıyla aynı, 4,25 inç) |
+| Köşe yayı: köşe bayrağından, sahanın içine çeyrek daire | 1 | IFAB, Kural 1 |
+| Saha çizgisinin eni (IFAB en çok 0,12) · sahanın çiminin çevre çimden yüksekliği | 0,14 · 0,04 | 3B model |
 | Tribün basamağı: derinlik · yükseklik; oturma tahtası eni | 0,85 · 0,42 · 0,40 | 3B Dirlik Stadı modelinden ölçüldü |
 | Açık tribünün taş merdiveni: en | 1,2 | 3B model |
 
@@ -506,11 +514,15 @@ okundu. WMF'nin kendi sitesi açılamadı; minyatür ve keçe pist sayıları Al
 kaynaktan doğrulanmadı. Tribün basamağı için dış standart doğrulanamadı; ölçü modelin kendisinden (model IFAB
 ölçüleriyle, metreyle çizilmiş). Kaynağı olmayan her değer DENEME: bordür (yükseklik 0,08, en 0,06),
 bayrak boyu, koltuk eni ve aralığı, duş odasının eni ve bölmeleri, karo,
-birikinti, kamera yakınlığı.
+birikinti, kamera yakınlığı. Adım 1'de eklenen DENEME değerleri: başlangıcın (0,45) ve deliğin (0,3) arkasındaki
+pay, 1. delikte yayın açısı (45°) ve hunilerin yeri, 2. delikte deliğin taç çizgisine uzaklığı (1), pistin taç
+çizgisi boyunca yeri ve sulama başlıklarının yeri, 4. delikte iki kolun bölüşümü ve eğik kenar (0,8; yüksekliği
+0,16), köşe bayrağı direğinin kalınlığı ve bayrağın ölçüsü, penaltı noktasının çapı (0,22; IFAB çap vermez),
+5. delikte oval pistin eni (2,5) ve barajın yeri; eşyaların kendi ölçüleri (huni, sulama başlığı, manken).
 
 **Ortak dil:**
-- Pistin eni ve boyu gerçek minigolf pistinden: boy 6,25–13,4 m; en 1,25 m (kale), tribünde koltukların
-  arkasındaki oluk (0,35 m), duşta odanın kendisi.
+- Pistin eni ve boyu gerçek minigolf pistinden: boy 6–13,4 m; en 1,25 m (sahada; 5. delik oval, 2,5 m), tribünde
+  koltukların arkasındaki oluk (0,35 m), duşta odanın kendisi.
 - Zemin çizilmez; yerin zemini neyse o. Sınır ince, yükseltilmiş bordür. **Karar (Kemal, 18 Kasım):**
   pist kenarı kiremit.
 - **Karar (Kemal, 18 Kasım): top ve delik gerçek ölçüde.** Top 4,27 cm (golf topunun en küçük çapı
@@ -555,10 +567,68 @@ birikinti, kamera yakınlığı.
 - Deneme notu: eğim topu süzgece adil taşıyor mu; birikinti açıkça "girme" diyor mu.
 - 18 Kasım: Kemal "duşlarda top ve delik yine çok büyük" dedi; top ve delik gerçek ölçüye indi.
 
-Üstten şemalar (ölçü çizgili) ve üç deliğin stattaki yeri (ölçekli):
+**Adım 1 (18 Kasım; öneri, Kemal görmedi): 1, 2, 4, 5.** Yer saha, zemin sahanın çimi; pist eni 1,25 m (beton
+norm pist; 5. delik oval). Saha çizgileri modelden; modelde olmayan köşe yayı, köşe bayrağı ve penaltı noktası
+IFAB ölçüsüyle kodla çizildi (4.7'deki "eklenecek saha eşyası"; model dosyası değişmedi). Hareketli engel yok.
+Kems'in ön elemesi (18 Kasım): 1, 2 ve 5 boş çimde düz kutu gibi duruyordu; üçüne yerin eşyası eklendi.
+**Bu üç eşya (antrenman hunisi, sulama başlığı, baraj mankeni) künyede ve modelde yok: DENEME, Kemal
+onaylamadı.** Üstlerinde yazı ya da logo yok; manken insan figürü değil, düz levha.
+
+**1 · Orta yuvarlak** · zemin: sahanın çimi · zorluk: kolay
+- Yer: orta yuvarlağın çizgisi (IFAB: yarıçap 9,15 m; modelde var). Tur burada başlar (Kemal, 16 Kasım).
+  Başlangıç orta çizginin yuvarlağı açık tribün yanında kestiği yerde; pist çizginin üstünde A ucuna doğru kıvrılır.
+- Ölçü: çizgi boyunca 7,19 m (yuvarlağın 45°'lik yayı; açı ve boy DENEME).
+- Eşya: çizginin üstünde, yayın başında üç antrenman hunisi (DENEME; yayın 7°, 12° ve 17°'sinde).
+- Bulmaca: pist yuvarlağın kavsi. Çizgiyi izleyen top hunilere çarpar; top hunilerin dışından dış kenara
+  gider, kenardan bir kez sekip çizgiye geri döner. Delik çizginin üstünde, yayın sonunda.
+- Öğretir: çek-bırak ve nişan çizgisi.
+- Deneme notu: kavisli kenardan sekme tahmin edilir mi; huniler ilk delik için fazla mı (fazlaysa bir huni kalır).
+
+**2 · Kenar çizgisi** · zemin: sahanın çimi · zorluk: kolay
+- Yer: açık tribün yanındaki taç çizgisi, A yarısı (modelde var). Pist çizgiye dik: sahanın içinden taç çizgisine iner.
+- Ölçü: 6,25 m (minyatür norm pist boyu). Delik çizgiden 1 m içeride (DENEME). Pistin çizgi boyunca yeri DENEME
+  (A yarısının ortası).
+- Eşya: pistin ortasında, yerden çıkmış iki sulama başlığı (DENEME; başlangıçtan 2 ve 4 m).
+- Bulmaca: düz giden top başlığa çarpar; top yan kenardan bir kez sekip iki başlığın yanından dolanır. Pistin
+  ucu açık, sınır taç çizgisinin kendisi: çizgiyi geçen top taca çıkar (dışarı sayılır; kural 2. bölümde,
+  DENEME). Delik çizginin hemen önünde.
+- Öğretir: güç ayarı.
+- Deneme notu: taca çıkmak ikinci delikte kızdırıyor mu (kızdırıyorsa delik çizgiden uzaklaşır ya da uca alçak kenar gelir).
+- Eski tarifte pist çizgiye paraleldi; açık uç için dik çevrildi.
+
+**4 · Köşe (A ucu)** · zemin: sahanın çimi · zorluk: orta
+- Yer: A ucunda, açık tribün yanındaki saha köşesi (modelde var); köşe bayrağı ve köşe yayı eklendi (IFAB: direk
+  en az 1,5 m, yay 1 m).
+- Ölçü: L pist; bir kol taç çizgisinin, öbürü kale çizgisinin üstünde. Yolun toplamı 6,25 m (minyatür norm pist
+  boyu); kollar eşit, 3,13 m (bölüşüm DENEME). Dış köşede 45° eğik kenar (0,8 m, DENEME); görünsün diye öbür
+  kenarın iki katı yüksek ve üstü krem.
+- Bulmaca: köşe bayrağının direği dönüşün tam ortasında durur; çizginin üstünden düz giden top direğe çarpar. Top
+  direğin dışından dolanmalı, eğik kenardan sekip kale çizgisi boyunca dönmeli. Delik kale çizgisinin üstünde.
+- Öğretir: banttan sektirme.
+- Deneme notu: direğin çevresindeki aralık adil mi; nişan çizgisi sekmeyi göstersin mi (DENEME, karar Kemal'in).
+
+**5 · Penaltı noktası (nefes)** · zemin: sahanın çimi · zorluk: kolay
+- Yer: A ucundaki ceza sahası. Başlangıç ceza sahası çizgisinde, delik penaltı noktasının kendisi (IFAB: 16,5 ve
+  11 m; aradaki 5,5 m). Nokta eklendi.
+- Ölçü: pist oval, 6,04 × 2,5 m (en DENEME). Ovalin iki odağı başlangıç ve delik.
+- Eşya: başlangıçla deliğin ortasında yan yana üç baraj mankeni (antrenman eşyası; DENEME). Makette boyları
+  kısa tutuldu (arkası görünsün).
+- Bulmaca: baraj düz vuruşu keser. Top barajın yanından geçer; oval kenara bir kez değen top penaltı noktasına
+  döner (ovalin odak özelliği). Hangi yandan vurulursa vurulsun olur; tek vuruşla bitme sevinci.
+- Deneme notu: oval kenar topu gerçekten deliğe getiriyor mu (hız fazlaysa top delikten atlar mı); fazla mı kolay.
+
+Makette görülen ve modelin kendisinde düzeltilmesi iyi olacak iki şey (Kems Ajans): sahanın çimi çevredeki
+çimden 4 cm yüksek, taç ve kale çizgisinin üstünden geçen pistte basamak oluyor (1, 2, 4, 5 maketinde çevre çim
+sahanın düzeyine getirildi; 3. delik maketinde düzeltilmedi, aynı basamak orada da var); orta yuvarlak kesik
+parçalarla çizilmiş, yakından kare kare görünüyor (makette üstüne düz çizgi çizildi). Modelde köşe yayı, penaltı
+yayı, penaltı noktası ve orta nokta da yok.
+
+Üstten şemalar (ölçü çizgili) ve yedi deliğin stattaki yeri (ölçekli):
 
 | | | | |
 |---|---|---|---|
+| ![1](plan/ornek-delik-1.png) | ![2](plan/ornek-delik-2.png) | ![4](plan/ornek-delik-4.png) | ![5](plan/ornek-delik-5.png) |
+| 1 · Orta yuvarlak | 2 · Kenar çizgisi | 4 · Köşe | 5 · Penaltı noktası |
 | ![3](plan/ornek-delik-3.png) | ![7](plan/ornek-delik-7.png) | ![14](plan/ornek-delik-14.png) | ![Yerleşim](plan/ornek-delikler-yerlesim.png) |
 | 3 · Kale | 7 · Açık tribün sıraları | 14 · Duşlar | Stattaki yerleri (ölçekli) |
 
@@ -575,13 +645,13 @@ Delikler yere göre toplandı; turun sırası (1–18) değişmez.
 
 | Adım | Delikler | Yer | Zemin | Not |
 |---|---|---|---|---|
-| 1 | 1, 2, 4, 5 | Saha: orta yuvarlak, kenar çizgisi, köşe, penaltı noktası | çim | Modelde hazır; 3. delikle aynı yer, en kolay başlangıç |
+| 1 | 1, 2, 4, 5 | Saha: orta yuvarlak, kenar çizgisi, köşe, penaltı noktası | çim | **Çizildi (18 Kasım, öneri; Kemal görmedi).** Tarifleri 4.8'de |
 | 2 | 6, 8, 9 | Açık tribünün önü, koridor köprüsü, duvar içi koridor | beton, toprak yol, taş duvar | 7. delikle komşu |
 | 3 | 10, 11 | Kulüp binası, ışık direği | binanın önü (zemini modelden bakılacak), toprak yol | B ucu |
 | 4 | 12, 13, 15 | Oyuncu tüneli, soyunma odası, soyunma odası kapısı | beton ya da zift, karo | Bu yerler modelde yok; 14 gibi kodla çizilir. 15'in hareketli kapısı en sona kalır, önce durağan hâli |
 | 5 | 16, 17, 18 | Kapalı tribün, bayrak direği, final (orta yuvarlak) | beton basamak ve koltuklar, toprak, çim | Hareketli engeller burada; en son |
 
-Toplam 4 + 3 + 2 + 3 + 3 = 15 delik. Her delikte: gerçek ölçü, yerin kendi zemini, kiremit ince kenar, yerin
+Toplam 4 + 3 + 2 + 3 + 3 = 15 delik; adım 1'den sonra yeni dille 7 delik var, kalan 11 (adım 2–5). Her delikte: gerçek ölçü, yerin kendi zemini, kiremit ince kenar, yerin
 şekli ve eşyasıyla kurulan bulmaca; kaynağı olmayan değer DENEME. 4.4'teki zorluk dalgası her adımda o
 deliklere göre yeniden yazılır. 18 delik bitince 4.5 ve eski kartlı şema (4. bölümün eki) yenisiyle değişir.
 
@@ -719,12 +789,13 @@ ekranına karışmaz. Görüntüler iPhone 13 boyutunda çekildi.
    18 delik, ilerleme boş), "Oyna", ayın turu ve pullar kutuları, alt menü (Oyna, Turlar, Pullar, Ayarlar).
 2. **Tur seçimi** (`?maket=tur-secimi`): Stadyum turu kartı 3B statın küçük görüntüsüyle; sonraki turlar
    kilitli, yer tutucu (açılma kuralı [Kemal]).
-3. **Delik ekranı** (`?maket=delik&no=3`, `7`, `14`): **18 Kasım'da yeniden yapıldı.** Üç örnek delik
-   (4.8). Kamera topun yanında; top ve delik gerçek ölçüde. Delik ekranda değilse kenarda ok ve uzaklığı,
+3. **Delik ekranı** (`?maket=delik&no=1`, `2`, `3`, `4`, `5`, `7`, `14`): **18 Kasım'da yeniden yapıldı.**
+   Yeni dille çizilen yedi delik (4.8). Kamera topun yanında; top ve delik gerçek ölçüde. Delik ekranda değilse kenarda ok ve uzaklığı,
    köşede deliğin tamamını gösteren küçük plan. Zemin yerin kendi zemini, kenar kiremit ince bordür.
-4. **Atış ve nişan** (`?maket=atis&no=3`, `7`, `14`): kamera topa daha da yaklaşır; parmakla geri çekme
-   göstergesi, kiremit kesik nişan çizgisi, topun çevresinde güç halkası.
-   Ayrıca **üstten şema** (`?maket=sema&no=3`, `7`, `14`; `no=0` üç deliğin stattaki yeri): ölçü çizgili.
+4. **Atış ve nişan** (`?maket=atis&no=…`, aynı numaralar): kamera topa daha da yaklaşır; parmakla geri çekme
+   göstergesi, kiremit kesik nişan çizgisi, topun çevresinde güç halkası. 2 ve 4'te atış ekranı ikinci
+   vuruşun anıdır (top deliğin ya da dönüşün yakınında), yerin eşyası görünsün diye.
+   Ayrıca **üstten şema** (`?maket=sema&no=…`; `no=0` yedi deliğin stattaki yeri): ölçü çizgili.
 5. **Skor kartı** (`?maket=skor-karti`): 18 deliğin listesi (plandaki yerleriyle), vuruşlar "–", DENEME.
 6. **Tur sonu** (`?maket=tur-sonu`): toplam vuruş "–", ayın turu ilerlemesi (18 parça, boş), ayın pulu yer
    tutucusu ve 3+1 pul dizisi.
@@ -739,6 +810,13 @@ Eski 3. ve 4. maket (büyük krem pist) 18 Kasım'da kaldırıldı.
 | 1 · Ana ekran | 2 · Tur seçimi | 5 · Skor kartı |
 | ![Tur sonu](ekranlar/maket-6-tur-sonu.png) | | |
 | 6 · Tur sonu | | |
+
+Adım 1 (18 Kasım; saha, çim): üstte delik ekranı, altta atış ekranı.
+
+| 1 · Orta yuvarlak | 2 · Kenar çizgisi | 4 · Köşe | 5 · Penaltı noktası |
+|---|---|---|---|
+| ![1 delik](ekranlar/ornek-delik-1-delik.png) | ![2 delik](ekranlar/ornek-delik-2-delik.png) | ![4 delik](ekranlar/ornek-delik-4-delik.png) | ![5 delik](ekranlar/ornek-delik-5-delik.png) |
+| ![1 atış](ekranlar/ornek-delik-1-atis.png) | ![2 atış](ekranlar/ornek-delik-2-atis.png) | ![4 atış](ekranlar/ornek-delik-4-atis.png) | ![5 atış](ekranlar/ornek-delik-5-atis.png) |
 
 Örnek delikler (18 Kasım): üstte delik ekranı, altta atış ekranı.
 

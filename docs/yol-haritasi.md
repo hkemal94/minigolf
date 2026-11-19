@@ -33,22 +33,32 @@
 - 18 Kasım 2026 (aynı dal, Kemal'in ikinci cevapları): deliğin yeri ok, uzaklık ve küçük planla; kamera
   maketteki uzaklıkta ve iki parmakla yakınlaştırılıp çevrilebilir; delik çapı 10,8 cm; **bu dil 18 deliğe
   yayılır**, kalan 15 delik adım adım ayrı PR'larda (aşağıda).
+- 18 Kasım 2026 (öneri; `ajans/delikler-adim-1`): adım 1. Sahadaki dört delik yeni dille çizildi: 1 (orta
+  yuvarlağın çizgisinde kavisli pist, çizgide üç antrenman hunisi), 2 (taç çizgisine inen, ucu açık pist, ortada
+  iki sulama başlığı), 4 (köşe bayrağının çevresinden dönen L), 5 (penaltı noktası; baraj mankenleri ve oval
+  kenar, nefes). Zemin sahanın çimi, kenar kiremit, top ve delik gerçek ölçüde. Maketler
+  `?maket=delik&no=1|2|4|5`, `?maket=atis&no=…`, şemalar `?maket=sema&no=…` (`docs/plan/ornek-delik-*.png`);
+  yerleşim şeması ve delik planı yedi deliği gösterir, kalan 11 "yeniden çizilecek". Köşe yayı, köşe bayrağı ve
+  penaltı noktası modelde yok, kodla çizildi. Huniler, sulama başlıkları ve baraj mankenleri künyede ve modelde
+  yok: DENEME, Kemal onaylamadı (Kems'in ön elemesinden sonra eklendi). Oynanış yok; gerçek telefonda denenmedi.
 
 ## Sıradaki
 
-1. **Kalan 15 delik yeni dille** (karar: Kemal, 18 Kasım; sıra öneri, tasarım belgesi 4.9). Her adım tek
+1. **Kalan 11 delik yeni dille** (karar: Kemal, 18 Kasım; sıra öneri, tasarım belgesi 4.9). Her adım tek
    PR (şema, delik ve atış maketi, tarif); bir sonraki adım Kemal bir öncekini gördükten sonra:
-   - Adım 1: **1, 2, 4, 5** (saha, çim).
+   - Adım 1: **1, 2, 4, 5** (saha, çim). Çizildi (öneri; `ajans/delikler-adim-1`), Kemal'in bakması bekleniyor.
    - Adım 2: **6, 8, 9** (açık tribünün önü, koridor köprüsü, duvar içi koridor).
    - Adım 3: **10, 11** (kulüp binası, ışık direği).
    - Adım 4: **12, 13, 15** (tünel, soyunma odası, kapı; yerler modelde yok, kodla çizilir).
    - Adım 5: **16, 17, 18** (kapalı tribün, bayrak direği, final; hareketli engeller en son).
-2. **Tünel ve soyunma odası** (duşlarıyla) modele eklenir: kapalı tribünün altı, tünel oradan sahaya
+2. **Modelde düzeltilecekler** (Kems Ajans; tasarım belgesi 4.8 sonu): sahanın çimi çevre çimden 4 cm yüksek,
+   orta yuvarlak kesik parçalı; köşe yayı, penaltı yayı, penaltı noktası, orta nokta ve köşe bayrakları yok.
+3. **Tünel ve soyunma odası** (duşlarıyla) modele eklenir: kapalı tribünün altı, tünel oradan sahaya
    (yeri karar, Kemal 16 Kasım; 3B iş). Makette o zamana kadar kodla çizilir.
-3. **İlk delik denemesi:** fizik kütüphanesi seçilir, tek parmak vuruş ve nişan çizgisi, geri al, delik
+4. **İlk delik denemesi:** fizik kütüphanesi seçilir, tek parmak vuruş ve nişan çizgisi, geri al, delik
    sonu; kamera topu izler, iki parmakla yakınlaştırılır ve çevrilir (Kemal, 18 Kasım). Hangi delikle
    başlanacağı o zaman sorulur (yeni dille çizilmiş bir delik). DENEME değerleri burada denenir.
-4. Sonraki delikler oynanışa, delik delik; her biri Kemal denedikten sonra; hareketliler en son.
+5. Sonraki delikler oynanışa, delik delik; her biri Kemal denedikten sonra; hareketliler en son.
 
 ## Sona kalanlar
 

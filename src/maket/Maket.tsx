@@ -231,10 +231,10 @@ function DelikAlt({ ipucu }: { ipucu: ReactNode }) {
   );
 }
 
-// Örnek delikler (Kemal, 18 Kasım 2026): yeni dille üç delik. ?maket=delik&no=3 | 7 | 14.
+// Yeni dille çizilen delikler (Kemal, 18 Kasım 2026): ?maket=delik&no=1 | 2 | 3 | 4 | 5 | 7 | 14.
 const ornekNo = () => ornekDelik(Number(new URLSearchParams(window.location.search).get('no') ?? ORNEK_DELIKLER[0].no)).no;
 
-// Örnek delikler arasında geçiş (maketin kendi gezintisi; oyunda olmayacak).
+// Yeni dille çizilen delikler arasında geçiş (maketin kendi gezintisi; oyunda olmayacak).
 function OrnekGecis({ ekran, secili }: { ekran: string; secili: number }) {
   return (
     <nav className="mk-ornekler">
@@ -340,7 +340,7 @@ function AtisEkrani() {
   );
 }
 
-// Üstten şema (ölçü çizgili): ?maket=sema&no=3 | 7 | 14; no=0 üç deliğin stattaki yeri (ölçekli).
+// Üstten şema (ölçü çizgili): ?maket=sema&no=1 | 2 | 3 | 4 | 5 | 7 | 14; no=0 bu deliklerin stattaki yeri (ölçekli).
 function SemaEkrani() {
   const ham = Number(new URLSearchParams(window.location.search).get('no') ?? 0);
   return (
