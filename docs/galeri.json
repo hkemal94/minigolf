@@ -60,7 +60,7 @@
       "baslik": "Maket · Ana ekran",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 10,
+      "pr": 11,
       "yol": "docs/ekranlar/maket-1-ana-ekran.png"
     },
     {
@@ -68,7 +68,7 @@
       "baslik": "Maket · Tur seçimi",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 10,
+      "pr": 11,
       "yol": "docs/ekranlar/maket-2-tur-secimi.png"
     },
     {
@@ -268,7 +268,7 @@
       "baslik": "Maket · Tur sonu",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 10,
+      "pr": 11,
       "yol": "docs/ekranlar/maket-6-tur-sonu.png"
     },
     {
@@ -1477,6 +1477,36 @@
       "yol": "docs/galeri/eski/doku-oncesi/oyna-doku-6-bayrak.png",
       "grup": "Dokulu görünüşten önce · düz renkli hâl",
       "not": "Düz renkli yüzeyler, gamzesiz top, çizgilerden file, donuk bayrak. Aynı bakışla alındı (PR #9 ve #10 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Maket · Ana ekran · kulüp binası kadrajın kenarında",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 10,
+      "yol": "docs/galeri/eski/kadraj-oncesi/maket-1-ana-ekran.png",
+      "grup": "Kadraj kaydırılmadan önce · kulüp binası kenarda",
+      "not": "Kulüp binası kadrajın sağ kenarında kalıyor, tamamı görünmüyordu."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Maket · Tur seçimi · kulüp binası kadrajın kenarında",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 10,
+      "yol": "docs/galeri/eski/kadraj-oncesi/maket-2-tur-secimi.png",
+      "grup": "Kadraj kaydırılmadan önce · kulüp binası kenarda",
+      "not": "Kulüp binası kadrajın sağ kenarında kalıyor, tamamı görünmüyordu."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Maket · Tur sonu · kulüp binası kadrajın kenarında",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 10,
+      "yol": "docs/galeri/eski/kadraj-oncesi/maket-6-tur-sonu.png",
+      "grup": "Kadraj kaydırılmadan önce · kulüp binası kenarda",
+      "not": "Kulüp binası kadrajın sağ kenarında kalıyor, tamamı görünmüyordu."
     }
   ]
 }

@@ -41,6 +41,12 @@ vuruşlarla deliğe soktu (1, 1, 4; sapma 0). Bütün görünüş değerleri DEN
 belgesi 6.4 "Görünüş", çizim yükü tablosuyla). Öncesi ve sonrası: `docs/ekranlar/oyna-doku-7-oncesi-sonrasi.jpg`.
 Bilgisayarda telefon boyutunda denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
 
+## Maketlerde kadraj (19 Kasım 2026; öneri, PR #11, aynı dal, ayrı commit)
+
+Karar (Kemal, 19 Kasım): köşeye taşınan kulüp binası tam görünsün. Ana ekran, tur seçimi ve tur sonu maketleri aynı stat
+görüntüsünü kullanıyor; üçünde de bakış binaya doğru kaydırıldı ve biraz uzaklaştırıldı (kayma ve uzaklık DENEME). Üç
+görüntü yeniden alındı; önceki hâlleri `docs/galeri/eski/kadraj-oncesi/` altında. Oynanış yok; gerçek telefonda denenmedi.
+
 ## Neredeyiz
 
 - 16 Kasım 2026 (PR #1, birleşti): iskelet. Dikey tek ekran: üstte ince şerit (oyunun adı

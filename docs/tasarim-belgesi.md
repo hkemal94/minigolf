@@ -36,6 +36,8 @@ modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik
 
 En yeni üstte.
 
+- **19 Kasım (Kemal, maket kadrajı; kesin):** ana ekran, tur seçimi ve tur sonu maketlerinde stat görüntüsünün kadrajı,
+  köşedeki kulüp binası tam görünecek biçimde kaydırılır. Kayma ve uzaklık DENEME (`src/maket/Maket.tsx`).
 - **19 Kasım (Kemal, doku kaynağı; kesin):** dokulu gerçekçi görünüşün dokuları yalnız Poly Haven ve ambientCG'den
   (ikisi de CC0); her doku `docs/lisanslar.md`'ye yazılır. Top gerçek, gamzeli golf topu; kale filesi gerçek ağ; delik
   bayrağı donuk durmaz, hafif rüzgârda oynar (büyük kutlama dalgası ayrı adım). Uygulama: 6.4 "Görünüş" (öneri).

@@ -88,8 +88,13 @@ function AltMenu({ secili }: { secili: 'oyna' | 'turlar' | 'pullar' | 'ayarlar' 
 }
 
 // Statın kuşbakışı küçük görüntüsü (ana ekran, tur kartı, tur sonu).
+// Kadraj (Kemal, 19 Kasım 2026): köşeye taşınan kulüp binası tam görünsün diye bakış binaya doğru
+// kaydırıldı (KADRAJ_KAYMA; DENEME) ve biraz uzaklaştırıldı; statın öbür ucu da kadrajda kalır.
+const KADRAJ_KAYMA: [number, number] = [7.1, -5.5]; // x, z (m): ekranda sağa, kulüp binasına doğru
 function StatKucuk({ zoom = 3.2 }: { zoom?: number }) {
-  const [x, , z] = ORTA_YUVARLAK;
+  const [x0, , z0] = ORTA_YUVARLAK;
+  const x = x0 + KADRAJ_KAYMA[0];
+  const z = z0 + KADRAJ_KAYMA[1];
   return (
     <StatSahnesi konum={[x + 70, 75, z + 90]} hedef={[x, 0, z - 4]} zoom={zoom} golgeYaricap={80} arkaPlan={renk.krem} />
   );
@@ -104,7 +109,7 @@ function AnaEkran() {
         <div className="mk-oyun-ad">{m('oyun.ad')}</div>
       </header>
       <div className="mk-vitrin">
-        <StatKucuk zoom={3.6} />
+        <StatKucuk zoom={3.05} />
       </div>
       <div className="mk-tur-kart">
         <div className="mk-tur-kart-ust">
@@ -159,7 +164,7 @@ function TurSecimi() {
       </header>
       <div className="mk-tur-buyuk">
         <div className="mk-tur-resim">
-          <StatKucuk zoom={2.7} />
+          <StatKucuk zoom={2.45} />
           <span className="mk-etiket mk-etiket-ust">{m('maket.turlar.ayin')}</span>
         </div>
         <div className="mk-tur-bilgi">
@@ -402,7 +407,7 @@ function TurSonu() {
   return (
     <Ekran koyu>
       <div className="mk-son-resim">
-        <StatKucuk zoom={3.3} />
+        <StatKucuk zoom={2.85} />
       </div>
       <div className="mk-son-govde">
         <div className="mk-son-baslik">{m('maket.sonu.baslik')}</div>
