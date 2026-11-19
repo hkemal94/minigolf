@@ -41,6 +41,21 @@ vuruşlarla deliğe soktu (1, 1, 4; sapma 0). Bütün görünüş değerleri DEN
 belgesi 6.4 "Görünüş", çizim yükü tablosuyla). Öncesi ve sonrası: `docs/ekranlar/oyna-doku-7-oncesi-sonrasi.jpg`.
 Bilgisayarda telefon boyutunda denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
 
+## Oynanabilir prototip · par, yıldız, kutlama, ortam, rozetler (19 Kasım 2026; öneri, PR #12, `ajans/oyna-par-ortam`)
+
+Üç PR'lık düzeltmenin üçüncüsü. **Par ve yıldız:** her deliğin hedef vuruş sayısı (par) üstteki bilgide, delik sonunda ve
+tur sonundaki listede yazıyor; vuruşa göre en çok üç yıldız veriliyor. **Kutlama:** top deliğe düşünce bayrak delikten
+kalkıp dalgalanıyor, deliğin çevresinde iki ince halka açılıp kayboluyor; kart ondan sonra açılıyor (ses, titreşim, konfeti
+yok). **Maçsız gün:** hafif rüzgâr (delik bayrağı esintiyle büyüyüp küçülüyor, duvarın dışındaki ağaçların yaprakları
+salınıyor, çimin üstünden esinti bantları geçiyor), deliğin üstünde dönen beş kuş, uzakta beş kişi (dördü duruyor, biri
+yürüyor; ad, yüz, hikâye yok). Hepsi kodla çizildi; yeni dış model yok. **Rozetler:** tur sonundaki delik listesinde küçük
+simgeler (tek vuruş, par altı, cezasız); ad konmadı, pulun yerine geçmez. Oyun yavaşlayıp gölgeleri kapatırsa ortam da
+azalır (2 kuş, 3 kişi; ağaç ve çim durur). **Fizik değişmedi:** bot üç deliği de aynı vuruşlarla deliğe soktu (1, 1, 4).
+Bütün değerler DENEME (`src/oyun/ayarlar.ts` → `PUAN`, `KUTLAMA`, `ORTAM`; tasarım belgesi 6.4). Çizim yükü tablosu
+belgede. Görüntüler: `docs/ekranlar/oyna-par-1-ortam.jpg` … `oyna-par-5-kolaj.jpg`; delik sonu ve tur sonu kartlarının
+önceki hâlleri `docs/galeri/eski/par-oncesi/` altında. Bilgisayarda telefon boyutunda denendi; **gerçek telefonda
+denenmedi, telefondaki kare hızı ölçülmedi.**
+
 ## Maketlerde kadraj (19 Kasım 2026; öneri, PR #11, aynı dal, ayrı commit)
 
 Karar (Kemal, 19 Kasım): köşeye taşınan kulüp binası tam görünsün. Ana ekran, tur seçimi ve tur sonu maketleri aynı stat
@@ -142,6 +157,7 @@ görüntü yeniden alındı; önceki hâlleri `docs/galeri/eski/kadraj-oncesi/` 
 4. **İlk delik denemesi:** yapıldı (PR #7 birleşti; yukarıda "Oynanabilir prototip"): 3, 1 ve 7. delik oynanıyor.
    Kemal telefonda dener; DENEME değerleri (güç sınırı, çimin hızı, sekme, kamera, dışarı çıkma kuralı) onun
    denemesinden sonra ayarlanır. Eksik kalan: geri al, kaldığı yerden devam.
+   Par, yıldız eşikleri, rozetler ve ortamın sayıları da DENEME (PR #12): Kemal oynadıktan sonra onaylar.
 5. Sonraki delikler oynanışa, delik delik; her biri Kemal denedikten sonra; hareketliler en son.
 
 ## Sona kalanlar

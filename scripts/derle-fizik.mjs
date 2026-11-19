@@ -4,7 +4,7 @@ import { build } from 'esbuild';
 const cikti = process.argv[2] ?? '/tmp/minigolf-fizik.mjs';
 await build({
   stdin: {
-    contents: `export * from './src/oyun/fizik'; export * from './src/oyun/tahmin'; export * from './src/oyun/dunya'; export * from './src/oyun/ayarlar'; export * from './src/maket/ornekDelikler'; export { MODEL } from './src/maket/olculer';`,
+    contents: `export * from './src/oyun/fizik'; export * from './src/oyun/tahmin'; export * from './src/oyun/dunya'; export * from './src/oyun/ayarlar'; export * from './src/oyun/puan'; export * from './src/maket/ornekDelikler'; export { MODEL } from './src/maket/olculer';`,
     resolveDir: process.cwd(),
     loader: 'ts',
   },
