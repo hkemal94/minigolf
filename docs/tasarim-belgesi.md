@@ -36,6 +36,26 @@ modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik
 
 En yeni üstte.
 
+- **19 Kasım (Kemal, dışarıdan gelen minigolf raporu belgeyle karşılaştırıldı; kesin):**
+  1. **Geri al cezalı:** geri alınan ya da iptal edilen vuruş **+1 vuruş** sayılır (2. bölüm). 16 Kasım'daki "denemeden
+     sonra" notunun yerine geçer.
+  2. **Tur yapısı aynı kalır:** her lokasyon ayrı 18 delikli tur; ilk tur yalnız stat kompleksi. Liman, iskele, meydan,
+     sahil yolu ve zeytinliği bağlayan tek bir "Düzada Turu" kullanılmaz (3.1).
+  3. **Nişan yardımı:** yön oku + güç çubuğunda çentikler (25 / 50 / 75) + topun duracağı tahmini yer yalnız **kolay
+     modda**. Kolay modun açık ya da kapalı başlaması DENEME. Falso için aşağıda 8. madde.
+  4. **Dışarı çıkan top cezalı:** oyun alanından çıkan top (saha dışı, taç çizgisinin ötesi, su, ör. duşlardaki su
+     tuzağı) **+1 ceza vuruşu** alır ve son vuruş yerine döner (2. bölüm). "Ek ceza yok" önerisinin yerine geçer.
+  5. **Par ve yıldız:** her deliğin hedef vuruş sayısı (par) ve yıldızı olur; değerler DENEME, Kemal oynadıktan sonra
+     onaylar (3.3). Top düşünce kısa kutlama (bayrak dalgalanır); maçsız gün ortamı (rüzgâr, kuşlar, uzakta birkaç
+     kişi); görsel dil **dokulu gerçekçi** (5.2). Sesler sonra.
+  6. **Yüzey tablosu sonraki turlar için** (stat turu için değil): kısa çim, uzun çim, taş ve kaldırım, ahşap, kum,
+     deniz; değerler DENEME, veri yok (3.2).
+  7. Açık soru: vuruştan önce cezasız iptal (7. bölüm). Raporun öbür önerileri havuzda (6.5).
+  8. **Falso (spin): evet, sade.** Tek elle oynanır, kapsamlı olmaz ("inanılmaz kapsamlı olmasın"). Falso seçilince nişan
+     oku ona göre kıvrılır ya da değişir, top da ona göre gider. Falsonun miktarı ve nasıl seçildiği DENEME (2. bölüm).
+  9. **Dokunmatik titreşim: evet.** Seslerle birlikte, sonra gelir (5.1).
+  10. **Rozetler: evet, küçük.** Delik listesinde küçük simgeler: tek vuruşta delik, geri almadan bitirme ve benzerleri.
+      Pul koleksiyonunun yerine geçmez (8. bölüm).
 - **19 Kasım (Kemal, PR #6'nın soruları; kesin):**
   1. **2. delik, taç:** uç duvarsız kalır, sınır taç çizgisinin kendisi (seçenek A; 7. bölüm).
   2. **8. delik, köprü:** kenarsız ve korkuluksuz düz beton, **en 0,6 m**. En artık Kemal'in değeri, DENEME değil.
@@ -113,7 +133,7 @@ En yeni üstte.
 ### 1.1 Oyun bir cümlede
 
 Düzada'nın yerlerine kurulmuş gerçek minigolf pistlerinde, topu tek parmakla çekip bırakarak deliğe
-sokulan, sakin ve cezasız bir telefon minigolf oyunu.
+sokulan, sakin bir telefon minigolf oyunu; dışarı çıkan top ve geri al bir vuruş ceza alır.
 
 **Karar (Kemal, 15 Kasım):** telefon önce, dikey, tek elle. Web deneme sürümü önce, telefon
 uygulaması sonra.
@@ -124,7 +144,9 @@ uygulaması sonra.
 bölümlerinde adım adım ilerler, sanki oralara gerçek minigolf parkurları kurulmuş gibi.
 
 **Öneri:**
-- Sakin ve cezasız: süre yok, kaybetme yok, "oyun bitti" yok. Vuruş yalnız sayılır.
+- ~~Sakin ve cezasız: süre yok, kaybetme yok, "oyun bitti" yok. Vuruş yalnız sayılır.~~ **Karar (Kemal, 19 Kasım):**
+  sakin: süre sınırı yok, kaybetme yok, "oyun bitti" yok. Ceza vuruşu yalnız iki yerde: dışarı çıkan top ve geri al
+  (2. bölüm).
 - Her delik küçük bir bulmaca: açıyı ve gücü oyuncu kendi hızında dener.
 - Ödülün yarısı yerin kendisi: oyuncu adanın bir köşesini maket gibi gezer. Delik ne kadar yerin
   eşyasıyla kurulursa o kadar "Düzada"dır.
@@ -146,19 +168,33 @@ karakteri, adı, yüzü yok.
 - Yardımcılar: **nişan çizgisi**, **geri al vuruş**, **kaldığı yerden devam**.
 - Delik başına vuruş sınırı: sonra; web denemesinden sonra Kemal karar verir.
 
+**Karar (Kemal, 19 Kasım):**
+- **Nişan yardımı:** yön oku + güç çubuğunda çentikler (25 / 50 / 75) + topun duracağı tahmini yer **yalnız kolay
+  modda**. Kolay modun açık ya da kapalı başlaması DENEME.
+- ~~Falso (spin) eklenirse etkisini gösteren bir nişan çizgisi gerekebilir; falso yalnız öneridir ve o çizgiyle
+  birlikte düşünülür (6.5).~~
+- **Falso (spin): evet, sade.** Tek elle oynanır, kapsamlı olmaz ("inanılmaz kapsamlı olmasın"). Falso seçilince nişan
+  oku ona göre kıvrılır ya da değişir; top da ona göre gider. Falsonun miktarı ve nasıl seçildiği DENEME.
+- **Geri al cezalı:** geri alınan vuruş **+1 vuruş** sayılır.
+- **Dışarı çıkan top cezalı:** oyun alanından çıkan top (saha dışı, taç çizgisinin ötesi, su; ör. duşlardaki su
+  tuzağı) **+1 ceza vuruşu** alır ve son vuruş yerine döner.
+
 **Öneri:**
 - **Çek-bırak vuruş:** oyuncu topa dokunur, başparmağını geri çeker (ne kadar çekerse o kadar
   güçlü), bırakınca top atılır. Çekerken topun önünde ince bir nişan çizgisi çıkar. Güç-çekme oranı DENEME.
 - Nişan çizgisi yalnız yönü gösterir; sekmeyi gösterip göstermeyeceği DENEME (yardımın boyu Kemal'in).
-- **Geri al:** son vuruştan önceki yere döner. Vuruş sayısından düşüp düşmeyeceği: DENEME; **Karar (Kemal, 16 Kasım)**,
-  karar denemeden sonra.
+- **Geri al:** son vuruştan önceki yere döner. ~~Vuruş sayısından düşüp düşmeyeceği: DENEME; **Karar (Kemal, 16 Kasım)**,
+  karar denemeden sonra.~~ **Karar (Kemal, 19 Kasım):** +1 vuruş (yukarıda).
+- **Vuruştan önce iptal:** çekerken parmak topa geri getirilip bırakılırsa vuruş olmaz, sayılmaz. Açık soru (7. bölüm);
+  prototip çok kısa çekmeyi zaten iptal ediyor (6.4).
 - **Kaldığı yerden devam:** oyun kapanınca tur ve delik hatırlanır; açılınca aynı delikte, aynı vuruş sayısıyla.
 - **Kamera:** **Karar (Kemal, 18 Kasım):** topu yakından izler; iki parmakla yakınlaştırma, uzaklaştırma
   ve açıyı çevirme var (tek elle oynamak için gerekmez, isteğe bağlı). Sınırları (en yakın, en uzak) DENEME.
-- **Top dışarı kaçarsa** (pistten, köprüden, suya): vuruştan önceki yere döner, o vuruş sayılır, ek ceza yok.
-  Durum: açık, DENEME (Kemal, 16 Kasım).
-- **Delik sonu:** kısa sonuç (vuruş sayısı), "sonraki delik" ve "yeniden".
-- **Tur sonu:** 18 deliğin vuruşları; ceza yok, "kaybettin" yok.
+- ~~**Top dışarı kaçarsa** (pistten, köprüden, suya): vuruştan önceki yere döner, o vuruş sayılır, ek ceza yok.
+  Durum: açık, DENEME (Kemal, 16 Kasım).~~ **Karar (Kemal, 19 Kasım):** +1 ceza vuruşu, son vuruş yerine döner (yukarıda).
+- **Delik sonu:** kısa sonuç (vuruş sayısı), "sonraki delik" ve "yeniden". **Karar (Kemal, 19 Kasım):** top deliğe
+  düşünce kısa bir kutlama (bayrak dalgalanır); par ve yıldız 3.3'te.
+- **Tur sonu:** 18 deliğin vuruşları; "kaybettin" yok.
 
 ## 3. Turlar, delikler, engeller, zorluk
 
@@ -175,7 +211,10 @@ karakteri, adı, yüzü yok.
   yok, sınır ince bordür (4.8).
 - Künyede ayrıca yazmayan ama **her statta olan genel eşya ve bölümler** kullanılabilir (kale, köşe
   bayrağı, tünel, soyunma odası, tribün sıraları gibi). Ad yok.
-- Ortam: maç olmayan, sakin bir gün.
+- Ortam: maç olmayan, sakin bir gün. **Karar (Kemal, 19 Kasım):** maçsız günün ortamı görünür: rüzgâr, kuşlar, uzakta
+  birkaç kişi (ad ve hikâye yok).
+- **Karar (Kemal, 19 Kasım):** tur yapısı aynı kalır. Liman, iskele, meydan, sahil yolu ve zeytinliği bağlayan tek
+  bir "Düzada Turu" kullanılmaz.
 - Imperial'deki uzun tur sonra; otelin planları (The Imperial Kemskoy deposu ve künye; otel 1954
   yapımı) kullanılır, plan dışı yer uydurulmaz.
 
@@ -210,6 +249,18 @@ köprü); su ve kum tuzakları; hareketli engeller. **Hareketli engeller en son 
   edilir; oyuncu bekleyip zamanlayabilir. Hızlar DENEME.
 - Engeller basit biçimli: top ayaklara, ince parçalara takılmaz.
 
+**Karar (Kemal, 19 Kasım): yüzey tablosu sonraki turlar için** (stat turu için değil; stat turunda zemin 4.8'deki gibi).
+Değerler DENEME, veri yok.
+
+| Yüzey | Nasıl davranır (öneri) |
+|---|---|
+| Kısa çim | Top rahat yuvarlanır; temel yüzey. |
+| Uzun çim | Topu belirgin yavaşlatır. |
+| Taş ve kaldırım | Hızlı; düşen top daha çok seker. |
+| Ahşap | Hızlı ve düz; düşen top seker. |
+| Kum | Topu çok yavaşlatır, az seker. |
+| Deniz | Dışarı sayılır (+1 ceza vuruşu, 2. bölüm). |
+
 ### 3.3 Zorluk eğrisi
 
 **Karar (Kemal, 16 Kasım):** zorluk delikten deliğe ve turdan tura **değişken**; düz artmaz.
@@ -222,7 +273,9 @@ köprü); su ve kum tuzakları; hareketli engeller. **Hareketli engeller en son 
 - **Turdan tura:** her tur kendi dalgasını taşır; ikinci tur birincinin sonundan başlamaz. Bir tur
   baştan sona "daha kolay" ya da "daha zor" olabilir (ör. Stadyum yumuşak bir ilk tur, Imperial uzun
   ve zor bir tur). Turların zorluk sırası [Kemal].
-- Zorluk kelimeyle yazılır (en kolay, kolay, orta, zor, en zor); "par" ya da sayı yok, denemeden sonra Kemal.
+- Zorluk kelimeyle yazılır (en kolay, kolay, orta, zor, en zor); ~~"par" ya da sayı yok, denemeden sonra Kemal.~~
+  **Karar (Kemal, 19 Kasım):** her deliğin hedef vuruş sayısı (par) ve yıldızı olur. Değerler DENEME; Kemal oynadıktan
+  sonra onaylar. Yıldızın nasıl verildiği DENEME.
 - Stadyum turunun dalgası 4.4'te.
 
 ## 4. Stadyum turu (Dirlik Stadı, 18 delik)
@@ -801,6 +854,7 @@ deliklere göre yeniden yazılır. 18 delik bitince 4.5 ve eski kartlı şema (4
   olmayan gün; seyirci sesi yok. Tünel ve soyunma odasında ses biraz yankılı.
 - **Müzik:** seyrek; ortam sesi önde (The Imperial Kemskoy'daki karara yakın).
 - Efektler, ortam ve müzik ayrı kısılır.
+- **Karar (Kemal, 19 Kasım):** sesler sonra. Dokunmatik titreşim de olur; seslerle birlikte, sonra gelir.
 - Sesler yalnız ücretsiz ve ticari kullanıma açık kaynaklardan; her biri `docs/lisanslar.md`'ye, kaynağı Kemal'e sorularak.
 
 ### 5.2 Görsel dil
@@ -812,7 +866,10 @@ deliklere göre yeniden yazılır. 18 delik bitince 4.5 ve eski kartlı şema (4
   ekran, eğik yukarıdan; temel 3B modelin yerleşimi korunur.
 - Renkler marka kitinden: lacivert, krem, az kiremit; yazı tipi Poppins. Modelin kiremit çatısı ve
   çimi kendi renginde kalır.
-- Low-poly, mat yüzey (Dondurmacı Kızlar'daki tasarım dili örnek). Hangi dil olduğu: [Kemal].
+- ~~Low-poly, mat yüzey (Dondurmacı Kızlar'daki tasarım dili örnek). Hangi dil olduğu: [Kemal].~~
+
+**Karar (Kemal, 19 Kasım):** görsel dil **dokulu gerçekçi**: çim, beton, ahşap dokuları; gerçekçi ışık ve gölge;
+gamzeli golf topu; gerçek ağ. Low-poly önerisinin yerine geçer. İllüstratör denemesi kararı (yukarıda) geçmiş olarak durur.
 
 ## 6. Teknik, kapsam ve ilk sürüm
 
@@ -902,6 +959,36 @@ boyunca vurulan top köşeden dönüp bir alt sıranın oluğuna iniyor. **Gerç
 
 Görüntüler: `ekranlar/oyna-1-delik-3-baslangic.png` … `oyna-7-tur-sonu.png`.
 
+### 6.5 Öneri havuzu (19 Kasım raporundan)
+
+**Öneri** (Kemal onaylamadı; karara bağlananlar ayrıca yazılı). Dışarıdan gelen rapordaki fikirler. ✓ = prototipte (#7, ana dalda) var; "1. PR'da" =
+kamera ve güç PR'ında geliyor.
+
+- Çekişin parmağın dokunduğu yerden ölçülmesi (dinamik çekme ölçeği).
+- ~~Falso (topspin / backspin): köşede küçük top simgesiyle; etkisini gösteren nişan çizgisiyle birlikte (2. bölüm).~~
+  **Karar (Kemal, 19 Kasım):** falso evet, sade ve tek elle; nişan oku ona göre değişir (2. bölüm). Nasıl seçildiği
+  (ör. köşedeki küçük top simgesi) DENEME.
+- Tek dokunuşla kuşbakışı ("Deliğe bak"ın yanında): 1. PR'da.
+- Kamera duvara ve binaya girmesin (yaylı kol).
+- Çekerken eğim ızgarası ve akış işaretleri (ayarlardan kapatılabilir).
+- Engelin arkasında kalan top için röntgen gibi siluet.
+- Havadaki topun altında dikey gölge.
+- Top ince duvarlardan geçmesin (sürekli çarpışma denetimi). Prototipte hesap adımı sabit 1/480 sn; 5 m/s'de top adımda
+  yaklaşık 1 cm gider. Güç artınca yeniden bakılır.
+- Eğim gelince dikişsiz çarpışma yüzeyleri ve topun zemine oturtulması.
+- Akıllı durma eşiği ✓.
+- Gerçek çukur delik, kenardan dönüp atlama ✓.
+- Sıkışan top: 3 sn sonra (DENEME) cezasız, en yakın düz yere. Bugün prototip topu ancak 30 sn sonra durduruyor.
+- Anında yeniden başlat ✓ ("Deliği baştan", "Yeniden").
+- Hayalet top (en iyi oyun).
+- ~~Delik bazında rozetler (tek vuruş, geri alsız, riskli kestirme). Ortak ödül pul koleksiyonudur (Karar, 15 Kasım;
+  8. bölüm); rozetler pulların yerine geçmeyen küçük işaretler olabilir.~~ **Karar (Kemal, 19 Kasım):** rozetler evet,
+  küçük: delik listesinde küçük simgeler (tek vuruşta delik, geri almadan bitirme ve benzerleri); pulların yerine
+  geçmez (8. bölüm).
+- Delik arası kamera süzülmesi.
+- ~~Dokunmatik titreşim (Kemal'e sorulacak).~~ **Karar (Kemal, 19 Kasım):** evet; seslerle birlikte, sonra (5.1).
+- Yüzeye göre sesler (sesler sonra).
+
 ## 7. Açık sorular
 
 Kemal'in kararını bekleyenler.
@@ -927,14 +1014,22 @@ Kemal'in kararını bekleyenler.
 - ~~Top ve delik ne kadar büyük çizilsin?~~ Cevaplandı (Kemal, 18 Kasım): gerçek ölçü, kamera topu izler.
 - ~~Bordürün rengi~~ Cevaplandı (Kemal, 18 Kasım): kiremit.
 - ~~Tribünde oturma tahtaları~~ Cevaplandı (Kemal, 18 Kasım): tahta yerine tek tek koltuk, engel olarak.
-- **Geri al vuruşu sayıdan düşer mi?** DENEME; karar denemeden sonra (Kemal, 16 Kasım; 2. bölüm).
-- **Top dışarı kaçarsa:** öneri "vuruştan önceki yere döner, vuruş sayılır"; DENEME, karar denemeden sonra.
+- **Vuruştan önce cezasız iptal** (19 Kasım): çekerken parmak topa geri getirilip bırakılırsa vuruş olmaz, sayılmaz.
+  Prototip çok kısa çekmeyi zaten iptal ediyor (6.4). Seçenekler: **(a)** böyle kalsın, ceza yok (önerilen);
+  **(b)** her bırakış vuruş sayılır.
+- ~~**Geri al vuruşu sayıdan düşer mi?** DENEME; karar denemeden sonra (Kemal, 16 Kasım; 2. bölüm).~~ Cevaplandı
+  (Kemal, 19 Kasım): +1 vuruş.
+- ~~**Top dışarı kaçarsa:** öneri "vuruştan önceki yere döner, vuruş sayılır"; DENEME, karar denemeden sonra.~~
+  Cevaplandı (Kemal, 19 Kasım): +1 ceza vuruşu, son vuruş yerine döner.
 - **Vuruş sınırı:** web denemesinden sonra.
-- **Nişan çizgisi sekmeyi göstersin mi?** (4. delik)
+- **Nişan çizgisi sekmeyi göstersin mi?** (4. delik) Nişan yardımı karara bağlandı (Kemal, 19 Kasım; 2. bölüm: yön oku,
+  güç çentikleri, kolay modda duracağı yer); sekme çizgisi bu kararda yok.
+- **Kolay modun açık ya da kapalı başlaması:** DENEME (2. bölüm).
+- **Par ve yıldız değerleri:** DENEME; Kemal oynadıktan sonra (3.3).
 - **Delik ölçüsü, tur süresi, hızlar, eğimler:** DENEME, denemeden sonra.
-- **Görsel dil:** İllüstratör'ün 2–3 denemesinden hangisi.
+- ~~**Görsel dil:** İllüstratör'ün 2–3 denemesinden hangisi.~~ Cevaplandı (Kemal, 19 Kasım): dokulu gerçekçi (5.2).
 - **Oynanabilir prototipten (6.4), telefonda denedikten sonra:** güç sınırı ve çekme boyu elde nasıl; çim hızlı mı
-  yavaş mı; top dışarı çıkınca ek ceza olsun mu; tribünde tam güçte top koltukların üstünden aşabilsin mi; kamera
+  yavaş mı; ~~top dışarı çıkınca ek ceza olsun mu~~ (cevaplandı: +1, Kemal 19 Kasım); tribünde tam güçte top koltukların üstünden aşabilsin mi; kamera
   başta bu kadar yandan mı baksın.
 - **Sonraki turların sırası** ve Imperial uzun turunun zamanı; turların zorluk sırası.
 - **Öbür ayların turu:** Stadyum Ocak 2027'nin; öbür aylar [Kemal].
@@ -953,6 +1048,10 @@ Kemal'in kararını bekleyenler.
 **Karar (Kemal, 15 Kasım):** minigolfün ödül sistemi bütün oyunların ortak pul koleksiyonudur: her ay
 bir pul, çeyrekte üç pul toplanınca büyük 4. pul ("3+1"), her pul ayrı tasarım ve yazısız, ortak
 koleksiyon sayfası (Kems Ajans `docs/pul-koleksiyonu.md`). Ayın pulu o ayın görevi bitince gelir.
+
+**Karar (Kemal, 19 Kasım): rozetler küçük.** Delik listesinde (skor kartı, 11. bölüm) her deliğin yanında küçük
+simgeler: tek vuruşta delik, geri almadan bitirme ve benzerleri. Rozetler pul koleksiyonunun yerine geçmez; ödül
+yine puldur. Hangi rozetlerin olacağı ve simgeleri DENEME.
 
 **Öneri:** kod yapısı kart oyunundaki `src/pul/` klasörü örnek alınarak kurulur. Pulların tasarımı
 İllüstratör'ün, onayı Kemal'in.

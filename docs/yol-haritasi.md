@@ -81,6 +81,12 @@ olduğu gibi duruyor. Geri al, kaldığı yerden devam, ses, vuruş sınırı bu
   **9. delikte** taş sırası yerine saha kenarı bankları (köprünün iki ayağı kaldı). Yeni değerler DENEME. 1, 2, 4, 6, 8, 9'un
   ekranları, şemaları ve yerleşim yeniden alındı; önceki hâlleri `docs/galeri/eski/adim-2-zorluk-oncesi/` altında,
   galeri listesinde. Oynanış yok; gerçek telefonda denenmedi.
+- 19 Kasım 2026 (öneri; `ajans/belge-rapor-kararlari`): dışarıdan gelen minigolf raporu belgeyle karşılaştırıldı, Kemal'in
+  kararları tasarım belgesine işlendi: geri al ve dışarı çıkan top +1 vuruş; tur yapısı aynı; nişan yardımı (yön, güç
+  çentikleri, kolay modda duracağı yer); par ve yıldız (DENEME); kutlama, maçsız gün ortamı, dokulu gerçekçi görsel dil;
+  sonraki turlar için yüzey tablosu; falso (sade, tek elle), dokunmatik titreşim (seslerle, sonra), delik listesinde
+  küçük rozetler. Açık soru: vuruştan önce cezasız iptal. Raporun öbür fikirleri öneri havuzunda (6.5).
+  Yalnız belge; oyunda değişiklik yok.
 
 ## Sıradaki
 
