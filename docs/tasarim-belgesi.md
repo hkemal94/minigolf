@@ -45,6 +45,12 @@ En yeni üstte.
   4. **Engel şeffaflığı:** şeffaflaşan yerin opaklığı 0,25 böyle kalır. Topun halkasının rengi ayar menüsünden
      seçilir: krem, lacivert, kiremit; başta krem; seçim telefonda hatırlanır (6.4).
   5. **Kameranın başlangıç yakınlığı** şimdiki gibi (200, maketteki uzaklık).
+  6. **Bırakmadan cezasız iptal:** nişan alırken parmak topun üstüne geri getirilip bırakılırsa atış olmaz; vuruş da
+     ceza da sayılmaz. Çekerken güç çubuğunun altında kısa ipucu yazar (2. bölüm, 7. bölüm).
+  7. **Oyun normal modla başlar:** kolay mod ilk açılışta kapalı; ayar menüsünden açılır, seçim telefonda hatırlanır
+     (2. bölüm).
+  8. **Delik için de aynı pencere:** delik ve bayrağı kameradan bakınca bir engelin arkasında kalınca deliğin çevresinde de
+     aynı yumuşak pencere açılır (aynı saydamlık, süre, halka rengi); top ve delik birlikte gizliyse iki pencere birden (6.4).
 - **19 Kasım (Kemal, oynanabilir prototip, görünüş isteği):** top bir duvarın, tribünün, binanın, kenarın arkasında
   kalınca aradaki engel yumuşakça şeffaflaşsın; kamera biraz daha uzaklaşabilsin, çevre daha çok görünsün (uzaklaşınca saha
   dışındaki boşluk görünebilir; gökyüzü ve ada ayrı adım). Uygulama: 6.4 "Engel şeffaflığı ve kamera" (öneri; değerler DENEME).
@@ -192,7 +198,11 @@ karakteri, adı, yüzü yok.
 
 **Karar (Kemal, 19 Kasım):**
 - **Nişan yardımı:** yön oku + güç çubuğunda çentikler (25 / 50 / 75) + topun duracağı tahmini yer **yalnız kolay
-  modda**. Kolay modun açık ya da kapalı başlaması DENEME.
+  modda**. ~~Kolay modun açık ya da kapalı başlaması DENEME.~~ **Karar (Kemal, 19 Kasım, prototipten sonra):** oyun
+  normal modla başlar; kolay mod ayar menüsünden açılır, seçim telefonda hatırlanır.
+- **Bırakmadan iptal cezasız** (Kemal, 19 Kasım): nişan alırken parmak topun üstüne geri getirilip bırakılırsa atış
+  olmaz; vuruş da ceza da sayılmaz. Çekerken güç çubuğunun altında "Vazgeçmek için parmağını topa geri getir, bırak"
+  yazar; parmak topa dönünce güç yazısı "Bırak: iptal" olur. (Geri al cezası atış yapıldıktan sonrası içindir.)
 - ~~Falso (spin) eklenirse etkisini gösteren bir nişan çizgisi gerekebilir; falso yalnız öneridir ve o çizgiyle
   birlikte düşünülür (6.5).~~
 - **Falso (spin): evet, sade.** Tek elle oynanır, kapsamlı olmaz ("inanılmaz kapsamlı olmasın"). Falso seçilince nişan
@@ -207,8 +217,8 @@ karakteri, adı, yüzü yok.
 - Nişan çizgisi yalnız yönü gösterir; sekmeyi gösterip göstermeyeceği DENEME (yardımın boyu Kemal'in).
 - **Geri al:** son vuruştan önceki yere döner. ~~Vuruş sayısından düşüp düşmeyeceği: DENEME; **Karar (Kemal, 16 Kasım)**,
   karar denemeden sonra.~~ **Karar (Kemal, 19 Kasım):** +1 vuruş (yukarıda).
-- **Vuruştan önce iptal:** çekerken parmak topa geri getirilip bırakılırsa vuruş olmaz, sayılmaz. Açık soru (7. bölüm);
-  prototip çok kısa çekmeyi zaten iptal ediyor (6.4).
+- **Vuruştan önce iptal:** çekerken parmak topa geri getirilip bırakılırsa vuruş olmaz, sayılmaz. ~~Açık soru (7. bölüm).~~
+  Karar (Kemal, 19 Kasım): cezasız (yukarıda).
 - **Kaldığı yerden devam:** oyun kapanınca tur ve delik hatırlanır; açılınca aynı delikte, aynı vuruş sayısıyla.
 - **Kamera:** **Karar (Kemal, 18 Kasım):** topu yakından izler; iki parmakla yakınlaştırma, uzaklaştırma
   ve açıyı çevirme var (tek elle oynamak için gerekmez, isteğe bağlı). Sınırları (en yakın, en uzak) DENEME.
@@ -972,12 +982,12 @@ Sıra: 3 (kale), 1 (orta yuvarlak), 7 (tribün sıraları).
 | Düşen topun zeminden sekmesi: çim · beton | 0,25 · 0,4 | kaynağı yok |
 | Delik: kenardan sekme · tabandan sekme · derinlik | 0,3 · 0,15 · 0,1016 m | derinlik golf kuralındaki en az 4 inç; bu oturumda kaynaktan okunmadı |
 | Duvara sürtünme | 0,12 | kaynağı yok |
-| Kamera: yakınlık · en uzak · en yakın | 200 · 25 · 420 piksel/m | 200: ekranın eni yaklaşık 1,95 m (maketteki uzaklık); en uzak 19 Kasım'da 55'ten 25'e (ekranın eni 7,1 m yerine 15,6 m) |
+| Kamera: yakınlık · en uzak · en yakın | 200 · 25 · 420 piksel/m | 200: ekranın eni yaklaşık 1,95 m (maketteki uzaklık; **Karar (Kemal, 19 Kasım)**, artık DENEME değil); en uzak 19 Kasım'da 55'ten 25'e (ekranın eni 7,1 m yerine 15,6 m) |
 | Kamera eğimi: başta · en az · en çok | 52° · 20° · 80° | en az: yere yatmaz, yerin altına inmez; en çok: tam tepeden bakmaz |
 | Tek parmakla çevirme · eğme hızı | 0,012 · 0,006 radyan/piksel | yaklaşık 520 piksel sağa sola sürükleme bir tam tur |
 | Vuruştan sonra izleme: sıkılık · dönme | 12 · 1,2 (top 2 m/s'den yavaşken orantılı az) | kamera topun arkasına döner; oyuncu elle çevirirse o vuruş için bırakır |
 | "Deliğe bak" dönüşünün yumuşaklığı | 8 | |
-| Kolay mod (topun duracağı yer) başta | açık | Kemal'in kararı; ayar menüsünden kapanır, telefonda hatırlanır |
+| Kolay mod (topun duracağı yer) başta | kapalı (normal mod) | **Karar (Kemal, 19 Kasım)**; ayar menüsünden açılır, telefonda hatırlanır (`OYUNCU.kolayMod`) |
 | Kale filesinin göz aralığı · ip kalınlığı | 0,12 m · 9 mm | kaynağı yok; ip telefonda seçilsin diye gerçeğinden kalın |
 | Kamera başlangıç yönü | maketteki bakış | topun arkasından, biraz yandan |
 | Top dışarı çıkarsa | son vuruşun yerine döner, vuruş sayılır, +1 ceza vuruşu | **Karar (Kemal, 19 Kasım)**; artık DENEME değil (`KURAL.disariCeza`) |
@@ -1104,7 +1114,9 @@ DENEME değerleri (`src/oyun/ayarlar.ts` → `KUTLAMA`, `ORTAM`; Kemal onaylamad
 | İndirilen yeni dosya | yok | yok |
 
 Ortam beş çizim çağrısı ekler (kuşların hepsi 1; insanlar 4: gövde, baş, bacak, yerdeki gölge) ve en çok 870 üçgen.
-İnsanlar kapanınca (Kemal, 19 Kasım) ortam yalnız 1 çağrı ekler; ölçüm aşağıda "Kemal'in 19 Kasım kararları".
+İnsanlar kapanınca (Kemal, 19 Kasım; PR #14) ortam yalnız 1 çağrı ekler. Ölçüm (aynı bilgisayar, delik 3 · 1 · 7,
+başlangıç bakışı): çizim çağrısı gölge açık 53 · 71 · 57 → 49 · 67 · 53, gölge kapalı 29 · 37 · 32 → 25 · 33 · 28;
+üçgen gölge açık 840, gölge kapalı 504 azaldı. Kuşlar aynı (5; düşük kalitede 2).
 Ağaç ve çim hareketi yeni çizim getirmez. Kare sayıları ekran kartı olmayan bir bilgisayarda, art arda 6 saniyelik
 ölçümlerle alındı (önce sonra, hemen ardından önce) ve çok oynak: aynı "önce" sürümü gün içinde 13,9 · 14,2 · 5,3 ve
 8,6 · 8,1 · 2,8 de ölçüldü (gölge açık). Bu ölçümle önce ile sonra arasında güvenilir bir fark gösterilemedi; sayılar
@@ -1132,6 +1144,16 @@ Görüntüler: `galeri/eski/insan-oncesi/oyna-par-1-ortam.jpg` (delik 3, biraz u
   ucundaki yer kesiliyordu (eski en uzak hâlde de 20°'de oluyordu); kamera o zaman kendi bakış çizgisinde geri çekilir,
   görüntü küçülmez. Saha dışındaki boşluk görünebilir; gökyüzü ve ada ayrı adım.
 - **Fizik değişmedi:** `fizik.ts`, delik verisi ve vuruş ayarlarına dokunulmadı; bot aynı vuruşlarla (1, 1, 4) bitirdi.
+- **Delik için de (Kemal, 19 Kasım; öneri, PR #14):** delik ve bayrağı kameradan bakınca bir engelin (taş duvar,
+  basamak, koltuk, bina…) arkasında kalınca deliğin çevresinde aynı yumuşak pencere açılır; pencere delik ağzından
+  yukarısını, bayrakla birlikte kapsar. Saydamlık, süre ve pencere boyu topunkiyle aynı; deliğin çevresine de aynı
+  renkte halka çıkar. Top ve delik birlikte gizliyse iki pencere birden açıktır. Delik yerinden oynamadığı için ışın
+  (üç ışın: delik ağzı, bayrağın ortası, ucu) yalnız kamera oynayınca atılır, en çok saniyede 10 kez. Malzeme
+  kopyalanmaz; ek çizim yalnız deliğin halkası (pencere açıkken 1 çağrı). Engeller aynı (`seffaflik.ts`).
+- **Halkanın rengi** (Kemal, 19 Kasım): ayar menüsünde krem, lacivert, kiremit; başta krem; hem topun hem deliğin halkası.
+- Görüntüler (PR #14): `ekranlar/oyna-karar-1-ortam-insansiz.jpg`, `oyna-karar-2-ayarlar.jpg`, `oyna-karar-3-iptal.jpg`,
+  `oyna-karar-4-delik-oncesi-sonrasi.jpg`, `oyna-karar-5-kolaj.jpg`. Bot (19 Kasım): hepsi tamam; delik 7'de duvarın
+  gerisinden bakınca iki pencere birden açıldı, bakış dönünce deliğinki kapandı.
 
 Kemal'in kararı (19 Kasım; `src/oyun/ayarlar.ts`, "Karar: Kemal, 19 Kasım 2026"):
 
@@ -1235,9 +1257,8 @@ Kemal'in kararını bekleyenler.
 - ~~Top ve delik ne kadar büyük çizilsin?~~ Cevaplandı (Kemal, 18 Kasım): gerçek ölçü, kamera topu izler.
 - ~~Bordürün rengi~~ Cevaplandı (Kemal, 18 Kasım): kiremit.
 - ~~Tribünde oturma tahtaları~~ Cevaplandı (Kemal, 18 Kasım): tahta yerine tek tek koltuk, engel olarak.
-- **Vuruştan önce cezasız iptal** (19 Kasım): çekerken parmak topa geri getirilip bırakılırsa vuruş olmaz, sayılmaz.
-  Prototip çok kısa çekmeyi zaten iptal ediyor (6.4). Seçenekler: **(a)** böyle kalsın, ceza yok (önerilen);
-  **(b)** her bırakış vuruş sayılır.
+- ~~**Vuruştan önce cezasız iptal** (19 Kasım): seçenekler (a) ceza yok, (b) her bırakış vuruş sayılır.~~ Cevaplandı
+  (Kemal, 19 Kasım): **(a)**, cezasız; parmak topa geri getirilip bırakılır, ekranda kısa ipucu (2. bölüm).
 - ~~**Geri al vuruşu sayıdan düşer mi?** DENEME; karar denemeden sonra (Kemal, 16 Kasım; 2. bölüm).~~ Cevaplandı
   (Kemal, 19 Kasım): +1 vuruş.
 - ~~**Top dışarı kaçarsa:** öneri "vuruştan önceki yere döner, vuruş sayılır"; DENEME, karar denemeden sonra.~~
@@ -1245,7 +1266,8 @@ Kemal'in kararını bekleyenler.
 - **Vuruş sınırı:** web denemesinden sonra.
 - **Nişan çizgisi sekmeyi göstersin mi?** (4. delik) Nişan yardımı karara bağlandı (Kemal, 19 Kasım; 2. bölüm: yön oku,
   güç çentikleri, kolay modda duracağı yer); sekme çizgisi bu kararda yok.
-- **Kolay modun açık ya da kapalı başlaması:** DENEME (2. bölüm).
+- ~~**Kolay modun açık ya da kapalı başlaması:** DENEME (2. bölüm).~~ Cevaplandı (Kemal, 19 Kasım): kapalı başlar,
+  ayar menüsünden açılır.
 - ~~**Par ve yıldız değerleri:** DENEME; Kemal oynadıktan sonra (3.3).~~ Cevaplandı (Kemal, 19 Kasım): şimdiki gibi;
   par 3 · 2 · 4 (delik 3 · 1 · 7), yıldız eşikleri par, par + 1 (3.3, 6.4).
 - ~~**Rozetler:** hangi rozetler olsun~~ Cevaplandı (Kemal, 19 Kasım): üçü kalır (tek vuruş, par altı, cezasız).

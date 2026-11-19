@@ -262,11 +262,11 @@ dogrula((await sayfa.textContent('[data-deneme="par"]')).includes(String(F.parDe
   dogrula(icinde.length === 0, `ortam: insanlar pistlerin en az ${pay} m dışında`);
 }
 await goruntu('01-delik3-baslangic');
-// Ayar menüsü: kolay mod başta açık (DENEME).
+// Ayar menüsü: oyun normal modla başlar, kolay mod kapalı (Karar: Kemal, 19 Kasım).
 await sayfa.tap('[data-deneme="ayarlar"]');
 await bekle(300);
 dogrula(await sayfa.isVisible('[data-deneme="ayar-menusu"]'), 'ayar menüsü açıldı');
-dogrula(await sayfa.isChecked('[data-deneme="kolay-mod"]'), 'kolay mod başta açık');
+dogrula(!(await sayfa.isChecked('[data-deneme="kolay-mod"]')) && !(await durum()).kolay, 'kolay mod başta kapalı (normal mod)');
 // Engelin arkasındaki topun halkasının rengi (Kemal, 19 Kasım): krem, lacivert, kiremit; başta krem; hatırlanır.
 {
   const renkler = await sayfa.$$eval('[data-deneme="halka-rengi"] [data-renk]', (l) => l.map((b) => b.getAttribute('data-renk')));
@@ -281,6 +281,10 @@ dogrula(await sayfa.isChecked('[data-deneme="kolay-mod"]'), 'kolay mod başta a�
     dogrula((await durum()).halkaRengi === r && (await secili()) === r && saklanan === r, `halka rengi ${r} seçildi, oyuna geçti ve hatırlandı`);
   }
 }
+// Bot kolay moddaki tahmini de denetlediği için kolay modu burada açıkça açar; seçim hatırlanır.
+await sayfa.locator('label.oy-ayar-satir').tap();
+await bekle(200);
+dogrula(await sayfa.isChecked('[data-deneme="kolay-mod"]') && (await durum()).kolay && (await sayfa.evaluate(() => window.localStorage.getItem('minigolf.kolayMod'))) === '1', 'kolay mod ayar menüsünden açıldı ve hatırlandı');
 await sayfa.tap('[data-deneme="ayarlar"]');
 await bekle(300);
 
@@ -425,6 +429,29 @@ const iptal = (await durum()).nisan;
 await dokun('touchEnd', []);
 await bekle(500);
 dogrula(!iptal.aktif && (await durum()).vuruslar[0] === 0, 'çekerken ikinci parmak gelince vuruş iptal');
+// Cezasız iptal (Kemal, 19 Kasım): çekip parmağı topun üstüne geri getirip bırakınca atış olmaz, vuruş ve ceza sayılmaz.
+{
+  const b = await durum();
+  const [tx, ty] = b.topEkran;
+  await dokun('touchStart', [[tx, ty]]);
+  await dokun('touchMove', [[tx, ty + 90]]);
+  await bekle(250);
+  const ipucu = await sayfa.isVisible('[data-deneme="iptal-ipucu"]');
+  const cekili = (await durum()).nisan;
+  await dokun('touchMove', [[tx + 2, ty + 3]]);
+  // Yavaş makinede ekranın yetişmesini bekle (en çok 3 sn).
+  await sayfa.waitForFunction(() => window.__minigolf.durum().nisan.guc === 0, null, { timeout: 3000, polling: 50 }).catch(() => {});
+  await bekle(150);
+  const geri = (await durum()).nisan;
+  const yazi = await sayfa.textContent('.oy-guc span');
+  await goruntu('06-iptal');
+  await dokun('touchEnd', []);
+  await bekle(600);
+  const s = await durum();
+  dogrula(ipucu && cekili.guc > 0, 'nişan alırken iptal ipucu ekranda');
+  dogrula(geri.aktif && geri.guc === 0 && yazi.trim() === 'Bırak: iptal', `parmak topa dönünce güç ${geri.guc}, "${yazi.trim()}" yazıyor`);
+  dogrula(s.vuruslar[0] === 0 && s.cezalar[0] === 0 && s.top.duruyor && Math.hypot(s.top.x - b.top.x, s.top.z - b.top.z) < 1e-6, 'topa geri getirip bırakınca atış iptal: top yerinde, vuruş ve ceza 0');
+}
 await sayfa.click('[data-deneme="delik-yeniden"]');
 await bekle(1200);
 
@@ -478,6 +505,21 @@ yaz('Delik 7 · tribün: önce dışarı çıkma');
 d = await durum();
 dogrula(d.no === 7, '"sonraki delik" üçüncü deliği açtı (7)');
 await goruntu('30-delik7-baslangic');
+// Engelin arkasındaki delik (Kemal, 19 Kasım): başlangıçta delik görünür, pencere kapalı. Kamera deliğe tribünün
+// duvarının gerisinden bakınca deliğin çevresinde pencere açılır (top da arkadaysa ikisi birden); geri dönünce kapanır.
+{
+  dogrula(d.cizim.delikEngel === 0, 'delik 7: başlangıç bakışında delik açıkta, pencere kapalı');
+  const c7 = F.oyunDeligi(7).dunya.delik;
+  await sayfa.evaluate(([x, y, z]) => window.__minigolf.kamera({ aci: (120 * Math.PI) / 180, egim: (30 * Math.PI) / 180, yakinlik: 150, bak: [x, y + 0.35, z] }), [c7.x, c7.y, c7.z]);
+  await bekle(1500);
+  const a = await durum();
+  dogrula(a.cizim.delikEngel > 0.99 && a.cizim.engel > 0.99, `delik 7: duvarın gerisinden bakınca deliğin ve topun penceresi birden açık (delik ${a.cizim.delikEngel.toFixed(2)}, top ${a.cizim.engel.toFixed(2)})`);
+  await goruntu('32-delik7-delik-arkada');
+  await sayfa.evaluate(([aci, egim, yakinlik]) => window.__minigolf.kamera({ aci, egim, yakinlik, bak: null }), [d.aci, d.egim, d.yakinlik]);
+  await bekle(1500);
+  const g = await durum();
+  dogrula(g.cizim.delikEngel === 0, 'delik 7: bakış geri dönünce deliğin penceresi kapandı');
+}
 // Tam güçle oluk boyunca: top köşeden dönüp koltukların üstünden aşar, dışarı çıkar.
 const delik7 = F.oyunDeligi(7);
 const disari = dene(delik7, d.top, Math.PI, 1);

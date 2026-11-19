@@ -249,6 +249,38 @@
     },
     {
       "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · ayar menüsü · halka rengi (krem, lacivert, kiremit), kolay mod başta kapalı",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 14,
+      "yol": "docs/ekranlar/oyna-karar-2-ayarlar.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · cezasız iptal · parmak topa dönünce \"Bırak: iptal\", altında ipucu",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 14,
+      "yol": "docs/ekranlar/oyna-karar-3-iptal.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · delik 7 · engelin arkasındaki delik · önce ve sonra (deliğin çevresinde pencere ve halka)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 14,
+      "yol": "docs/ekranlar/oyna-karar-4-delik-oncesi-sonrasi.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · Kemal'in 19 Kasım kararları · kolaj",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 14,
+      "yol": "docs/ekranlar/oyna-karar-5-kolaj.jpg"
+    },
+    {
+      "bolum": "oyun",
       "baslik": "Oynanabilir prototip · kutlama · top deliğe düşünce bayrak kalkar, halkalar açılır",
       "tarih": "2026-11-19",
       "durum": "taslak",

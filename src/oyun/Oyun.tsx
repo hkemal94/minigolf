@@ -479,6 +479,10 @@ export default function Oyun() {
             ))}
           </div>
           <span ref={gucYaziRef} />
+          {/* Kemal, 19 Kasım: atış bırakılmadan cezasız iptal edilebilir (parmağı topa geri getirip bırakmak). */}
+          <small className="oy-guc-ipucu" data-deneme="iptal-ipucu">
+            {m('oyna.iptalIpucu')}
+          </small>
         </div>
         <div className="oy-arac">
           <button type="button" className="oy-dugme-kucuk" onClick={deligeBak} data-deneme="delige-bak">

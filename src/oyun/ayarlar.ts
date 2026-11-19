@@ -48,7 +48,8 @@ export const VURUS = {
   enCokHiz: 8.5,
   // DENEME · Gücün dolduğu çekme boyu (ekran pikseli).
   enCokCekme: 150,
-  // DENEME · Bundan kısa çekme vuruş sayılmaz (iptal).
+  // Karar: Kemal, 19 Kasım 2026 · Bırakmadan önce parmak topun üstüne geri getirilip bırakılırsa atış cezasız
+  // iptal olur (vuruş sayılmaz). Sınırın kendisi (piksel) DENEME: bundan kısa çekme vuruş sayılmaz.
   enAzCekme: 14,
   // DENEME · Güç eğrisi: hız = enCokHiz × (çekme / enCokCekme) ^ us. 1'den büyük: kısa vuruş daha ince ayarlanır.
   us: 1.5,
@@ -115,9 +116,9 @@ export const SEFFAFLIK = {
 
 // --- Oyuncu ayarları (oyundaki küçük ayar menüsü)
 export const OYUNCU = {
-  // DENEME · Kolay mod: çekerken topun duracağı yer gösterilir (aynı fizikle, sekmeler dahil). Kemal
-  // 19 Kasım'da istedi; başta açık mı kapalı mı Kemal'in kararı. Şimdilik açık.
-  kolayMod: true,
+  // Karar: Kemal, 19 Kasım 2026 · Kolay mod: çekerken topun duracağı yer gösterilir (aynı fizikle, sekmeler dahil).
+  // Oyun ilk açılışta normal modla başlar (kapalı); kolay mod ayar menüsünden açılır, seçim telefonda hatırlanır.
+  kolayMod: false,
   // Karar: Kemal, 19 Kasım 2026 · Engelin arkasındaki topun halkasının rengi ayar menüsünden seçilir (krem, lacivert,
   // kiremit; marka kitinin renkleri). Başta krem; seçim oyuncunun telefonunda hatırlanır.
   halkaRengi: 'krem' as HalkaRengi,
