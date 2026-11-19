@@ -2,7 +2,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type Point
 import { Canvas } from '@react-three/fiber';
 import { m, type MetinAnahtari } from '../metinler';
 import { metre } from '../maket/metre';
-import { HALKA_RENKLERI, KAMERA, KURAL, KUTLAMA, OYUNCU, PUAN, VURUS, type HalkaRengi } from './ayarlar';
+import { ARKA_PLAN, HALKA_RENKLERI, KAMERA, KURAL, KUTLAMA, OYUNCU, PUAN, VURUS, type HalkaRengi } from './ayarlar';
 import { renk } from '../sahne/renkler';
 import { OYUN_SIRASI, oyunDeligi } from './dunya';
 import { vur, yeniTop } from './fizik';
@@ -422,7 +422,7 @@ export default function Oyun() {
           shadows
           orthographic
           dpr={[1, 2]}
-          camera={{ position: [0, 20, 0], zoom: KAMERA.yakinlik, near: 0.1, far: 200 }}
+          camera={{ position: [0, 20, 0], zoom: KAMERA.yakinlik, near: 0.1, far: ARKA_PLAN.kameraUzak }}
           onCreated={({ gl }) => {
             gl.localClippingEnabled = true;
           }}

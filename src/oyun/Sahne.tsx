@@ -8,6 +8,7 @@ import { DENEME, GOLF, MODEL, TOP_YARICAP, WMF } from '../maket/olculer';
 import { BOS_KOLTUK, MERDIVEN_X0, TRIBUN_X1, koltukX, koltukZ, siraOn, siraY } from '../maket/ornekDelikler';
 import { FIZIK, GORUNTU, GORUNUS, KAMERA, KUTLAMA, ORTAM, OYUNCU, SEFFAFLIK, VURUS, type HalkaRengi } from './ayarlar';
 import { engelArkasinda, seffafDegerler, seffafYap } from './seffaflik';
+import { ArkaPlan } from './ArkaPlan';
 import { Ortam, RUZGAR, agacMalzemesi, cimeRuzgar, yeniOrtamDurumu, type OrtamDurumu } from './Ortam';
 import { DOKU_DOSYALARI, dokuBellegi, dokulariHazirla, dunyaYerlesimi, fileDokusu, fileGeometrisi, gokYansimasi, modelDokusu, modelMalzemesi, modelYerlesimi, topKabartisi, type Dokular } from './dokular';
 import { adimAt, yeniTop, type Top } from './fizik';
@@ -694,7 +695,6 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
 
   return (
     <>
-      <color attach="background" args={[renk.krem]} />
       {/* Işık: sakin gün ışığı. Tek güneş (gölge veren tek ışık) ve gökten, yerden gelen dolgu. Değerler DENEME. */}
       <hemisphereLight args={[GORUNUS.gokRenk, GORUNUS.yerRenk, GORUNUS.dolguGuc]} />
       <primitive
@@ -765,6 +765,9 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
           <meshBasicMaterial color={delik.kaldirma > 0 ? renk.krem : renk.lacivert} transparent opacity={0} depthWrite={false} />
         </mesh>
       ))}
+
+      {/* Arka plan: gökyüzü, çevredeki mahalle, ağaçlar, uzakta ada ve deniz (engel değil; gölgeye girmez) */}
+      <ArkaPlan dusuk={() => golgeKapandi} />
 
       {/* Maçsız gün: kuşlar ve uzakta birkaç kişi (rüzgâr ağaçta, çimde ve bayrakta) */}
       <Ortam delik={delik} hal={durum.ortam} dusuk={() => golgeKapandi} />

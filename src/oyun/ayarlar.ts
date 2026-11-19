@@ -221,6 +221,20 @@ export const KUTLAMA = {
   halkaGecikme: 0.28, // ikinci halkanın gecikmesi (sn)
 } as const;
 
+// --- Arka plan (Kemal, 19 Kasım 2026: sahanın dışında boşluk yerine gökyüzü, ada, mahalle ve ağaçlar). src/oyun/ArkaPlan.tsx.
+// Çevre KKM haritasının 3B parçalarından (duzada-harita) gerçek yerinde: stadın çevresindeki 200 m ayrıntılı (evler, duvarlar,
+// sokaklar, ağaçlar), 200–900 m kaba arazi, deniz. Saha merkezi ve yönü haritadan; çevre gerçek ölçüde (saha oyunda 90 × 58 kalır).
+// Üretim: scripts/arka-plani-uret.mjs → public/modeller/arka-plan.glb. Engel sayılmaz (şeffaflık ışınına girmez), gölge almaz, vermez.
+export const ARKA_PLAN = {
+  // DENEME · Gök: ekranın üstünden altına yumuşak geçiş (yukarıda açık mavi, ufukta uzaklık pusu).
+  gokUst: '#A9C6DA',
+  gokAlt: '#E3E7E6',
+  // DENEME · Oyun yavaşlayıp gölgeleri kapatınca evler, duvarlar ve ağaçlar gizlenir; yalnız arazi ve deniz kalır.
+  dusukteAyrintiYok: true as boolean,
+  // DENEME · Kameranın en uzak çizim mesafesi (m). Önce 200; uzaklaşıp eğince çevre yarıda kesilmesin diye 600.
+  kameraUzak: 600,
+} as const;
+
 // --- Ortam: maç olmayan, sakin bir gün (Karar: Kemal, 19 Kasım 2026: rüzgâr, kuşlar, uzakta birkaç kişi; ad ve
 // hikâye yok). Hepsi kodla çizilir (dış model yok), fizikle ilgisi yok. Sayılar ve yerler DENEME.
 export const ORTAM = {

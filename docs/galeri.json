@@ -281,6 +281,22 @@
     },
     {
       "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · arka plan · önce ve sonra (başlangıç, en uzak ve eğik iki yön, delik 7)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 15,
+      "yol": "docs/ekranlar/oyna-arka-plan-kolaj.jpg"
+    },
+    {
+      "bolum": "oyun",
+      "baslik": "Oynanabilir prototip · arka plan · delik 3 · en uzak ve eğik bakış: duvarın ötesinde mahalle, evler, ağaçlar",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 15,
+      "yol": "docs/ekranlar/oyna-arka-plan-1-uzak-egik.jpg"
+    },
+    {
+      "bolum": "oyun",
       "baslik": "Oynanabilir prototip · kutlama · top deliğe düşünce bayrak kalkar, halkalar açılır",
       "tarih": "2026-11-19",
       "durum": "taslak",

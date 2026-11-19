@@ -37,5 +37,8 @@ mankeni ve maketlerdeki simgeler kodla çiziliyor (eşyaların üstünde yazı, 
 yeni dış model eklenmedi. Ses yok; hazır görsel yalnız yukarıdaki dokular. 3B stat modeli
 oyunda kullanılabilir (Kemal, 16 Kasım); tünel ve soyunma odası modelde yok, eklenecek.
 
+Arka plan (`public/modeller/arka-plan.glb`, 19 Kasım): Kemal'in kendi KKM haritasından (`hkemal94/duzada-harita`)
+üretildi; dış kaynak yok.
+
 Yazılım kütüphaneleri (React, Three.js, React Three Fiber, Vite, TypeScript) MIT ve Apache 2.0
 lisanslıdır; oyunun içinde görünmezler.

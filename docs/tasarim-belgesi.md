@@ -1200,6 +1200,22 @@ Kontroller (19 Kasım): bot ayrıca tam tur çevirmeyi, eğmenin sınırlarını
 topun durduğu yerle aynı olduğunu (sapma 0) ve dışarı çıkan vuruşta sayacın 2 arttığını doğruladı. Tarifteki yolla 3. delik
 tek vuruşta gücün %62–68'iyle deliğe giriyor (hesap). Görüntüler: `ekranlar/oyna-v2-1-baslangic.png` … `oyna-v2-9-disari-ceza.png`.
 
+**Arka plan (19 Kasım; öneri, Kemal'in isteği: sahanın dışında boşluk yerine gökyüzü, ada, mahalle, ağaçlar).**
+Stadın çevresi KKM haritasının 3B parçalarından (`duzada-harita`, `parca/*.glb`) gerçek yerinde alındı: saha merkezi ve
+yönü haritadaki saha çizgilerinden. Stattan 150 m içinde ayrıntılı arazi, sokaklar, ağaçlar; 100 m içinde evler ve
+duvarlar; ötesinde 900 m'ye kadar kaba arazi ve evler; en dışta deniz. Haritadaki stadın kendisi alınmadı, yerinde oyunun
+kendi stat modeli duruyor. Çevre gerçek ölçüde; saha oyunda 90 × 58 kalır. Arabalar ve sokak eşyası alınmadı. Renkler
+haritanın renkleri, uzaklaştıkça pusa karışır; gökyüzü ekranın üstünden altına açık maviden puslu açık griye geçer.
+Arka plan engel sayılmaz (şeffaflık ona işlemez), gölge almaz ve vermez, fiziğe girmez. Oyun yavaşlayıp gölgeleri
+kapatınca evler, duvarlar ve ağaçlar da gizlenir, arazi ve deniz kalır. Kameranın çizim mesafesi 200 m'den 600 m'ye çıktı.
+Değerler DENEME (`src/oyun/ayarlar.ts` → `ARKA_PLAN`; dosya `public/modeller/arka-plan.glb`, 186 KB; üretim
+`scripts/arka-plani-uret.mjs`). Bot üç deliği aynı vuruşlarla (1, 1, 4) bitirdi.
+Çizim yükü (bilgisayarda, telefon boyutunda, piksel oranı 2, yüksek kalite, yazılımla çizen tarayıcıda; önce → sonra):
+delik 3 başlangıç 49 → 53 çizim, 25,6 bin → 62,9 bin üçgen; delik 7 53 → 57 çizim, 39,2 bin → 76,5 bin üçgen.
+Yazılımla çizen tarayıcıda kare süresi yaklaşık 2–4 kat uzadı (ekran kartı yok; telefondaki hızı göstermez). İndirilen
+toplam 4,32 → 4,46 MB. **Gerçek telefonda denenmedi; telefondaki kare hızı ölçülmedi.** Görüntüler:
+`ekranlar/oyna-arka-plan-kolaj.jpg`, `oyna-arka-plan-1-uzak-egik.jpg`.
+
 ### 6.5 Öneri havuzu (19 Kasım raporundan)
 
 **Öneri** (Kemal onaylamadı; karara bağlananlar ayrıca yazılı). Dışarıdan gelen rapordaki fikirler. ✓ = prototipte (#7, ana dalda) var; "1. PR'da" =
