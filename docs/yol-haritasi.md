@@ -42,17 +42,29 @@
   penaltı noktası modelde yok, kodla çizildi. Huniler, sulama başlıkları ve baraj mankenleri künyede ve modelde
   yok: DENEME, Kemal onaylamadı (Kems'in ön elemesinden sonra eklendi). Oynanış yok; gerçek telefonda denenmedi.
 
+- 19 Kasım 2026 (öneri; `ajans/delikler-adim-2`): adım 2. Açık tribünün çevresindeki üç delik yeni dille çizildi:
+  6 (tribünün önü: çimden toprağa, korkuluğun altından, direklerin arasından merdivenin ayağına), 8 (üst sıranın
+  oluğundan köşeyle köprüye; kenarsız, hafif inen köprüden taş duvarın üstüne), 9 (nefes; koridorda köprü
+  ayağının yanından, taş duvardan sekip tribünün köşesinin arkasına). Maketler `?maket=delik|atis|sema&no=6|8|9`;
+  yerleşim şeması ve delik planı on deliği gösterir, kalan 8 "yeniden çizilecek". Numara şeridi on deliğe göre
+  düzenlendi. Köprünün yeri karar (Kemal); biçimi, ölçüsü ve ayağı DENEME. Oynanış yok; gerçek telefonda denenmedi.
+- 19 Kasım 2026 (aynı dal; Kemal): **stat modeli düzeltildi** (çim tek düzeyde, orta yuvarlak sürekli, yaylar,
+  noktalar ve köşe bayrakları modelde); maket yeni modele uyarlandı, kodla çizilen işaretler kaldırıldı, 1–5, 7 ve
+  14'ün ekranları yeniden alındı. Huni, sulama başlığı ve baraj mankeni **kalıyor, gerçeğe yakın çizildi**
+  (boyları kaynakla). 2. delikteki taç sorusu için üç seçenekli çizim: `docs/plan/delik-2-tac-secenekleri.png`.
+
 ## Sıradaki
 
-1. **Kalan 11 delik yeni dille** (karar: Kemal, 18 Kasım; sıra öneri, tasarım belgesi 4.9). Her adım tek
+1. **Kalan 8 delik yeni dille** (karar: Kemal, 18 Kasım; sıra öneri, tasarım belgesi 4.9). Her adım tek
    PR (şema, delik ve atış maketi, tarif); bir sonraki adım Kemal bir öncekini gördükten sonra:
-   - Adım 1: **1, 2, 4, 5** (saha, çim). Çizildi (öneri; `ajans/delikler-adim-1`), Kemal'in bakması bekleniyor.
-   - Adım 2: **6, 8, 9** (açık tribünün önü, koridor köprüsü, duvar içi koridor).
+   - Adım 1: **1, 2, 4, 5** (saha, çim). Bitti (PR #4 birleşti).
+   - Adım 2: **6, 8, 9** (açık tribünün önü, koridor köprüsü, duvar içi koridor). Çizildi (öneri;
+     `ajans/delikler-adim-2`), Kemal'in bakması bekleniyor.
    - Adım 3: **10, 11** (kulüp binası, ışık direği).
    - Adım 4: **12, 13, 15** (tünel, soyunma odası, kapı; yerler modelde yok, kodla çizilir).
    - Adım 5: **16, 17, 18** (kapalı tribün, bayrak direği, final; hareketli engeller en son).
-2. **Modelde düzeltilecekler** (Kems Ajans; tasarım belgesi 4.8 sonu): sahanın çimi çevre çimden 4 cm yüksek,
-   orta yuvarlak kesik parçalı; köşe yayı, penaltı yayı, penaltı noktası, orta nokta ve köşe bayrakları yok.
+2. **Kemal'in kararını bekleyenler:** 2. delikte taç çizgisi (üç seçenek, tasarım belgesi 7. bölüm); 8. delikte
+   köprünün biçimi. Köprü ve arka duvardaki geçit modele eklenir (3B iş; makette kodla çizili).
 3. **Tünel ve soyunma odası** (duşlarıyla) modele eklenir: kapalı tribünün altı, tünel oradan sahaya
    (yeri karar, Kemal 16 Kasım; 3B iş). Makette o zamana kadar kodla çizilir.
 4. **İlk delik denemesi:** fizik kütüphanesi seçilir, tek parmak vuruş ve nişan çizgisi, geri al, delik
@@ -71,6 +83,9 @@
 
 ## Bitenler
 
+- Adım 1: delik 1, 2, 4, 5 (18 Kasım, PR #4 birleşti).
+- Stat modeli düzeltildi (19 Kasım; Kemal): çim düzeyi, orta yuvarlak, yaylar, noktalar, köşe bayrakları.
+- Huni, sulama başlığı, baraj mankeni kararı (Kemal, 19 Kasım): kalsın, gerçeğe yakın.
 - İskelet (16 Kasım, PR #1 birleşti).
 - Stadyum turu soruları: Kemal'in 8 cevabı (16 Kasım; tasarım belgesi, kararların geçmişi).
 - Ölçek, zemin ve özgün delik kararı (Kemal, 18 Kasım; tasarım belgesi, kararların geçmişi ve 4.8).

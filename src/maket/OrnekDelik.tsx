@@ -1,25 +1,27 @@
 import { useMemo } from 'react';
-import { CanvasTexture, RepeatWrapping, SRGBColorSpace } from 'three';
+import { CanvasTexture, RepeatWrapping, Shape, SRGBColorSpace } from 'three';
 
 import { renk } from '../sahne/renkler';
-import { StatSahnesi, EkranKonumu } from './StatSahnesi';
+import { StatSahnesi, EkranKonumu, type Kesim } from './StatSahnesi';
 import { Bordur, Baslangic, Top, BayrakliDelik, KesikNisan, KalinCizgi, GucHalkasi } from './Pist';
-import { DENEME, IFAB, MODEL, TOP_YARICAP } from './olculer';
+import { DENEME, ESYA, MODEL, TOP_YARICAP } from './olculer';
 import {
   ornekDelik,
   siraOn,
   siraY,
-  TRIBUN_X1,
   MERDIVEN_X0,
+  MERDIVEN_X1,
+  KOPRU,
+  KOPRU_BOY,
+  KOPRU_INIS,
+  KOPRU_AYAK,
+  kopruY,
   BOS_KOLTUK,
   koltukX,
   koltukZ,
   DUS_BOY,
   DUS_EN,
   DUS_BOLMELER,
-  KOSE,
-  ORTA,
-  PENALTI,
   HUNILER,
   SULAMA,
   MANKENLER,
@@ -49,6 +51,23 @@ const BAKISLAR: Record<number, { genel: Bakis; atis: Bakis }> = {
   4: eksiX,
   // 5: baraj 2,75 m ileride; ekrana girsin diye kamera biraz daha ileriye bakar.
   5: { genel: { ...eksiX.genel, ileri: [-1.75, 0, -0.1] }, atis: eksiX.atis },
+  // 6: başlangıçta oyun yönü -z (tribüne doğru); korkuluk ve ilk basamak ekrana girsin diye ileriye bakar.
+  // Atış anında oyun yönü +x (tribün boyunca).
+  6: {
+    genel: { ...eksiZ.genel, ileri: [0.1, 0, -1.8] },
+    atis: { uzak: [-12, 17, 4.45], ileri: [0.42, 0, -0.16], zoom: 340, golge: 3 },
+  },
+  // 8: başlangıçta oyun yönü +x (oluk boyunca); atış anında -z (köprü boyunca).
+  8: {
+    genel: { uzak: [-12, 17, 4.45], ileri: [1.75, 0, -0.55], zoom: 200, golge: 6 },
+    atis: { uzak: [-1.5, 17, 13.3], ileri: [0.05, 0, -0.6], zoom: 340, golge: 4 },
+  },
+  // 9: başlangıçta oyun yönü +x (koridor boyunca; köprünün ayağı ekrana girsin diye ileriye bakar);
+  // atış anında +z (tribünün köşesinin arkasındaki cebe).
+  9: {
+    genel: { uzak: [-12, 17, -4.45], ileri: [1.7, 0, 0.35], zoom: 200, golge: 7 },
+    atis: { uzak: [5.5, 17, -12.3], ileri: [-0.2, 0, 0.42], zoom: 340, golge: 4 },
+  },
   3: {
     genel: { uzak: [5.5, 17, -12.3], ileri: [-0.52, 0, 1.15], zoom: 200, golge: 5 },
     atis: { uzak: [5.5, 17, -12.3], ileri: [-0.19, 0, 0.42], zoom: 340, golge: 3 },
@@ -64,24 +83,31 @@ const BAKISLAR: Record<number, { genel: Bakis; atis: Bakis }> = {
 };
 
 // Tribün koltukları (Kemal, 18 Kasım 2026: oturma tahtası yerine tek tek koltuk). Modelde yok; kodla
-// çizilir. Modelin tahtaları bu bölgede kesilir (StatSahnesi, kesim). Koltuk: oturak ve sırtlık; sırtlık
-// bir üst basamağa bakan yanda. Boş bırakılan koltuklar topun alt sıraya geçtiği yerlerdir.
-const KOLTUK_BOLGE = { x0: MERDIVEN_X0 - 4.5, x1: TRIBUN_X1 + 3.5 };
-function TribunKoltuklari() {
+// çizilir. Modelin tahtaları bu bölgede kesilir (StatSahnesi, kesimler). Koltuk: oturak ve sırtlık; sırtlık
+// bir üst basamağa bakan yanda. Boş bırakılan koltuklar topun alt sıraya geçtiği yerlerdir (yalnız 7. delik).
+// Koltuk dizisi merdivenden merdivene: ortadaki merdivenin doğusunda B ucundaki merdivene, batısında A ucundakine kadar.
+type KoltukBolge = { x0: number; x1: number };
+const KOLTUK_BOLGELERI: Record<number, KoltukBolge> = {
+  6: { x0: 35.5, x1: 50.5 },
+  7: { x0: MERDIVEN_X0 - 4.5, x1: MERDIVEN_X1 + 9.75 },
+  8: { x0: 51, x1: MODEL.yanDuvarX0 },
+};
+const tahtaKesimi = (b: KoltukBolge): Kesim => ({ x0: b.x0, x1: b.x1, z0: siraOn(MODEL.acikTribunSira) - 0.7, z1: siraOn(1) });
+function TribunKoltuklari({ bolge, bos = {} }: { bolge: KoltukBolge; bos?: Record<number, number> }) {
   const koltuklar = useMemo(() => {
     const liste: { x: number; sira: number }[] = [];
     for (let sira = 1; sira <= MODEL.acikTribunSira; sira++) {
       // merdivenin doğusu
-      for (let i = 0; koltukX(i)[1] <= KOLTUK_BOLGE.x1; i++) {
-        if (BOS_KOLTUK[sira] !== i) liste.push({ x: (koltukX(i)[0] + koltukX(i)[1]) / 2, sira });
+      for (let i = 0; koltukX(i)[1] <= Math.min(bolge.x1, MODEL.bMerdivenX0); i++) {
+        if (bos[sira] !== i && koltukX(i)[0] >= bolge.x0) liste.push({ x: (koltukX(i)[0] + koltukX(i)[1]) / 2, sira });
       }
       // merdivenin batısı
-      for (let x = MERDIVEN_X0 - DENEME.koltukAralik / 2; x - DENEME.koltukEn / 2 >= KOLTUK_BOLGE.x0; x -= DENEME.koltukAralik) {
-        liste.push({ x, sira });
+      for (let x = MERDIVEN_X0 - DENEME.koltukAralik / 2; x - DENEME.koltukEn / 2 >= bolge.x0; x -= DENEME.koltukAralik) {
+        if (x + DENEME.koltukEn / 2 <= bolge.x1) liste.push({ x, sira });
       }
     }
     return liste;
-  }, []);
+  }, [bolge, bos]);
   const kalin = MODEL.tahtaKalinlik;
   const derin = MODEL.tahtaEn;
   const sirt = DENEME.koltukSirt;
@@ -234,75 +260,37 @@ function Birikinti({ n, r }: { n: [number, number]; r: number }) {
   );
 }
 
-// Adım 1 (delik 1, 2, 4, 5): zemin sahanın çimi.
-// Modelde sahanın çimi çevredeki çimden 4 cm yüksek (basamak). Taç ve kale çizgisinin üstünden geçen
-// pistte top bu basamağa takılır; makette çevre çim sahanın düzeyine getirilir. Model dosyasına
-// dokunulmaz; modelin kendisinde de düzeltilmesi iyi olur. Renk modeldeki çimin rengi.
-const SAHA_ESYALI = [1, 2, 4, 5];
-function CevreCimi() {
-  // Modeldeki çevre çim: x -4 … 94, z -62 … 4. Sahanın şeritli çiminin hemen altında durur.
-  return (
-    <mesh position={[45, MODEL.cimUstu - 0.001, -29]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-      <planeGeometry args={[98, 66]} />
-      <meshStandardMaterial color="#7E9A55" roughness={1} />
-    </mesh>
-  );
-}
+// Adım 1 (delik 1, 2, 4, 5): zemin sahanın çimi. Model 19 Kasım 2026'da düzeltildi: sahanın çimi çevre
+// çimle aynı düzeyde, orta yuvarlak sürekli çizgi; köşe yayı, köşe bayrağı, penaltı ve orta noktası modelde.
+// Bunlar artık kodla çizilmez.
 
-const CIZGI_RENGI = '#EEE8DC'; // modeldeki saha çizgisinin rengi
-
-// Köşe bayrağı ve köşe yayı (modelde yok; tasarım belgesi 4.7 "eklenecek saha eşyası"). Kodla çizilir.
-// Direk en az 1,5 m, köşe yayı 1 m (IFAB, Kural 1). Direğin kalınlığı ve bayrağın ölçüsü DENEME.
-function KoseBayragi() {
-  const boy = IFAB.koseBayragiEnAz;
-  const r = DENEME.koseDirekYaricap;
-  const yay = IFAB.koseYayiYaricap;
-  const en = MODEL.cizgiEn;
-  return (
-    <group position={[KOSE[0], 0, KOSE[1]]}>
-      <mesh position={[0, MODEL.cizgiUstu - 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <ringGeometry args={[yay - en / 2, yay + en / 2, 32, 1, -Math.PI / 2, Math.PI / 2]} />
-        <meshStandardMaterial color={CIZGI_RENGI} roughness={1} />
-      </mesh>
-      <mesh position={[0, MODEL.cimUstu + boy / 2, 0]} castShadow>
-        <cylinderGeometry args={[r, r, boy, 12]} />
-        <meshStandardMaterial color={renk.krem} roughness={0.8} />
-      </mesh>
-      <mesh position={[DENEME.koseBayrakEn / 2 + r, MODEL.cimUstu + boy - DENEME.koseBayrakBoy / 2, 0]} castShadow>
-        <boxGeometry args={[DENEME.koseBayrakEn, DENEME.koseBayrakBoy, 0.008]} />
-        <meshStandardMaterial color={renk.lacivert} roughness={1} />
-      </mesh>
-    </group>
-  );
-}
-
-// Orta yuvarlak modelde kesik parçalarla çizilmiş; yakından kare kare görünüyor. Makette üstüne aynı
-// yarıçapta (IFAB 9,15 m), parçaların eninde düz bir çizgi çizilir; modelin kendisinde de düzeltilmesi iyi olur.
-function OrtaYuvarlakCizgisi() {
-  const r = IFAB.ortaYuvarlakYaricap;
-  return (
-    <mesh position={[ORTA[0], MODEL.cizgiUstu + 0.002, ORTA[1]]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-      <ringGeometry args={[r - MODEL.ortaYuvarlakCizgiEn / 2, r + MODEL.ortaYuvarlakCizgiEn / 2, 160]} />
-      <meshStandardMaterial color={CIZGI_RENGI} roughness={1} />
-    </mesh>
-  );
-}
-
-// Antrenman hunileri (1. delik). Modelde ve künyede yok; DENEME, Kemal onaylamadı. Yazı, logo yok.
+// Antrenman hunileri (1. delik). Kemal, 19 Kasım 2026: kalsın, gerçeğe yakın. Biçim gerçek huni: kare taban,
+// kesik uçlu koni, ortasında açık renk kuşak. Boy 30,5 cm (ESYA; kaynak olculer.ts); taban ve uç DENEME.
+// Renk marka paletinden (kiremit, krem). Yazı, logo yok.
 function Huniler() {
   const t = DENEME.huniTaban;
-  const b = DENEME.huniBoy;
+  const b = ESYA.huniBoy;
+  const tabanKalin = 0.015;
+  const altR = t / 2 - 0.02;
+  const ustR = DENEME.huniUc / 2;
+  const govde = b - tabanKalin;
+  // Kuşak: gövdenin yüzde 45–70'i arasında, koninin o yükseklikteki yarıçapıyla.
+  const rAt = (o: number) => altR + (ustR - altR) * o;
   return (
     <group>
       {HUNILER.map((n, i) => (
         <group key={i} position={[n[0], MODEL.cizgiUstu, n[1]]}>
-          <mesh position={[0, 0.01, 0]} castShadow receiveShadow>
-            <boxGeometry args={[t, 0.02, t]} />
-            <meshStandardMaterial color={renk.lacivertAcik} roughness={1} />
+          <mesh position={[0, tabanKalin / 2, 0]} castShadow receiveShadow>
+            <boxGeometry args={[t, tabanKalin, t]} />
+            <meshStandardMaterial color={renk.kiremit} roughness={0.9} />
           </mesh>
-          <mesh position={[0, 0.02 + b / 2, 0]} castShadow>
-            <cylinderGeometry args={[0.02, t / 2 - 0.02, b, 16]} />
-            <meshStandardMaterial color={renk.krem} roughness={1} />
+          <mesh position={[0, tabanKalin + govde / 2, 0]} castShadow>
+            <cylinderGeometry args={[ustR, altR, govde, 28]} />
+            <meshStandardMaterial color={renk.kiremit} roughness={0.9} />
+          </mesh>
+          <mesh position={[0, tabanKalin + govde * 0.575, 0]}>
+            <cylinderGeometry args={[rAt(0.7) + 0.002, rAt(0.45) + 0.002, govde * 0.25, 28]} />
+            <meshStandardMaterial color={renk.krem} roughness={0.9} />
           </mesh>
         </group>
       ))}
@@ -310,26 +298,32 @@ function Huniler() {
   );
 }
 
-// Sulama başlıkları (2. delik): yerden çıkmış kısa başlık ve çimdeki yuvası. Modelde ve künyede yok;
-// DENEME, Kemal onaylamadı.
+// Sulama başlıkları (2. delik). Kemal, 19 Kasım 2026: kalsın, gerçeğe yakın. Yerden çıkan (pop-up) başlık:
+// çimde yuvası, yerle bir gövde ağzı, ince yükselen boru ve üstünde kapak. Görünen çap 4,1 cm, çıkma boyu
+// 10,2 cm (ESYA; kaynak olculer.ts). Yuvanın ölçüsü DENEME.
 function SulamaBasliklari() {
-  const r = DENEME.sulamaYaricap;
-  const b = DENEME.sulamaBoy;
+  const r = ESYA.sulamaCap / 2;
+  const b = ESYA.sulamaBoy;
+  const kapak = 0.022;
   return (
     <group>
       {SULAMA.map((n, i) => (
         <group key={i} position={[n[0], MODEL.cimUstu, n[1]]}>
-          <mesh position={[0, 0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <circleGeometry args={[r + 0.04, 24]} />
-            <meshStandardMaterial color={renk.lacivert} roughness={1} />
+          <mesh position={[0, 0.003, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[DENEME.sulamaYuva, 28]} />
+            <meshStandardMaterial color="#8E7F62" roughness={1} />
           </mesh>
-          <mesh position={[0, b / 2, 0]} castShadow>
-            <cylinderGeometry args={[r, r, b, 16]} />
-            <meshStandardMaterial color="#8C9299" roughness={0.6} />
+          <mesh position={[0, 0.006, 0]} castShadow>
+            <cylinderGeometry args={[r + 0.012, r + 0.012, 0.012, 24]} />
+            <meshStandardMaterial color="#2B2A28" roughness={0.7} />
           </mesh>
-          <mesh position={[0, b + 0.01, 0]} castShadow>
-            <cylinderGeometry args={[r * 0.6, r, 0.02, 16]} />
-            <meshStandardMaterial color={renk.lacivertAcik} roughness={0.6} />
+          <mesh position={[0, (b - kapak) / 2, 0]} castShadow>
+            <cylinderGeometry args={[r * 0.72, r * 0.72, b - kapak, 20]} />
+            <meshStandardMaterial color="#8C9299" roughness={0.45} />
+          </mesh>
+          <mesh position={[0, b - kapak / 2, 0]} castShadow>
+            <cylinderGeometry args={[r, r, kapak, 24]} />
+            <meshStandardMaterial color="#2B2A28" roughness={0.7} />
           </mesh>
         </group>
       ))}
@@ -337,29 +331,94 @@ function SulamaBasliklari() {
   );
 }
 
-// Baraj mankenleri (5. delik): antrenman eşyası, insan figürü değil; düz levha ve taban. Modelde ve
-// künyede yok; DENEME, Kemal onaylamadı. Boy makette kısa (arkası görünsün). Yazı, logo yok.
+// Baraj mankenleri (5. delik). Kemal, 19 Kasım 2026: kalsın, gerçeğe yakın. Gerçek antrenman mankeni biçimi:
+// baş, omuz ve gövde silueti tek parça düz kalıp (insan yüzü yok), altta direk ve yuvarlak ayak tabanı.
+// Boy 1,80 m (ESYA; kaynak olculer.ts); en, kalınlık ve taban DENEME. Renk lacivert. Yazı, logo yok.
 function BarajMankenleri() {
   const en = DENEME.mankenEn;
-  const boy = DENEME.mankenBoy;
+  const boy = ESYA.mankenBoy;
+  const kalin = DENEME.mankenKalinlik;
+  const siluet = useMemo(() => {
+    // Silüet (z, y) düzleminde çizilir: z yana, y yukarı. Oranlar DENEME.
+    const w = en / 2;
+    const s = new Shape();
+    s.moveTo(-w * 0.34, boy * 0.3); // kalça
+    s.lineTo(-w * 0.62, boy * 0.52); // bel
+    s.lineTo(-w, boy * 0.74); // koltuk altı
+    s.quadraticCurveTo(-w, boy * 0.845, -w * 0.5, boy * 0.855); // omuz
+    s.lineTo(-w * 0.3, boy * 0.87); // boyun
+    s.quadraticCurveTo(-w * 0.48, boy * 0.94, -w * 0.3, boy * 0.985); // baş
+    s.quadraticCurveTo(0, boy * 1.012, w * 0.3, boy * 0.985);
+    s.quadraticCurveTo(w * 0.48, boy * 0.94, w * 0.3, boy * 0.87);
+    s.lineTo(w * 0.5, boy * 0.855);
+    s.quadraticCurveTo(w, boy * 0.845, w, boy * 0.74);
+    s.lineTo(w * 0.62, boy * 0.52);
+    s.lineTo(w * 0.34, boy * 0.3);
+    s.closePath();
+    return s;
+  }, [en, boy]);
   return (
     <group>
       {MANKENLER.map((n, i) => (
         <group key={i} position={[n[0], MODEL.cimUstu, n[1]]}>
+          {/* Ayak tabanı ve direk */}
           <mesh position={[0, 0.02, 0]} castShadow receiveShadow>
-            <boxGeometry args={[0.24, 0.04, en]} />
-            <meshStandardMaterial color={renk.lacivert} roughness={1} />
+            <cylinderGeometry args={[DENEME.mankenTaban / 2 - 0.02, DENEME.mankenTaban / 2, 0.04, 28]} />
+            <meshStandardMaterial color="#2B2A28" roughness={0.9} />
           </mesh>
-          <mesh position={[0, 0.04 + (boy - en / 2) / 2, 0]} castShadow>
-            <boxGeometry args={[0.05, boy - en / 2, en]} />
-            <meshStandardMaterial color={renk.lacivertAcik} roughness={1} />
+          <mesh position={[0, 0.04 + (boy * 0.3) / 2, 0]} castShadow>
+            <boxGeometry args={[kalin * 0.8, boy * 0.3, 0.07]} />
+            <meshStandardMaterial color={renk.lacivert} roughness={0.9} />
           </mesh>
-          <mesh position={[0, 0.04 + boy - en / 2, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
-            <cylinderGeometry args={[en / 2, en / 2, 0.05, 24, 1, false, 0, Math.PI]} />
-            <meshStandardMaterial color={renk.lacivertAcik} roughness={1} />
+          {/* Gövde silueti: düz kalıp, kaleye ve topa dönük */}
+          <mesh position={[-kalin / 2, 0.04, 0]} rotation={[0, -Math.PI / 2, 0]} castShadow>
+            <extrudeGeometry args={[siluet, { depth: kalin, bevelEnabled: false, curveSegments: 10 }]} />
+            <meshStandardMaterial color={renk.lacivertAcik} roughness={0.9} />
           </mesh>
         </group>
       ))}
+    </group>
+  );
+}
+
+// Köprü (8. delik; 9. delikte üstte ve ayağıyla). Modelde yok, kodla çizilir. Yeri karar (Kemal: açık
+// tribünün kulüp binası ucunda, tribünün arkasından taş duvara). Biçimi ve ölçüsü DENEME, Kemal onaylamadı:
+// düz beton döşeme, kenarsız ve korkuluksuz; ortasında tek ayak. Tribünün arka duvarında köprünün eninde
+// bir geçit açılır (modelin duvarı orada kesilir, basamak düzeyine kadar olan altı kodla doldurulur).
+// Döşeme tribünden (2,52 m) taş duvarın üstüne (2,40 m) hafif iner; duvarın üstünde düz bir sahanlık olur.
+const KOPRU_KESIMI: Kesim = { x0: KOPRU.x0, x1: KOPRU.x1, z0: MODEL.arkaDuvarDisZ - 0.05, z1: MODEL.arkaDuvarIcZ, malzemeler: ['tas2'] };
+function Kopru() {
+  const en = KOPRU.x1 - KOPRU.x0;
+  const x = (KOPRU.x0 + KOPRU.x1) / 2;
+  const k = DENEME.kopruKalinlik;
+  const duvarKalin = MODEL.arkaDuvarIcZ - MODEL.arkaDuvarDisZ;
+  const tasKalin = MODEL.tasDuvarIcZ - MODEL.tasDuvarDisZ;
+  const egik = Math.hypot(KOPRU_BOY, KOPRU_INIS);
+  const aci = -Math.atan2(KOPRU_INIS, KOPRU_BOY);
+  const ayakBoy = kopruY(KOPRU_AYAK[1]) - k;
+  const beton = '#C9C1B0';
+  return (
+    <group>
+      {/* Geçidin altı: arka duvarın basamak düzeyine kadar olan kısmı (modeldeki duvarın rengi) */}
+      <mesh position={[x, KOPRU.y0 / 2, MODEL.arkaDuvarDisZ + duvarKalin / 2]} castShadow receiveShadow>
+        <boxGeometry args={[en, KOPRU.y0, duvarKalin]} />
+        <meshStandardMaterial color="#C9B48F" roughness={1} />
+      </mesh>
+      {/* Döşeme: koridorun üstünde, tribünden duvara iner */}
+      <mesh position={[x, (KOPRU.y0 + KOPRU.y1) / 2 - k / 2, (MODEL.arkaDuvarDisZ + MODEL.tasDuvarIcZ) / 2]} rotation={[aci, 0, 0]} castShadow receiveShadow>
+        <boxGeometry args={[en, k, egik]} />
+        <meshStandardMaterial color={beton} roughness={1} />
+      </mesh>
+      {/* Sahanlık: taş duvarın üstünde düz */}
+      <mesh position={[x, KOPRU.y1 - 0.11, MODEL.tasDuvarDisZ + tasKalin / 2]} castShadow receiveShadow>
+        <boxGeometry args={[en, 0.22, tasKalin]} />
+        <meshStandardMaterial color={beton} roughness={1} />
+      </mesh>
+      {/* Ayak: koridorun ortasında */}
+      <mesh position={[KOPRU_AYAK[0], ayakBoy / 2, KOPRU_AYAK[1]]} castShadow receiveShadow>
+        <boxGeometry args={[DENEME.kopruAyak, ayakBoy, DENEME.kopruAyak]} />
+        <meshStandardMaterial color="#B9B09D" roughness={1} />
+      </mesh>
     </group>
   );
 }
@@ -382,16 +441,6 @@ function VurguKenar({ a, b, y }: { a: [number, number]; b: [number, number]; y: 
         <meshStandardMaterial color={renk.krem} roughness={1} />
       </mesh>
     </group>
-  );
-}
-
-// Penaltı noktası (modelde yok; tasarım belgesi 4.7). Yeri IFAB: kale çizgisinden 11 m. Çapı DENEME.
-function PenaltiNoktasi() {
-  return (
-    <mesh position={[PENALTI[0], MODEL.cimUstu + 0.003, PENALTI[1]]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-      <circleGeometry args={[DENEME.penaltiNoktasiCap / 2, 32]} />
-      <meshStandardMaterial color={CIZGI_RENGI} roughness={1} />
-    </mesh>
   );
 }
 
@@ -426,10 +475,12 @@ export function OrnekSahne({ no, atis = false, parmakBildir, delikBildir }: Sahn
   const top = atis ? delik.atis.top : delik.baslangic;
   const hedef: N3 = [top[0] + bakis.ileri[0], top[1] + bakis.ileri[1], top[2] + bakis.ileri[2]];
   const konum: N3 = [hedef[0] + bakis.uzak[0], hedef[1] + bakis.uzak[1], hedef[2] + bakis.uzak[2]];
-  const kesim = useMemo(
-    () => (delik.no === 7 ? { x0: KOLTUK_BOLGE.x0, x1: KOLTUK_BOLGE.x1, z0: siraOn(MODEL.acikTribunSira) - 0.7, z1: siraOn(1) } : undefined),
-    [delik.no],
-  );
+  const kesimler = useMemo(() => {
+    const liste: Kesim[] = [];
+    if (KOLTUK_BOLGELERI[delik.no]) liste.push(tahtaKesimi(KOLTUK_BOLGELERI[delik.no]));
+    if (delik.no === 8 || delik.no === 9) liste.push(KOPRU_KESIMI);
+    return liste.length ? liste : undefined;
+  }, [delik.no]);
   return (
     <StatSahnesi
       konum={konum}
@@ -438,18 +489,15 @@ export function OrnekSahne({ no, atis = false, parmakBildir, delikBildir }: Sahn
       golgeMerkez={hedef}
       golgeYaricap={bakis.golge}
       modelsiz={delik.no === 14}
-      kesim={kesim}
+      kesimler={kesimler}
       arkaPlan={delik.no === 14 ? renk.kremKoyu : renk.krem}
     >
-      {SAHA_ESYALI.includes(delik.no) && <CevreCimi />}
-      {delik.no === 1 && <OrtaYuvarlakCizgisi />}
       {delik.no === 1 && <Huniler />}
       {delik.no === 2 && <SulamaBasliklari />}
       {delik.no === 5 && <BarajMankenleri />}
       {delik.vurguKenar && <VurguKenar a={delik.vurguKenar[0]} b={delik.vurguKenar[1]} y={delik.bordurler[0].y} />}
-      {delik.no === 4 && <KoseBayragi />}
-      {delik.no === 5 && <PenaltiNoktasi />}
-      {delik.no === 7 && <TribunKoltuklari />}
+      {KOLTUK_BOLGELERI[delik.no] && <TribunKoltuklari bolge={KOLTUK_BOLGELERI[delik.no]} bos={delik.no === 7 ? BOS_KOLTUK : undefined} />}
+      {(delik.no === 8 || delik.no === 9) && <Kopru />}
       {delik.no === 14 && <DusOdasi />}
       {delik.birikinti && <Birikinti n={delik.birikinti.n} r={delik.birikinti.r} />}
       {delik.bordurler.map((b, i) => (

@@ -231,10 +231,11 @@ function DelikAlt({ ipucu }: { ipucu: ReactNode }) {
   );
 }
 
-// Yeni dille çizilen delikler (Kemal, 18 Kasım 2026): ?maket=delik&no=1 | 2 | 3 | 4 | 5 | 7 | 14.
+// Yeni dille çizilen delikler (Kemal, 18 Kasım 2026): ?maket=delik&no=1–9 | 14.
 const ornekNo = () => ornekDelik(Number(new URLSearchParams(window.location.search).get('no') ?? ORNEK_DELIKLER[0].no)).no;
 
 // Yeni dille çizilen delikler arasında geçiş (maketin kendi gezintisi; oyunda olmayacak).
+// Numaralar şeridi eşit paylaşır (10 delik sığar, 18'e kadar da sığar); zemin yazısı sahnenin sol üst köşesinde.
 function OrnekGecis({ ekran, secili }: { ekran: string; secili: number }) {
   return (
     <nav className="mk-ornekler">
@@ -244,7 +245,6 @@ function OrnekGecis({ ekran, secili }: { ekran: string; secili: number }) {
           {d.no}
         </a>
       ))}
-      <span className="mk-ornek-zemin">{m(`maket.zemin.${secili}` as MetinAnahtari)}</span>
     </nav>
   );
 }
@@ -271,8 +271,11 @@ function DelikYeri({ no, atis, delikEkran, alan }: { no: number; atis: boolean; 
       const okY = oy + (dy - oy) * t;
       // Sağ üst köşede küçük plan var; ok onun altında kalmasın.
       if (okX > g - 120 && okY < 190) okX = g - 130;
+      // Sol üst köşede zemin yazısı var; ok onun üstüne binmesin.
+      let okYSon = okY;
+      if (okX < 190 && okY < 60) okYSon = 64;
       ok = (
-        <div className="mk-delik-oku" style={{ left: okX, top: okY }}>
+        <div className="mk-delik-oku" style={{ left: okX, top: okYSon }}>
           <svg viewBox="0 0 24 24" width="26" height="26" style={{ transform: `rotate(${aci}deg)` }} aria-hidden>
             <path d="M4 12h13M12 6l6 6-6 6" fill="none" stroke={renk.krem} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -284,6 +287,7 @@ function DelikYeri({ no, atis, delikEkran, alan }: { no: number; atis: boolean; 
   return (
     <>
       {ok}
+      <div className="mk-ornek-zemin">{m(`maket.zemin.${no}` as MetinAnahtari)}</div>
       <div className="mk-kucuk-harita-kutu">
         <KucukHarita delik={delik} top={[top[0], top[2]]} />
       </div>
@@ -340,7 +344,7 @@ function AtisEkrani() {
   );
 }
 
-// Üstten şema (ölçü çizgili): ?maket=sema&no=1 | 2 | 3 | 4 | 5 | 7 | 14; no=0 bu deliklerin stattaki yeri (ölçekli).
+// Üstten şema (ölçü çizgili): ?maket=sema&no=1–9 | 14; no=0 bu deliklerin stattaki yeri (ölçekli).
 function SemaEkrani() {
   const ham = Number(new URLSearchParams(window.location.search).get('no') ?? 0);
   return (

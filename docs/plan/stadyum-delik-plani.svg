@@ -15,7 +15,7 @@
 </defs>
 <rect width="1200" height="1530" fill="#FAF8F5"/>
 <text x="20" y="42" class="b">Minigolf · Stadyum turu (Dirlik Stadı) · 18 delik</text>
-<text x="20" y="66" class="a">Taslak · 16-11-2026 (not: 18-11-2026) · Oyun Tasarımcısı · Kemal'in 16 Kasım kararları işli · 3B Dirlik Stadı modelinin kuşbakışı düzeni (kaba, ölçeksiz) · ad, sayı yok</text>
+<text x="20" y="66" class="a">Taslak · 16-11-2026 (not: 19-11-2026) · Oyun Tasarımcısı · Kemal'in 16 Kasım kararları işli · 3B Dirlik Stadı modelinin kuşbakışı düzeni (kaba, ölçeksiz) · ad, sayı yok</text>
 
 <!-- Harita: 3B modelin kuşbakışı -->
 <rect x="20" y="84" width="1160" height="572" rx="12" fill="#F3EFE8" stroke="#0E1C4F" stroke-opacity=".3"/>
@@ -83,8 +83,12 @@
 <circle cx="205" cy="330" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="118" y="396" width="174" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="205" y="410" text-anchor="middle">3 · örnek · gerçek ölçü</text><text x="205" y="423" text-anchor="middle">13,4 m uzun · pist eni 1,25 m</text>
 <circle cx="640" cy="148" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="664" y="106" width="150" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="739" y="120" text-anchor="middle">7 · örnek · gerçek ölçü</text><text x="739" y="133" text-anchor="middle">6,25 m uzun · 3 sıra</text>
 <circle cx="540" cy="565" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="465" y="588" width="150" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="540" y="602" text-anchor="middle">14 · örnek · gerçek ölçü</text><text x="540" y="615" text-anchor="middle">6,25 × 2,7 m</text>
+<!-- 19 Kasım 2026, adım 2: 6, 8, 9 (açık tribünün önü, köprü, koridor) aynı dille -->
+<circle cx="540" cy="180" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="398" y="212" width="170" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="483" y="226" text-anchor="middle">6 · gerçek ölçü</text><text x="483" y="239" text-anchor="middle">L · yol 6,25 m · korkuluk</text>
+<circle cx="840" cy="140" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="826" y="166" width="150" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="901" y="180" text-anchor="middle">8 · gerçek ölçü</text><text x="901" y="193" text-anchor="middle">köprü 3,1 × 0,6 m</text>
+<circle cx="950" cy="150" r="19" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="976" y="106" width="150" height="32" rx="6" fill="#FAF8F5" stroke="#F26B6F"/><text x="1051" y="120" text-anchor="middle">9 · gerçek ölçü</text><text x="1051" y="133" text-anchor="middle">koridor eni 3,1 m · ayak</text>
 </g>
-<g transform="translate(664,592)"><rect width="496" height="56" rx="8" fill="#F26B6F"/><text x="12" y="18" font-size="11" font-weight="600" fill="#FAF8F5">18 Kasım (Kemal): pist gerçek ölçüde, zemin yerin kendi zemini, delik yere özgü.</text><text x="12" y="33" font-size="11" fill="#FAF8F5">1–5, 7 ve 14 yeni dille, gerçek ölçüde (ornek-delik-N.png, ornek-delikler-yerlesim.png).</text><text x="12" y="48" font-size="11" fill="#FAF8F5">Kalan 11 delik yeniden çizilecek; bu sayfadaki harita ölçeksiz, o kartlar eski dildir.</text></g>
+<g transform="translate(664,592)"><rect width="496" height="56" rx="8" fill="#F26B6F"/><text x="12" y="18" font-size="11" font-weight="600" fill="#FAF8F5">18 Kasım (Kemal): pist gerçek ölçüde, zemin yerin kendi zemini, delik yere özgü.</text><text x="12" y="33" font-size="11" fill="#FAF8F5">1–9 ve 14 yeni dille, gerçek ölçüde (ornek-delik-N.png, ornek-delikler-yerlesim.png).</text><text x="12" y="48" font-size="11" fill="#FAF8F5">Kalan 8 delik yeniden çizilecek; bu sayfadaki harita ölçeksiz, o kartlar eski dildir.</text></g>
 
 </g>
 
@@ -107,7 +111,7 @@
 <rect x="119.6" y="161.2" width="6" height="6" class="engel"/><rect x="116.3" y="144.2" width="6" height="6" class="engel"/><rect x="111.3" y="128.9" width="6" height="6" class="engel"/>
 <path d="M124 184L136 150L64 84" class="nisan"/>
 <use xlink:href="#bas" x="124" y="188"/><use xlink:href="#delik" x="62" y="83"/>
-<text x="12" y="220" class="ks">Öğretir: çek-bırak, nişan</text><text x="12" y="236" class="ks">Zorluk: kolay · huniler DENEME</text>
+<text x="12" y="220" class="ks">Öğretir: çek-bırak, nişan</text><text x="12" y="236" class="ks">Zorluk: kolay · huni yeri DENEME</text>
 </g>
 <!-- 2 -->
 <g transform="translate(215,710)">
@@ -119,7 +123,7 @@
 <rect x="89" y="151" width="6" height="6" class="engel"/><rect x="89" y="118" width="6" height="6" class="engel"/>
 <path d="M92 186L72 139L92 96" class="nisan"/>
 <use xlink:href="#bas" x="92" y="192"/><use xlink:href="#delik" x="92" y="92"/>
-<text x="12" y="220" class="ks">Öğretir: güç ayarı</text><text x="12" y="236" class="ks">Zorluk: kolay · başlıklar DENEME</text>
+<text x="12" y="220" class="ks">Öğretir: güç ayarı</text><text x="12" y="236" class="ks">Zorluk: kolay · başlık yeri DENEME</text>
 </g>
 <!-- 3 -->
 <g transform="translate(410,710)">
@@ -154,20 +158,22 @@
 <rect x="75" y="142" width="10" height="5" class="engel"/><rect x="87" y="142" width="10" height="5" class="engel"/><rect x="99" y="142" width="10" height="5" class="engel"/>
 <path d="M92 186L119 138L92 102" class="nisan"/>
 <use xlink:href="#bas" x="92" y="190"/><use xlink:href="#delik" x="92" y="98"/>
-<text x="12" y="220" class="ks">Öğretir: yeni şey yok, nefes</text><text x="12" y="236" class="ks">Zorluk: kolay · baraj DENEME</text>
+<text x="12" y="220" class="ks">Öğretir: yeni şey yok, nefes</text><text x="12" y="236" class="ks">Zorluk: kolay · baraj yeri DENEME</text>
 </g>
 <!-- 6 -->
 <g transform="translate(995,710)">
 <rect width="185" height="250" rx="10" class="kart"/>
 <circle cx="20" cy="22" r="12" class="no"/><text x="20" y="26.5" class="not">6</text>
-<text x="38" y="21" class="kb">Açık tribün önü</text><text x="38" y="36" class="ks">Pist: düz, yukarı rampa</text>
-<rect x="66" y="58" width="52" height="140" rx="6" class="pist"/>
-<rect x="67" y="100" width="50" height="40" class="kapali" fill-opacity=".15"/>
-<g fill="none" stroke="#0E1C4F" stroke-opacity=".6" stroke-width="1.6"><path d="M84 132L92 124L100 132"/><path d="M84 116L92 108L100 116"/></g>
-<text x="126" y="104" class="ks" transform="rotate(90 126 104)">yukarı</text>
-<line x1="92" y1="178" x2="92" y2="82" class="nisan"/>
-<use xlink:href="#bas" x="92" y="184"/><use xlink:href="#delik" x="92" y="78"/>
-<text x="12" y="220" class="ks">Öğretir: yokuş yukarı vurmak</text><text x="12" y="236" class="ks">Zorluk: orta · modelde var</text>
+<text x="38" y="21" class="kb">Açık tribün önü</text><text x="38" y="36" class="ks">Pist: L · korkuluk · basamak</text>
+<rect x="28" y="56" width="132" height="34" fill="#0E1C4F" fill-opacity=".18"/><rect x="118" y="56" width="24" height="34" fill="#0E1C4F" fill-opacity=".3"/>
+<text x="32" y="68" class="ks">tribün</text>
+<path d="M42 90H142V110H66V192H42Z" class="pist"/>
+<line x1="28" y1="102" x2="160" y2="102" class="ince"/>
+<rect x="33" y="100" width="4" height="4" class="engel" fill-opacity="1"/><rect x="71" y="100" width="4" height="4" class="engel" fill-opacity="1"/><rect x="109" y="100" width="4" height="4" class="engel" fill-opacity="1"/><rect x="147" y="100" width="4" height="4" class="engel" fill-opacity="1"/>
+<text x="72" y="124" class="ks">korkuluk</text>
+<path d="M54 178L54 106L130 96" class="nisan"/>
+<use xlink:href="#bas" x="54" y="182"/><use xlink:href="#delik" x="130" y="96"/>
+<text x="12" y="220" class="ks">Öğretir: direk arasından geçiş</text><text x="12" y="236" class="ks">Zorluk: orta · modelde var</text>
 </g>
 <!-- 7 -->
 <g transform="translate(20,972)">
@@ -186,27 +192,30 @@
 <g transform="translate(215,972)">
 <rect width="185" height="250" rx="10" class="kart"/>
 <circle cx="20" cy="22" r="12" class="no"/><text x="20" y="26.5" class="not">8</text>
-<text x="38" y="21" class="kb">Koridor köprüsü</text><text x="38" y="36" class="ks">Pist: iki parça, köprü</text>
-<rect x="28" y="100" width="128" height="40" fill="#E6D9C2"/>
-<rect x="46" y="140" width="92" height="58" rx="6" class="pist"/>
-<rect x="46" y="54" width="92" height="46" rx="6" class="pist"/>
-<rect x="82" y="96" width="20" height="48" class="pist"/>
-<text x="112" y="124" class="ks">koridor</text>
-<line x1="92" y1="182" x2="92" y2="74" class="nisan"/>
-<use xlink:href="#bas" x="92" y="186"/><use xlink:href="#delik" x="92" y="70"/>
-<text x="12" y="220" class="ks">Öğretir: düz, kararlı vuruş</text><text x="12" y="236" class="ks">Zorluk: zor · modelde var</text>
+<text x="38" y="21" class="kb">Koridor köprüsü</text><text x="38" y="36" class="ks">Pist: oluk · köprü · duvar üstü</text>
+<rect x="28" y="84" width="132" height="76" fill="#E6D9C2"/><text x="34" y="126" class="ks">koridor</text>
+<rect x="28" y="70" width="132" height="14" fill="#0E1C4F" fill-opacity=".3"/><rect x="28" y="160" width="132" height="8" fill="#0E1C4F" fill-opacity=".3"/>
+<rect x="28" y="188" width="132" height="10" fill="#0E1C4F" fill-opacity=".18"/>
+<path d="M40 176H112V70H124V186H40Z" class="pist"/>
+<g class="engel"><rect x="40" y="189" width="12" height="8"/><rect x="55" y="189" width="12" height="8"/><rect x="70" y="189" width="12" height="8"/><rect x="85" y="189" width="12" height="8"/><rect x="100" y="189" width="12" height="8"/></g>
+<text x="128" y="66" class="ks">duvar</text>
+<path d="M50 181H118V80" class="nisan"/>
+<use xlink:href="#bas" x="50" y="181"/><use xlink:href="#delik" x="118" y="77"/>
+<text x="12" y="220" class="ks">Öğretir: düz, kararlı vuruş</text><text x="12" y="236" class="ks">Zorluk: zor · köprü DENEME</text>
 </g>
 <!-- 9 -->
 <g transform="translate(410,972)">
 <rect width="185" height="250" rx="10" class="kart"/>
 <circle cx="20" cy="22" r="12" class="no"/><text x="20" y="26.5" class="not">9</text>
-<text x="38" y="21" class="kb">Duvar içi koridor</text><text x="38" y="36" class="ks">Pist: geniş, kısa · nefes</text>
+<text x="38" y="21" class="kb">Duvar içi koridor</text><text x="38" y="36" class="ks">Pist: koridor · ayak · nefes</text>
 <rect x="22" y="54" width="8" height="146" fill="#0E1C4F" fill-opacity=".45"/>
-<rect x="30" y="58" width="124" height="140" rx="6" class="pist"/>
-<rect x="84" y="112" width="16" height="28" class="engel"/>
-<path d="M50 180L150 128L120 80" class="nisan"/>
-<use xlink:href="#bas" x="50" y="186"/><use xlink:href="#delik" x="118" y="76"/>
-<text x="12" y="220" class="ks">Öğretir: sektirmeyi tekrar</text><text x="12" y="236" class="ks">Zorluk: kolay · modelde var</text>
+<rect x="90" y="100" width="66" height="100" fill="#0E1C4F" fill-opacity=".18"/><text x="100" y="156" class="ks">tribün</text>
+<path d="M30 196V58H123V100H90V196Z" class="pist"/>
+<g class="ek" stroke-width="1.2"><line x1="22" y1="130" x2="96" y2="130"/><line x1="22" y1="142" x2="96" y2="142"/></g>
+<rect x="57" y="133" width="6" height="6" class="engel" fill-opacity="1"/>
+<path d="M60 182L31 152L104 76" class="nisan"/>
+<use xlink:href="#bas" x="60" y="182"/><use xlink:href="#delik" x="104" y="76"/>
+<text x="12" y="220" class="ks">Öğretir: sektirmeyi tekrar</text><text x="12" y="236" class="ks">Zorluk: kolay · ayak DENEME</text>
 </g>
 <!-- 10 -->
 <g transform="translate(605,972)">
@@ -329,10 +338,10 @@
 <g transform="translate(215,710)"><rect x="0" y="0" width="185" height="250" rx="8" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="30" y="-11" width="150" height="21" rx="6" fill="#F26B6F"/><text x="105" y="3.5" text-anchor="middle" font-size="10.5" font-weight="600" fill="#FAF8F5">yeni: ornek-delik-2.png</text></g>
 <g transform="translate(605,710)"><rect x="0" y="0" width="185" height="250" rx="8" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="30" y="-11" width="150" height="21" rx="6" fill="#F26B6F"/><text x="105" y="3.5" text-anchor="middle" font-size="10.5" font-weight="600" fill="#FAF8F5">yeni: ornek-delik-4.png</text></g>
 <g transform="translate(800,710)"><rect x="0" y="0" width="185" height="250" rx="8" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="30" y="-11" width="150" height="21" rx="6" fill="#F26B6F"/><text x="105" y="3.5" text-anchor="middle" font-size="10.5" font-weight="600" fill="#FAF8F5">yeni: ornek-delik-5.png</text></g>
-<!-- Kalan 11 delik: eski dilde, yeniden çizilecek -->
-<g transform="translate(995,710)"><rect x="70" y="-10" width="107" height="19" rx="6" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/><text x="123.5" y="3.5" text-anchor="middle" font-size="10" font-weight="600" fill="#0E1C4F" fill-opacity=".7">yeniden çizilecek</text></g>
-<g transform="translate(215,972)"><rect x="70" y="-10" width="107" height="19" rx="6" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/><text x="123.5" y="3.5" text-anchor="middle" font-size="10" font-weight="600" fill="#0E1C4F" fill-opacity=".7">yeniden çizilecek</text></g>
-<g transform="translate(410,972)"><rect x="70" y="-10" width="107" height="19" rx="6" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/><text x="123.5" y="3.5" text-anchor="middle" font-size="10" font-weight="600" fill="#0E1C4F" fill-opacity=".7">yeniden çizilecek</text></g>
+<g transform="translate(995,710)"><rect x="0" y="0" width="185" height="250" rx="8" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="30" y="-11" width="150" height="21" rx="6" fill="#F26B6F"/><text x="105" y="3.5" text-anchor="middle" font-size="10.5" font-weight="600" fill="#FAF8F5">yeni: ornek-delik-6.png</text></g>
+<g transform="translate(215,972)"><rect x="0" y="0" width="185" height="250" rx="8" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="30" y="-11" width="150" height="21" rx="6" fill="#F26B6F"/><text x="105" y="3.5" text-anchor="middle" font-size="10.5" font-weight="600" fill="#FAF8F5">yeni: ornek-delik-8.png</text></g>
+<g transform="translate(410,972)"><rect x="0" y="0" width="185" height="250" rx="8" fill="none" stroke="#F26B6F" stroke-width="3"/><rect x="30" y="-11" width="150" height="21" rx="6" fill="#F26B6F"/><text x="105" y="3.5" text-anchor="middle" font-size="10.5" font-weight="600" fill="#FAF8F5">yeni: ornek-delik-9.png</text></g>
+<!-- Kalan 8 delik: eski dilde, yeniden çizilecek -->
 <g transform="translate(605,972)"><rect x="70" y="-10" width="107" height="19" rx="6" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/><text x="123.5" y="3.5" text-anchor="middle" font-size="10" font-weight="600" fill="#0E1C4F" fill-opacity=".7">yeniden çizilecek</text></g>
 <g transform="translate(800,972)"><rect x="70" y="-10" width="107" height="19" rx="6" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/><text x="123.5" y="3.5" text-anchor="middle" font-size="10" font-weight="600" fill="#0E1C4F" fill-opacity=".7">yeniden çizilecek</text></g>
 <g transform="translate(995,972)"><rect x="70" y="-10" width="107" height="19" rx="6" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/><text x="123.5" y="3.5" text-anchor="middle" font-size="10" font-weight="600" fill="#0E1C4F" fill-opacity=".7">yeniden çizilecek</text></g>
@@ -341,6 +350,6 @@
 <g transform="translate(605,1234)"><rect x="70" y="-10" width="107" height="19" rx="6" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/><text x="123.5" y="3.5" text-anchor="middle" font-size="10" font-weight="600" fill="#0E1C4F" fill-opacity=".7">yeniden çizilecek</text></g>
 <g transform="translate(800,1234)"><rect x="70" y="-10" width="107" height="19" rx="6" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/><text x="123.5" y="3.5" text-anchor="middle" font-size="10" font-weight="600" fill="#0E1C4F" fill-opacity=".7">yeniden çizilecek</text></g>
 <g transform="translate(995,1234)"><rect x="70" y="-10" width="107" height="19" rx="6" fill="#FAF8F5" stroke="#0E1C4F" stroke-opacity=".45"/><text x="123.5" y="3.5" text-anchor="middle" font-size="10" font-weight="600" fill="#0E1C4F" fill-opacity=".7">yeniden çizilecek</text></g>
-<text x="20" y="1506" class="ks">Kartlar: pist kuşbakışı, dikey ekrana göre; ölçeksiz (kiremit çerçeveli 7 kartın ölçülü şeması ornek-delik-N.png). Yerleşim Kems Ajans assetler/3b/binalar/dirlik-stadi.glb önizlemesinden.</text>
+<text x="20" y="1506" class="ks">Kartlar: pist kuşbakışı, dikey ekrana göre; ölçeksiz (kiremit çerçeveli 10 kartın ölçülü şeması ornek-delik-N.png). Yerleşim Kems Ajans assetler/3b/binalar/dirlik-stadi.glb önizlemesinden.</text>
 <text x="20" y="1520" class="ks">Tünel ve soyunma odası (duşlarıyla) modelde yok, eklenecek. Yerleri karar (Kemal, 16 Kasım): kapalı tribünün altı; tünel oradan sahaya açılır. Tur orta yuvarlakta başlar ve biter.</text>
 </svg>

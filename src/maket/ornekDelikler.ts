@@ -1,8 +1,8 @@
 import type { MetinAnahtari } from '../metinler';
-import { IFAB, WMF, MODEL, DENEME, TOP_YARICAP } from './olculer';
+import { IFAB, WMF, MODEL, DENEME, ESYA, TOP_YARICAP } from './olculer';
 
 // YENİ DİLLE DELİKLER (öneri; Kemal, 18 Kasım 2026): önce üç örnek (3, 7, 14), sonra adım adım öbürleri
-// (tasarım belgesi 4.9). Adım 1: 1, 2, 4, 5 (saha, çim). Pist gerçek minigolf ölçüsünde,
+// (tasarım belgesi 4.9). Adım 1: 1, 2, 4, 5 (saha, çim). Adım 2: 6, 8, 9 (açık tribünün önü, köprü, koridor). Pist gerçek minigolf ölçüsünde,
 // zemin mekânın kendi zemini, sınır ince bordür; bulmacayı yerin şekli, eğimi ve eşyası kurar.
 // Koordinatlar 3B modelin koordinatları (x, z; metre). Aynı veri hem 3B makette hem üstten şemada kullanılır.
 
@@ -24,8 +24,14 @@ export type OrnekDelik = {
   cukur: N3;
   // Şemada: çerçeve, zemin çizgileri, eşyalar
   cerceve: Dikdortgen;
-  cizgiler: { a: N2; b: N2; tur: 'saha' | 'basamak' | 'merdiven' | 'ag' }[];
-  kutular: (Dikdortgen & { tur: 'direk' | 'koltuk' | 'koltukAcik' | 'bolme' | 'duvar' | 'huni' | 'sulama' | 'manken' })[];
+  cizgiler: { a: N2; b: N2; tur: 'saha' | 'basamak' | 'merdiven' | 'ag' | 'korkuluk' }[];
+  kutular: (Dikdortgen & { tur: 'direk' | 'koltuk' | 'koltukAcik' | 'bolme' | 'duvar' | 'tas' | 'merdivenTas' | 'ayak' | 'huni' | 'sulama' | 'manken' })[];
+  // Şemada zeminin parçaları (çim, toprak, beton, köprü): çerçevenin rengi tek zemine yetmediğinde.
+  alanlar?: (Dikdortgen & { renk: string })[];
+  // Kenarı olmayan pist sınırı (köprünün yanları): şemada ve küçük planda kesik kiremit çizgi.
+  acikKenarlar?: N2[][];
+  // Deliğin dış çizgisi (yerleşim şemasında kiremit biçim); yoksa ilk bordür.
+  dis?: N2[];
   birikinti?: { n: N2; r: number };
   // Yere boyanmış yuvarlak işaretler (penaltı noktası)
   noktalar?: { n: N2; r: number }[];
@@ -53,7 +59,7 @@ const kale: OrnekDelik = {
   // Bordür: kalenin dışında kale çizgisinin iki yanı; kalenin içinde sınır ağın kendisi.
   bordurler: [
     {
-      y: 0.04,
+      y: MODEL.cimUstu,
       noktalar: [
         [-G / 2, yk],
         [-G / 2, kaleBas],
@@ -63,8 +69,8 @@ const kale: OrnekDelik = {
       ],
     },
   ],
-  baslangic: [0, 0.05, MODEL.kaleSahasiCizgisiZ],
-  cukur: [-1.25, 0.045, uz - 0.3],
+  baslangic: [0, MODEL.cizgiUstu, MODEL.kaleSahasiCizgisiZ],
+  cukur: [-1.25, MODEL.cimUstu, uz - 0.3],
   cerceve: { x0: -3.9, x1: 3.9, z0: kaleBas - 1.3, z1: uz + 1.5 },
   cizgiler: [
     { a: [0, kaleBas - 1.3], b: [0, uz + 1.5], tur: 'saha' }, // kale çizgisi
@@ -91,7 +97,7 @@ const kale: OrnekDelik = {
     { n: [-0.8, yk - 1.6], metin: 'maket.sema.yanAg', hiza: 'sol' },
   ],
   // Nişan: yakın direği sıyıran dar açı (yaklaşık 2°)
-  atis: { top: [0, 0.05, MODEL.kaleSahasiCizgisiZ], yon: [0.035, 0.9994], boy: 1.3 },
+  atis: { top: [0, MODEL.cizgiUstu, MODEL.kaleSahasiCizgisiZ], yon: [0.035, 0.9994], boy: 1.3 },
 };
 
 // ---------- 7 · Açık tribün sıraları: zemin tribünün beton basamağı ----------
@@ -210,8 +216,8 @@ const dus: OrnekDelik = {
 
 // =====================================================================================================
 // ADIM 1 (tasarım belgesi 4.9): 1, 2, 4, 5. Yer: saha. Zemin: sahanın çimi. Hareketli engel yok.
-// Sahanın çizgileri modelden (IFAB ölçüleriyle çizilmiş); modelde olmayan köşe yayı, köşe bayrağı ve
-// penaltı noktası IFAB ölçüsüyle kodla çizilir (OrnekDelik.tsx). Pist eni hepsinde 1,25 m (WMF beton pist).
+// Sahanın çizgileri, köşe yayı, köşe bayrağı ve penaltı noktası modelden (IFAB ölçüleriyle; model 19 Kasım
+// 2026'da düzeltildi, bunlar artık kodla çizilmez). Pist eni hepsinde 1,25 m (WMF beton pist).
 // =====================================================================================================
 const h = G / 2;
 const yCim = MODEL.cimUstu;
@@ -281,7 +287,7 @@ export const SULAMA: N2[] = [
   [X2, tacBas - 2.0],
   [X2, tacBas - 4.0],
 ]; // DENEME
-const sy = DENEME.sulamaYaricap;
+const sy = ESYA.sulamaCap / 2;
 const tacSekme: N2 = [X2 - h + TOP_YARICAP, (tacBas + tacCukurZ) / 2];
 
 const kenarCizgisi: OrnekDelik = {
@@ -362,7 +368,7 @@ const koseDeligi: OrnekDelik = {
     // köşe yayı (IFAB: köşe bayrağından 1 m, sahanın içine çeyrek daire)
     ...parcala(Array.from({ length: 13 }, (_, i): N2 => [KOSE[0] + IFAB.koseYayiYaricap * Math.cos((i * Math.PI) / 24), KOSE[1] + IFAB.koseYayiYaricap * Math.sin((i * Math.PI) / 24)])),
   ],
-  kutular: [{ tur: 'direk', x0: KOSE[0] - 0.06, x1: KOSE[0] + 0.06, z0: KOSE[1] - 0.06, z1: KOSE[1] + 0.06 }],
+  kutular: [{ tur: 'direk', x0: KOSE[0] - MODEL.koseDirekEn / 2, x1: KOSE[0] + MODEL.koseDirekEn / 2, z0: KOSE[1] - MODEL.koseDirekEn / 2, z1: KOSE[1] + MODEL.koseDirekEn / 2 }],
   vurguKenar: [
     [KOSE[0] - h + pah, KOSE[1] - h],
     [KOSE[0] - h, KOSE[1] - h + pah],
@@ -409,11 +415,11 @@ const penalti: OrnekDelik = {
   eksen: '-x',
   bordurler: [{ y: yCim, noktalar: Array.from({ length: 97 }, (_, i) => elips((2 * Math.PI * i) / 96)) }],
   baslangic: [penBas[0], yCizgi, penBas[1]],
-  cukur: [PENALTI[0], yCim + 0.005, PENALTI[1]],
+  cukur: [PENALTI[0], MODEL.noktaUstu, PENALTI[1]],
   cerceve: { x0: 9.5, x1: 17.9, z0: zKale - 2.5, z1: zKale + 2.5 },
   cizgiler: [{ a: [IFAB.cezaSahasi, zKale - 2.5], b: [IFAB.cezaSahasi, zKale + 2.5], tur: 'saha' }],
-  kutular: MANKENLER.map((n) => ({ tur: 'manken' as const, x0: n[0] - 0.05, x1: n[0] + 0.05, z0: n[1] - my, z1: n[1] + my })),
-  noktalar: [{ n: PENALTI, r: DENEME.penaltiNoktasiCap / 2 }],
+  kutular: MANKENLER.map((n) => ({ tur: 'manken' as const, x0: n[0] - DENEME.mankenKalinlik / 2, x1: n[0] + DENEME.mankenKalinlik / 2, z0: n[1] - my, z1: n[1] + my })),
+  noktalar: [{ n: PENALTI, r: MODEL.penaltiNoktasiCap / 2 }],
   yollar: [
     [penBas, elips(penSekme), PENALTI],
     [penBas, elips(-penSekme), PENALTI],
@@ -432,7 +438,268 @@ const penalti: OrnekDelik = {
   atis: { top: [penBas[0], yCizgi, penBas[1]], yon: [-0.9503, 0.311], boy: 1.4 },
 };
 
-// Tur sırasıyla. Yeni dille çizilen delikler: 1, 2, 3, 4, 5, 7, 14; kalan 11 delik eski dilde.
-export const ORNEK_DELIKLER: OrnekDelik[] = [ortaYuvarlak, kenarCizgisi, kale, koseDeligi, penalti, tribun, dus];
+// =====================================================================================================
+// ADIM 2 (tasarım belgesi 4.9): 6, 8, 9. Yer: açık tribünün önü, köprü, duvar içi koridor.
+// Zemin yerin kendisi: çim ve toprak (6), beton basamak ve köprü (8), toprak yol (9). Hareketli engel yok.
+// Korkuluk, basamaklar, merdivenler, tribünün duvarları ve taş duvar modelde var (ölçüleri MODEL).
+// Köprü modelde yok: yeri karar (Kemal: açık tribünün kulüp binası ucunda, tribünün arkasından taş duvara);
+// biçimi, ölçüsü ve ayağı DENEME, Kemal onaylamadı. Kodla çizilir (OrnekDelik.tsx).
+// =====================================================================================================
+const zOn = MODEL.acikTribunOnZ; // tribünün ilk basamağının alnı (-63)
+const zCimKenar = MODEL.cevreCimKenarZ; // çimin bittiği yer (-62)
+const zKork = MODEL.korkulukZ;
+const direkY = MODEL.korkulukDirekEn / 2;
+// Korkuluk direkleri: x 28'den başlayıp her 2 m'de bir (model).
+export const korkulukDirekleri = (x0: number, x1: number): number[] =>
+  Array.from({ length: 18 }, (_, i) => MODEL.acikTribunX0 + i * MODEL.korkulukDirekAralik).filter((x) => x >= x0 && x <= x1);
+
+// ---------- 6 · Açık tribünün önü: korkuluğun altından, ilk basamağın dibinden merdivenin ayağına ----------
+const X6 = DENEME.korkulukPistX; // tribüne inen kolun ortası
+const merdivenOrta = (MERDIVEN_X0 + MERDIVEN_X1) / 2; // 45
+const seritOrta = (zOn + zCimKenar) / 2;
+const kol2 = merdivenOrta - X6; // tribün boyunca kol: 4 m
+const kol1 = WMF.minyaturBoy - kol2; // tribüne inen kol: 2,25 m (yolun toplamı 6,25 m; bölüşüm DENEME)
+const bas6: N2 = [X6, seritOrta + kol1];
+// Delik korkulukla ilk basamağın arasındaki dar yanda (0,36 m), merdivenin ayağında.
+const darYanOrta = (zOn + zKork - direkY) / 2;
+const cukur6: N2 = [merdivenOrta, darYanOrta];
+// İkinci vuruşun anı: top köşeyi dönmüş, şeridin geniş yanında durur.
+const ara6: N2 = [X6, zCimKenar - 0.3];
+const yon6 = ((): N2 => {
+  const dx = cukur6[0] - ara6[0];
+  const dz = cukur6[1] - ara6[1];
+  const b = Math.hypot(dx, dz);
+  return [dx / b, dz / b];
+})();
+const c6 = { x0: 39.6, x1: 46.4, z0: -66.0, z1: -57.4 };
+
+const tribunOnu: OrnekDelik = {
+  no: 6,
+  zorluk: 'maket.zorluk.orta',
+  eksen: '-z',
+  // Tribün yanında kenar yok: sınır ilk basamağın alnı (0,42 m) ve merdivenin ilk basamağı.
+  bordurler: [
+    {
+      y: 0,
+      noktalar: [
+        [MERDIVEN_X1, zOn],
+        [MERDIVEN_X1, zCimKenar],
+        [X6 + h, zCimKenar],
+        [X6 + h, bas6[1] + DENEME.baslangicPayi],
+        [X6 - h, bas6[1] + DENEME.baslangicPayi],
+        [X6 - h, zOn],
+      ],
+    },
+  ],
+  baslangic: [bas6[0], 0, bas6[1]],
+  cukur: [cukur6[0], 0, cukur6[1]],
+  cerceve: c6,
+  alanlar: [
+    { renk: '#86A35C', x0: c6.x0, x1: c6.x1, z0: MODEL.tacCizgisiZ, z1: c6.z1 }, // saha
+    { renk: '#7E9A55', x0: c6.x0, x1: c6.x1, z0: zCimKenar, z1: MODEL.tacCizgisiZ }, // sahayı saran çim
+    { renk: '#BDB09A', x0: c6.x0, x1: c6.x1, z0: zOn, z1: zCimKenar }, // toprak
+    { renk: '#C8C0AF', x0: c6.x0, x1: c6.x1, z0: c6.z0, z1: zOn }, // tribün (beton)
+  ],
+  cizgiler: [
+    ...[1, 2, 3, 4].map((k) => ({ a: [c6.x0, siraOn(k)] as N2, b: [c6.x1, siraOn(k)] as N2, tur: 'basamak' as const })),
+    { a: [c6.x0, MODEL.tacCizgisiZ + MODEL.cizgiEn / 2], b: [c6.x1, MODEL.tacCizgisiZ + MODEL.cizgiEn / 2], tur: 'saha' },
+    { a: [c6.x0, zKork], b: [c6.x1, zKork], tur: 'korkuluk' },
+  ],
+  kutular: [
+    { tur: 'merdivenTas', x0: MERDIVEN_X0, x1: MERDIVEN_X1, z0: c6.z0, z1: zOn },
+    ...korkulukDirekleri(c6.x0, c6.x1).map((x) => ({ tur: 'direk' as const, x0: x - direkY, x1: x + direkY, z0: zKork - direkY, z1: zKork + direkY })),
+  ],
+  yollar: [[bas6, ara6, cukur6]],
+  olculer: [
+    { a: [X6 - h, bas6[1]], b: [X6 - h, seritOrta], kaydir: 0.4, deger: kol1, kaynak: 'deneme' },
+    { a: [X6, zCimKenar], b: [merdivenOrta, zCimKenar], kaydir: 0.85, deger: kol2, kaynak: 'deneme' },
+    { a: [X6 - h, bas6[1] + DENEME.baslangicPayi], b: [X6 + h, bas6[1] + DENEME.baslangicPayi], kaydir: 0.35, deger: WMF.betonEn, kaynak: 'wmf' },
+    { a: [40.15, zOn], b: [40.15, zCimKenar], kaydir: 0.05, deger: zCimKenar - zOn, kaynak: 'model' },
+    { a: [42, zKork], b: [44, zKork], kaydir: -1.55, deger: MODEL.korkulukDirekAralik, kaynak: 'model' },
+  ],
+  etiketler: [
+    { n: [43.5, zCimKenar + 0.3], metin: 'maket.sema.korkuluk', hiza: 'orta' },
+    { n: [42.2, zOn - 0.3], metin: 'maket.sema.ilkBasamak', hiza: 'orta' },
+    { n: [46.3, zOn - 2.3], metin: 'maket.sema.merdivenAyagi', hiza: 'sag' },
+    { n: [45.9, -59.7], metin: 'maket.sema.cim', hiza: 'orta' },
+    { n: [46.35, seritOrta + 0.07], metin: 'maket.sema.toprak', hiza: 'sag' },
+    { n: [43.8, -60.35], metin: 'maket.sema.yolBoyu', deger: WMF.minyaturBoy, metre: true, hiza: 'orta' },
+    { n: [46.3, MODEL.tacCizgisiZ + 0.42], metin: 'maket.sema.tacCizgisi', hiza: 'sag' },
+    { n: [39.7, -65.75], metin: 'maket.yerlesim.acikTribun', hiza: 'sol' },
+  ],
+  // Atış anı: ikinci vuruş; nişan iki direğin arasından dar yana, merdivenin ayağındaki deliğe
+  atis: { top: [ara6[0], 0, ara6[1]], yon: yon6, boy: 1.2 },
+};
+
+// ---------- 8 · Koridor köprüsü: üst sıranın oluğundan köprüye, köprüden taş duvarın üstüne ----------
+const UST = MODEL.acikTribunSira; // 6. (en üst) sıra
+const zArkaIc = MODEL.arkaDuvarIcZ;
+const zArkaDis = MODEL.arkaDuvarDisZ;
+const zTasIc = MODEL.tasDuvarIcZ;
+const zTasDis = MODEL.tasDuvarDisZ;
+// Köprü B ucundaki merdivenin hemen batısında; arka duvarda köprünün eninde geçit açılır (modelde yok).
+export const KOPRU = {
+  x0: MODEL.bMerdivenX0 - DENEME.kopruEn,
+  x1: MODEL.bMerdivenX0,
+  y0: siraY(UST), // tribün yanı: üst sıranın düzeyi (2,52)
+  y1: DENEME.kopruSahanlikY, // duvar yanı (2,40)
+} as const;
+const kopruOrta = (KOPRU.x0 + KOPRU.x1) / 2;
+export const KOPRU_BOY = zArkaDis - zTasIc; // koridorun üstündeki açıklık: 3,1 m (model)
+export const KOPRU_INIS = KOPRU.y0 - KOPRU.y1; // 0,12 m
+// Köprünün üstünde yükseklik (z'ye göre): arka duvarın içinde düz, koridorun üstünde iner, taş duvarın üstünde düz.
+export const kopruY = (z: number) => (z >= zArkaDis ? KOPRU.y0 : z <= zTasIc ? KOPRU.y1 : KOPRU.y0 - (KOPRU_INIS * (zArkaDis - z)) / KOPRU_BOY);
+// Köprünün koridorun ortasındaki ayağı (DENEME): 9. delikte düz yolu keser.
+export const KOPRU_AYAK: N2 = [kopruOrta, (zArkaDis + zTasIc) / 2];
+const olukOrta8 = siraArka(UST) + OLUK / 2;
+const bas8: N2 = [kopruOrta - DENEME.kopruOluk, olukOrta8];
+const cukur8: N2 = [kopruOrta, (zTasIc + zTasDis) / 2];
+const c8 = { x0: 56.3, x1: 62.4, z0: -73.0, z1: -66.95 };
+// Üst iki sıranın koltukları (şemada): koltuk dizisi ortadaki merdivenden başlar, B ucundaki merdivende biter.
+const koltuklar8 = [UST].flatMap((k) =>
+  Array.from({ length: 34 }, (_, i) => koltukX(i))
+    .filter(([a, b]) => a >= c8.x0 && b <= MODEL.bMerdivenX0)
+    .map(([a, b]) => ({ tur: 'koltuk' as const, x0: a, x1: b, z0: koltukZ(k)[0], z1: koltukZ(k)[1] })),
+);
+
+const kopru: OrnekDelik = {
+  no: 8,
+  zorluk: 'maket.zorluk.zor',
+  eksen: '-z',
+  bordurler: [
+    { y: KOPRU.y0, noktalar: [[bas8[0] - DENEME.baslangicPayi, zArkaIc], [bas8[0] - DENEME.baslangicPayi, zArkaIc + OLUK]] },
+    // Köprünün ağzındaki 45° köşe: oluktan gelen topu köprüye çevirir.
+    { y: KOPRU.y0, noktalar: [[kopruOrta - OLUK / 2, zArkaIc + OLUK], [kopruOrta + OLUK / 2, zArkaIc], [KOPRU.x1, zArkaIc]] },
+    // Duvarın üstündeki sahanlık: üç yanı kenarlı (arkası zeytinlik).
+    { y: KOPRU.y1, noktalar: [[KOPRU.x0, zTasIc], [KOPRU.x0, zTasDis], [KOPRU.x1, zTasDis], [KOPRU.x1, zTasIc]] },
+  ],
+  acikKenarlar: [
+    [[KOPRU.x0, zArkaDis], [KOPRU.x0, zTasIc]],
+    [[KOPRU.x1, zArkaDis], [KOPRU.x1, zTasIc]],
+  ],
+  dis: [
+    [bas8[0] - DENEME.baslangicPayi, zArkaIc + OLUK],
+    [KOPRU.x1, zArkaIc + OLUK],
+    [KOPRU.x1, zTasDis],
+    [KOPRU.x0, zTasDis],
+    [KOPRU.x0, zArkaIc],
+    [bas8[0] - DENEME.baslangicPayi, zArkaIc],
+  ],
+  baslangic: [bas8[0], KOPRU.y0, bas8[1]],
+  cukur: [cukur8[0], KOPRU.y1, cukur8[1]],
+  cerceve: c8,
+  alanlar: [
+    { renk: '#BDB09A', x0: c8.x0, x1: c8.x1, z0: c8.z0, z1: zArkaDis }, // toprak: koridor ve duvarın dışı
+    { renk: '#C9C1B0', x0: KOPRU.x0, x1: KOPRU.x1, z0: zTasDis, z1: zArkaIc }, // köprü
+  ],
+  cizgiler: [UST].map((k) => ({ a: [c8.x0, siraOn(k)] as N2, b: [MODEL.yanDuvarX0, siraOn(k)] as N2, tur: 'basamak' as const })),
+  kutular: [
+    ...koltuklar8,
+    { tur: 'merdivenTas', x0: MODEL.bMerdivenX0, x1: MODEL.yanDuvarX0, z0: zArkaIc, z1: c8.z1 },
+    { tur: 'duvar', x0: c8.x0, x1: KOPRU.x0, z0: zArkaDis, z1: zArkaIc },
+    { tur: 'duvar', x0: KOPRU.x1, x1: MODEL.yanDuvarX0, z0: zArkaDis, z1: zArkaIc },
+    { tur: 'duvar', x0: MODEL.yanDuvarX0, x1: MODEL.yanDuvarX1, z0: zArkaIc, z1: c8.z1 },
+    { tur: 'tas', x0: c8.x0, x1: KOPRU.x0, z0: zTasDis, z1: zTasIc },
+    { tur: 'tas', x0: KOPRU.x1, x1: c8.x1, z0: zTasDis, z1: zTasIc },
+  ],
+  yollar: [[bas8, [kopruOrta, olukOrta8], cukur8]],
+  olculer: [
+    { a: [bas8[0], zArkaIc + OLUK], b: [kopruOrta, zArkaIc + OLUK], kaydir: 0.5, deger: DENEME.kopruOluk, kaynak: 'deneme' },
+    { a: [KOPRU.x1, zArkaDis], b: [KOPRU.x1, zTasIc], kaydir: 0.45, deger: KOPRU_BOY, kaynak: 'model' },
+    { a: [KOPRU.x0, zTasDis], b: [KOPRU.x1, zTasDis], kaydir: -0.4, deger: DENEME.kopruEn, kaynak: 'deneme' },
+    { a: [KOPRU.x1, zTasIc], b: [KOPRU.x1, zTasDis], kaydir: 0.45, deger: zTasIc - zTasDis, kaynak: 'model' },
+    { a: [bas8[0] - DENEME.baslangicPayi, zArkaIc], b: [bas8[0] - DENEME.baslangicPayi, zArkaIc + OLUK], kaydir: 0.25, deger: OLUK, kaynak: 'model' },
+  ],
+  etiketler: [
+    { n: [kopruOrta - 0.25, zArkaIc + OLUK + 0.3], metin: 'maket.sema.sektirme', hiza: 'sag' },
+    { n: [KOPRU.x0 - 0.15, -69.3], metin: 'maket.sema.kopru', hiza: 'sag' },
+    { n: [KOPRU.x0 - 0.15, -69.65], metin: 'maket.sema.kopruInis', deger: KOPRU_INIS, metre: true, hiza: 'sag' },
+    { n: [KOPRU.x0 - 0.15, -70.0], metin: 'maket.sema.kopruAcik', hiza: 'sag' },
+    { n: [57.6, -70.9], metin: 'maket.sema.koridorAsagida', hiza: 'orta' },
+    { n: [57.4, (zTasIc + zTasDis) / 2 + 0.07], metin: 'maket.sema.tasDuvar', hiza: 'orta' },
+    { n: [58.5, (zArkaIc + zArkaDis) / 2 + 0.07], metin: 'maket.sema.arkaDuvar', hiza: 'orta' },
+    { n: [KOPRU.x0 - 0.15, (zTasIc + zTasDis) / 2 + 0.07], metin: 'maket.sema.sahanlik', hiza: 'sag' },
+    { n: [(MODEL.bMerdivenX0 + MODEL.yanDuvarX0) / 2, -67.3], metin: 'maket.sema.merdivenKisa', hiza: 'orta' },
+  ],
+  // Atış anı: ikinci vuruş, top köprünün üstünde; nişan dümdüz duvarın üstündeki deliğe
+  atis: { top: [kopruOrta, kopruY(-70.4), -70.4], yon: [0, -1], boy: 1.0 },
+};
+
+// ---------- 9 · Duvar içi koridor (nefes): köprünün altından, taş duvardan sekip tribünün köşesini dön ----------
+const kose9: N2 = [MODEL.yanDuvarX1, zArkaDis]; // tribünün B ucundaki arka köşesi
+const bas9: N2 = [KOPRU_AYAK[0] - DENEME.koridorBaslangic, KOPRU_AYAK[1]];
+const cepX1 = kose9[0] + DENEME.koridorCepBoy;
+const cepZ1 = kose9[1] + DENEME.koridorCepDerinlik;
+const cukur9: N2 = [kose9[0] + 1.4, cepZ1 - 0.6];
+// Önerilen yol: taş duvardan tek sekme. Deliğin duvara göre aynası başlangıçla birleştirilince duvarı kestiği yer.
+const zSek = zTasIc + TOP_YARICAP;
+const sek9: N2 = [bas9[0] + ((cukur9[0] - bas9[0]) * (bas9[1] - zSek)) / (bas9[1] - zSek + (cukur9[1] - zSek)), zSek];
+export const KORIDOR_EN = zArkaDis - zTasIc; // 3,1 m (model)
+const ay = DENEME.kopruAyak / 2;
+const c9 = { x0: 56.0, x1: 65.4, z0: -72.6, z1: -65.8 };
+// Atış anı: ikinci vuruş, top köşeyi dönmüş.
+const ara9: N2 = [kose9[0] + 0.45, zArkaDis - 0.4];
+const yon9 = ((): N2 => {
+  const dx = cukur9[0] - ara9[0];
+  const dz = cukur9[1] - ara9[1];
+  const b = Math.hypot(dx, dz);
+  return [dx / b, dz / b];
+})();
+
+const koridor: OrnekDelik = {
+  no: 9,
+  zorluk: 'maket.zorluk.kolay',
+  eksen: 'x',
+  // İki yan kenarsız: sınır tribünün arka duvarı ve taş duvarın kendisi. Kiremit kenar yalnız açık uçlarda.
+  bordurler: [
+    { y: 0, noktalar: [[bas9[0] - DENEME.baslangicPayi, zArkaDis], [bas9[0] - DENEME.baslangicPayi, zTasIc]] },
+    { y: 0, noktalar: [[kose9[0], cepZ1], [cepX1, cepZ1], [cepX1, zTasIc]] },
+  ],
+  dis: [
+    [bas9[0] - DENEME.baslangicPayi, zArkaDis],
+    [kose9[0], zArkaDis],
+    [kose9[0], cepZ1],
+    [cepX1, cepZ1],
+    [cepX1, zTasIc],
+    [bas9[0] - DENEME.baslangicPayi, zTasIc],
+  ],
+  baslangic: [bas9[0], 0, bas9[1]],
+  cukur: [cukur9[0], 0, cukur9[1]],
+  cerceve: c9,
+  alanlar: [{ renk: '#C8C0AF', x0: c9.x0, x1: MODEL.yanDuvarX0, z0: zArkaIc, z1: c9.z1 }], // tribün (beton)
+  cizgiler: [],
+  kutular: [
+    { tur: 'duvar', x0: c9.x0, x1: KOPRU.x0, z0: zArkaDis, z1: zArkaIc },
+    { tur: 'duvar', x0: KOPRU.x1, x1: MODEL.yanDuvarX0, z0: zArkaDis, z1: zArkaIc },
+    { tur: 'duvar', x0: MODEL.yanDuvarX0, x1: MODEL.yanDuvarX1, z0: zArkaIc, z1: c9.z1 },
+    { tur: 'tas', x0: c9.x0, x1: c9.x1, z0: zTasDis, z1: zTasIc },
+    { tur: 'ayak', x0: KOPRU_AYAK[0] - ay, x1: KOPRU_AYAK[0] + ay, z0: KOPRU_AYAK[1] - ay, z1: KOPRU_AYAK[1] + ay },
+  ],
+  // Köprü üstte: şemada iki kenarı kesik çizgiyle (top altından geçer).
+  acikKenarlar: [
+    [[KOPRU.x0, zArkaIc], [KOPRU.x0, zTasDis]],
+    [[KOPRU.x1, zArkaIc], [KOPRU.x1, zTasDis]],
+  ],
+  yollar: [[bas9, sek9, cukur9]],
+  olculer: [
+    { a: [bas9[0] - DENEME.baslangicPayi, zArkaDis], b: [bas9[0] - DENEME.baslangicPayi, zTasIc], kaydir: -0.4, deger: KORIDOR_EN, kaynak: 'model' },
+    { a: [bas9[0], zArkaDis], b: [KOPRU_AYAK[0], zArkaDis], kaydir: 0.75, deger: DENEME.koridorBaslangic, kaynak: 'deneme' },
+    { a: [kose9[0], cepZ1], b: [cepX1, cepZ1], kaydir: 0.4, deger: DENEME.koridorCepBoy, kaynak: 'deneme' },
+    { a: [cepX1, zArkaDis], b: [cepX1, cepZ1], kaydir: -0.4, deger: DENEME.koridorCepDerinlik, kaynak: 'deneme' },
+  ],
+  etiketler: [
+    { n: [58.9, (zTasIc + zTasDis) / 2 + 0.07], metin: 'maket.sema.tasDuvarSektirme', hiza: 'orta' },
+    { n: [58.3, (zArkaIc + zArkaDis) / 2 + 0.07], metin: 'maket.sema.arkaDuvar', hiza: 'orta' },
+    { n: [KOPRU_AYAK[0] - 0.4, KOPRU_AYAK[1] + 0.2], metin: 'maket.sema.kopruAyagi', hiza: 'orta' },
+    { n: [KOPRU.x1 + 0.13, -70.85], metin: 'maket.sema.kopruUstte', hiza: 'orta' },
+    { n: [kose9[0] - 0.25, zArkaDis + 0.75], metin: 'maket.sema.tribunKosesi', hiza: 'sag' },
+    { n: [63.5, -70.2], metin: 'maket.sema.toprak', hiza: 'orta' },
+  ],
+  // Atış anı: ikinci vuruş, top tribünün köşesini dönmüş; nişan cepteki deliğe
+  atis: { top: [ara9[0], 0, ara9[1]], yon: yon9, boy: 1.2 },
+};
+
+// Tur sırasıyla. Yeni dille çizilen delikler: 1–9 ve 14; kalan 8 delik eski dilde.
+export const ORNEK_DELIKLER: OrnekDelik[] = [ortaYuvarlak, kenarCizgisi, kale, koseDeligi, penalti, tribunOnu, tribun, kopru, koridor, dus];
 export const KALAN_DELIK_SAYISI = 18 - ORNEK_DELIKLER.length;
 export const ornekDelik = (no: number): OrnekDelik => ORNEK_DELIKLER.find((d) => d.no === no) ?? kale;
