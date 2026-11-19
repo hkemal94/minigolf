@@ -41,9 +41,11 @@ export const FIZIK = {
 
 // --- Vuruş
 export const VURUS = {
-  // DENEME · En güçlü vuruşta topun hızı (m/s): güç sınırı. En uzun delik (3; 13,4 m) tarifteki yolla
-  // gücün yaklaşık %90'ını ister.
-  enCokHiz: 5,
+  // DENEME · En güçlü vuruşta topun hızı (m/s): güç sınırı. 19 Kasım (Kemal: "top çok yavaş"; en uzun delik
+  // rahatça %60–70 güçle oynansın): 5'ten 8,5'e çıktı. En uzun delik (3; 13,4 m) tarifteki yolla gücün
+  // yaklaşık %61–69'unu ister (tek vuruşta deliğe giren hızlar 4,1–4,85 m/s; scripts/oyna-bot.mjs hesabı).
+  // Bir hesap adımında top en çok 8,5 / 480 = 1,8 cm gider; yarıçapından (2,13 cm) az, duvardan geçemez.
+  enCokHiz: 8.5,
   // DENEME · Gücün dolduğu çekme boyu (ekran pikseli).
   enCokCekme: 150,
   // DENEME · Bundan kısa çekme vuruş sayılmaz (iptal).
@@ -57,26 +59,49 @@ export const VURUS = {
   okEnCok: 1.4,
 } as const;
 
-// --- Kamera (eğik yukarıdan, izometrik; topu izler)
+// --- Kamera (eğik yukarıdan, izometrik; topu izler). 19 Kasım (Kemal): topun çevresinde tam tur, yukarı aşağı
+// eğme, vuruştan sonra topu izleme, "Deliğe bak" düğmesi; iki parmakla yakınlaştırma kalır.
 export const KAMERA = {
   // DENEME · Yakınlık: ekranın bir pikseline düşen yer. 200: ekranın eni yaklaşık 1,95 m (maketteki uzaklık).
   yakinlik: 200,
   enUzak: 55,
   enYakin: 420,
-  // Kameranın yerden açısı (maketteki bakış: 17 m yukarı, 13,4 m geri).
+  // Kameranın başlangıçta yerden açısı (maketteki bakış: 17 m yukarı, 13,4 m geri; yaklaşık 52°).
   egim: Math.atan2(17, 13.4),
+  // DENEME · Eğmenin sınırları (derece → radyan). En az 20°: kamera yere yatmaz, yerin altına inmez.
+  // En çok 80°: tam tepeden (90°) bakılmaz, yön duygusu kaybolmasın.
+  enAzEgim: (20 * Math.PI) / 180,
+  enCokEgim: (80 * Math.PI) / 180,
+  // DENEME · Tek parmakla çevirme ve eğme hızı (radyan / ekran pikseli). Sağa sola sürüklemek çevirir
+  // (sınırsız, tam tur), yukarı aşağı sürüklemek eğer. 0,012: yaklaşık 520 piksel sürükleme bir tam tur.
+  cevirHizi: 0.012,
+  egimHizi: 0.006,
   uzaklik: 22,
   // DENEME · Top ekranın ortasından bu kadar aşağıda durur (ekran boyunun oranı): önü görünsün, çekmeye yer kalsın.
   topAsagi: 0.12,
   // DENEME · Kameranın topu izleme yumuşaklığı (büyük: daha çabuk).
   izleme: 6,
+  // DENEME · Vuruştan sonra, top durana kadar: kamera topu daha sıkı izler ve yavaşça topun gittiği yöne döner
+  // (topun arkasından bakar). Oyuncu bu sırada kamerayı elle çevirirse izleme o vuruş için bırakılır.
+  takipIzleme: 12,
+  takipDonme: 1.2, // dönme hızı (büyük: daha çabuk); top yavaşladıkça azalır
+  takipHizi: 2, // top bu hızdan (m/s) hızlıyken tam hızla döner, yavaşken orantılı
+  // DENEME · "Deliğe bak" düğmesinde dönüşün yumuşaklığı (büyük: daha çabuk).
+  delikBakisi: 8,
+} as const;
+
+// --- Oyuncu ayarları (oyundaki küçük ayar menüsü)
+export const OYUNCU = {
+  // DENEME · Kolay mod: çekerken topun duracağı yer gösterilir (aynı fizikle, sekmeler dahil). Kemal
+  // 19 Kasım'da istedi; başta açık mı kapalı mı Kemal'in kararı. Şimdilik açık.
+  kolayMod: true,
 } as const;
 
 // --- Kural
 export const KURAL = {
-  // DENEME · Top dışarı çıkarsa vuruştan önceki yere döner; o vuruş sayılır (+1), ek ceza yok
-  // (tasarım belgesi 2. bölümdeki öneri; karar Kemal'in). Ek ceza istenirse bu sayı artar.
-  disariCeza: 0,
+  // Karar (Kemal, 19 Kasım 2026): top dışarı çıkarsa (saha dışı, taç, su) son vuruşun yerine döner;
+  // o vuruş sayılır, üstüne 1 ceza vuruşu eklenir (sayaç 2 artar).
+  disariCeza: 1,
 } as const;
 
 // --- Görüntü (fizikle ilgisi yok)
@@ -85,4 +110,9 @@ export const GORUNTU = {
   direkBoy: 2.44, // kale direği (IFAB)
   // Saha çizgileri modelde çimden 1 cm yüksek; top çizginin içine gömülmesin diye çimde bu kadar yukarıda çizilir.
   cimKaldirma: 0.011,
+  // DENEME · Kale filesinin göz aralığı (m). Model filesi oyunda çizilmez; yerine ince çizgilerle file ağı
+  // (fizikteki yan ağlar ve arka ağ). Kaynağı yok; gerçek file sonraki adımda.
+  fileGoz: 0.12,
+  // Modeldeki arka filenin boyu (m; dirlik-stadi.glb).
+  fileArkaBoy: 1.7,
 } as const;

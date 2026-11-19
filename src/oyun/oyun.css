@@ -27,9 +27,9 @@
 .oy-guc-cubuk { flex: 1; height: 8px; border-radius: 999px; background: rgba(14, 28, 79, 0.15); overflow: hidden; }
 .oy-guc-dolu { height: 100%; width: 0; background: var(--kiremit); }
 .oy-guc span { min-width: 74px; text-align: right; }
-.oy-alt-satir { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 14px; background: rgba(14, 28, 79, 0.92); color: var(--krem); }
-.oy-ipucu { flex: 1; font-size: 10.5px; line-height: 1.35; text-align: center; opacity: 0.9; }
-.oy-rozet { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; max-width: 62px; text-align: right; line-height: 1.25; }
+.oy-alt-satir { display: flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 14px; background: rgba(14, 28, 79, 0.92); color: var(--krem); }
+.oy-ipucu { flex: 1; min-width: 0; font-size: 10px; line-height: 1.35; text-align: center; opacity: 0.9; }
+.oy-rozet { font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; max-width: 44px; text-align: right; line-height: 1.25; }
 
 .oy-dugme, .oy-dugme-ince { font: inherit; border: 0; cursor: pointer; pointer-events: auto; border-radius: 999px; }
 .oy-dugme { display: block; width: 100%; padding: 12px 16px; background: var(--lacivert); color: var(--krem); font-size: 14px; font-weight: 600; }
@@ -48,3 +48,25 @@
 .oy-tablo-sayi { text-align: right; font-weight: 600; font-size: 15px; }
 .oy-tablo-toplam td { border-bottom: 0; font-weight: 600; }
 .oy-tablo-toplam .oy-tablo-sayi { color: var(--kiremit); font-size: 18px; }
+
+/* Barem: güç çubuğunda %25, %50, %75 çentikleri */
+.oy-guc-cubuk { position: relative; }
+.oy-guc-centik { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--lacivert); opacity: 0.55; }
+
+/* Deliğe bak: alt şeridin üstünde, sağda (başparmağın altında) */
+.oy-arac { display: flex; justify-content: flex-end; margin-bottom: 6px; }
+.oy-dugme-kucuk { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border: 0; border-radius: 999px; background: var(--krem); color: var(--lacivert); font: inherit; font-size: 11px; font-weight: 600; cursor: pointer; pointer-events: auto; box-shadow: 0 2px 8px rgba(14, 28, 79, 0.22); }
+.oy-dugme-simge { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; padding: 0; border: 1px solid currentColor; border-radius: 999px; background: transparent; color: inherit; cursor: pointer; pointer-events: auto; opacity: 0.85; flex: none; }
+
+/* Küçük ayar menüsü */
+.oy-ayar { position: absolute; left: 10px; right: 10px; bottom: calc(62px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 16px; background: var(--krem); color: var(--lacivert); box-shadow: 0 6px 24px rgba(14, 28, 79, 0.28); }
+.oy-ayar-baslik { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
+.oy-ayar-satir { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; }
+.oy-ayar-satir b { display: block; font-size: 13px; font-weight: 600; }
+.oy-ayar-satir small { display: block; font-size: 11px; opacity: 0.7; }
+.oy-ayar-satir input { position: absolute; opacity: 0; pointer-events: none; }
+.oy-anahtar { flex: none; width: 40px; height: 22px; border-radius: 999px; background: rgba(14, 28, 79, 0.2); position: relative; transition: background 0.15s; }
+.oy-anahtar::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--krem); transition: left 0.15s; }
+.oy-ayar-satir input:checked + .oy-anahtar { background: var(--lacivert); }
+.oy-ayar-satir input:checked + .oy-anahtar::after { left: 21px; }
+.oy-ayar .oy-dugme-ince { align-self: flex-end; }

@@ -2,11 +2,12 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type Point
 import { Canvas } from '@react-three/fiber';
 import { m, type MetinAnahtari } from '../metinler';
 import { metre } from '../maket/metre';
-import { KAMERA, KURAL, VURUS } from './ayarlar';
+import { KAMERA, KURAL, OYUNCU, VURUS } from './ayarlar';
 import { OYUN_SIRASI, oyunDeligi } from './dunya';
 import { vur, yeniTop } from './fizik';
+import { vurusHizi } from './tahmin';
 import { KucukPlan, planNoktasi } from './KucukPlan';
-import { OyunSahnesi, ekranNoktasi, yeniDurum, yerNoktasi, type Durum, type Olay } from './Sahne';
+import { OyunSahnesi, delikYonu, ekranNoktasi, yeniDurum, yerNoktasi, type Durum, type Olay } from './Sahne';
 import './oyun.css';
 
 // OYNANABİLİR PROTOTİP (Kemal, 19 Kasım 2026: telefonda denenecek ilk oynanış). ?oyna=1 ile açılır.
@@ -23,6 +24,18 @@ type Hareket =
 
 const yerAdi = (no: number) => m(`maket.yer.${no}` as MetinAnahtari);
 
+// Kolay mod oyuncunun telefonunda hatırlanır (yalnız bu ayar; kaldığı yerden devam bu prototipte yok).
+const KOLAY_ANAHTARI = 'minigolf.kolayMod';
+function kolayOku(): boolean {
+  try {
+    const v = window.localStorage.getItem(KOLAY_ANAHTARI);
+    return v === null ? OYUNCU.kolayMod : v === '1';
+  } catch {
+    return OYUNCU.kolayMod;
+  }
+}
+const sinirla = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
+
 export default function Oyun() {
   const [sira, setSira] = useState(0);
   const [tekrar, setTekrar] = useState(0);
@@ -30,11 +43,21 @@ export default function Oyun() {
   const [asama, setAsama] = useState<Asama>('oyun');
   const [disari, setDisari] = useState(false);
   const [yuklendi, setYuklendi] = useState(false);
+  const [kolay, setKolay] = useState(kolayOku);
+  const [ayarAcik, setAyarAcik] = useState(false);
 
   const no = OYUN_SIRASI[sira];
   // Her delik (ve her "yeniden") için yeni bir oyun hâli.
   // tekrar: "yeniden" denince aynı delik baştan kurulur.
   const durum = useMemo<Durum>(() => yeniDurum(oyunDeligi(no)), [no, tekrar]);
+  durum.kolay = kolay;
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(KOLAY_ANAHTARI, kolay ? '1' : '0');
+    } catch {
+      // Tarayıcı saklamaya izin vermiyorsa ayar yalnız bu açılışta geçerli.
+    }
+  }, [kolay]);
 
   const alanRef = useRef<HTMLDivElement>(null);
   const uzaklikRef = useRef<HTMLSpanElement>(null);
@@ -63,6 +86,13 @@ export default function Oyun() {
         top: { ...durum.top },
         onceki: durum.onceki,
         aci: durum.aci,
+        egim: durum.egim,
+        takip: durum.takip,
+        hedefAci: durum.hedefAci,
+        kolay: durum.kolay,
+        tahmin: durum.tahmin,
+        tahminGorunur: durum.tahminGorunur,
+        delikYonu: delikYonu(durum),
         yakinlik: durum.yakinlik,
         topEkran: durum.topEkran,
         nisan: { ...durum.nisan },
@@ -84,7 +114,7 @@ export default function Oyun() {
         durum.kilitli = true;
         setAsama('delikSonu');
       } else if (o === 'disari') {
-        // DENEME: top dışarı çıktı; vuruştan önceki yere döner. Vuruş sayıldı (KURAL.disariCeza ek ceza).
+        // Top dışarı çıktı (Kemal, 19 Kasım): son vuruşun yerine döner; vuruş sayıldı, üstüne KURAL.disariCeza ceza vuruşu.
         const [x, y, z] = durum.onceki;
         durum.top = yeniTop(x, y, z);
         durum.birikim = 0;
@@ -96,7 +126,7 @@ export default function Oyun() {
   );
   useEffect(() => {
     if (!disari) return;
-    const z = window.setTimeout(() => setDisari(false), 2600);
+    const z = window.setTimeout(() => setDisari(false), 3500);
     return () => window.clearTimeout(z);
   }, [disari]);
 
@@ -158,6 +188,11 @@ export default function Oyun() {
     const [a, b] = [...parmaklar.current.values()];
     return { aralik: Math.hypot(b.x - a.x, b.y - a.y), yon: Math.atan2(b.y - a.y, b.x - a.x) };
   };
+  // Oyuncu kamerayı eliyle oynatınca otomatik dönüşler o an bırakılır.
+  const kameraElde = () => {
+    durum.takip = false;
+    durum.hedefAci = null;
+  };
   const nisanBirak = () => {
     durum.nisan.aktif = false;
     durum.nisan.guc = 0;
@@ -182,6 +217,7 @@ export default function Oyun() {
       }
     } else if (parmaklar.current.size === 2) {
       nisanBirak(); // ikinci parmak gelince vuruş iptal
+      kameraElde();
       hareket.current = { tur: 'iki', ...ikiParmak(), yakinlik: durum.yakinlik, aci: durum.aci };
     }
   };
@@ -209,12 +245,13 @@ export default function Oyun() {
       durum.nisan.guc = Math.min(1, cekme / VURUS.enCokCekme);
       gucGoster(durum.nisan.guc);
     } else if (h.tur === 'cevir' && h.kimlik === e.pointerId) {
-      // Parmak topun çevresinde ne kadar döndüyse yer de o kadar döner (parmağın altındaki yer parmağı izler).
-      const [tx, ty] = durum.topEkran;
-      let fark = Math.atan2(p.y - ty, p.x - tx) - Math.atan2(h.son.y - ty, h.son.x - tx);
-      if (fark > Math.PI) fark -= 2 * Math.PI;
-      if (fark < -Math.PI) fark += 2 * Math.PI;
-      if (Math.hypot(p.x - tx, p.y - ty) > VURUS.dokunmaPayi) durum.aci -= fark;
+      // Tek parmak boşta: sağa sola sürüklemek kamerayı topun çevresinde çevirir (sınırsız, tam tur),
+      // yukarı aşağı sürüklemek eğer (aşağı: daha tepeden, yukarı: daha yandan; sınırlı).
+      const dx = p.x - h.son.x;
+      const dy = p.y - h.son.y;
+      if (dx !== 0 || dy !== 0) kameraElde();
+      durum.aci -= dx * KAMERA.cevirHizi;
+      durum.egim = sinirla(durum.egim + dy * KAMERA.egimHizi, KAMERA.enAzEgim, KAMERA.enCokEgim);
       h.son = p;
     } else if (h.tur === 'iki' && parmaklar.current.size === 2) {
       const simdi = ikiParmak();
@@ -237,7 +274,10 @@ export default function Oyun() {
         const t = durum.top;
         durum.onceki = [t.x, t.y, t.z];
         durum.birikim = 0;
-        vur(t, n.yonX, n.yonZ, VURUS.enCokHiz * Math.pow(n.guc, VURUS.us));
+        vur(t, n.yonX, n.yonZ, vurusHizi(n.guc));
+        // Kamera top durana kadar topu izler.
+        durum.takip = true;
+        durum.hedefAci = null;
         setVuruslar((v) => v.map((s, i) => (i === sira ? s + 1 : s)));
       }
       nisanBirak();
@@ -256,11 +296,17 @@ export default function Oyun() {
   };
 
   // --- Düğmeler
+  // Deliğe bak: kamera topun arkasına döner, delik topun önünde kalır.
+  const deligeBak = () => {
+    durum.takip = false;
+    durum.hedefAci = delikYonu(durum);
+  };
   const temizle = () => {
     parmaklar.current.clear();
     hareket.current = { tur: 'yok' };
     sonUzaklik.current = '';
     setDisari(false);
+    setAyarAcik(false);
   };
   const delikYeniden = () => {
     temizle();
@@ -335,7 +381,7 @@ export default function Oyun() {
 
       {disari && (
         <div className="oy-bildirim" data-deneme="disari">
-          {m('oyna.disari')}
+          {m('oyna.disari', KURAL.disariCeza)}
         </div>
       )}
 
@@ -344,8 +390,21 @@ export default function Oyun() {
         <div className="oy-guc" ref={gucRef} style={{ visibility: 'hidden' }}>
           <div className="oy-guc-cubuk">
             <div className="oy-guc-dolu" ref={gucDoluRef} />
+            {/* Barem: %25, %50, %75 çentikleri */}
+            {[25, 50, 75].map((c) => (
+              <i key={c} className="oy-guc-centik" style={{ left: `${c}%` }} data-deneme="guc-centik" />
+            ))}
           </div>
           <span ref={gucYaziRef} />
+        </div>
+        <div className="oy-arac">
+          <button type="button" className="oy-dugme-kucuk" onClick={deligeBak} data-deneme="delige-bak">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" strokeWidth="2" />
+              <circle cx="12" cy="12" r="2.4" fill="currentColor" />
+            </svg>
+            {m('oyna.deligeBak')}
+          </button>
         </div>
         <div className="oy-alt-satir">
           <button type="button" className="oy-dugme-ince" onClick={delikYeniden} data-deneme="delik-yeniden">
@@ -356,8 +415,33 @@ export default function Oyun() {
             <div>{m('oyna.ipucuKamera')}</div>
           </div>
           <span className="oy-rozet">{m('oyna.deneme')}</span>
+          <button type="button" className="oy-dugme-simge" onClick={() => setAyarAcik((a) => !a)} aria-label={m('oyna.ayarlar')} data-deneme="ayarlar">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M4 7h10M18 7h2M4 17h2M10 17h10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <circle cx="16" cy="7" r="2.2" fill="none" stroke="currentColor" strokeWidth="2" />
+              <circle cx="8" cy="17" r="2.2" fill="none" stroke="currentColor" strokeWidth="2" />
+            </svg>
+          </button>
         </div>
       </div>
+
+      {/* Küçük ayar menüsü: kolay mod */}
+      {ayarAcik && asama === 'oyun' && (
+        <div className="oy-ayar" data-deneme="ayar-menusu">
+          <div className="oy-ayar-baslik">{m('oyna.ayarlar')}</div>
+          <label className="oy-ayar-satir">
+            <span>
+              <b>{m('oyna.kolayMod')}</b>
+              <small>{m('oyna.kolayModAciklama')}</small>
+            </span>
+            <input type="checkbox" checked={kolay} onChange={(e) => setKolay(e.target.checked)} data-deneme="kolay-mod" />
+            <i className="oy-anahtar" aria-hidden="true" />
+          </label>
+          <button type="button" className="oy-dugme-ince" onClick={() => setAyarAcik(false)}>
+            {m('oyna.kapat')}
+          </button>
+        </div>
+      )}
 
       {asama === 'delikSonu' && (
         <div className="oy-perde">

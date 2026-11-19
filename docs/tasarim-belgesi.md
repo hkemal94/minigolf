@@ -940,25 +940,42 @@ Sıra: 3 (kale), 1 (orta yuvarlak), 7 (tribün sıraları).
 
 | Ne | Değer | Not |
 |---|---|---|
-| Güç sınırı (en güçlü vuruşta topun hızı) | 5 m/s | 3. delik tarifteki yolla gücün yaklaşık %90'ını istiyor |
+| Güç sınırı (en güçlü vuruşta topun hızı) | 8,5 m/s (19 Kasım; önce 5) | Kemal: "top çok yavaş". 3. delik tarifteki yolla gücün yaklaşık %61–69'unu istiyor (tek vuruşta deliğe giren hızlar 4,1–4,85 m/s); önce %90'dı. Bir hesap adımında top en çok 1,8 cm gider, duvardan geçemez |
 | Gücün dolduğu çekme boyu · en kısa çekme (altı iptal) | 150 · 14 piksel | |
 | Güç eğrisi (üs) | 1,5 | kısa vuruş daha ince ayarlanır |
 | Topa dokunma payı | 44 piksel | |
-| Çimde yavaşlama | 0,55 m/s² | orta hızda golf yeşili: Stimpmeter topu 1,83 m/s ile bırakır, 10 fit (3,05 m) giderse 0,55 (İngilizce Vikipedi "Stimpmeter", 19 Kasım'da okundu); "10 fit" seçimi DENEME |
+| Çimde yavaşlama | 0,55 m/s² (değişmedi) | orta hızda golf yeşili: Stimpmeter topu 1,83 m/s ile bırakır, 10 fit (3,05 m) giderse 0,55 (İngilizce Vikipedi "Stimpmeter", 19 Kasım'da okundu); "10 fit" seçimi DENEME |
 | Betonda yavaşlama | 0,4 m/s² | kaynağı yok |
 | Sekme: bordür · direk · huni ve koltuk · ağ | 0,72 · 0,6 · 0,5 · 0,1 | çarpmadan sonra kalan hız oranı; kaynağı yok |
 | Düşen topun zeminden sekmesi: çim · beton | 0,25 · 0,4 | kaynağı yok |
 | Delik: kenardan sekme · tabandan sekme · derinlik | 0,3 · 0,15 · 0,1016 m | derinlik golf kuralındaki en az 4 inç; bu oturumda kaynaktan okunmadı |
 | Duvara sürtünme | 0,12 | kaynağı yok |
 | Kamera: yakınlık · en uzak · en yakın | 200 · 55 · 420 piksel/m | 200: ekranın eni yaklaşık 1,95 m (maketteki uzaklık) |
+| Kamera eğimi: başta · en az · en çok | 52° · 20° · 80° | en az: yere yatmaz, yerin altına inmez; en çok: tam tepeden bakmaz |
+| Tek parmakla çevirme · eğme hızı | 0,012 · 0,006 radyan/piksel | yaklaşık 520 piksel sağa sola sürükleme bir tam tur |
+| Vuruştan sonra izleme: sıkılık · dönme | 12 · 1,2 (top 2 m/s'den yavaşken orantılı az) | kamera topun arkasına döner; oyuncu elle çevirirse o vuruş için bırakır |
+| "Deliğe bak" dönüşünün yumuşaklığı | 8 | |
+| Kolay mod (topun duracağı yer) başta | açık | Kemal'in kararı; ayar menüsünden kapanır, telefonda hatırlanır |
+| Kale filesinin göz aralığı | 0,12 m | kaynağı yok; gerçek file sonraki adımda |
 | Kamera başlangıç yönü | maketteki bakış | topun arkasından, biraz yandan |
-| Top dışarı çıkarsa | önceki yerine döner, vuruş sayılır, ek ceza 0 | 2. bölümdeki öneri; ek ceza istenirse tek sayı (`KURAL.disariCeza`) |
+| Top dışarı çıkarsa | son vuruşun yerine döner, vuruş sayılır, +1 ceza vuruşu | **Karar (Kemal, 19 Kasım)**; artık DENEME değil (`KURAL.disariCeza`) |
 | Bir vuruşun en uzun süresi | 30 sn | top sıkışırsa oyun kilitlenmesin diye |
 
 Yerçekimi 9,81 m/s² (gerçek). Kale direği 2,44 m (IFAB). Huni boyu maketteki gibi 0,3 m (DENEME).
 
+**Kontroller (19 Kasım, Kemal'in telefon denemesinden sonra; öneri):**
+- **Kamera:** tek parmak topun üstünde vurur; tek parmak boşta sağa sola sürüklenince kamera topun çevresinde tam tur
+  döner (sınırsız), yukarı aşağı sürüklenince eğilir (20°–80°). İki parmak yakınlaştırır ve çevirir. Vuruştan sonra
+  kamera top durana kadar topu izler ve yavaşça topun arkasına döner. "Deliğe bak" düğmesi kamerayı tek dokunuşla topun
+  arkasına çevirir; delik topun tam önünde kalır.
+- **Güç:** sınır 5'ten 8,5 m/s'ye çıktı; çim yavaşlaması aynı. Güç çubuğunda %25, %50, %75 çentikleri.
+- **Kolay mod** (küçük ayar menüsü, sağ alttaki düğme): çekerken topun duracağı yer halkayla gösterilir; aynı fizikle,
+  sekmeler dahil hesaplanır (dışarı çıkacaksa halka kiremit). Kapalıyken gösterilmez.
+- **Kale filesi:** modeldeki dolu file (cam gibi görünüp çimle titriyordu) oyunda çizilmez; yerine ince çizgilerden ağ:
+  iki yan, arka ve üst file, fizikteki ağlarla aynı yerde.
+
 **Bu prototipte yok:** geri al, kaldığı yerden devam, ses, vuruş sınırı, zorluk yazısı, ana ekran, skor kartı
-ekranı, pul. Nişan oku yalnız yönü ve gücü gösterir, sekmeyi göstermez.
+ekranı, pul. Nişan oku yalnız yönü ve gücü gösterir; sekmeyi yalnız kolay moddaki durma yeri halkası hesaba katar.
 
 **Nasıl denendi:** bilgisayarda telefon boyutunda (390 × 844), dokunmatik olarak; bot gerçek parmak hareketiyle
 üç deliği de deliğe soktu, sekmeyi, güç sınırını, kamerayı ve dışarı çıkıp geri dönmeyi doğruladı
@@ -968,6 +985,9 @@ boyunca vurulan top köşeden dönüp bir alt sıranın oluğuna iniyor. **Gerç
 ölçülmedi (çizim yükü hafif: karede 44 çizim, yaklaşık 28 bin üçgen).
 
 Görüntüler: `ekranlar/oyna-1-delik-3-baslangic.png` … `oyna-7-tur-sonu.png`.
+Kontroller (19 Kasım): bot ayrıca tam tur çevirmeyi, eğmenin sınırlarını, izlemeyi, "Deliğe bak"ı, kolay mod halkasının
+topun durduğu yerle aynı olduğunu (sapma 0) ve dışarı çıkan vuruşta sayacın 2 arttığını doğruladı. Tarifteki yolla 3. delik
+tek vuruşta gücün %62–68'iyle deliğe giriyor (hesap). Görüntüler: `ekranlar/oyna-v2-1-baslangic.png` … `oyna-v2-9-disari-ceza.png`.
 
 ### 6.5 Öneri havuzu (19 Kasım raporundan)
 
