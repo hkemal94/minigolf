@@ -1,13 +1,25 @@
 import { m, seciliDil, type MetinAnahtari } from '../metinler';
 import { renk } from '../sahne/renkler';
 import { metre } from './metre';
-import { DENEME, GOLF, IFAB, MODEL, WMF } from './olculer';
-import { ORNEK_DELIKLER, KALAN_DELIK_SAYISI, YAY_BOYU, OVAL_BOY, ornekDelik, DUS_BOY, DUS_EN, MERDIVEN_X1, type Kaynak, type N2, type OrnekDelik } from './ornekDelikler';
+import { DENEME, GOLF, IFAB, KARAR, MODEL, WMF } from './olculer';
+import { ORNEK_DELIKLER, KALAN_DELIK_SAYISI, YAY_BOYU, OVAL_BOY, ornekDelik, DUS_BOY, DUS_EN, MERDIVEN_X1, KORIDOR_EN, type Kaynak, type N2, type OrnekDelik } from './ornekDelikler';
 
 // MAKET (öneri): yeni dille çizilen deliklerin üstten şeması, ölçü çizgileriyle. Veri 3B maketle aynı (ornekDelikler.ts).
 
 const CIM = '#7E9A55'; // modeldeki çimin rengi
-const ZEMIN: Record<number, string> = { 1: CIM, 2: CIM, 3: CIM, 4: CIM, 5: CIM, 7: '#C8C0AF', 14: '#C8C0AF' };
+const TOPRAK = '#BDB09A'; // modeldeki toprak zeminin rengi
+const ZEMIN: Record<number, string> = { 1: CIM, 2: CIM, 3: CIM, 4: CIM, 5: CIM, 6: CIM, 7: '#C8C0AF', 8: '#C8C0AF', 9: TOPRAK, 14: '#C8C0AF' };
+// Şemada eşyaların rengi (modeldeki renkler): tribün duvarı, taş duvar, taş merdiven, köprü ayağı.
+const KUTU_RENGI: Partial<Record<OrnekDelik['kutular'][number]['tur'], string>> = {
+  koltuk: renk.lacivert,
+  koltukAcik: renk.krem,
+  duvar: '#C9B48F',
+  tas: '#D6C7A8',
+  merdivenTas: '#BFA987',
+  ayak: '#B9B09D',
+  bank: '#D9DCE0', // saha kenarı bankının oturağı (alüminyum)
+  bankAyak: '#6E7379',
+};
 
 // Uzun eksen ekranda dikey, başlangıç altta: 'z' (x, z) -> (-x, -z); '-z' -> (x, z); 'x' -> (z, -x); '-x' -> (-z, x).
 const eksenCevir = (eksen: OrnekDelik['eksen']) => (n: N2): N2 =>
@@ -17,6 +29,7 @@ const KAYNAK_ADI: Record<Kaynak, MetinAnahtari> = {
   wmf: 'maket.kaynak.wmf',
   model: 'maket.kaynak.model',
   deneme: 'maket.deneme',
+  kemal: 'maket.kaynak.kemal',
 };
 
 // Önerilen yol (kesik kiremit) ve kestirme: bulmacayı anlatmak için; oynanışta çizilmez.
@@ -52,13 +65,16 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
   return (
     <svg viewBox={`0 0 ${gen} ${yuk}`} width="100%" height="100%" className="mk-sema-cizim">
       <rect x={ox} y={oy} width={(maxX - minX) * olcek} height={(maxY - minY) * olcek} rx="10" fill={ZEMIN[delik.no]} />
+      {delik.alanlar?.map((a, i) => (
+        <rect key={`a${i}`} {...kutu(a)} fill={a.renk} />
+      ))}
       {delik.no === 14 && <rect {...kutu({ x0: 0, x1: DUS_BOY, z0: 0, z1: DUS_EN })} fill="#F4F1EA" />}
       {delik.no === 7 && <rect {...kutu({ x0: c.x0, x1: MERDIVEN_X1, z0: c.z0, z1: c.z1 })} fill="#B79A6E" opacity="0.55" />}
       {delik.cizgiler.map((l, i) => (
         <path
           key={i}
           d={yol([l.a, l.b])}
-          stroke={l.tur === 'basamak' ? '#8F8776' : l.tur === 'merdiven' ? '#A58A5E' : '#FAF8F5'}
+          stroke={l.tur === 'basamak' ? '#8F8776' : l.tur === 'merdiven' ? '#A58A5E' : l.tur === 'korkuluk' ? '#3F3B36' : '#FAF8F5'}
           strokeWidth={l.tur === 'saha' ? (delik.yollar ? Math.max(2.2, MODEL.cizgiEn * olcek) : 2.2) : 1.2}
           strokeLinecap={l.tur === 'saha' && delik.yollar ? 'round' : undefined}
           strokeDasharray={l.tur === 'ag' ? '3 3' : undefined}
@@ -72,10 +88,13 @@ function Cizim({ delik, gen, yuk }: { delik: OrnekDelik; gen: number; yuk: numbe
         <circle key={i} cx={P(n.n)[0]} cy={P(n.n)[1]} r={n.r * olcek} fill="#FAF8F5" />
       ))}
       {delik.kutular.map((k, i) => (
-        <rect key={i} {...kutu(k)} rx={k.tur.startsWith('koltuk') ? 2 : 0} fill={k.tur === 'koltuk' ? renk.lacivert : k.tur === 'koltukAcik' ? renk.krem : '#FAF8F5'} stroke={renk.lacivert} strokeWidth={k.tur === 'koltuk' ? 0 : 0.8} />
+        <rect key={i} {...kutu(k)} rx={k.tur.startsWith('koltuk') ? 2 : 0} fill={KUTU_RENGI[k.tur] ?? '#FAF8F5'} stroke={renk.lacivert} strokeWidth={k.tur === 'koltuk' ? 0 : 0.8} />
       ))}
       {delik.bordurler.map((b, i) => (
         <path key={i} d={yol(b.noktalar)} stroke={renk.kiremit} strokeWidth="2.6" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+      ))}
+      {delik.acikKenarlar?.map((b, i) => (
+        <path key={`ak${i}`} d={yol(b)} stroke={renk.kiremit} strokeWidth="1.6" strokeDasharray="4 3" fill="none" />
       ))}
       {delik.vurguKenar && (
         <>
@@ -160,14 +179,17 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
   const dusX = 40, dusZ = 9.5;
   // sekil: deliğin kenarı gerçek biçimiyle (adım 1 delikleri); yoksa gerçek ölçüsünde kutu.
   type Isaret = { no: number; n: N2; boyut: [number, number]; yazi: N2; hiza: 'start' | 'end'; sekil?: N2[] };
-  const sekil = (no: number) => ornekDelik(no).bordurler[0].noktalar.map((q) => P(q[0], q[1]));
+  const sekil = (no: number) => (ornekDelik(no).dis ?? ornekDelik(no).bordurler[0].noktalar).map((q) => P(q[0], q[1]));
   const isaretler: Isaret[] = [
     { no: 1, n: P(40.4, -37), boyut: [YAY_BOYU, WMF.betonEn], yazi: P(31, -39), hiza: 'start', sekil: sekil(1) },
     { no: 2, n: P(22.5, -55), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(22.5, -45), hiza: 'start', sekil: sekil(2) },
     { no: 3, n: P(-0.7, -32), boyut: [2.6, 13.4], yazi: P(-9, -32), hiza: 'start' },
-    { no: 4, n: P(0.4, -57.6), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(-9, -60), hiza: 'start', sekil: sekil(4) },
+    { no: 4, n: P(0.4, -57.6), boyut: [WMF.minyaturBoy, WMF.minyaturEn], yazi: P(-9, -60), hiza: 'start', sekil: sekil(4) },
     { no: 5, n: P(13.75, -29), boyut: [OVAL_BOY, 2 * DENEME.ovalYariEn], yazi: P(13.75, -17), hiza: 'start', sekil: sekil(5) },
+    { no: 6, n: P(43, -62.5), boyut: [WMF.minyaturBoy, WMF.betonEn], yazi: P(38, -50), hiza: 'start', sekil: sekil(6) },
     { no: 7, n: P(48.7, -66), boyut: [6.25, 2.55], yazi: P(48.7, -54), hiza: 'start' },
+    { no: 8, n: P(60.5, -70), boyut: [MODEL.arkaDuvarIcZ - MODEL.tasDuvarDisZ, KARAR.kopruEn], yazi: P(60, -53), hiza: 'start', sekil: sekil(8) },
+    { no: 9, n: P(63.5, -69.5), boyut: [ornekDelik(9).dis![4][0] - ornekDelik(9).dis![0][0], KORIDOR_EN], yazi: P(71, -60), hiza: 'start', sekil: sekil(9) },
     { no: 14, n: P(dusX + DUS_BOY / 2, dusZ + DUS_EN / 2), boyut: [DUS_BOY, DUS_EN], yazi: P(dusX + DUS_BOY / 2, -3), hiza: 'end' },
   ];
   return (
@@ -224,7 +246,7 @@ function Yerlesim({ gen, yuk }: { gen: number; yuk: number }) {
 
 const santim = (n: number) => (n * 100).toLocaleString(seciliDil(), { maximumFractionDigits: 2 });
 
-const KAYNAK_SATIRLARI: MetinAnahtari[] = ['maket.kaynak.ifabUzun', 'maket.kaynak.wmfUzun', 'maket.kaynak.modelUzun', 'maket.kaynak.denemeUzun'];
+const KAYNAK_SATIRLARI: MetinAnahtari[] = ['maket.kaynak.ifabUzun', 'maket.kaynak.wmfUzun', 'maket.kaynak.modelUzun', 'maket.kaynak.kemalUzun', 'maket.kaynak.denemeUzun'];
 
 export function Sema({ no }: { no: number }) {
   if (no === 0) {
@@ -295,6 +317,12 @@ export function KucukHarita({ delik, top }: { delik: OrnekDelik; top: [number, n
         delik.cizgiler.filter((l) => l.tur === 'saha').map((l, i) => (
           <path key={`s${i}`} d={yol([l.a, l.b])} stroke={renk.lacivert} strokeWidth="1" fill="none" opacity="0.28" strokeLinecap="round" />
         ))}
+      {delik.cizgiler.filter((l) => l.tur === 'korkuluk').map((l, i) => (
+        <path key={`k${i}`} d={yol([l.a, l.b])} stroke={renk.lacivert} strokeWidth="0.8" fill="none" opacity="0.45" />
+      ))}
+      {delik.acikKenarlar?.map((b, i) => (
+        <path key={`ak${i}`} d={yol(b)} stroke={renk.kiremit} strokeWidth="1.1" strokeDasharray="2.5 2" fill="none" />
+      ))}
       {delik.bordurler.map((b, i) => (
         <path key={i} d={yol(b.noktalar)} stroke={renk.kiremit} strokeWidth="1.5" fill="none" strokeLinejoin="round" strokeLinecap="round" />
       ))}

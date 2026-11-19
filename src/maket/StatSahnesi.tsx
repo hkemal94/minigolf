@@ -13,18 +13,24 @@ export const ORTA_YUVARLAK: [number, number, number] = [45, 0, -29];
 
 // Modelde kesilecek kutu: içindeki oturma tahtaları (krem ve lacivert) çizilmez; yerlerine makette
 // tek tek koltuk çizilir (Kemal, 18 Kasım 2026). Model dosyasına dokunulmaz.
-export type Kesim = { x0: number; x1: number; z0: number; z1: number };
+// malzemeler: kutunun içinde hangi malzemeler kesilir (yoksa oturma tahtaları: krem ve lacivert).
+// Adım 2: arka duvarda köprünün geçidi için 'tas2' de kesilir. Bir malzeme yalnız bir kutuyla kesilir.
+export type Kesim = { x0: number; x1: number; z0: number; z1: number; malzemeler?: string[] };
 
-function StatModeli({ kesim }: { kesim?: Kesim }) {
+function StatModeli({ kesimler }: { kesimler?: Kesim[] }) {
   const gltf = useLoader(GLTFLoader, STAT_MODELI);
   const sahne = useMemo(() => {
     const kopya = gltf.scene.clone(true);
-    const duzlemler = kesim && [
-      new Plane(new Vector3(-1, 0, 0), kesim.x0),
-      new Plane(new Vector3(1, 0, 0), -kesim.x1),
-      new Plane(new Vector3(0, 0, -1), kesim.z0),
-      new Plane(new Vector3(0, 0, 1), -kesim.z1),
-    ];
+    const duzlemler = new Map<string, Plane[]>();
+    for (const kesim of kesimler ?? []) {
+      const d = [
+        new Plane(new Vector3(-1, 0, 0), kesim.x0),
+        new Plane(new Vector3(1, 0, 0), -kesim.x1),
+        new Plane(new Vector3(0, 0, -1), kesim.z0),
+        new Plane(new Vector3(0, 0, 1), -kesim.z1),
+      ];
+      for (const ad of kesim.malzemeler ?? ['krem', 'lacivert']) duzlemler.set(ad, d);
+    }
     kopya.traverse((o: Object3D) => {
       if (!(o instanceof Mesh)) return;
       o.castShadow = true;
@@ -47,16 +53,16 @@ function StatModeli({ kesim }: { kesim?: Kesim }) {
         o.material = ag;
         o.castShadow = false;
       }
-      if (duzlemler && (ad === 'krem' || ad === 'lacivert')) {
+      if (duzlemler.has(ad)) {
         const kesik = (o.material as Material).clone();
-        kesik.clippingPlanes = duzlemler;
+        kesik.clippingPlanes = duzlemler.get(ad)!;
         kesik.clipIntersection = true;
         kesik.clipShadows = true;
         o.material = kesik;
       }
     });
     return kopya;
-  }, [gltf, kesim]);
+  }, [gltf, kesimler]);
   return <primitive object={sahne} />;
 }
 
@@ -101,11 +107,11 @@ type Ozellik = {
   gorusAcisi?: number;
   // Model çizilmesin (modelde olmayan kapalı yerler: duşlar).
   modelsiz?: boolean;
-  kesim?: Kesim;
+  kesimler?: Kesim[];
   children?: ReactNode;
 };
 
-export function StatSahnesi({ konum, hedef, zoom, golgeMerkez = hedef, golgeYaricap = 40, arkaPlan = renk.krem, gorusAcisi, modelsiz = false, kesim, children }: Ozellik) {
+export function StatSahnesi({ konum, hedef, zoom, golgeMerkez = hedef, golgeYaricap = 40, arkaPlan = renk.krem, gorusAcisi, modelsiz = false, kesimler, children }: Ozellik) {
   const [gx, gy, gz] = golgeMerkez;
   return (
     <Canvas
@@ -135,7 +141,7 @@ export function StatSahnesi({ konum, hedef, zoom, golgeMerkez = hedef, golgeYari
         shadow-bias={-0.0005}
       />
       <Suspense fallback={null}>
-        {!modelsiz && <StatModeli kesim={kesim} />}
+        {!modelsiz && <StatModeli kesimler={kesimler} />}
       </Suspense>
       {children}
     </Canvas>
