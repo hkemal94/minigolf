@@ -1031,7 +1031,7 @@ karşılaştırır. Üçgen ve çağrı artışının çoğu gölgenin artık de
 Görüntüler: `ekranlar/oyna-doku-1-delik-3.jpg` … `oyna-doku-7-oncesi-sonrasi.jpg`; önceki hâlleri
 `galeri/eski/doku-oncesi/`.
 
-**Engel şeffaflığı ve kamera (19 Kasım; öneri, PR #?; Kemal'in isteği):**
+**Engel şeffaflığı ve kamera (19 Kasım; öneri, PR #13; Kemal'in isteği):**
 - **Engelin arkasındaki top:** top kameradan bakınca bir engelin arkasında kalırsa (tribünün taş duvarı, basamak,
   koltuk, kulüp binası, sundurma, kale direği, bordür, huni; stat modelinde zemin olmayan her şey) engel topun çevresinde
   yuvarlak, yumuşak kenarlı bir pencerede şeffaflaşır; top görünür ve çevresine ince krem bir halka çıkar. Engel açılınca

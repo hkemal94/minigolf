@@ -41,7 +41,7 @@ vuruşlarla deliğe soktu (1, 1, 4; sapma 0). Bütün görünüş değerleri DEN
 belgesi 6.4 "Görünüş", çizim yükü tablosuyla). Öncesi ve sonrası: `docs/ekranlar/oyna-doku-7-oncesi-sonrasi.jpg`.
 Bilgisayarda telefon boyutunda denendi; **gerçek telefonda denenmedi, telefondaki kare hızı ölçülmedi.**
 
-## Oynanabilir prototip · engel şeffaflığı ve kamera (19 Kasım 2026; öneri, PR #?, `ajans/oyna-seffaf-kamera`)
+## Oynanabilir prototip · engel şeffaflığı ve kamera (19 Kasım 2026; öneri, PR #13, `ajans/oyna-seffaf-kamera`)
 
 Kemal'in iki isteği. **Engelin arkasındaki top:** top tribünün duvarı, basamak, koltuk, kulüp binası, sundurma, kale direği,
 bordür ya da huni arkasında kalınca o engel topun çevresinde yuvarlak bir pencerede yumuşakça şeffaflaşır (opaklık 0,25,
