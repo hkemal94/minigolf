@@ -62,7 +62,8 @@ export const VURUS = {
 // --- Kamera (eğik yukarıdan, izometrik; topu izler). 19 Kasım (Kemal): topun çevresinde tam tur, yukarı aşağı
 // eğme, vuruştan sonra topu izleme, "Deliğe bak" düğmesi; iki parmakla yakınlaştırma kalır.
 export const KAMERA = {
-  // DENEME · Yakınlık: ekranın bir pikseline düşen yer. 200: ekranın eni yaklaşık 1,95 m (maketteki uzaklık).
+  // Karar: Kemal, 19 Kasım 2026 · Başlangıç yakınlığı: ekranın bir pikseline düşen yer. 200: ekranın eni yaklaşık
+  // 1,95 m (maketteki uzaklık).
   yakinlik: 200,
   // DENEME · En uzak hâl (iki parmakla uzaklaştırmanın sınırı). 19 Kasım (Kemal: "biraz daha uzaklaşabilsin, çevre
   // daha çok görünsün"): 55'ten 25'e indi; telefonun eni (390 piksel) 7,1 m yerine yaklaşık 15,6 m yer gösterir.
@@ -99,7 +100,7 @@ export const KAMERA = {
 // Duvar, tribün, koltuk, kulüp binası, sundurma, kale direği, bordür, huni: topun önündeki kısmı yuvarlak bir pencerede
 // şeffaflaşır; top görünür, çevresine ince bir halka çıkar. Zemin (çim, toprak, saha çizgisi) şeffaflaşmaz.
 export const SEFFAFLIK = {
-  // DENEME · Şeffaflaşan yerin opaklığı (1: hiç şeffaf değil, 0: hiç görünmez).
+  // Karar: Kemal, 19 Kasım 2026 · Şeffaflaşan yerin opaklığı (1: hiç şeffaf değil, 0: hiç görünmez).
   opaklik: 0.25,
   // DENEME · Açılma ve kapanma süresi (saniye).
   sure: 0.3,
@@ -117,7 +118,12 @@ export const OYUNCU = {
   // DENEME · Kolay mod: çekerken topun duracağı yer gösterilir (aynı fizikle, sekmeler dahil). Kemal
   // 19 Kasım'da istedi; başta açık mı kapalı mı Kemal'in kararı. Şimdilik açık.
   kolayMod: true,
+  // Karar: Kemal, 19 Kasım 2026 · Engelin arkasındaki topun halkasının rengi ayar menüsünden seçilir (krem, lacivert,
+  // kiremit; marka kitinin renkleri). Başta krem; seçim oyuncunun telefonunda hatırlanır.
+  halkaRengi: 'krem' as HalkaRengi,
 } as const;
+export const HALKA_RENKLERI = ['krem', 'lacivert', 'kiremit'] as const;
+export type HalkaRengi = (typeof HALKA_RENKLERI)[number];
 
 // --- Kural
 export const KURAL = {
@@ -187,17 +193,17 @@ export const GORUNUS = {
 } as const;
 
 // --- Par, yıldız, rozet (Karar: Kemal, 19 Kasım 2026: her deliğin hedef vuruş sayısı ve yıldızı olur; delik
-// listesinde küçük rozetler. Değerlerin HEPSİ DENEME: Kemal oynadıktan sonra onaylar; tasarım belgesi 3.3 ve 8).
+// listesinde küçük rozetler. Par ve yıldız değerleri ile rozetlerin üçü de Kemal'in kararı, 19 Kasım 2026; tasarım
+// belgesi 3.3 ve 8). Rozetlerin adları [Kemal]: ekranda yalnız ne oldukları yazar.
 export const PUAN = {
-  // DENEME · Par (hedef vuruş sayısı). Kaynağı belgedeki zorluk kelimesi (4.8): kolay 2, orta 3, zor 4.
-  // Delik 1 "kolay", delik 3 "orta", delik 7 "zor". Kelimeden sayıya geçiş Kemal'in onayını bekler.
+  // Karar: Kemal, 19 Kasım 2026 · Par (hedef vuruş sayısı): delik 1 → 2, delik 3 → 3, delik 7 → 4.
   par: { 1: 2, 3: 3, 7: 4 } as Record<number, number>,
-  // DENEME · Yıldız: en çok 3. Par ya da altı 3 yıldız; par + 1 vuruş 2 yıldız; daha fazlası 1 yıldız.
+  // Karar: Kemal, 19 Kasım 2026 · Yıldız: en çok 3. Par ya da altı 3 yıldız; par + 1 vuruş 2 yıldız; daha fazlası 1.
   // Liste: [3 yıldız için par'dan en çok kaç fazla, 2 yıldız için en çok kaç fazla].
   yildizSayisi: 3,
   yildizEsik: [0, 1],
-  // DENEME · Rozetler (yalnız delik listesinde küçük simge; pulun yerine geçmez). Hangi rozetlerin olacağı,
-  // simgeleri ve adları Kemal'in; buradaki üçü aday. Ad konmadı: ekranda yalnız ne olduğu yazar.
+  // Karar: Kemal, 19 Kasım 2026 · Rozetler üçü kalır (yalnız delik listesinde küçük simge; pulun yerine geçmez).
+  // Adları sonra [Kemal]; ad konmadı.
   rozetler: ['tekVurus', 'parAlti', 'cezasiz'],
 } as const;
 
@@ -217,6 +223,9 @@ export const KUTLAMA = {
 // --- Ortam: maç olmayan, sakin bir gün (Karar: Kemal, 19 Kasım 2026: rüzgâr, kuşlar, uzakta birkaç kişi; ad ve
 // hikâye yok). Hepsi kodla çizilir (dış model yok), fizikle ilgisi yok. Sayılar ve yerler DENEME.
 export const ORTAM = {
+  // Karar: Kemal, 19 Kasım 2026 · Uzaktaki insanlar kapalı ("bir müddet gerek yok"; ileride dönülür). Kod ve yerler
+  // aşağıda duruyor; açınca yeniden çizilir. Kuşlar ve esinti aynen kalır.
+  insanlarAcik: false as boolean,
   // Rüzgâr: esinti yavaş yavaş artıp azalır (0…1). Bayrağın dalgası esintiyle büyür.
   esintiHizi: 0.35,
   bayrakEsinti: 0.5, // esintinin bayrak genliğine katkısı (oran)

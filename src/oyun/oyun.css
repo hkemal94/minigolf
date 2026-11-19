@@ -70,6 +70,9 @@
 .oy-ayar-satir input:checked + .oy-anahtar { background: var(--lacivert); }
 .oy-ayar-satir input:checked + .oy-anahtar::after { left: 21px; }
 .oy-ayar .oy-dugme-ince { align-self: flex-end; }
+.oy-renkler { flex: none; display: flex; gap: 8px; }
+.oy-renk { width: 26px; height: 26px; padding: 0; border-radius: 50%; border: 1.5px solid rgba(14, 28, 79, 0.35); cursor: pointer; }
+.oy-renk.secili { outline: 2px solid var(--lacivert); outline-offset: 2px; }
 
 /* Par ve yıldız (değerler deneme): delik sonu kartında büyük, listede küçük. Dolu yıldız lacivert. */
 .oy-yildizlar { display: flex; justify-content: center; gap: 4px; margin: 0 0 6px; }

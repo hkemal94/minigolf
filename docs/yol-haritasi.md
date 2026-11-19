@@ -52,7 +52,7 @@ yürüyor; ad, yüz, hikâye yok). Hepsi kodla çizildi; yeni dış model yok. *
 simgeler (tek vuruş, par altı, cezasız); ad konmadı, pulun yerine geçmez. Oyun yavaşlayıp gölgeleri kapatırsa ortam da
 azalır (2 kuş, 3 kişi; ağaç ve çim durur). **Fizik değişmedi:** bot üç deliği de aynı vuruşlarla deliğe soktu (1, 1, 4).
 Bütün değerler DENEME (`src/oyun/ayarlar.ts` → `PUAN`, `KUTLAMA`, `ORTAM`; tasarım belgesi 6.4). Çizim yükü tablosu
-belgede. Görüntüler: `docs/ekranlar/oyna-par-1-ortam.jpg` … `oyna-par-5-kolaj.jpg`; delik sonu ve tur sonu kartlarının
+belgede. Görüntüler: `docs/ekranlar/oyna-par-2-kutlama.jpg` … `oyna-par-5-kolaj.jpg` (ortam görüntüsü insanlar kapanınca `docs/galeri/eski/insan-oncesi/` altına taşındı); delik sonu ve tur sonu kartlarının
 önceki hâlleri `docs/galeri/eski/par-oncesi/` altında. Bilgisayarda telefon boyutunda denendi; **gerçek telefonda
 denenmedi, telefondaki kare hızı ölçülmedi.**
 

@@ -241,11 +241,11 @@
     },
     {
       "bolum": "oyun",
-      "baslik": "Oynanabilir prototip · maçsız gün ortamı · delik 3 (kuşlar, uzakta bir kişi; biraz uzaklaştırılmış ve eğilmiş bakış)",
+      "baslik": "Oynanabilir prototip · maçsız gün ortamı · delik 3 · insansız (kuşlar ve esinti kaldı; biraz uzaklaştırılmış ve eğilmiş bakış)",
       "tarih": "2026-11-19",
       "durum": "taslak",
-      "pr": 12,
-      "yol": "docs/ekranlar/oyna-par-1-ortam.jpg"
+      "pr": 14,
+      "yol": "docs/ekranlar/oyna-karar-1-ortam-insansiz.jpg"
     },
     {
       "bolum": "oyun",
@@ -1613,6 +1613,16 @@
       "yol": "docs/galeri/eski/seffaf-kamera-oncesi/oyna-seffaf-3-en-uzak.jpg",
       "grup": "Engel şeffaflığından ve uzak kameradan önce",
       "not": "Engel opak, top arkasında görünmüyor; en uzak hâl 55 piksel/m. Aynı bakışla alındı (PR #11 birleştikten sonraki hâl)."
+    },
+    {
+      "bolum": "eski",
+      "baslik": "Oynanabilir prototip · maçsız gün ortamı · delik 3 (kuşlar, uzakta bir kişi; biraz uzaklaştırılmış ve eğilmiş bakış)",
+      "tarih": "2026-11-19",
+      "durum": "taslak",
+      "pr": 12,
+      "yol": "docs/galeri/eski/insan-oncesi/oyna-par-1-ortam.jpg",
+      "grup": "Uzaktaki insanlar kapanmadan önce",
+      "not": "Uzakta beş kişi vardı (PR #12'deki hâl). Kemal, 19 Kasım: \"bir müddet gerek yok\"; insanlar kapandı, kod duruyor."
     }
   ]
 }

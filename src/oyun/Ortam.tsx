@@ -6,7 +6,7 @@ import { GORUNUS, ORTAM } from './ayarlar';
 import type { OyunDeligi } from './dunya';
 
 // OYNANABİLİR PROTOTİP · ortam: maç olmayan, sakin bir gün (Karar: Kemal, 19 Kasım 2026: rüzgâr, kuşlar, uzakta
-// birkaç kişi; ad ve hikâye yok). Hepsi kodla çizilir; dış model, doku, ses yok. Fizikle ilgisi yok: top hiçbirine
+// birkaç kişi; ad ve hikâye yok). 19 Kasım, Kemal: insanlar bir müddet kapalı (ORTAM.insanlarAcik). Hepsi kodla çizilir; dış model, doku, ses yok. Fizikle ilgisi yok: top hiçbirine
 // çarpmaz, hiçbiri pistin içinde durmaz. Sayılar ve yerler DENEME (ayarlar.ts → ORTAM).
 // Telefonda hafif kalsın diye: kuşların hepsi tek çizim, insanlar dört çizim (gövde, baş, bacak, yerdeki gölge);
 // ağaç ve çim hareketi yeni çizim getirmez (modelin kendi malzemesinde hesaplanır).
@@ -292,7 +292,8 @@ export function Ortam({ delik, hal, dusuk }: { delik: OyunDeligi; hal: OrtamDuru
   return (
     <>
       <Kuslar ox={ox} oz={oz} hal={hal} />
-      <Insanlar hal={hal} />
+      {/* Kemal, 19 Kasım 2026: insanlar bir müddet kapalı (ORTAM.insanlarAcik); kapalıyken hiç çizilmez. */}
+      {ORTAM.insanlarAcik && <Insanlar hal={hal} />}
     </>
   );
 }

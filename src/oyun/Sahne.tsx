@@ -6,7 +6,7 @@ import { BoxGeometry, BufferGeometry, Color, DirectionalLight, DoubleSide, Float
 import { renk } from '../sahne/renkler';
 import { DENEME, GOLF, MODEL, TOP_YARICAP, WMF } from '../maket/olculer';
 import { BOS_KOLTUK, MERDIVEN_X0, TRIBUN_X1, koltukX, koltukZ, siraOn, siraY } from '../maket/ornekDelikler';
-import { FIZIK, GORUNTU, GORUNUS, KAMERA, KUTLAMA, ORTAM, SEFFAFLIK, VURUS } from './ayarlar';
+import { FIZIK, GORUNTU, GORUNUS, KAMERA, KUTLAMA, ORTAM, OYUNCU, SEFFAFLIK, VURUS, type HalkaRengi } from './ayarlar';
 import { engelArkasinda, seffafDegerler, seffafYap } from './seffaflik';
 import { Ortam, RUZGAR, agacMalzemesi, cimeRuzgar, yeniOrtamDurumu, type OrtamDurumu } from './Ortam';
 import { DOKU_DOSYALARI, dokuBellegi, dokulariHazirla, dunyaYerlesimi, fileDokusu, fileGeometrisi, gokYansimasi, modelDokusu, modelMalzemesi, modelYerlesimi, topKabartisi, type Dokular } from './dokular';
@@ -32,6 +32,7 @@ export type Durum = {
   hedef: Vector3; // kameranın izlediği nokta (topu yumuşak izler)
   nisan: { aktif: boolean; yonX: number; yonZ: number; guc: number };
   kolay: boolean; // kolay mod: çekerken topun duracağı yer görünür
+  halkaRengi: HalkaRengi; // engelin arkasındaki topun halkası (ayar menüsünden; Kemal, 19 Kasım)
   // Kolay moddaki tahmin ve hangi nişan için hesaplandığı (nişan değişmedikçe yeniden hesaplanmaz).
   tahmin: (Tahmin & { yonX: number; yonZ: number; guc: number }) | null;
   tahminGorunur: boolean; // işaret şu an ekranda mı (deneme için)
@@ -66,6 +67,7 @@ export function yeniDurum(delik: OyunDeligi): Durum {
     hedef: new Vector3(x, y, z),
     nisan: { aktif: false, yonX: 0, yonZ: 0, guc: 0 },
     kolay: false,
+    halkaRengi: OYUNCU.halkaRengi,
     tahmin: null,
     tahminGorunur: false,
     topEkran: [-1, -1],
@@ -539,6 +541,7 @@ export function OyunSahnesi({ durum, olay, kare }: Ozellik) {
         halka.quaternion.copy(kam.quaternion);
         halka.scale.setScalar(Math.max(1, KAMERA.yakinlik / d.yakinlik));
         (halka.material as Material).opacity = SEFFAFLIK.halkaOpaklik * yumusak;
+        (halka.material as Material & { color: Color }).color.set(renk[d.halkaRengi]);
       }
     }
 

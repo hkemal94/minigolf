@@ -253,7 +253,9 @@ dogrula((await sayfa.textContent('[data-deneme="par"]')).includes(String(F.parDe
 {
   const o = d.ortam;
   const dusuk = !d.cizim.golge;
-  dogrula(o.kus === (dusuk ? F.ORTAM.dusukKus : F.ORTAM.kusSayisi) && o.insan === (dusuk ? F.ORTAM.dusukInsan : F.ORTAM.insanlar.length), `ortam: ${o.kus} kuş, ${o.insan} insan (${dusuk ? 'düşük kalite: azaltılmış' : 'tam'})`);
+  // Kemal, 19 Kasım: insanlar bir müddet kapalı (ORTAM.insanlarAcik); kapalıyken hiç insan çizilmez.
+  const insanBeklenen = !F.ORTAM.insanlarAcik ? 0 : dusuk ? F.ORTAM.dusukInsan : F.ORTAM.insanlar.length;
+  dogrula(o.kus === (dusuk ? F.ORTAM.dusukKus : F.ORTAM.kusSayisi) && o.insan === insanBeklenen, `ortam: ${o.kus} kuş, ${o.insan} insan (${dusuk ? 'düşük kalite: azaltılmış' : 'tam'}; insanlar ${F.ORTAM.insanlarAcik ? 'açık' : 'kapalı, 0 beklenir'})`);
   const pay = 2;
   const uclar = F.ORTAM.insanlar.flatMap((k) => (k.x2 === undefined ? [[k.x, k.z]] : Array.from({ length: 41 }, (_, i) => [k.x + ((k.x2 - k.x) * i) / 40, k.z + ((k.z2 - k.z) * i) / 40])));
   const icinde = [3, 1, 7].filter((n) => { const c = F.oyunDeligi(n).cerceve; return uclar.some(([x, z]) => x > c.x0 - pay && x < c.x1 + pay && z > c.z0 - pay && z < c.z1 + pay); });
@@ -265,7 +267,20 @@ await sayfa.tap('[data-deneme="ayarlar"]');
 await bekle(300);
 dogrula(await sayfa.isVisible('[data-deneme="ayar-menusu"]'), 'ayar menüsü açıldı');
 dogrula(await sayfa.isChecked('[data-deneme="kolay-mod"]'), 'kolay mod başta açık');
-await goruntu('07-ayarlar');
+// Engelin arkasındaki topun halkasının rengi (Kemal, 19 Kasım): krem, lacivert, kiremit; başta krem; hatırlanır.
+{
+  const renkler = await sayfa.$$eval('[data-deneme="halka-rengi"] [data-renk]', (l) => l.map((b) => b.getAttribute('data-renk')));
+  dogrula(JSON.stringify(renkler) === JSON.stringify(['krem', 'lacivert', 'kiremit']), `halka rengi seçenekleri: ${renkler.join(', ')}`);
+  const secili = () => sayfa.$$eval('[data-deneme="halka-rengi"] [aria-checked="true"]', (l) => l.map((b) => b.getAttribute('data-renk')).join(','));
+  dogrula((await durum()).halkaRengi === 'krem' && (await secili()) === 'krem', 'halka rengi başta krem');
+  await goruntu('07-ayarlar');
+  for (const r of ['lacivert', 'kiremit', 'krem']) {
+    await sayfa.tap(`[data-deneme="halka-rengi"] [data-renk="${r}"]`);
+    await bekle(150);
+    const saklanan = await sayfa.evaluate(() => window.localStorage.getItem('minigolf.halkaRengi'));
+    dogrula((await durum()).halkaRengi === r && (await secili()) === r && saklanan === r, `halka rengi ${r} seçildi, oyuna geçti ve hatırlandı`);
+  }
+}
 await sayfa.tap('[data-deneme="ayarlar"]');
 await bekle(300);
 
@@ -368,7 +383,7 @@ await bekle(1500);
 // Kolay mod kapalıyken işaret çıkmaz.
 await sayfa.tap('[data-deneme="ayarlar"]');
 await bekle(200);
-await sayfa.locator('.oy-ayar-satir').tap();
+await sayfa.locator('label.oy-ayar-satir').tap();
 await bekle(200);
 dogrula(!(await sayfa.isChecked('[data-deneme="kolay-mod"]')), 'kolay mod kapatıldı');
 await sayfa.tap('[data-deneme="ayarlar"]');
@@ -387,7 +402,7 @@ await bekle(200);
 }
 await sayfa.tap('[data-deneme="ayarlar"]');
 await bekle(200);
-await sayfa.locator('.oy-ayar-satir').tap();
+await sayfa.locator('label.oy-ayar-satir').tap();
 await bekle(200);
 dogrula(await sayfa.isChecked('[data-deneme="kolay-mod"]'), 'kolay mod yeniden açıldı');
 await sayfa.tap('[data-deneme="ayarlar"]');

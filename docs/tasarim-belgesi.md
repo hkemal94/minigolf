@@ -36,6 +36,15 @@ modelinden (Kems Ajans `assetler/3b/binalar/dirlik-stadi.glb`, önizleme `dirlik
 
 En yeni üstte.
 
+- **19 Kasım (Kemal, oynanabilir prototip, PR #12 ve #13 cevapları; kesin):**
+  1. **Par ve yıldız şimdiki gibi:** par delik 1 → 2, delik 3 → 3, delik 7 → 4; par ya da altı 3 yıldız, par + 1
+     vuruş 2 yıldız, daha fazlası 1 yıldız. Artık DENEME değil (3.3, 6.4).
+  2. **Rozetler:** üçü kalır (tek vuruşta delik, par altı, cezasız bitirme). Adları sonra: [Kemal] (8. bölüm, 7. bölüm).
+  3. **Sahada gezen insanlar:** "bir müddet gerek yok". Uzaktaki insanlar kapalı; kod duruyor, ileride dönülür
+     (`ORTAM.insanlarAcik`). Kuşlar ve esinti aynen kalır (6.4).
+  4. **Engel şeffaflığı:** şeffaflaşan yerin opaklığı 0,25 böyle kalır. Topun halkasının rengi ayar menüsünden
+     seçilir: krem, lacivert, kiremit; başta krem; seçim telefonda hatırlanır (6.4).
+  5. **Kameranın başlangıç yakınlığı** şimdiki gibi (200, maketteki uzaklık).
 - **19 Kasım (Kemal, oynanabilir prototip, görünüş isteği):** top bir duvarın, tribünün, binanın, kenarın arkasında
   kalınca aradaki engel yumuşakça şeffaflaşsın; kamera biraz daha uzaklaşabilsin, çevre daha çok görünsün (uzaklaşınca saha
   dışındaki boşluk görünebilir; gökyüzü ve ada ayrı adım). Uygulama: 6.4 "Engel şeffaflığı ve kamera" (öneri; değerler DENEME).
@@ -226,7 +235,8 @@ karakteri, adı, yüzü yok.
 - Künyede ayrıca yazmayan ama **her statta olan genel eşya ve bölümler** kullanılabilir (kale, köşe
   bayrağı, tünel, soyunma odası, tribün sıraları gibi). Ad yok.
 - Ortam: maç olmayan, sakin bir gün. **Karar (Kemal, 19 Kasım):** maçsız günün ortamı görünür: rüzgâr, kuşlar, uzakta
-  birkaç kişi (ad ve hikâye yok).
+  birkaç kişi (ad ve hikâye yok). **Karar (Kemal, 19 Kasım, sonra):** insanlar bir müddet yok (kod duruyor, ileride
+  dönülür); rüzgâr ve kuşlar kalır (6.4).
 - **Karar (Kemal, 19 Kasım):** tur yapısı aynı kalır. Liman, iskele, meydan, sahil yolu ve zeytinliği bağlayan tek
   bir "Düzada Turu" kullanılmaz.
 - Imperial'deki uzun tur sonra; otelin planları (The Imperial Kemskoy deposu ve künye; otel 1954
@@ -288,9 +298,10 @@ Değerler DENEME, veri yok.
   baştan sona "daha kolay" ya da "daha zor" olabilir (ör. Stadyum yumuşak bir ilk tur, Imperial uzun
   ve zor bir tur). Turların zorluk sırası [Kemal].
 - Zorluk kelimeyle yazılır (en kolay, kolay, orta, zor, en zor); ~~"par" ya da sayı yok, denemeden sonra Kemal.~~
-  **Karar (Kemal, 19 Kasım):** her deliğin hedef vuruş sayısı (par) ve yıldızı olur. Değerler DENEME; Kemal oynadıktan
-  sonra onaylar. Yıldızın nasıl verildiği DENEME. Prototipteki deneme değerleri (öneri, PR #12): kelimeden sayıya
-  kolay 2, orta 3, zor 4; par ya da altı 3 yıldız, par + 1 iki yıldız, daha fazlası 1 yıldız (6.4 "Par, yıldız, kutlama, ortam").
+  **Karar (Kemal, 19 Kasım):** her deliğin hedef vuruş sayısı (par) ve yıldızı olur. ~~Değerler DENEME; Kemal oynadıktan
+  sonra onaylar.~~ **Karar (Kemal, 19 Kasım, prototipi oynadıktan sonra):** değerler şimdiki gibi: kolay 2, orta 3,
+  zor 4 (delik 1 → 2, delik 3 → 3, delik 7 → 4); par ya da altı 3 yıldız, par + 1 iki yıldız, daha fazlası 1 yıldız
+  (6.4 "Par, yıldız, kutlama, ortam"). Kalan 15 deliğin par'ı o delikler çizilince Kemal'e sorulur.
 - Stadyum turunun dalgası 4.4'te.
 
 ## 4. Stadyum turu (Dirlik Stadı, 18 delik)
@@ -1045,21 +1056,29 @@ Görüntüler: `ekranlar/oyna-doku-1-delik-3.jpg` … `oyna-doku-7-oncesi-sonras
   çizgisinin gerisinde duran bir kişi, orta yuvarlağın içinde duran iki kişi, açık tribünün önünde korkuluğun yanında
   duran bir kişi, A ucunda duvar içindeki toprak yolda yürüyen bir kişi. Ad, yüz, hikâye yok; tür adı yok. İnsanlar
   pistlerin en az 2 m dışında; top onlara ulaşamaz, fizikte yoklar. Hepsi kodla çizilir (`src/oyun/Ortam.tsx`); dış
-  model eklenmedi.
+  model eklenmedi. **Karar (Kemal, 19 Kasım, sonra): insanlar bir müddet yok** ("bir müddet gerek yok"). Tek ayarla
+  kapalı (`ORTAM.insanlarAcik: false`): hiç çizilmezler, çizim çağrısı da düşer (4 çağrı). Kod ve yerler duruyor;
+  ileride açılınca aynen döner. Kuşlar, bayrak, ağaç ve çim esintisi aynen kalır.
 - **Rozetler:** tur sonundaki delik listesinde, delik numarasının yanında küçük simgeler: tek vuruşta delik (kiremit
   daire içinde 1), par altı (aşağı ok), cezasız bitirme (onay işareti). Listenin altında tek satır açıklama. Rozetlere
-  ad konmadı; pulun yerine geçmez (8. bölüm).
+  ad konmadı; pulun yerine geçmez (8. bölüm). **Karar (Kemal, 19 Kasım):** üçü kalır; adları sonra [Kemal].
 - **Kalite düşürme:** kare hızı düşüp gölgeler kapanınca ortam da azalır: 2 kuş, 3 kişi (yürüyen kalkar); ağaç ve çim
   hareketi durur. Bayrak ve kutlama aynı kalır.
 - **Fizik değişmedi:** `fizik.ts`, delik verisi ve vuruş ayarlarına dokunulmadı; bot üç deliği aynı vuruşlarla bitirdi.
 
-DENEME değerleri (`src/oyun/ayarlar.ts` → `PUAN`, `KUTLAMA`, `ORTAM`; Kemal onaylamadı):
+Kemal'in kararı (19 Kasım; `src/oyun/ayarlar.ts` → `PUAN`, "Karar: Kemal, 19 Kasım 2026"):
 
 | Ne | Değer | Not |
 |---|---|---|
-| Par: delik 3 · 1 · 7 | 3 · 2 · 4 | belgedeki zorluk kelimesinden (4.8): kolay 2, orta 3, zor 4; kelimeden sayıya geçiş onay bekler |
+| Par: delik 3 · 1 · 7 | 3 · 2 · 4 | zorluk kelimesinden (4.8): kolay 2, orta 3, zor 4 |
 | Yıldız | par ya da altı 3 · par + 1 vuruş 2 · daha fazlası 1 | en çok 3, bitmiş delikte en az 1 |
-| Rozetler | tek vuruş · par altı · cezasız | üçü aday; "geri almadan bitirme" geri al gelince |
+| Rozetler | tek vuruş · par altı · cezasız | üçü kalır; adları [Kemal]; "geri almadan bitirme" geri al gelince |
+| Uzaktaki insanlar | kapalı (`ORTAM.insanlarAcik: false`) | "bir müddet gerek yok"; kod duruyor |
+
+DENEME değerleri (`src/oyun/ayarlar.ts` → `KUTLAMA`, `ORTAM`; Kemal onaylamadı):
+
+| Ne | Değer | Not |
+|---|---|---|
 | Kutlamanın süresi (kart bu kadar sonra açılır) | 1,7 sn | |
 | Bayrağın kalkışı · süresi | 28 cm · 0,55 sn | |
 | Kutlamada dalga genliği · sönmesi | olağanın 3,2 katı · 1,1 sn | |
@@ -1068,8 +1087,8 @@ DENEME değerleri (`src/oyun/ayarlar.ts` → `PUAN`, `KUTLAMA`, `ORTAM`; Kemal o
 | Ağaç: tepedeki salınım | en çok 6 cm | yaprakların başladığı yükseklik (2,3 m) ve boyu (2,6 m) modelden ölçüldü |
 | Çim esintisi: parlaklık · dalga boyu · hız | %7 · 9 m · 2,2 m/sn | |
 | Kuş: sayı · kanat açıklığı · yükseklik · hız · dönüş yarıçapı | 5 · 32 cm · 5 ve 8 m · 5 m/sn · 12 ve 17 m | kaynağı yok |
-| İnsan: sayı · boy · yürüme hızı | 5 · 1,7 m · 0,9 m/sn | kaynağı yok; yerler yukarıda |
-| Düşük kalitede kuş · insan | 2 · 3 | |
+| İnsan: sayı · boy · yürüme hızı | 5 · 1,7 m · 0,9 m/sn | kaynağı yok; yerler yukarıda; 19 Kasım'dan beri kapalı |
+| Düşük kalitede kuş · insan | 2 · 3 | insanlar kapalıyken 0 |
 
 **Çizim yükü (bilgisayarda, telefon boyutunda 390 × 844, piksel oranı 1, yazılımla çizen tarayıcıda; delik 3 · 1 · 7):**
 
@@ -1085,20 +1104,22 @@ DENEME değerleri (`src/oyun/ayarlar.ts` → `PUAN`, `KUTLAMA`, `ORTAM`; Kemal o
 | İndirilen yeni dosya | yok | yok |
 
 Ortam beş çizim çağrısı ekler (kuşların hepsi 1; insanlar 4: gövde, baş, bacak, yerdeki gölge) ve en çok 870 üçgen.
+İnsanlar kapanınca (Kemal, 19 Kasım) ortam yalnız 1 çağrı ekler; ölçüm aşağıda "Kemal'in 19 Kasım kararları".
 Ağaç ve çim hareketi yeni çizim getirmez. Kare sayıları ekran kartı olmayan bir bilgisayarda, art arda 6 saniyelik
 ölçümlerle alındı (önce sonra, hemen ardından önce) ve çok oynak: aynı "önce" sürümü gün içinde 13,9 · 14,2 · 5,3 ve
 8,6 · 8,1 · 2,8 de ölçüldü (gölge açık). Bu ölçümle önce ile sonra arasında güvenilir bir fark gösterilemedi; sayılar
 telefondaki hızı göstermez.
 **Gerçek telefonda denenmedi; telefondaki kare hızı ölçülmedi.**
 
-Görüntüler: `ekranlar/oyna-par-1-ortam.jpg` (delik 3, biraz uzaklaştırılmış ve eğilmiş bakış), `oyna-par-2-kutlama.jpg`,
+Görüntüler: `galeri/eski/insan-oncesi/oyna-par-1-ortam.jpg` (delik 3, biraz uzaklaştırılmış ve eğilmiş bakış; insanlar kapanmadan önce), `oyna-par-2-kutlama.jpg`,
 `oyna-par-3-delik-sonu.jpg`, `oyna-par-4-tur-sonu.jpg`, `oyna-par-5-kolaj.jpg`; delik sonu ve tur sonu kartlarının
 önceki hâlleri `galeri/eski/par-oncesi/`.
 
 **Engel şeffaflığı ve kamera (19 Kasım; öneri, PR #13; Kemal'in isteği):**
 - **Engelin arkasındaki top:** top kameradan bakınca bir engelin arkasında kalırsa (tribünün taş duvarı, basamak,
   koltuk, kulüp binası, sundurma, kale direği, bordür, huni; stat modelinde zemin olmayan her şey) engel topun çevresinde
-  yuvarlak, yumuşak kenarlı bir pencerede şeffaflaşır; top görünür ve çevresine ince krem bir halka çıkar. Engel açılınca
+  yuvarlak, yumuşak kenarlı bir pencerede şeffaflaşır; top görünür ve çevresine ince bir halka çıkar (rengi ayar
+  menüsünden; başta krem). Engel açılınca
   pencere yumuşakça kapanır. Zemin (çim, toprak, saha çizgisi), kale filesi (zaten ağ), top ve işaretler şeffaflaşmaz.
 - **Neden bütün engel değil, pencere:** stat modeli malzemeye göre birleşik (bütün taş duvarlar tek parça, bütün
   basamaklar tek parça); engel tek tek soldurulursa bütün stadın duvarları birden solardı. Pencere yalnız topun
@@ -1112,11 +1133,18 @@ Görüntüler: `ekranlar/oyna-par-1-ortam.jpg` (delik 3, biraz uzaklaştırılm�
   görüntü küçülmez. Saha dışındaki boşluk görünebilir; gökyüzü ve ada ayrı adım.
 - **Fizik değişmedi:** `fizik.ts`, delik verisi ve vuruş ayarlarına dokunulmadı; bot aynı vuruşlarla (1, 1, 4) bitirdi.
 
+Kemal'in kararı (19 Kasım; `src/oyun/ayarlar.ts`, "Karar: Kemal, 19 Kasım 2026"):
+
+| Ne | Değer | Not |
+|---|---|---|
+| Şeffaflaşan yerin opaklığı | 0,25 | böyle kalır (`SEFFAFLIK.opaklik`) |
+| Kameranın başlangıç yakınlığı | 200 piksel/m | maketteki uzaklık, şimdiki gibi (`KAMERA.yakinlik`) |
+| Halkanın rengi | krem · lacivert (#0E1C4F) · kiremit (#F26B6F); başta krem | ayar menüsünden seçilir, telefonda hatırlanır (`OYUNCU.halkaRengi`) |
+
 DENEME değerleri (`src/oyun/ayarlar.ts` → `SEFFAFLIK` ve `KAMERA`; Kemal onaylamadı):
 
 | Ne | Değer | Not |
 |---|---|---|
-| Şeffaflaşan yerin opaklığı | 0,25 | 1: hiç şeffaf değil, 0: hiç görünmez |
 | Açılma ve kapanma süresi | 0,3 sn | |
 | Engelin arkasında mı diye bakma sıklığı | saniyede 10 | yerinde dururken bakılmaz |
 | Pencerenin yarıçapı | 110 ekran pikseli | yakınlaşınca da uzaklaşınca da ekranda aynı boy |
@@ -1198,7 +1226,8 @@ Kemal'in kararını bekleyenler.
 - ~~3B model eksikleri (çim basamağı, orta yuvarlak, yaylar, noktalar, köşe bayrakları)~~ Düzeltildi (19 Kasım; model).
 - **Kalan 8 deliğin adım sırası** (4.9): öneri; Kemal değiştirebilir.
 - **İki parmakla yakınlaştırma ve çevirmenin sınırları:** DENEME, ilk delik denemesinde. 19 Kasım: en uzak 25'e indi;
-  engel şeffaflığının opaklığı (0,25), süresi (0,3 sn) ve penceresi (110 piksel) de DENEME (6.4).
+  engel şeffaflığının süresi (0,3 sn) ve penceresi (110 piksel) de DENEME (6.4). Opaklık (0,25), başlangıç yakınlığı
+  (200) ve halka rengi seçimi karar (Kemal, 19 Kasım).
 - ~~Örnek delikler (3, 7, 14) onay~~ Cevaplandı (Kemal, 18 Kasım): bu dil 18 deliğe yayılır (4.9).
 - ~~Kameranın yakınlığı ve deliğin işareti~~ Cevaplandı (Kemal, 18 Kasım): maketteki uzaklık, ok ve uzaklık
   ve küçük plan; ayrıca iki parmakla yakınlaştırma ve çevirme (4.8).
@@ -1217,11 +1246,12 @@ Kemal'in kararını bekleyenler.
 - **Nişan çizgisi sekmeyi göstersin mi?** (4. delik) Nişan yardımı karara bağlandı (Kemal, 19 Kasım; 2. bölüm: yön oku,
   güç çentikleri, kolay modda duracağı yer); sekme çizgisi bu kararda yok.
 - **Kolay modun açık ya da kapalı başlaması:** DENEME (2. bölüm).
-- **Par ve yıldız değerleri:** DENEME; Kemal oynadıktan sonra (3.3). Prototipteki deneme değerleri 6.4'te: par 3 · 2 · 4
-  (delik 3 · 1 · 7); yıldız eşikleri par, par + 1.
-- **Rozetler:** hangi rozetler olsun, simgeleri ve adları (8. bölüm; prototipte üç aday).
-- **Ortam:** uzaktaki insanların sayısı ve yerleri, kuşların sayısı (6.4; DENEME). İnsanlar kodla çizilmiş basit
-  figürler; hazır CC0 modelle (ör. Kenney, Quaternius) değiştirilsin mi?
+- ~~**Par ve yıldız değerleri:** DENEME; Kemal oynadıktan sonra (3.3).~~ Cevaplandı (Kemal, 19 Kasım): şimdiki gibi;
+  par 3 · 2 · 4 (delik 3 · 1 · 7), yıldız eşikleri par, par + 1 (3.3, 6.4).
+- ~~**Rozetler:** hangi rozetler olsun~~ Cevaplandı (Kemal, 19 Kasım): üçü kalır (tek vuruş, par altı, cezasız).
+  **Açık:** rozetlerin adları [Kemal] (8. bölüm).
+- **Ortam:** kuşların sayısı (6.4; DENEME). ~~Uzaktaki insanların sayısı ve yerleri; CC0 modelle değiştirilsin mi?~~
+  Kemal, 19 Kasım: insanlar bir müddet yok (kod duruyor); dönülünce bu soru yeniden açılır.
 - **Delik ölçüsü, tur süresi, hızlar, eğimler:** DENEME, denemeden sonra.
 - ~~**Görsel dil:** İllüstratör'ün 2–3 denemesinden hangisi.~~ Cevaplandı (Kemal, 19 Kasım): dokulu gerçekçi (5.2).
 - **Oynanabilir prototipten (6.4), telefonda denedikten sonra:** güç sınırı ve çekme boyu elde nasıl; çim hızlı mı
@@ -1247,8 +1277,9 @@ koleksiyon sayfası (Kems Ajans `docs/pul-koleksiyonu.md`). Ayın pulu o ayın g
 
 **Karar (Kemal, 19 Kasım): rozetler küçük.** Delik listesinde (skor kartı, 11. bölüm) her deliğin yanında küçük
 simgeler: tek vuruşta delik, geri almadan bitirme ve benzerleri. Rozetler pul koleksiyonunun yerine geçmez; ödül
-yine puldur. Hangi rozetlerin olacağı ve simgeleri DENEME. Prototipte (öneri, PR #12) üç aday var: tek vuruşta delik,
-par altı, cezasız bitirme; yalnız tur sonundaki delik listesinde, küçük simge olarak. "Geri almadan bitirme" geri al
+yine puldur. Hangi rozetlerin olacağı ve simgeleri DENEME. Prototipte (PR #12) üç rozet var: tek vuruşta delik,
+par altı, cezasız bitirme; yalnız tur sonundaki delik listesinde, küçük simge olarak. **Karar (Kemal, 19 Kasım):** üçü
+kalır; adları sonra. "Geri almadan bitirme" geri al
 gelince eklenir. Rozetlere ad konmadı: ekranda yalnız ne oldukları yazar; adlar [Kemal].
 
 **Öneri:** kod yapısı kart oyunundaki `src/pul/` klasörü örnek alınarak kurulur. Pulların tasarımı
