@@ -348,6 +348,9 @@ parçalarına oturur. Modelin önizlemesinde görülenler:
 - **Kulüp binası:** sahanın bir kısa ucunda (B ucu), ~~açık tribün tarafına yakın~~ **açık tribün
   tarafındaki köşede** (Kemal, 19 Kasım; modelde x 95–102, z -62 … -50), kiremit çatılı küçük yapı. Saha
   yüzünde 2 m direkli sundurma; taş duvarda sokağa açılan kapı.
+  İçi (Kemal, 19 Kasım: çizimdeki gibi): lokal (≈ 25 m²) ve çay ocağı, yönetim odası, malzeme odası, iki WC,
+  giriş holünde kupa vitrini. **Öneri (22 Kasım):** iç bölmeler oyunun modeline girmez (tur binanın içine girmez,
+  dışarıdan görünmez); yalnız kesit önizlemesi var (`docs/plan/kulup-binasi-ic-kesit.jpg`). Oda ölçüleri DENEME.
   **Karar (Kemal, 16 Kasım)**: Dirlik Spor Kulübü'nün binası; ad yok.
 - **Bayrak direği:** kompleksin bir köşesinde, duvarın dibinde.
 - **Ağaçlar:** duvarın dışında, bir kısa uçta (dekor; pist yok).

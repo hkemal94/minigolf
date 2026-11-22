@@ -96,6 +96,14 @@ Karar (Kemal, 19 Kasım): köşeye taşınan kulüp binası tam görünsün. Ana
 görüntüsünü kullanıyor; üçünde de bakış binaya doğru kaydırıldı ve biraz uzaklaştırıldı (kayma ve uzaklık DENEME). Üç
 görüntü yeniden alındı; önceki hâlleri `docs/galeri/eski/kadraj-oncesi/` altında. Oynanış yok; gerçek telefonda denenmedi.
 
+## Dirlik Stadı · kulüp binasının içi (22 Kasım 2026; taslak, PR yok, `ajans/dirlik-kulup-binasi`)
+
+Kemal'in 19 Kasım cevaplarının dördüncüsü (odalar çizimdeki gibi). İlk üçü (bina açık tribün köşesinde, saha yüzünde
+2 m direkli sundurma, taş duvarda sokak kapısı) modelde zaten var (PR #10); stat modelinin dosyası bu dalda **değişmedi**.
+İç bölmeler (lokal ≈ 25 m² ve çay ocağı, yönetim odası, malzeme odası, iki WC, holde kupa vitrini) yalnız kesit
+önizlemesi olarak çizildi; tur binanın içine girmediği için oyunun modeline konmadı (öneri). Galeride üç yeni resim:
+iç kesit, sundurma yakın, sokak kapısı. Oyun ekranında değişen bir şey yok. Oda ölçüleri, duvar kalınlıkları ve eşya DENEME.
+
 ## Neredeyiz
 
 - 16 Kasım 2026 (PR #1, birleşti): iskelet. Dikey tek ekran: üstte ince şerit (oyunun adı
