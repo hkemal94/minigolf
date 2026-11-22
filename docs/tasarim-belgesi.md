@@ -348,6 +348,9 @@ parçalarına oturur. Modelin önizlemesinde görülenler:
 - **Kulüp binası:** sahanın bir kısa ucunda (B ucu), ~~açık tribün tarafına yakın~~ **açık tribün
   tarafındaki köşede** (Kemal, 19 Kasım; modelde x 95–102, z -62 … -50), kiremit çatılı küçük yapı. Saha
   yüzünde 2 m direkli sundurma; taş duvarda sokağa açılan kapı.
+  İçi (Kemal, 19 Kasım: çizimdeki gibi): lokal (≈ 25 m²) ve çay ocağı, yönetim odası, malzeme odası, iki WC,
+  giriş holünde kupa vitrini. **Karar (Kemal, 22 Kasım):** odalar oyunun 3B modeline **girmez** (tur binanın
+  içine girmez, dışarıdan görünmez); yalnız kesit resmi kalır (`docs/plan/kulup-binasi-ic-kesit.jpg`). Oda ölçüleri DENEME.
   **Karar (Kemal, 16 Kasım)**: Dirlik Spor Kulübü'nün binası; ad yok.
 - **Bayrak direği:** kompleksin bir köşesinde, duvarın dibinde.
 - **Ağaçlar:** duvarın dışında, bir kısa uçta (dekor; pist yok).
@@ -505,7 +508,8 @@ zorluk · öğretir · deneme notu. Hepsi **Öneri**.
   ayrıntısı adım 3'te çizilir (4.9).
 - Pist: düz, ortası üstü kapalı.
 - Engeller: ~~saçak~~ sundurma (pistin bir bölümü üstü kapalı, top kısa bir an görünmez; sundurmayla
-  yeniden bakılacak, adım 3); binanın duvarı bant; sundurmanın direkleri (öneri).
+  yeniden bakılacak, adım 3); binanın duvarı bant; ~~sundurmanın direkleri (öneri)~~ **Karar (Kemal, 22 Kasım):** sundurmanın
+  direkleri engeldir: top direğe çarpıp seker.
 - Zorluk: orta.
 - Öğretir: görünmeyen bölümden geçirmek.
 - Deneme notu: kapalı bölümde top saydam mı görünsün, hiç mi görünmesin: DENEME.

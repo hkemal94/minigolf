@@ -56,6 +56,30 @@
       "yol": "docs/plan/delik-2-tac-secenekleri.png"
     },
     {
+      "bolum": "plan",
+      "baslik": "Dirlik Stadı · kulüp binasının içi (kesit; lokal, çay ocağı, yönetim, malzeme, iki WC, holde kupa vitrini)",
+      "tarih": "2026-11-22",
+      "durum": "taslak",
+      "yol": "docs/plan/kulup-binasi-ic-kesit.jpg",
+      "not": "Yalnız önizleme, oyunun modeline girmez. Oda ölçüleri, duvarlar, eşya DENEME. Henüz PR yok."
+    },
+    {
+      "bolum": "plan",
+      "baslik": "Dirlik Stadı · kulüp binası, saha yüzündeki 2 m direkli sundurma (yakın)",
+      "tarih": "2026-11-22",
+      "durum": "taslak",
+      "yol": "docs/plan/kulup-binasi-sundurma.jpg",
+      "not": "Modelin 19 Kasım hâli; sundurma ölçüleri DENEME. 10. delik bunun altında. Henüz PR yok."
+    },
+    {
+      "bolum": "plan",
+      "baslik": "Dirlik Stadı · taş duvarda sokağa açılan kapı (duvar dışından)",
+      "tarih": "2026-11-22",
+      "durum": "taslak",
+      "yol": "docs/plan/kulup-binasi-sokak-kapisi.jpg",
+      "not": "Modelin 19 Kasım hâli; kapı 1,0 x 2,1 m DENEME. Henüz PR yok."
+    },
+    {
       "bolum": "maket",
       "baslik": "Maket · Ana ekran",
       "tarih": "2026-11-19",
