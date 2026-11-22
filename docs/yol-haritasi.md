@@ -96,13 +96,15 @@ Karar (Kemal, 19 Kasım): köşeye taşınan kulüp binası tam görünsün. Ana
 görüntüsünü kullanıyor; üçünde de bakış binaya doğru kaydırıldı ve biraz uzaklaştırıldı (kayma ve uzaklık DENEME). Üç
 görüntü yeniden alındı; önceki hâlleri `docs/galeri/eski/kadraj-oncesi/` altında. Oynanış yok; gerçek telefonda denenmedi.
 
-## Dirlik Stadı · kulüp binasının içi (22 Kasım 2026; taslak, PR yok, `ajans/dirlik-kulup-binasi`)
+## Dirlik Stadı · kulüp binasının içi (22 Kasım 2026; öneri, `ajans/dirlik-kulup-binasi`)
 
 Kemal'in 19 Kasım cevaplarının dördüncüsü (odalar çizimdeki gibi). İlk üçü (bina açık tribün köşesinde, saha yüzünde
 2 m direkli sundurma, taş duvarda sokak kapısı) modelde zaten var (PR #10); stat modelinin dosyası bu dalda **değişmedi**.
 İç bölmeler (lokal ≈ 25 m² ve çay ocağı, yönetim odası, malzeme odası, iki WC, holde kupa vitrini) yalnız kesit
-önizlemesi olarak çizildi; tur binanın içine girmediği için oyunun modeline konmadı (öneri). Galeride üç yeni resim:
+önizlemesi olarak çizildi. **Karar (Kemal, 22 Kasım):** odalar oyunun 3B modeline girmez, yalnız kesit resmi kalır. Galeride üç yeni resim:
 iç kesit, sundurma yakın, sokak kapısı. Oyun ekranında değişen bir şey yok. Oda ölçüleri, duvar kalınlıkları ve eşya DENEME.
+**Karar (Kemal, 22 Kasım):** 10. delikte sundurmanın direkleri engel: top direğe çarpıp seker (belge 10. delik).
+Delik adım 3'te kurulurken direkler çarpışan engel olarak eklenir (sekme oranı şimdilik direkle aynı, 0,6; DENEME).
 
 ## Neredeyiz
 
